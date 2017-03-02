@@ -1,8 +1,8 @@
-let gulp = require('gulp');
-let config = require('js.shared').config;
+const gulp = require('gulp');
+const config = require('js.shared').config;
 
-let buildDir = config.get('buildDir');
-let indexSource = 'front/index.html';
+const buildDir = config.get('buildDir');
+const indexSource = 'front/index.html';
 
 module.exports = function () {
     return gulp

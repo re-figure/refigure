@@ -1,0 +1,10 @@
+{
+  "name": "refigure",
+  "version": "0.1.0",
+  "authors": [
+    "Andrey Pavlov <andrew.m.pavlov@gmail.com>"
+  ],
+  "private": true,
+  "dependencies": {
+  }
+}

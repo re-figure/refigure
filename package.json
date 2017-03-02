@@ -1,0 +1,42 @@
+{
+  "name": "refigure",
+  "version": "0.1.0",
+  "description": "Refigure",
+  "author": "Andrey Pavlov <andrew.m.pavlov@gmail.com>",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-load-tasks": "^0.8.4",
+    "gulp-service": "0.0.3",
+    "run-sequence": "^1.2.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.0",
+    "js.shared": "https://github.com/andrewpavlov/js.shared.git",
+    "yargs": "^6.6.0"
+  },
+  "locals": {
+    "buildDir": "build",
+    "tmpDir": "tmp",
+    "mysql": {
+      "host": "HOST",
+      "user": "USER",
+      "password": "PASSWORD",
+      "database": "refigure",
+      "port": 3306,
+      "connectionLimit": 10
+    },
+    "server": {
+      "addr": "127.0.0.1",
+      "port": "8181"
+    },
+    "smtp": {
+      "host": "HOST",
+      "port": 25,
+      "tls": true,
+      "user": "USER",
+      "password": "PASSWORD"
+    }
+  }
+}

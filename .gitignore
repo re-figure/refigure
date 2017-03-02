@@ -1,0 +1,14 @@
+reports/
+node_modules/
+bower_components/
+build/
+.sass-cache/
+tmp/
+front/assets/sass/**/*.css
+front/assets/sass/**/*.map
+front/app/**/*.css
+front/app/**/*.map
+.idea/
+upload/
+npm-debug.log
+*.bak

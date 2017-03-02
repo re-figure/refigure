@@ -1,22 +1,36 @@
+'use strict';
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
 const bodyParser = require('body-parser');
-const config = require('js.shared').config;
 
+const config = require('js.shared').config;
+// initialize config from package.json
 const p = require('../package.json');
 config.init(p.locals);
+
+const routes = require('./routes');
+const auth = require('./auth');
+const errors = require('./errors');
+
 
 // various middleware parsers
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// routes
-app.use(require('./routes'));
+// authentication filter
+app.use(auth.authFilter);
 
-// Start server
-const srvPort = config.get('server.port', '8181');
-app.listen(srvPort, function () {
-    console.log('Server has started at %s', srvPort);
+// routes
+app.use(routes);
+
+// error handling
+app.use(errors);
+
+// start the server
+let port = config.get('server.port', '8181');
+app.listen(port, () => {
+    console.log('Server has started at %s', port);
 });

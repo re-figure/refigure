@@ -12,15 +12,22 @@
   "dependencies": {
     "body-parser": "^1.17.0",
     "cookie-parser": "^1.4.3",
+    "crypto-js": "^3.1.9-1",
+    "emailjs": "^1.0.8",
     "express": "^4.15.0",
+    "http-status-codes": "^1.1.6",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
+    "jsonwebtoken": "^7.3.0",
+    "mysql": "^2.13.0",
+    "node-captcha": "^0.2.2",
+    "node-uuid": "^1.4.7",
     "yargs": "^6.6.0"
   },
   "locals": {
     "buildDir": "build",
     "tmpDir": "tmp",
     "mysql": {
-      "host": "HOST",
+      "host": "refugure.czigngpclatr.us-east-1.rds.amazonaws.com",
       "user": "USER",
       "password": "PASSWORD",
       "database": "refigure",
@@ -32,11 +39,16 @@
       "port": "8181"
     },
     "smtp": {
-      "host": "HOST",
+      "host": "email-smtp.us-east-1.amazonaws.com",
       "port": 25,
       "tls": true,
       "user": "USER",
       "password": "PASSWORD"
+    },
+    "jwt": {
+      "useToken": true,
+      "key": "A83fg-2737mvgTG8-38027",
+      "pwdChangeExpiresIn": "10h"
     }
   }
 }

@@ -1,3 +1,5 @@
+'use strict';
+
 const service = require('gulp-service');
 const yargs = require('yargs');
 

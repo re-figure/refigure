@@ -1,10 +1,10 @@
-let express = require('express');
-let cookieParser = require('cookie-parser');
-let app = express();
-let bodyParser = require('body-parser');
-let config = require('js.shared').config;
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const app = express();
+const bodyParser = require('body-parser');
+const config = require('js.shared').config;
 
-let p = require('../package.json');
+const p = require('../package.json');
 config.init(p.locals);
 
 // various middleware parsers
@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(require('./routes'));
 
 // Start server
-var srvPort = config.get('server.port', '8181');
+const srvPort = config.get('server.port', '8181');
 app.listen(srvPort, function () {
     console.log('Server has started at %s', srvPort);
 });

@@ -1,10 +1,10 @@
-let service = require('gulp-service');
-let yargs = require('yargs');
+const service = require('gulp-service');
+const yargs = require('yargs');
 
-let indexFile = 'back/index.js';
+const indexFile = 'back/index.js';
 
 module.exports = function () {
-    var env = Object.create(process.env);
+    let env = Object.create(process.env);
 
     for (var key in yargs.argv) {
         env[key] = yargs.argv[key];

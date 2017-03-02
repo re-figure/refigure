@@ -1,9 +1,9 @@
-let express = require('express');
-let router = express.Router();
-let config = require('js.shared').config;
+const express = require('express');
+const router = express.Router();
+const config = require('js.shared').config;
 
-let homePage = __dirname + '/../build/';
-let staticOptions = {};
+const homePage = __dirname + '/../build/';
+const staticOptions = {};
 
 module.exports = router;
 

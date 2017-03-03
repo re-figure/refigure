@@ -6,6 +6,7 @@ const router = express.Router();
 const auth = require('./auth');
 const users = require('./users');
 const captcha = require('./captcha');
+const figures = require('./figures');
 
 const homePage = __dirname + '/../build/';
 const staticOptions = {};
@@ -29,4 +30,5 @@ router.get('/api/password-change/:token', users.passwordChange);
 router.post('/api/password-change', users.passwordChange);
 router.post('/api/profile-update', users.updateUser);
 router.get('/api/userinfo', users.userInfo);
+router.post('/api/check-figures', figures.checkFigures);
 

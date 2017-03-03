@@ -9,7 +9,7 @@
  */
 function logError(err, req, res, next) {
     console.error({
-        path: req.route.path,
+        route: req.route,
         err: err
     });
     

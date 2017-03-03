@@ -23,6 +23,7 @@ exports.addAuthHeader = addAuthHeader;
 exports.passwordCheckWeakness = passwordCheckWeakness;
 
 var pathsNoAuth = [
+    '/api/check-figures',
     '/api/login',
     '/api/password-validate',
     '/api/captcha',

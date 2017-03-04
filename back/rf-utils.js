@@ -1,6 +1,7 @@
 'use strict';
 
 const vars = require('js.shared').vars;
+const utils = require('js.shared').utils;
 
 const constants = require('./const.js');
 
@@ -9,6 +10,7 @@ exports.checkStringNotEmpty = checkStringNotEmpty;
 exports.boolValue = boolValue;
 exports.getUserName = getUserName;
 exports.getObjectId = getObjectId;
+exports.parseQuery = parseQuery;
 
 /**
  * Check that given string is not empty
@@ -95,3 +97,105 @@ function getObjectId(req, res) {
     return id;
 }
 
+/**
+ * Parse out search query from input parameters
+ * @param {Object[]} tables - list of table descriptors to evaluate query parameters against
+ * @param {Object<string, string>} params - input request parameters
+ * @returns {CommonResponse} parsed query {Query} in data
+ */
+function parseQuery(tables, params) {
+    /*jshint maxstatements:100 */
+    /*jshint maxcomplexity:100 */
+    let _query = {
+        from: 0,
+        size: constants.DEFAULT_PAGE_SIZE,
+        sortDirection: constants.SORT_DIRECTION_ASCENDING,
+        query: '',
+        filters: []
+    };
+
+    if (!params) {
+        return {data: _query};
+    }
+    // pagination
+    if (utils.isset(params.from)) {
+        let i = parseInt(params.from);
+        if (!isNaN(i) && i > 0) {
+            _query.from = i;
+        }
+    }
+    if (utils.isset(params.size)) {
+        let i = parseInt(params.size);
+        if (!isNaN(i) && i > 0) {
+            _query.size = i;
+        }
+    }
+
+    // sorting
+    // first, assume that sort order can be passed as
+    // sort=column:order
+    let _sortField = null;
+    let _sortDirection = null;
+    if (utils.isset(params.sort)) {
+        let _re = new RegExp('^([^:]+):(' +
+            constants.SORT_DIRECTION_ASCENDING + '|' +
+            constants.SORT_DIRECTION_DESCENDING + ')$', 'i');
+        let _m = String(params.sort).match(_re);
+        if (_m) {
+            _sortField = _m[1];
+            _sortDirection = _m[2].toUpperCase();
+        } else {
+            _sortField = String(params.sort);
+        }
+    }
+    if (!_sortField) {
+        // just in case: have an ability to set sort field name
+        // separately via sortField or sor_field parameter
+        let _s = params.sortField || params['sort_field'];
+        if (utils.isset(_s)) {
+            _sortField = String(_s);
+        }
+    }
+    if (_sortField) {
+        _query.sortField = _sortField;
+    }
+
+    if (!_sortDirection) {
+        let _s = params.sortDirection || params['sort_dir'] || params['dir'];
+        if (!utils.isset(_s)) {
+            _s = String(_s);
+            let _re = new RegExp('^' +
+                constants.SORT_DIRECTION_ASCENDING + '|' +
+                constants.SORT_DIRECTION_DESCENDING + '$', 'i');
+            if (_s.match(_re)) {
+                _sortDirection = _s.toUpperCase();
+            }
+        }
+    }
+    if (_sortDirection) {
+        _query.sortDirection = _sortDirection;
+    }
+
+    // add main query
+    if (utils.isset(params.query)) {
+        _query.query = params.query;
+    }
+
+    // add filters
+    if (tables) {
+        tables.forEach((table) => {
+            table.columns.forEach((column) => {
+                let _f = table.name + '.' + column.name;
+                let _lf = _f.toLowerCase();
+                Object.keys(params).forEach((k) => {
+                    if (k.toLowerCase() === _lf) {
+                        if (typeof params[k] !== 'undefined') {
+                            _query.filters.push({name: _f, value: params[k]});
+                        }
+                    }
+                });
+            });
+        });
+    }
+    return {data: _query};
+}

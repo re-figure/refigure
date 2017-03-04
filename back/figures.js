@@ -2,14 +2,17 @@
 
 const httpStatus = require('http-status-codes');
 
+const utils = require('js.shared').utils;
+
 const constants = require('./const');
 const db = require('./db');
 const rfUtils = require('./rf-utils');
-const utils = require('js.shared').utils;
+const metapublications = require('./metapublications');
 
 exports.checkFigures = checkFigures;
 exports.normaliseURL = normaliseURL;
 exports.normaliseDOIFigure = normaliseDOIFigure;
+exports.getFigure = getFigure;
 
 function normaliseURL(url) {
     if (rfUtils.checkStringNotEmpty(url)) {
@@ -39,7 +42,6 @@ function checkFigures(req, res) {
 
     let result = {
         data: {
-            found: 0,
             figures: []
         }
     };
@@ -66,7 +68,6 @@ function checkFigures(req, res) {
     }
 
     function checkOneFigure(fig, cb) {
-        result.data.figures.push(fig);
         checkDOIFigure(fig, (r) => {
             if (r.error) {
                 if (r.error === constants.ERROR_SQLNOTFOUND) {
@@ -79,8 +80,7 @@ function checkFigures(req, res) {
                             }
                         } else {
                             if (r2.data && Array.isArray(r2.data) && r2.data.length) {
-                                fig.Figure = r2.data[0];
-                                result.data.found++;
+                                result.data.figures.push(r.data[0]);
                             }
                             cb({});
                         }
@@ -90,8 +90,7 @@ function checkFigures(req, res) {
                 }
             } else {
                 if (r.data && Array.isArray(r.data) && r.data.length) {
-                    fig.Figure = r.data[0];
-                    result.data.found++;
+                    result.data.figures.push(r.data[0]);
                 }
                 cb({});
             }
@@ -135,4 +134,41 @@ function checkFigures(req, res) {
             cb({error: constants.ERROR_SQLNOTFOUND});
         }
     }
+}
+
+/**
+ * Get figure by ID
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function getFigure(req, res) {
+    let id = rfUtils.getObjectId(req, res);
+    db.pool.query({sql: `
+        SELECT * 
+          FROM Figure
+          JOIN Metapublication ON Figure.MetapublicationID = Metapublication.ID
+          JOIN User AS UserFigure ON UserFigure.ID = Figure.UserID
+          JOIN User AS UserMetapublication ON UserMetapublication.ID = Metapublication.UserID
+          LEFT JOIN Visit ON Visit.MetapublicationID = Metapublication.ID
+         WHERE Figure.ID = ?
+    `, nestTables: true}, [id], (err, results) => {
+        if (err) {
+            console.log(err);
+            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
+        }
+        if (results.length === 0) {
+            return rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_SQLNOTFOUND, 'No Figure found');
+        }
+        let rec = {
+            Figure: results[0].Figure,
+            Metapublication: results[0].Metapublication,
+        };
+        rec.Figure.User = metapublications.arrangeUserRecord(results[0].UserFigure);
+        rec.Metapublication.User = metapublications.arrangeUserRecord(results[0].UserMetapublication);
+        rec.Metapublication.Visit = metapublications.arrangeVisitRecord(results[0].Visit, rec.Metapublication.ID);
+
+        res.send({
+            data: rec
+        });
+    });
 }

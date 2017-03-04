@@ -33,6 +33,16 @@ var _gConst = {
     // cookie to store last captcha
     CAPTCHA_COOKIE: 'refigure',
 
+    // other constants
+    MAX_RESULTS: 20,
+    DEFAULT_MOST_VISITED_LIMIT: 3,
+
+    // query parameters
+    DEFAULT_PAGE_SIZE: 20,
+    MAX_PAGE_SIZE: 1000,
+    SORT_DIRECTION_ASCENDING: 'ASC',
+    SORT_DIRECTION_DESCENDING: 'DESC',
+
     // error messages
     // 400 BAD PARAMETERS
     ERROR_NOCAPTCHA: 40001, // no captcha text provided in the captcha validation request

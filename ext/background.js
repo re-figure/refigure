@@ -5,12 +5,22 @@ var tabsData = {};
 function updateBrowserAction(tab) {
     if (isTabToProceed(tab)) {
         var t = tabsData[tab.id];
+        //TODO change icon accordingly status and number of found figures
         if (t.status === _gConst.STATUS_NEW) {
             chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
         } else if (t.status === _gConst.STATUS_INPROCESS) {
             chrome.browserAction.setBadgeText({tabId: tab.id, text: 'L'});
         } else {
-            chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.count)});
+            if (t.count === -1) {
+                // an error occurred while search figures
+                chrome.browserAction.setBadgeText({tabId: tab.id, text: 'E'});
+            } else if (t.count === 0) {
+                // no figures found on the page
+                chrome.browserAction.setBadgeText({tabId: tab.id, text: '0'});
+            } else {
+                // found figures on the page
+                chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.count)});
+            }
         }
     } else {
         // an empty or service tab
@@ -53,6 +63,9 @@ function onSearchFiguresComplete(result, tab) {
     if (t) {
         t.status = _gConst.STATUS_COMPLETE;
         t.count = result.count;
+        t.figures = result.figures;
+        // to make sure the browserAction is enabled finally
+        chrome.browserAction.enable(tab.id);
         update(tab.id);
     }
 }
@@ -68,7 +81,8 @@ function createNewTabData(tabId) {
     tabsData[tabId] = {
         status: 0,
         count: 0,
-        url: ''
+        url: '',
+        figures: []
     };
 }
 

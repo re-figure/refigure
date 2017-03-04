@@ -50,22 +50,30 @@ function sendCheckFiguresRequest(figures) {
     xhr.onreadystatechange = function (e) {
         if (xhr.readyState === 4) {
             var count = 0;
+            var foundFigures = [];
             if (xhr.status === 200) {
                 var json = JSON.parse(xhr.responseText);
                 if (json.error) {
                     console.log('Failed to send search request, got response ', json);
                 } else {
-                    if (json.data && typeof(json.data.found) === 'number') {
-                        count = json.data.found;
+                    if (json.data && json.data.figures && Array.isArray(json.data.figures)) {
+                        count = json.data.figures.length;
+                        foundFigures = json.data.figures;
                         console.log(json);
                     } else {
                         console.log('Got broken response', json);
+                        count = -1;
                     }
                 }
             } else {
                 console.log('Failed to send search request, got status ', xhr.status);
+                count = -1;
             }
-            chrome.runtime.sendMessage({type: _gConst.MSG_TYPE_SEARCH_COMPLETED, count: count});
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+                count: count,
+                figures: foundFigures
+            });
         }
     };
     xhr.open("POST", _gApiURL + 'check-figures', true);

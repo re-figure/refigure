@@ -23,6 +23,7 @@ exports.addAuthHeader = addAuthHeader;
 exports.passwordCheckWeakness = passwordCheckWeakness;
 
 var pathsNoAuth = [
+    '/api/check-figures',
     '/api/login',
     '/api/password-validate',
     '/api/captcha',
@@ -30,7 +31,14 @@ var pathsNoAuth = [
     '/api/register',
     '/api/registration-complete',
     '/api/password-change-request',
-    '/api/password-change'
+    '/api/password-change',
+    '/api/most-visited-metapublications',
+    '/api/metapublications'
+];
+
+var pathsNoAuthGET = [
+    '/api/figure',
+    '/api/metapublication'
 ];
 
 /**
@@ -39,13 +47,22 @@ var pathsNoAuth = [
  * @returns {boolean} true if request must be authenticated
  */
 function shouldAuthenticate(req) {
+
     let reqPath = req.path.toLowerCase();
-    for (let pathNoAuth of pathsNoAuth) {
-        if (reqPath.indexOf(pathNoAuth) === 0) {
+
+    for (let path of pathsNoAuth) {
+        if (reqPath.indexOf(path) === 0) {
             return false;
         }
     }
 
+    if (req.method === 'GET') {
+        for (let path of pathsNoAuthGET) {
+            if (reqPath.indexOf(path) === 0) {
+                return false;
+            }
+        }
+    }
     return req.path.match(/\/api\//);
 }
 

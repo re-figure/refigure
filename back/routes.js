@@ -38,8 +38,11 @@ router.post('/api/check-figures', figures.checkFigures);
 router.get('/api/figure/:ID', figures.getFigure);
 router.get('/api/metapublication/:ID', metapublications.getMetapublication);
 router.get('/api/most-visited-metapublications', metapublications.mostVisited);
-router.get('/api/metapublications', metapublications.search);
+router.get('/api/metapublications', metapublications.searchMetapublications);
 
-// content management API
+// content management API available only for logged in users
 router.get('/api/my-metapublications', metapublications.myMetapublications);
 
+router.post('/api/metapublication', metapublications.addOrUpdateMetapublication);
+router.put('/api/metapublication', metapublications.addOrUpdateMetapublication);
+router.delete('/api/metapublication', metapublications.deleteMetapublication);

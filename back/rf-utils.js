@@ -29,6 +29,9 @@ function checkStringNotEmpty(s) {
  * @param message error message to be sent as {message:string}
  */
 function error(res, http, error, message) {
+    if (typeof http === 'undefined') {
+        http = 500;
+    }
     res
         .status(http)
         .send({

@@ -1,6 +1,7 @@
 'use strict';
 
 const httpStatus = require('http-status-codes');
+const uuid = require('node-uuid');
 
 const utils = require('js.shared').utils;
 const vars = require('js.shared').vars;
@@ -8,13 +9,17 @@ const vars = require('js.shared').vars;
 const constants = require('./const');
 const db = require('./db');
 const rfUtils = require('./rf-utils');
+const auth = require('./auth');
 
 exports.getMetapublication = getMetapublication;
 exports.arrangeVisitRecord = arrangeVisitRecord;
 exports.arrangeUserRecord = arrangeUserRecord;
 exports.mostVisited = mostVisited;
 exports.myMetapublications = myMetapublications;
-exports.search = search;
+exports.searchMetapublications = searchMetapublications;
+exports.addOrUpdateMetapublication = addOrUpdateMetapublication;
+exports.deleteMetapublication = deleteMetapublication;
+exports.flagMetapublication = flagMetapublication;
 
 /**
  * Clean User record before output
@@ -52,12 +57,11 @@ function arrangeVisitRecord(rec, id) {
 }
 
 /**
- * Get metapubliucation by its ID with related data - figures, visits counter
- * @param {Object} req HTTP request
- * @param {Object} res HTTP response
+ * Retrieve a Metapublication with related data from he db by ID
+ * @param {string} id Metapublication ID
+ * @param {CommonCallback} cb
  */
-function getMetapublication(req, res) {
-    let id = rfUtils.getObjectId(req, res);
+function get(id, cb) {
     db.pool.query({sql: `
         SELECT *
           FROM Metapublication
@@ -66,10 +70,18 @@ function getMetapublication(req, res) {
     `, nestTables: true}, [id], (err, results) => {
         if (err) {
             console.log(err);
-            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
+            return cb({
+                http: httpStatus.INTERNAL_SERVER_ERROR,
+                error: constants.ERROR_SQL,
+                message: constants.ERROR_MSG_SQL
+            });
         }
         if (results.length === 0) {
-            return rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_SQLNOTFOUND, 'No Metapublication found');
+            return {
+                http: httpStatus.NOT_FOUND,
+                error: constants.ERROR_SQLNOTFOUND,
+                message: 'No Metapublication found'
+            }
         }
         let rec = {
             Metapublication: results[0].Metapublication
@@ -85,31 +97,46 @@ function getMetapublication(req, res) {
         `, nestTables:true}, [rec.Metapublication.ID], (err, results) => {
             if (err) {
                 console.log(err);
-                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
+                return {
+                    http: httpStatus.INTERNAL_SERVER_ERROR,
+                    error: constants.ERROR_SQL,
+                    message: constants.ERROR_MSG_SQL
+                }
             }
             rec.Metapublication.Figures = [];
             for (let r of results) {
                 r.Figure.User = arrangeUserRecord(r.User);
                 rec.Metapublication.Figures.push(r.Figure);
             }
-            let novisit = vars.get(req, 'novisit');
-            if (rfUtils.boolValue(novisit)) {
-                res.send({
-                    data: rec
-                });
-            } else {
-                db.pool.query(`
+            cb({data: rec});
+        });
+    });
+}
+
+/**
+ * Get metapubliucation by its ID with related data - figures, visits counter
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function getMetapublication(req, res) {
+    let id = rfUtils.getObjectId(req, res);
+    get(id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        let novisit = vars.get(req, 'novisit');
+        if (rfUtils.boolValue(novisit)) {
+            res.send(r);
+        } else {
+            db.pool.query(`
                     INSERT INTO Visit (MetapublicationID, Count) VALUES (?, 1) ON DUPLICATE KEY UPDATE Count = Count + 1
                 `, [rec.Metapublication.ID], (err) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                    res.send({
-                        data: rec
-                    });
-                });
-            }
-        });
+                if (err) {
+                    console.log(err);
+                }
+                res.send(r);
+            });
+        }
     });
 }
 
@@ -120,7 +147,7 @@ function getMetapublication(req, res) {
  */
 function mostVisited(req, res) {
     let limit = vars.get(req, 'limit');
-    if (!(typeof(limit) === typeof(Number) && limit > 0 && limit <= constants.MAX_RESULTS)) {
+    if (!(typeof limit === 'number' && limit > 0 && limit <= constants.MAX_RESULTS)) {
         limit = constants.DEFAULT_MOST_VISITED_LIMIT;
     }
     db.pool.query({sql:`
@@ -232,7 +259,7 @@ function myMetapublications(req, res) {
  * @param {Object} req HTTP request
  * @param {Object} res HTTP response
  */
-function search(req, res) {
+function searchMetapublications(req, res) {
     let r = rfUtils.parseQuery(undefined, req.query);
     if (r.error) {
         return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, constants.ERROR_MSG_BADPARAMETERS);
@@ -317,6 +344,185 @@ function search(req, res) {
                 found: found,
                 results: recs
             }
+        });
+    });
+}
+
+/**
+ * Delete a metapublication by its ID
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function deleteMetapublication(req, res) {
+
+    let id = rfUtils.getObjectId(req);
+    get(id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        if (!auth.checkObjectAccess(req, r.data.Metapublication.UserID)) {
+            return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+        }
+        db.pool.query('DELETE FROM Metapublication WHERE ID = ?', [id], (err) => {
+            if (err) {
+                console.log('Failed to delete Metapublication', err);
+                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_MSG_SQL, constants.ERROR_MSG_SQL);
+            }
+            res.send(r);
+        });
+    });
+}
+
+/**
+ * Create new Metapublication or update existing one
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function addOrUpdateMetapublication(req, res) {
+    let id = vars.get(req, 'ID');
+    if (utils.isset(id)) {
+        updateMetapublication(req, res);
+    } else {
+        createMetapublication(req, res);
+    }
+}
+
+function getUpdateData(params) {
+    let m = {};
+    ['Title', 'Description', 'Keywords'].forEach((key) => {
+        if (params[key]) {
+            m[key] = params[key];
+        }
+    });
+    return m;
+}
+
+/**
+ * Update existing Metapublication
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function updateMetapublication(req, res) {
+    let id = vars.get(req, 'ID');
+    if (!utils.isset(id)) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+    }
+
+    get(id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        if (!auth.checkObjectAccess(req, r.data.Metapublication.UserID)) {
+            return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+        }
+        let upd = getUpdateData(req.body);
+        if (Object.keys(upd).length === 0) {
+            return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No data for update provided');
+        }
+
+        let params = [];
+        let q = 'UPDATE Metapublication SET ';
+        Object.keys(upd).forEach((key) => {
+            if (params.length > 0) {
+                q += ', ';
+            }
+            q += key + ' = ?';
+            params.push(upd[key]);
+        });
+        q += ' WHERE ?? = ?';
+        params.push(db.model.ID);
+        params.push(id);
+        db.pool.query(q, params, (err) => {
+            if (err) {
+                console.log('Failed to update Metapublication', err);
+                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to update Metapublication');
+            }
+            get(id, (r) => {
+                if (r.error) {
+                    return rfUtils.error(res, r.http, r.error, r.message);
+                }
+                res.send(r);
+            });
+        });
+    });
+}
+
+
+/**
+ * Create new Metapublication
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function createMetapublication(req, res) {
+    let upd = getUpdateData(req.body);
+    if (Object.keys(upd).length === 0) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication data provided');
+    }
+
+    upd[db.model.ID] = uuid.v1();
+    upd['UserID'] = req.User.ID;
+
+    let params = [];
+    let q = 'INSERT INTO Metapubication (';
+    let v = ' VALUES (';
+    Object.keys(upd).forEach((key) => {
+        if (params.length > 0) {
+            q += ', ';
+            v += ', ';
+        }
+        q += key;
+        params.push(upd[key]);
+    });
+    q += v + ')';
+    db.pool.query(q, params, (err) => {
+        if (err) {
+            console.log('Failed to create new Metapublication', err);
+            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to create new Metapublication');
+        }
+        get(upd[db.model.ID], (r) => {
+            if (r.error) {
+                return rfUtils.error(res, r.http, r.error, r.message);
+            }
+            res.send(r);
+        });
+    });
+}
+
+/**
+ * Mark the metapublication as Flagged
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function flagMetapublication(req, res) {
+    let id = vars.get(req, 'ID');
+    if (!utils.isset(id)) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+    }
+
+    get(id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        if (!auth.checkObjectAccess(req, r.data.Metapublication.UserID)) {
+            return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+        }
+        let flagged = true;
+        if (typeof req.body.Flagged !== 'undefined') {
+            flagged = utils.boolValue(req.body.Flagged);
+        }
+
+        let q = 'UPDATE Metapublication SET Flagged = ?';
+        db.pool.query(q, [flagged], (err) => {
+            if (err) {
+                console.log('Failed to update Metapublication', err);
+                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to update Metapublication');
+            }
+            get(id, (r) => {
+                if (r.error) {
+                    return rfUtils.error(res, r.http, r.error, r.message);
+                }
+                res.send(r);
+            });
         });
     });
 }

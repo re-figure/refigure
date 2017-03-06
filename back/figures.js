@@ -7,18 +7,29 @@ const utils = require('js.shared').utils;
 const constants = require('./const');
 const db = require('./db');
 const rfUtils = require('./rf-utils');
+const auth = require('./auth');
 const metapublications = require('./metapublications');
 
 exports.checkFigures = checkFigures;
 exports.normaliseURL = normaliseURL;
 exports.normaliseDOIFigure = normaliseDOIFigure;
+exports.normaliseCaption = normaliseCaption;
 exports.getFigure = getFigure;
+exports.deleteFigure = deleteFigure;
+exports.addOrUpdateFigure = addOrUpdateFigure;
 
 function normaliseURL(url) {
     if (rfUtils.checkStringNotEmpty(url)) {
-        return url.toLowerCase();
+        return url.toLowerCase().substr(0, 255);
     }
-    return url;
+    return '';
+}
+
+function normaliseCaption(caption) {
+    if (rfUtils.checkStringNotEmpty(caption)) {
+        return url.toLowerCase().substr(0, 255);
+    }
+    return '';
 }
 
 function normaliseDOIFigure(doi) {
@@ -137,12 +148,11 @@ function checkFigures(req, res) {
 }
 
 /**
- * Get figure by ID
- * @param {Object} req HTTP request
- * @param {Object} res HTTP response
+ * Retrieve a Figure with related information from the DB by Fugure ID
+ * @param {string} id Figure ID
+ * @param {CommonCallback} cb
  */
-function getFigure(req, res) {
-    let id = rfUtils.getObjectId(req, res);
+function get(id, cb) {
     db.pool.query({sql: `
         SELECT * 
           FROM Figure
@@ -154,21 +164,207 @@ function getFigure(req, res) {
     `, nestTables: true}, [id], (err, results) => {
         if (err) {
             console.log(err);
-            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
+            return {
+                http: httpStatus.INTERNAL_SERVER_ERROR,
+                error: constants.ERROR_SQL,
+                message: constants.ERROR_MSG_SQL
+            };
         }
         if (results.length === 0) {
-            return rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_SQLNOTFOUND, 'No Figure found');
+            return {
+                http: httpStatus.INTERNAL_NOT_FOUND,
+                error: constants.ERROR_SQLNOTFOUND,
+                message: 'No Figure found'
+            };
         }
-        let rec = {
-            Figure: results[0].Figure,
-            Metapublication: results[0].Metapublication,
-        };
-        rec.Figure.User = metapublications.arrangeUserRecord(results[0].UserFigure);
-        rec.Metapublication.User = metapublications.arrangeUserRecord(results[0].UserMetapublication);
-        rec.Metapublication.Visit = metapublications.arrangeVisitRecord(results[0].Visit, rec.Metapublication.ID);
+        let fig = results[0].Figure;
+        fig.User = metapublications.arrangeUserRecord(results[0].UserFigure);
+        fig.Metapublication = results[0].Metapublication;
+        fig.Metapublication.User = metapublications.arrangeUserRecord(results[0].UserMetapublication);
+        fig.Metapublication.Visit = metapublications.arrangeVisitRecord(results[0].Visit, fig.MetapublicationID);
 
-        res.send({
-            data: rec
+        return cb({ data: { Figure: fig } });
+    });
+}
+
+/**
+ * Get figure by ID
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function getFigure(req, res) {
+    let id = rfUtils.getObjectId(req, res);
+    get(id, (r) => {
+       if (r.error) {
+           return rfUtils.error(res, r.http, r.error, r.message);
+       }
+       res.send(r);
+    });
+}
+
+/**
+ * Delete a Figure by its ID
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function deleteFigure(req, res) {
+    let id = rfUtils.getObjectId(req, res);
+    get(id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        if (!auth.checkObjectAccess(req, r.data.Figure.UserID)) {
+            if (!auth.checkObjectAccess(req, r.data.Figure.Metapublication.UserID)) {
+                return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+            }
+        }
+
+        db.pool.query('DELETE FROM Figure WHERE ID = ?', [id], (err) => {
+            if (err) {
+                console.log('Failed to delete Figure', err);
+            }
+            res.send(r);
+        });
+    });
+}
+
+/**
+ * Create new Figure or update existing one
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function addOrUpdateFigure(req, res) {
+    let id = vars.get(req, 'ID');
+    if (utils.isset(id)) {
+        updateFigure(req, res);
+    } else {
+        createFigure(req, res);
+    }
+}
+
+function getUpdateData(params) {
+    let m = {};
+    ['Caption', 'Authors', 'Features', 'Legend', 'DOI', 'URL', 'DOIFigure'].forEach((key) => {
+        if (params[key]) {
+            m[key] = params[key];
+        }
+    });
+    if (m['URL']) {
+        m['KeyURL'] = normaliseURL(m['URL']);
+    }
+    if (m['Caption']) {
+        m['KeyCaption'] = normaliseCaption(m['Caption']);
+    }
+    if (m['DOIFigure']) {
+        m['DOIFigure'] = normaliseDOIFigure(m['DOIFigure']);
+    }
+    return m;
+}
+
+/**
+ * Update existing Figure
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function updateFigure(req, res) {
+    let id = vars.get(req, 'ID');
+    if (!utils.isset(id)) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+    }
+
+    get(id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        if (!auth.checkObjectAccess(req, r.data.Figure.UserID)) {
+            if (!auth.checkObjectAccess(req, r.data.Figure.Metapublication.UserID)) {
+                return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+            }
+        }
+        let upd = getUpdateData(req.body);
+        if (Object.keys(upd).length === 0) {
+            return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No data for update provided');
+        }
+
+        let params = [];
+        let q = 'UPDATE Figure SET ';
+        Object.keys(upd).forEach((key) => {
+            if (params.length > 0) {
+                q += ', ';
+            }
+            q += key + ' = ?';
+            params.push(upd[key]);
+        });
+        q += ' WHERE ?? = ?';
+        params.push(db.model.ID);
+        params.push(id);
+        db.pool.query(q, params, (err) => {
+            if (err) {
+                console.log('Failed to update Figure', err);
+                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to update Figure');
+            }
+            get(id, (r) => {
+                if (r.error) {
+                    return rfUtils.error(res, r.http, r.error, r.message);
+                }
+                res.send(r);
+            });
+        });
+    });
+}
+
+
+/**
+ * Create new Figure
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function createFigure(req, res) {
+    let upd = getUpdateData(req.body);
+    if (Object.keys(upd).length === 0) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Figure data provided');
+    }
+    if (typeof req.body.MetapublicationID === 'undefined') {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication provided');
+    }
+    db.pool.query('SELECT * FROM Metapublication WHERE ID = ?', [req.body.MetapublicationID], (err, results) => {
+        if (err) {
+            console.log('Failed to determine Metapublication while new Figure creation', err);
+            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to identify Metapublication');
+        }
+        if (results.length === 0) {
+            return rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_SQLNOTFOUND, 'Metapublication is not found');
+        }
+        if (!auth.checkObjectAccess(req, results[0].UserID)) {
+            return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+        }
+        upd[db.model.ID] = uuid.v1();
+        upd['UserID'] = req.User.ID;
+        upd['MetapublicationID'] = req.body.MetapublicationID;
+
+        let params = [];
+        let q = 'INSERT INTO Figure (';
+        let v = ' VALUES (';
+        Object.keys(upd).forEach((key) => {
+            if (params.length > 0) {
+                q += ', ';
+                v += ', ';
+            }
+            q += key;
+            params.push(upd[key]);
+        });
+        q += v + ')';
+        db.pool.query(q, params, (err) => {
+            if (err) {
+                console.log('Failed to create new Figure', err);
+                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to create new Figure');
+            }
+            get(upd[db.model.ID], (r) => {
+                if (r.error) {
+                    return rfUtils.error(res, r.http, r.error, r.message);
+                }
+                res.send(r);
+            });
         });
     });
 }

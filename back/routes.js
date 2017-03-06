@@ -45,4 +45,9 @@ router.get('/api/my-metapublications', metapublications.myMetapublications);
 
 router.post('/api/metapublication', metapublications.addOrUpdateMetapublication);
 router.put('/api/metapublication', metapublications.addOrUpdateMetapublication);
-router.delete('/api/metapublication', metapublications.deleteMetapublication);
+router.put('/api/metapublication-flag', metapublications.flagMetapublication);
+router.delete('/api/metapublication/:ID', metapublications.deleteMetapublication);
+
+router.post('/api/figure', figures.addOrUpdateFigure);
+router.put('/api/figure', figures.addOrUpdateFigure);
+router.delete('/api/figure/:ID', figures.deleteFigure);

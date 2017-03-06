@@ -29,7 +29,7 @@ function dedupFigures(figures) {
 
 function searchFigures() {
     var figures = [];
-    if (typeof(parseFigures) === 'function') {
+    if (typeof parseFigures === 'function') {
         figures = parseFigures();
     } else {
         for (var i = 0; i < document.images.length; i++) {

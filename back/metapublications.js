@@ -205,10 +205,18 @@ function mostVisited(req, res) {
  * @param {Object} res HTTP response
  */
 function myMetapublications(req, res) {
-    db.pool.query({sql: `
-        SELECT *, 
+    let r = rfUtils.parseQuery(undefined, req.query);
+    if (r.error) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, constants.ERROR_MSG_BADPARAMETERS);
+    }
+    let query = r.data;
+
+    let params = [];
+    let q = `
+        SELECT SQL_CALC_FOUND_ROWS *, 
          (SELECT COUNT(*) FROM Figure WHERE Figure.MetapublicationID = Metapublication.ID) AS FiguresCount
           FROM Metapublication
+          JOIN User AS UserMetapublication ON UserMetapublication.ID = Metapublication.UserID
           LEFT JOIN Visit ON Visit.MetapublicationID = Metapublication.ID
           LEFT JOIN (Figure, User AS UserFigure) 
                  ON (
@@ -222,20 +230,50 @@ function myMetapublications(req, res) {
                       AND
                       UserFigure.ID = Figure.UserID
                    )
-          WHERE Metapublication.UserID = ?
-          ORDER BY Metapublication.Title
-    `, nestTables: true}, [req.User.ID], (err, results) => {
+         WHERE Metapublication.UserID = ?
+    `;
+    params.push(req.User.ID);
+    if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
+        q += `
+            AND Metapublication.ID IN (
+			          SELECT DISTINCT MetapublicationID
+                        FROM FullTextSearch
+			           WHERE MATCH(Value) AGAINST (?)
+                 )
+        `;
+        params.push(query.query);
+    }
+    if (query.sortField) {
+        let valid = false;
+        for (let f of ['Visit.Count', 'FiguresCount', 'Metapublication.Title']) {
+            valid = true;
+            break;
+        }
+        if (!valid) {
+            return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'Wrong sort provided');
+        }
+        q += ' ORDER BY ? ' + query.sortDirection;
+        params.push(query.sortField);
+    } else {
+        q += ' ORDER BY Visit.Count DESC';
+
+    }
+    q += ' LIMIT ' + query.from + ', ' + query.size;
+    q += '; SELECT FOUND_ROWS() AS count;';
+    db.pool.query({sql: q, nestTables: true}, params, (err, results) => {
         if (err) {
             console.log(err);
             return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
         }
         let recs = [];
-        if (results.length > 0) {
-            for (let r of results) {
+        let found = 0;
+        if (results[0].length > 0) {
+            found = results[1][0][''].count;
+            for (let r of results[0]) {
                 let x = {
                     Metapublication: r.Metapublication
                 };
-                x.Metapublication.User = arrangeUserRecord(req.User);
+                x.Metapublication.User = arrangeUserRecord(r.UserMetapublication);
                 x.Metapublication.Visit = arrangeVisitRecord(r.Visit, x.Metapublication.ID);
                 x.Metapublication.Figures = [];
                 if (r.Figure && r.Figure.ID) {
@@ -248,7 +286,11 @@ function myMetapublications(req, res) {
         }
 
         res.send({
-            data: recs
+            data: {
+                query: query,
+                found: found,
+                results: recs
+            }
         });
     });
 }

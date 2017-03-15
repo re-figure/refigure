@@ -1,4 +1,5 @@
-var CONTENT_BLOCK_SELECTOR = 'body';
+var CONTENT_BLOCK_SELECTOR = 'body',
+    FIGURES = [];
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.type){
         case _gConst.MSG_TYPE_ADD_START:
@@ -20,6 +21,7 @@ function onClickImage(event) {
         type: _gConst.MSG_TYPE_ADD_COMPLETED,
         src: event.target.src
     });
+    addToSelected(event.target.src);
     return false;
 }
 
@@ -64,16 +66,20 @@ function searchFigures() {
         // figures = parseFigures();
         parseFigures().then(function (result) {
             figures = result;
-            // console.log(result);
             figures = dedupFigures(figures);
+            FIGURES = figures;
             console.log(figures);
-            if (figures.length > 0) {
+            /*if (figures.length > 0) {
                 sendCheckFiguresRequest(figures);
-            } else {
-                chrome.runtime.sendMessage({type: _gConst.MSG_TYPE_SEARCH_COMPLETED, count: figures.length});
-            }
+            } else {*/
+                chrome.runtime.sendMessage({
+                    type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+                    figures: figures,
+                    count: figures.length
+                });
+            //}
         }, function (error) {
-            console.log(error);
+            console.error(error);
         });
     } else {
         for (var i = 0; i < document.images.length; i++) {
@@ -146,4 +152,28 @@ function prepareContent(node) {
     tmpContent = tmpEl.innerText;
     //replace images back
     return tmpContent.replace(/\|\|img\|\|/g, '<img');
+}
+
+function addToSelected(src) {
+    var img = FIGURES.find(function (el) {
+        return el.URL === src;
+    });
+    if(!img){
+        alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
+    }else{
+        chrome.storage.local.get('rfSelected', function (data) {
+            var selected = data.rfSelected || [];
+            var isDup = selected.find(function (el) {
+                return el.URL === src;
+            });
+            if (isDup) {
+                alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
+            }else{
+                selected.push(img);
+                chrome.storage.local.set({
+                    rfSelected: selected
+                });
+            }
+        });
+    }
 }

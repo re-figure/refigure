@@ -28,7 +28,7 @@ angular.module('ReFigure', [])
         $scope.remove = function (index) {
             $scope.selected.splice(index, 1);
             chrome.storage.local.set({
-                rfSelected: $scope.selected
+                rfSelected: angular.copy($scope.selected)   //clear $hasKey
             });
         };
 
@@ -55,7 +55,7 @@ angular.module('ReFigure', [])
                             $scope.selected.push(selectedImage);
                             $scope.selected = dedupFigures($scope.selected);
                             chrome.storage.local.set({
-                                rfSelected: $scope.selected
+                                rfSelected: angular.copy($scope.selected)   //clear $hasKey
                             });
                         }
                         $scope.$apply();

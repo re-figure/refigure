@@ -29,10 +29,7 @@ function updateBrowserAction(tab) {
 }
 
 function isTabToProceed(tab) {
-    if (tab.url && tab.url.indexOf('http') === 0) {
-        return true;
-    }
-    return false;
+    return tab.url && tab.url.indexOf('http') === 0;
 }
 
 function startSearchFiguresIfNeed(tab) {
@@ -64,6 +61,9 @@ function onSearchFiguresComplete(result, tab) {
         t.status = _gConst.STATUS_COMPLETE;
         t.count = result.count;
         t.figures = result.figures;
+        chrome.storage.local.set({
+            rfFigures: result.figures
+        });
         // to make sure the browserAction is enabled finally
         chrome.browserAction.enable(tab.id);
         update(tab.id);

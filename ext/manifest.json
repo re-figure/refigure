@@ -17,6 +17,14 @@
       "js": ["const.js", "content.js", "plos.js"]
     },
     {
+      "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
+      "js": ["const.js", "content.js", "pmc.js"]
+    },
+    {
+      "matches": ["*://figshare.com/articles/*"],
+      "js": ["const.js", "content.js", "figshare.js"]
+    },
+    {
       "matches": ["*://*/*"],
       "js": ["const.js", "content.js"]
     }

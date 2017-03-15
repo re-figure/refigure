@@ -30,18 +30,24 @@ function dedupFigures(figures) {
 function searchFigures() {
     var figures = [];
     if (typeof parseFigures === 'function') {
-        figures = parseFigures();
+        // figures = parseFigures();
+        parseFigures().then(function (result) {
+            figures = result;
+            // console.log(result);
+            figures = dedupFigures(figures);
+            console.log(figures);
+            if (figures.length > 0) {
+                sendCheckFiguresRequest(figures);
+            } else {
+                chrome.runtime.sendMessage({type: _gConst.MSG_TYPE_SEARCH_COMPLETED, count: figures.length});
+            }
+        }, function (error) {
+            console.log(error);
+        });
     } else {
         for (var i = 0; i < document.images.length; i++) {
             figures.push({URL: document.images[i].src});
         }
-    }
-    figures = dedupFigures(figures);
-    console.log(figures);
-    if (figures.length > 0) {
-        sendCheckFiguresRequest(figures);
-    } else {
-        chrome.runtime.sendMessage({type: _gConst.MSG_TYPE_SEARCH_COMPLETED, count: figures.length});
     }
 }
 

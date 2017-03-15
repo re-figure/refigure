@@ -17,7 +17,7 @@ function parseFigures() {
                     return prepareContent(tag);
                 }).join('');
                 figures.push({
-                    URL: figureImage[0].src.replace('size=inline', 'size=large'),   //collecting only large images
+                    URL: figureImage[0].src,   //.replace('size=inline', 'size=large') collecting only large images
                     Caption: getFigureCaption(figure, figureImage[0].title),
                     Legend: Legend,
                     Authors: Authors,

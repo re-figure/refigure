@@ -1,24 +1,25 @@
+CONTENT_BLOCK_SELECTOR = '.fig-expansion';
+
 function parseFigures() {
     var figures = [],
         pageDOI = getPageDOI(),
         Authors = getAuthors();
 
-    Sizzle('.article-text .figure[data-doi]').forEach(function (figure) {
-        var DOIFigure = figure.dataset.uri ? figure.dataset.uri.replace(/^info:doi\//, '') : figure.dataset.doi,
-            figureImage = Sizzle('.img-box img', figure);
-        if (figureImage.length !== 1) {
-            logError('Figure has ', figureImage.length, 'images');
+    Sizzle(CONTENT_BLOCK_SELECTOR).forEach(function (figure) {
+        var figureLink = Sizzle('.fig-inline-img img', figure);
+        if (figureLink.length !== 1) {
+            logError('Figure has ', figureLink.length, 'images');
         } else {
-            var Legend = Sizzle('>p:not([class])', figure).map(function (tag) {
+            var Legend = Sizzle('.fig-caption > p:not(:last)', figure).map(function (tag) {
                 return prepareContent(tag);
             }).join('');
             figures.push({
-                URL: figureImage[0].src.replace('size=inline', 'size=large'),   //collecting only large images
-                Caption: getFigureCaption(figure, figureImage[0].title),
+                URL: figureLink[0].src,
+                Caption: getFigureCaption(figure, figureLink[0].alt),
                 Legend: Legend,
                 Authors: Authors,
                 DOI: pageDOI,
-                DOIFigure: DOIFigure
+                DOIFigure: getFigureDOI(figure)
             });
         }
     });
@@ -27,8 +28,13 @@ function parseFigures() {
 
     /////////////////////////////
 
+    function getFigureDOI(container) {
+        var selector = Sizzle('.fig-caption > p:last a', container);
+        return selector.length ? selector[0].innerText.replace('http://dx.doi.org/', '') : '';
+    }
+
     function getFigureCaption(container, title) {
-        var selector = Sizzle('.figcaption', container);
+        var selector = Sizzle('.caption-title', container);
         return selector.length ? prepareContent(selector[0]) : title;
     }
 
@@ -52,5 +58,4 @@ function parseFigures() {
         }
         return ret;
     }
-
 }

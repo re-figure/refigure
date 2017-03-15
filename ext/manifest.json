@@ -6,19 +6,42 @@
   "icons": { "32": "/img/icon.png" },
   "background": {
     "persistent": false,
-    "page": "background.html"
+    "page": "/background/background.html"
   },
   "browser_action": {
-    "default_icon": "/img/icon.png"
+    "default_icon": "/img/icon.png",
+    "default_popup": "/popup/popup.html",
+    "default_title": "ReFigure"
   },
   "content_scripts": [
     {
-      "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
-      "js": ["const.js", "content.js", "/js/sizzle/sizzle.min.js", "/js/parsers/plos.js"]
+      "matches": [
+        "*://journals.plos.org/*",
+        "*://collections.plos.org/*"
+      ],
+      "js": [
+        "/js/sizzle/sizzle.min.js",
+        "/js/const.js",
+        "/content/content.js",
+        "/content/parsers/plos.js"
+      ],
+      "css": [
+        "/content/content.css"
+      ]
     },
     {
-      "matches": ["*://elifesciences.org/*"],
-      "js": ["const.js", "content.js", "/js/sizzle/sizzle.min.js", "/js/parsers/elifesciences.js"]
+      "matches": [
+        "*://elifesciences.org/*"
+      ],
+      "js": [
+        "/js/sizzle/sizzle.min.js",
+        "/js/const.js",
+        "/content/content.js",
+        "/content/parsers/elifesciences.js"
+      ],
+      "css": [
+        "/content/content.css"
+      ]
     },
     {
       "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
@@ -30,11 +53,18 @@
     },
     {
       "matches": ["*://*/*"],
-      "js": ["const.js", "content.js"]
+      "js": [
+        "/js/const.js",
+        "/content/content.js"
+      ],
+      "css": [
+        "/content/content.css"
+      ]
     }
   ],
   "permissions": [
     "http://localhost:8181/api/*",
-    "tabs"
+    "tabs",
+    "storage"
   ]
 }

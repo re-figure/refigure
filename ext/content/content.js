@@ -1,10 +1,41 @@
-
+var CONTENT_BLOCK_SELECTOR = 'body';
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.type === _gConst.MSG_TYPE_START_SEARCH) {
-        setTimeout(searchFigures(), 1);
+    switch (request.type){
+        case _gConst.MSG_TYPE_ADD_START:
+            figureAddStart();
+            break;
+        case _gConst.MSG_TYPE_START_SEARCH:
+            setTimeout(searchFigures(), 1);
+            break;
     }
-    return true;
+    //return true;
 });
+
+function onClickImage(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log(event);
+    figureAddStop();
+    chrome.runtime.sendMessage({
+        type: _gConst.MSG_TYPE_ADD_COMPLETED,
+        src: event.target.src
+    });
+    return false;
+}
+
+function figureAddStart() {
+    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
+        el.classList.add('rf-addable-image');
+        el.addEventListener('click', onClickImage);
+    });
+}
+
+function figureAddStop() {
+    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
+        el.classList.remove('rf-addable-image');
+        el.removeEventListener('click', onClickImage);
+    });
+}
 
 function dedupFigures(figures) {
     var deduped = [];

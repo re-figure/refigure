@@ -80,3 +80,33 @@ function sendCheckFiguresRequest(figures) {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({figures: figures}));
 }
+
+function logError() {
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift('ReFigure:');
+    console.error.apply(null, args);
+}
+
+/**
+ * Strips all tags except images,
+ * Transforms relative image src to absolute
+ * @param {HTMLElement} node content of tag to parse
+ * @return {string} transformed html text
+ */
+function prepareContent(node) {
+    var tmpEl = document.createElement('div');
+    //replace image tags to save them after "innerHTML"
+    var tmpContent = node.innerHTML.replace(/<img/g, '||img||');
+    //convert relative image srcs to absolute
+    tmpContent = tmpContent.replace(/src="(?!http)(.*?)"/g, function (match, src) {
+        tmpEl.innerHTML = '<a href="' + src + '">x</a>';
+        return 'src="' + tmpEl.firstChild.href + '"';
+    });
+    //TODO: convert href and save "a" tags
+    //TODO: replace a.ref-tip with span[title="..."] (parse fragment links)
+    //strip all tags
+    tmpEl.innerHTML = tmpContent;
+    tmpContent = tmpEl.innerText;
+    //replace images back
+    return tmpContent.replace(/\|\|img\|\|/g, '<img');
+}

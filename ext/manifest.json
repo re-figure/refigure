@@ -13,8 +13,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://journals.plos.org/*"],
-      "js": ["const.js", "content.js", "plos.js"]
+      "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
+      "js": ["const.js", "content.js", "/js/sizzle/sizzle.min.js", "/js/parsers/plos.js"]
+    },
+    {
+      "matches": ["*://elifesciences.org/*"],
+      "js": ["const.js", "content.js", "/js/sizzle/sizzle.min.js", "/js/parsers/elifesciences.js"]
     },
     {
       "matches": ["*://*/*"],

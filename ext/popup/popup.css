@@ -1,0 +1,14 @@
+body {
+    min-width: 400px;
+    max-width: 600px;
+}
+.figure-add{
+    color: rgb(220, 220, 220);
+    font-size: 20px;
+    border-radius: 4px;
+    border: 2px dashed rgb(220, 220, 220);
+}
+img{
+    max-width: 100%;
+    min-height: 100%;
+}

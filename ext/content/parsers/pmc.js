@@ -1,3 +1,5 @@
+CONTENT_BLOCK_SELECTOR = '.jig-ncbiinpagenav';
+
 function parseFigures() {
     var figures = [];
     //noinspection UnnecessaryLocalVariableJS
@@ -10,9 +12,10 @@ function parseFigures() {
         if (doi && doi.content) {doi = doi.content;}
 
         for (var i = 0; i < document.images.length; i++) {
-            src = document.images[i].getAttribute("src-large");
+            src = document.images[i].src;
+            //src = document.images[i].getAttribute("src-large");
             if (src && src.match(/articles\/.*\/bin/)) {
-                var figure = {URL: window.location.origin + src};
+                var figure = {URL: src};
 
                 prnt = document.images[i].parentNode.parentNode;
                 caption = prnt.childNodes[1].childNodes[0];

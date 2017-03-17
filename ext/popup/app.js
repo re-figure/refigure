@@ -16,7 +16,7 @@ angular.module('ReFigure', [])
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
-
+        $scope.isAuthenticated = false;
 
         $scope.figureAddStart = function () {
             $scope.error = '';
@@ -32,6 +32,26 @@ angular.module('ReFigure', [])
             });
         };
 
+        $scope.login = function () {
+            chrome.storage.local.set({
+                userInfo: {isAuthenticated: true}
+            });
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_USER_LOGGED_IN
+            });
+            $scope.isAuthenticated = true;
+        };
+
+        $scope.logout = function () {
+            chrome.storage.local.set({
+                userInfo: {isAuthenticated: false}
+            });
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_USER_LOGGED_OUT
+            });
+            $scope.isAuthenticated = false;
+        };
+
         activate();
 
         /////////////////////////
@@ -45,6 +65,12 @@ angular.module('ReFigure', [])
             chrome.storage.local.get('rfSelected', function (data) {
                 $scope.$apply(function () {
                     $scope.selected = data.rfSelected ? dedupFigures(data.rfSelected) : $scope.selected;
+                })
+            });
+
+            chrome.storage.local.get('userInfo', function (data) {
+                $scope.$apply(function () {
+                    $scope.isAuthenticated = data.userInfo.isAuthenticated ? data.userInfo.isAuthenticated : false;
                 })
             });
 

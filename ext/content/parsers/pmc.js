@@ -13,8 +13,8 @@ function parseFigures() {
 
         for (var i = 0; i < document.images.length; i++) {
             src = document.images[i].src;
-            //src = document.images[i].getAttribute("src-large");
-            if (src && src.match(/articles\/.*\/bin/)) {
+            var hasLarge = document.images[i].getAttribute("src-large");
+            if (hasLarge && src && src.match(/articles\/.*\/bin/)) {
                 var figure = {URL: src};
 
                 prnt = document.images[i].parentNode.parentNode;

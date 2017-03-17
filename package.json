@@ -19,7 +19,6 @@
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
     "jsonwebtoken": "^7.3.0",
     "mysql": "^2.13.0",
-    "node-captcha": "^0.2.2",
     "node-uuid": "^1.4.7",
     "yargs": "^6.6.0"
   },

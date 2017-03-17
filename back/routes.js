@@ -5,7 +5,7 @@ const router = express.Router();
 
 const auth = require('./auth');
 const users = require('./users');
-const captcha = require('./captcha');
+//const captcha = require('./captcha');
 const figures = require('./figures');
 const metapublications = require('./metapublications');
 
@@ -18,8 +18,8 @@ module.exports = router;
 router.use(express.static(homePage, staticOptions));
 
 // captcha
-router.get('/api/captcha', captcha.generate);
-router.get('/api/captcha-validate/:captcha', captcha.validate);
+//router.get('/api/captcha', captcha.generate);
+//router.get('/api/captcha-validate/:captcha', captcha.validate);
 
 // authentication and users
 router.post('/api/login', auth.login);

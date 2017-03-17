@@ -50,6 +50,45 @@ chrome.runtime.onMessage.addListener(
         if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
             onSearchFiguresComplete(request, sender.tab);
         }
+        if (request.type === _gConst.MSG_TYPE_USER_LOGGED_IN) {
+            /*
+             Create all the context menu items.
+             */
+            var createCollectionItemOptions = {
+                id: "create-collection",
+                title: "Create Collection",
+                contexts: ["image"]},
+
+                addToExistingItemOptions = {
+                    id: "add-to-existing",
+                    title: "Add to existing",
+                    contexts: ["image"]
+                };
+            chrome.contextMenus.create(createCollectionItemOptions, onCreated);
+            chrome.contextMenus.create(addToExistingItemOptions, onCreated);
+
+            /*
+             The click event listener, where we perform the appropriate action given the
+             ID of the menu item that was clicked.
+             */
+            chrome.contextMenus.onClicked.addListener(function(info, tab) {
+                switch (info.menuItemId) {
+                    case "create-collection":
+                        console.log("Create Collection");
+                        console.log("Image URL: ", info.srcUrl);
+                        break;
+                    case "add-to-existing":
+                        console.log("Add to existing");
+                        break;
+                }
+            });
+        }
+        if (request.type === _gConst.MSG_TYPE_USER_LOGGED_OUT) {
+            /*
+             Remove all the context menu items.
+             */
+            chrome.contextMenus.removeAll();
+        }
         return true;
     }
 
@@ -120,3 +159,23 @@ chrome.tabs.onReplaced.addListener(function(addedTabId, removedTabId) {
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     update(tabs[0].id);
 });
+
+/*
+ Called when the context menu item has been created, or when creation failed due to an error.
+ We'll just log success/failure here.
+ */
+function onCreated() {
+    if (chrome.runtime.lastError) {
+        onError(chrome.runtime.lastError);
+    } else {
+        console.log("Item created successfully");
+    }
+}
+
+/*
+ Called when there was an error.
+ We'll just log the error here.
+ */
+function onError(error) {
+    console.error("Error: ", error);
+}

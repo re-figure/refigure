@@ -1,0 +1,191 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    "RefigureEC2SecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Refigure Security Group. Public access to WWW.",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "80",
+            "ToPort": "80",
+            "CidrIp": "0.0.0.0/0"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "443",
+            "ToPort": "443",
+            "CidrIp": "0.0.0.0/0"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+    "RefigureRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/"
+      }
+    },
+    "RefigureInstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "RefigureRole"
+          }
+        ]
+      }
+    },
+    "RefigureAS": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "AvailabilityZones": [
+          "us-east-1a",
+          "us-east-1b"
+        ],
+        "DesiredCapacity": "1",
+        "MaxSize": "1",
+        "MinSize": "1",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "www.refigure.com",
+            "PropagateAtLaunch": true
+          }
+        ],
+        "LaunchConfigurationName": {
+          "Ref": "RefigureLC"
+        }
+      }
+    },
+    "RefigureLC": {
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+      "Properties": {
+        "ImageId": "ami-0b33d91d",
+        "IamInstanceProfile": {
+          "Ref": "RefigureInstanceProfile"
+        },
+        "SecurityGroups": [{
+          "Ref": "RefigureEC2SecurityGroup"
+        }],
+        "InstanceType": "t2.micro",
+        "KeyName": "refigure.com",
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash\n\n",
+                "yum update -y\n\n",
+                "yum install -y gcc gcc-c++ make openssl-devel\n",
+                "yum install -y ruby wget\n",
+                "cd /tmp/\n",
+                "curl -O https://nodejs.org/dist/v6.3.1/node-v6.3.1.tar.gz\n",
+                "tar -xvf node-v6.3.1.tar.gz\n",
+                "rm node-v6.3.1.tar.gz\n",
+                "cd /tmp/node-v6.3.1/\n",
+                "./configure\n",
+                "make\n",
+                "make install\n",
+                "ln -s /usr/local/bin/node /usr/bin/node\n",
+                "ln -s /usr/local/lib/node /usr/lib/node\n",
+                "ln -s /usr/local/bin/npm /usr/bin/npm\n",
+                "ln -s /usr/local/bin/node-waf /usr/bin/node-waf\n\n",
+                "mkdir -p /tmp/aws.codedeploy/\n",
+                "cd /tmp/aws.codedeploy/\n",
+                "wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install\n",
+                "chmod +x ./install\n",
+                "./install auto\n",
+                "service codedeploy-agent start\n",
+                "mkdir -p /var/www/refigure.com/\n",
+                "mkdir -p /var/www/logs/refigure.com/\n"
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "Route53Access": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "route53:*"
+              ],
+              "Resource": [
+                "*"
+              ]
+            }
+          ]
+        },
+        "PolicyName": "Route53Access",
+        "Roles": [
+          {
+            "Ref": "RefigureRole"
+          }
+        ]
+      }
+    },
+    "RefigurePolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cloudformation:DescribeStackResources",
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DescribeStacks",
+                "cloudformation:UpdateStack",
+                "cloudformation:CreateStack",
+                "cloudformation:DescribeStackResource",
+                "logs:*",
+                "ec2:*",
+                "codedeploy:*",
+                "s3:*",
+                "iam:*"
+              ],
+              "Resource": "*"
+            }
+          ]
+        },
+        "PolicyName": "RefigurePolicy",
+        "Roles": [
+          {
+            "Ref": "RefigureRole"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -16,4 +16,15 @@ var _gConst = {
     POPUP_ERROR_FIG_DUPLICATE: 'Figure is already selected'
 };
 
-var _gApiURL = 'http://localhost:8181/api/';
+// var _gApiURL = 'http://localhost:8181/api/';
+var _gApiURL,
+    permissions = chrome.runtime.getManifest().permissions;
+
+for (var i=0; i < permissions.length; i++){
+    if(permissions[i].match(/^http/)) {
+        _gApiURL = permissions[i].replace(/\*$/,"");
+        break;
+    }
+}
+
+_gApiURL = _gApiURL || 'http://localhost:8181/api/';

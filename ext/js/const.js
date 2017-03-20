@@ -32,4 +32,4 @@ var _gApiURL;
 }());
 
 
-_gApiURL = _gApiURL || 'http://localhost:8181/api/';
+_gApiURL = _gApiURL || 'https://localhost:8181/api/';

@@ -1,5 +1,10 @@
 
-var tabsData = {};
+var tabsData = {},
+    FIGURES = [];
+
+chrome.storage.local.get('rfFigures', function (data) {
+    FIGURES = data.rfFigures;
+});
 
 chrome.storage.local.get('userInfo', function (data) {
     data.userInfo.isAuthenticated ? createContextMenus() : removeContextMenus();
@@ -142,10 +147,6 @@ function onCreated() {
     }
 }
 
-/*
- Called when there was an error.
- We'll just log the error here.
- */
 function onError(error) {
     console.error("Error: ", error);
 }
@@ -185,6 +186,35 @@ function contextMenuClickListener(info, tab) {
             break;
         case "add-to-existing":
             console.log("Add to existing");
+            addToSelected(info.srcUrl);
             break;
+    }
+}
+
+function addToSelected(src) {
+    var img = FIGURES.find(function (el) {
+        return el.URL === src;
+    });
+    if(!img){
+        alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
+    }else{
+        chrome.storage.local.get('rfSelected', function (data) {
+            var selected = data.rfSelected || [];
+            var isDup = selected.find(function (el) {
+                return el.URL === src;
+            });
+            if (isDup) {
+                alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
+            }else{
+                selected.push(img);
+                chrome.storage.local.set({
+                    rfSelected: selected
+                });
+                chrome.runtime.sendMessage({
+                    type: _gConst.MSG_TYPE_ADD_COMPLETED,
+                    src: src
+                });
+            }
+        });
     }
 }

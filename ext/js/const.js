@@ -17,14 +17,19 @@ var _gConst = {
 };
 
 // var _gApiURL = 'http://localhost:8181/api/';
-var _gApiURL,
-    permissions = chrome.runtime.getManifest().permissions;
+var _gApiURL;
 
-for (var i=0; i < permissions.length; i++){
-    if(permissions[i].match(/^http/)) {
-        _gApiURL = permissions[i].replace(/\*$/,"");
-        break;
+(function () {
+    var permissions = chrome.runtime.getManifest().permissions,
+        i;
+    for (i=0; i < permissions.length; i++){
+        if(permissions[i].match(/^http/)) {
+            _gApiURL = permissions[i].replace(/\*$/,"");
+            break;
+        }
     }
-}
+
+}());
+
 
 _gApiURL = _gApiURL || 'http://localhost:8181/api/';

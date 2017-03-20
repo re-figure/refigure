@@ -6,6 +6,9 @@ files:
 hooks:
   ApplicationStop:
     - location: aws/codedeploy/app-stop.sh
+  AfterInstall:
+    - location: aws/codedeploy/after-install.sh
+      runas: root
   ApplicationStart:
     - location: aws/codedeploy/app-start.sh
   ValidateService:

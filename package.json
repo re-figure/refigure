@@ -7,19 +7,8 @@
     "gulp": "^3.9.1",
     "gulp-load-tasks": "^0.8.4",
     "gulp-service": "0.0.3",
-    "run-sequence": "^1.2.2"
-  },
-  "dependencies": {
-    "body-parser": "^1.17.0",
-    "cookie-parser": "^1.4.3",
-    "crypto-js": "^3.1.9-1",
-    "emailjs": "^1.0.8",
-    "express": "^4.15.0",
-    "http-status-codes": "^1.1.6",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
-    "jsonwebtoken": "^7.3.0",
-    "mysql": "^2.13.0",
-    "node-uuid": "^1.4.7",
+    "run-sequence": "^1.2.2",
     "yargs": "^6.6.0"
   },
   "locals": {

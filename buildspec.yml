@@ -1,0 +1,23 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - npm install -g gulp
+      - npm install -g bower
+  pre_build:
+    commands:
+      - npm install
+      - bower install --allow-root
+  build:
+    commands:
+      - gulp deploy
+      - cd back && npm install --production && cd ../
+artifacts:
+  files:
+    - aws/codedeploy/**/*
+    - back/**/*
+    - build/**/*
+    - appspec.yml
+    - package.json
+  discard-paths: no

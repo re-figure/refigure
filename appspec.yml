@@ -1,0 +1,13 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/refigure.com
+hooks:
+  ApplicationStop:
+    - location: aws/codedeploy/app-stop.sh
+  ApplicationStart:
+    - location: aws/codedeploy/app-start.sh
+  ValidateService:
+    - location: aws/codedeploy/app-validate.sh
+      timeout: 5

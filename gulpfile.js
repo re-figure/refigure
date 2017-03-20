@@ -16,6 +16,10 @@
         'index'
     ]);
 
+    gulp.task('deploy', [
+        'build'
+    ]);
+
     gulp.task('default', [
         'build',
         'server'

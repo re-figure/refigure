@@ -9,10 +9,10 @@ phases:
     commands:
       - npm install
       - bower install --allow-root
+      - cd back && npm install --production && cd ../
   build:
     commands:
       - gulp deploy
-      - cd back && npm install --production && cd ../
 artifacts:
   files:
     - aws/codedeploy/**/*

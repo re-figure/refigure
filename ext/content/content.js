@@ -69,15 +69,15 @@ function searchFigures() {
             figures = dedupFigures(figures);
             FIGURES = figures;
             console.log(figures);
-            /*if (figures.length > 0) {
+            if (figures.length > 0) {
                 sendCheckFiguresRequest(figures);
-            } else {*/
+            } else {
                 chrome.runtime.sendMessage({
                     type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
                     figures: figures,
                     count: figures.length
                 });
-            //}
+            }
         }, function (error) {
             console.error(error);
         });

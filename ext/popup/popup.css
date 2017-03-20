@@ -12,3 +12,16 @@ img{
     max-width: 100%;
     min-height: 100%;
 }
+
+#logout-form {
+    margin-bottom: 20px;
+}
+
+#logout-identity > label {
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+
+#login-password {
+    margin-top: 10px;
+}

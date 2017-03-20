@@ -1,6 +1,14 @@
 
-var tabsData = {};
+var tabsData = {},
+    FIGURES = [];
 
+chrome.storage.local.get('rfFigures', function (data) {
+    FIGURES = data.rfFigures;
+});
+
+chrome.storage.local.get('userInfo', function (data) {
+    data.userInfo.isAuthenticated ? createContextMenus() : removeContextMenus();
+});
 
 function updateBrowserAction(tab) {
     if (isTabToProceed(tab)) {
@@ -49,6 +57,12 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
             onSearchFiguresComplete(request, sender.tab);
+        }
+        if (request.type === _gConst.MSG_TYPE_USER_LOGGED_IN) {
+            createContextMenus();
+        }
+        if (request.type === _gConst.MSG_TYPE_USER_LOGGED_OUT) {
+            removeContextMenus();
         }
         return true;
     }
@@ -120,3 +134,87 @@ chrome.tabs.onReplaced.addListener(function(addedTabId, removedTabId) {
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     update(tabs[0].id);
 });
+
+/*
+ Called when the context menu item has been created, or when creation failed due to an error.
+ We'll just log success/failure here.
+ */
+function onCreated() {
+    if (chrome.runtime.lastError) {
+        onError(chrome.runtime.lastError);
+    } else {
+        console.log("Item created successfully");
+    }
+}
+
+function onError(error) {
+    console.error("Error: ", error);
+}
+
+function createContextMenus() {
+    /*
+     Create all the context menu items.
+     */
+    var createCollectionItemOptions = {
+            id: "create-collection",
+            title: "Create Collection",
+            contexts: ["image"]},
+
+        addToExistingItemOptions = {
+            id: "add-to-existing",
+            title: "Add to existing",
+            contexts: ["image"]
+        };
+    chrome.contextMenus.create(createCollectionItemOptions, onCreated);
+    chrome.contextMenus.create(addToExistingItemOptions, onCreated);
+
+    chrome.contextMenus.onClicked.addListener(contextMenuClickListener);
+}
+
+function removeContextMenus() {
+    if (chrome.contextMenus.onClicked.hasListener(contextMenuClickListener)) {
+        chrome.contextMenus.onClicked.removeListener(contextMenuClickListener);
+    }
+    chrome.contextMenus.removeAll();
+}
+
+function contextMenuClickListener(info, tab) {
+    switch (info.menuItemId) {
+        case "create-collection":
+            console.log("Create Collection");
+            console.log("Image URL: ", info.srcUrl);
+            break;
+        case "add-to-existing":
+            console.log("Add to existing");
+            addToSelected(info.srcUrl);
+            break;
+    }
+}
+
+function addToSelected(src) {
+    var img = FIGURES.find(function (el) {
+        return el.URL === src;
+    });
+    if(!img){
+        alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
+    }else{
+        chrome.storage.local.get('rfSelected', function (data) {
+            var selected = data.rfSelected || [];
+            var isDup = selected.find(function (el) {
+                return el.URL === src;
+            });
+            if (isDup) {
+                alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
+            }else{
+                selected.push(img);
+                chrome.storage.local.set({
+                    rfSelected: selected
+                });
+                chrome.runtime.sendMessage({
+                    type: _gConst.MSG_TYPE_ADD_COMPLETED,
+                    src: src
+                });
+            }
+        });
+    }
+}

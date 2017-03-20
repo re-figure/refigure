@@ -5,7 +5,7 @@
   "description": "ReFigure extension",
   "icons": { "32": "/img/icon.png" },
   "background": {
-    "persistent": false,
+    "persistent": true,
     "page": "/background/background.html"
   },
   "browser_action": {
@@ -71,6 +71,7 @@
     "http://localhost:8181/api/*",
     "https://refigure.noblecoz.com/api/*",
     "tabs",
-    "storage"
+    "storage",
+    "contextMenus"
   ]
 }

@@ -167,26 +167,24 @@ function createContextMenus() {
     chrome.contextMenus.create(createCollectionItemOptions, onCreated);
     chrome.contextMenus.create(addToExistingItemOptions, onCreated);
 
-    /*
-     The click event listener, where we perform the appropriate action given the
-     ID of the menu item that was clicked.
-     */
-    chrome.contextMenus.onClicked.addListener(function(info, tab) {
-        switch (info.menuItemId) {
-            case "create-collection":
-                console.log("Create Collection");
-                console.log("Image URL: ", info.srcUrl);
-                break;
-            case "add-to-existing":
-                console.log("Add to existing");
-                break;
-        }
-    });
+    chrome.contextMenus.onClicked.addListener(contextMenuClickListener);
 }
 
 function removeContextMenus() {
-    /*
-     Remove all the context menu items.
-     */
+    if (chrome.contextMenus.onClicked.hasListener(contextMenuClickListener)) {
+        chrome.contextMenus.onClicked.removeListener(contextMenuClickListener);
+    }
     chrome.contextMenus.removeAll();
+}
+
+function contextMenuClickListener(info, tab) {
+    switch (info.menuItemId) {
+        case "create-collection":
+            console.log("Create Collection");
+            console.log("Image URL: ", info.srcUrl);
+            break;
+        case "add-to-existing":
+            console.log("Add to existing");
+            break;
+    }
 }

@@ -1,6 +1,9 @@
 
 var tabsData = {};
 
+chrome.storage.local.get('userInfo', function (data) {
+    data.userInfo.isAuthenticated ? createContextMenus() : removeContextMenus();
+});
 
 function updateBrowserAction(tab) {
     if (isTabToProceed(tab)) {
@@ -51,43 +54,10 @@ chrome.runtime.onMessage.addListener(
             onSearchFiguresComplete(request, sender.tab);
         }
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_IN) {
-            /*
-             Create all the context menu items.
-             */
-            var createCollectionItemOptions = {
-                id: "create-collection",
-                title: "Create Collection",
-                contexts: ["image"]},
-
-                addToExistingItemOptions = {
-                    id: "add-to-existing",
-                    title: "Add to existing",
-                    contexts: ["image"]
-                };
-            chrome.contextMenus.create(createCollectionItemOptions, onCreated);
-            chrome.contextMenus.create(addToExistingItemOptions, onCreated);
-
-            /*
-             The click event listener, where we perform the appropriate action given the
-             ID of the menu item that was clicked.
-             */
-            chrome.contextMenus.onClicked.addListener(function(info, tab) {
-                switch (info.menuItemId) {
-                    case "create-collection":
-                        console.log("Create Collection");
-                        console.log("Image URL: ", info.srcUrl);
-                        break;
-                    case "add-to-existing":
-                        console.log("Add to existing");
-                        break;
-                }
-            });
+            createContextMenus();
         }
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_OUT) {
-            /*
-             Remove all the context menu items.
-             */
-            chrome.contextMenus.removeAll();
+            removeContextMenus();
         }
         return true;
     }
@@ -178,4 +148,45 @@ function onCreated() {
  */
 function onError(error) {
     console.error("Error: ", error);
+}
+
+function createContextMenus() {
+    /*
+     Create all the context menu items.
+     */
+    var createCollectionItemOptions = {
+            id: "create-collection",
+            title: "Create Collection",
+            contexts: ["image"]},
+
+        addToExistingItemOptions = {
+            id: "add-to-existing",
+            title: "Add to existing",
+            contexts: ["image"]
+        };
+    chrome.contextMenus.create(createCollectionItemOptions, onCreated);
+    chrome.contextMenus.create(addToExistingItemOptions, onCreated);
+
+    /*
+     The click event listener, where we perform the appropriate action given the
+     ID of the menu item that was clicked.
+     */
+    chrome.contextMenus.onClicked.addListener(function(info, tab) {
+        switch (info.menuItemId) {
+            case "create-collection":
+                console.log("Create Collection");
+                console.log("Image URL: ", info.srcUrl);
+                break;
+            case "add-to-existing":
+                console.log("Add to existing");
+                break;
+        }
+    });
+}
+
+function removeContextMenus() {
+    /*
+     Remove all the context menu items.
+     */
+    chrome.contextMenus.removeAll();
 }

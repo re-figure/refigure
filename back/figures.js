@@ -39,6 +39,40 @@ function normaliseDOIFigure(doi) {
     return doi;
 }
 
+function areFiguresTheSame(figure1, figure2, normalize) {
+    if (!(figure1 && figure2)) {
+        return false;
+    }
+    if (rfUtils.checkStringNotEmpty(figure1.DOIFigure) &&
+        rfUtils.checkStringNotEmpty(figure2.DOIFigure)
+    ) {
+        if (normalize) {
+            if (normaliseDOIFigure(figure1.DOIFigure) === normaliseDOIFigure(figure2.DOIFigure)) {
+                return true;
+            }
+        } else {
+            if (figure1.DOIFigure === figure2.DOIFigure) {
+                return true;
+            }
+        }
+    }
+    if (rfUtils.checkStringNotEmpty(figure1.KeyURL) &&
+        rfUtils.checkStringNotEmpty(figure2.KeyURL)
+    ) {
+        if (figure1.KeyURL === figure2.KeyURL) {
+            return true;
+        }
+    }
+    if (rfUtils.checkStringNotEmpty(figure1.URL) &&
+        rfUtils.checkStringNotEmpty(figure2.URL)
+    ) {
+        if (normaliseURL(figure1.URL) === normaliseURL(figure2.URL)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * Check if the listed figures ({URL:... DOIFigure:...}) are in the database
  * return list of matching figures
@@ -51,13 +85,49 @@ function checkFigures(req, res) {
         return;
     }
 
+    // dedup input figures and normalize its URL/DOI
+    let dedupedFigures = [];
+    for (let figure of req.body.figures) {
+        if (rfUtils.checkStringNotEmpty(figure.DOIFigure)) {
+            figure.DOIFigure = normaliseDOIFigure(figure.DOIFigure);
+        }
+        if (rfUtils.checkStringNotEmpty(figure.URL)) {
+            figure.KeyURL = normaliseURL(figure.URL);
+        }
+        let found = false;
+        for (let exFig of dedupedFigures) {
+            if (areFiguresTheSame(exFig, figure)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            dedupedFigures.push(figure);
+        }
+    }
+
+    let foundFigures = [];
     let result = {
         data: {
             figures: []
         }
     };
 
-    checkFiguresOneByOne(req.body.figures, () => {
+    checkFiguresOneByOne(dedupedFigures, () => {
+        // dedup output
+        foundFigures.forEach((figure) => {
+            let found = false;
+            for (let f of result.data.figures) {
+                if (areFiguresTheSame(f, figure)) {
+                    f.FoundInCollectionsCounter = Math.max(f.FoundInCollectionsCounter, figure.FoundInCollectionsCounter);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                result.data.figures.push(figure);
+            }
+        });
         res
             .status(httpStatus.OK)
             .send(result);
@@ -79,10 +149,10 @@ function checkFigures(req, res) {
     }
 
     function checkOneFigure(fig, cb) {
-        checkDOIFigure(fig, (r) => {
+        checkURL(fig, (r) => {
             if (r.error) {
                 if (r.error === constants.ERROR_SQLNOTFOUND) {
-                    checkURL(fig, (r2) => {
+                    checkDOIFigure(fig, (r2) => {
                         if (r2.error) {
                             if (r.error === constants.ERROR_SQLNOTFOUND) {
                                 return cb({});
@@ -90,8 +160,8 @@ function checkFigures(req, res) {
                                 cb(r);
                             }
                         } else {
-                            if (r2.data && Array.isArray(r2.data) && r2.data.length) {
-                                result.data.figures.push(r.data[0]);
+                            if (r2.data && Array.isArray(r2.data) && r2.data.length > 0) {
+                                foundFigures.push(countCollections(r2.data));
                             }
                             cb({});
                         }
@@ -100,8 +170,8 @@ function checkFigures(req, res) {
                     cb(r);
                 }
             } else {
-                if (r.data && Array.isArray(r.data) && r.data.length) {
-                    result.data.figures.push(r.data[0]);
+                if (r.data && Array.isArray(r.data) && r.data.length > 0) {
+                    foundFigures.push(countCollections(r.data));
                 }
                 cb({});
             }
@@ -145,10 +215,22 @@ function checkFigures(req, res) {
             cb({error: constants.ERROR_SQLNOTFOUND});
         }
     }
+
+    function countCollections(foundFigures) {
+        let counters = {};
+
+        // we assume a Metapublication cannot contain duplicates
+        // but for sure we will dedup and count unique collections where the figure occurs
+        foundFigures.forEach((figure) => {
+            counters[figure.MetapublicationID] = true;
+        });
+        foundFigures[0].FoundInCollectionsCounter = Object.keys(counters).length;
+        return foundFigures[0];
+    }
 }
 
 /**
- * Retrieve a Figure with related information from the DB by Fugure ID
+ * Retrieve a Figure with related information from the DB by Figure ID
  * @param {string} id Figure ID
  * @param {CommonCallback} cb
  */

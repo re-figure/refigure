@@ -46,16 +46,16 @@
         </div>
     </div>
     <div ng-if="!isAuthenticated" class="container-fluid">
-        <form id="login-form" name="login_form" ng-submit="login()">
+        <form id="login-form" name="login_form" ng-submit="login(loginData)">
             <div class="form-group">
                 <div id="login-email">
                     <label>Login</label>
-                    <input class="form-control" type="email" name="login_email"/>
+                    <input class="form-control" type="email" name="login_email" ng-model="loginData.email"/>
                 </div>
 
                 <div id="login-password">
                     <label>Password</label>
-                    <input class="form-control" type="password" name="login_password"/>
+                    <input class="form-control" type="password" name="login_password" ng-model="loginData.password"/>
                 </div>
             </div>
 

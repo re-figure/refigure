@@ -15,7 +15,7 @@
     "buildDir": "build",
     "tmpDir": "tmp",
     "mysql": {
-      "host": "refugure.czigngpclatr.us-east-1.rds.amazonaws.com",
+      "host": "192.168.0.116",
       "user": "USER",
       "password": "PASSWORD",
       "database": "refigure",

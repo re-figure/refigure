@@ -16,6 +16,7 @@ angular.module('ReFigure', [])
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
+        $scope.showFoundFigures = false;
 
 
         $scope.figureAddStart = function () {

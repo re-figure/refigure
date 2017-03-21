@@ -1,6 +1,10 @@
+
 body {
-    min-width: 400px;
-    max-width: 600px;
+  /*  min-width: 400px;
+    max-width: 600px; */
+    width: 400px;
+
+    transition: width .3s;
 }
 .figure-add{
     color: rgb(220, 220, 220);
@@ -12,3 +16,39 @@ img{
     max-width: 100%;
     min-height: 100%;
 }
+.vcenter {
+    display: inline-block;
+    float: none;
+    vertical-align: middle;
+}
+.clickable{
+    cursor: pointer;
+}
+.navbar {
+    color: whitesmoke;
+    background-color: #101010;
+
+}
+/* FOUND-FIGURES*/
+.figures-left {
+    box-sizing: border-box;
+    position: absolute;
+    width: 278px;
+    left: 0;
+    margin: 10px;
+    border: 1px solid #101010;
+    border-radius: 2px;
+    padding: 20px;
+}
+.wide {
+    width: 700px;
+}
+.fix {
+     width: 400px;
+ }
+.fixToRight {
+    position: relative;
+    left: 300px;
+}
+
+/* FOUND-FIGURES*/

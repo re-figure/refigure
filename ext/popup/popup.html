@@ -11,39 +11,44 @@
     <link rel="stylesheet" href="/popup/popup.css">
     <script src="/js/angular/angular.min.js"></script>
 </head>
-<body ng-controller="MainCtrl">
-    <nav class="navbar navbar-default">
+<body ng-controller="MainCtrl" ng-class="{wide: showFoundFigures}">
+    <found-figures class="figures-left" ng-show="showFoundFigures"></found-figures>
+    <div class="fix" ng-class="{fixToRight: showFoundFigures}">
+        <div class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
+                    <b class="navbar-text vcenter"><span class="glyphicon glyphicon-menu-left"></span><span
+                            ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</b>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid">
-            <div class="navbar-header text-center">
-                <b class="navbar-text">< <span ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</b>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <p><button class="btn btn-lg btn-default btn-block">Create Collection</button></p>
-        <p><button class="btn btn-lg btn-primary btn-block">Edit Collection</button></p>
-        <button ng-click="figureAddStart()" class="btn btn-lg btn-block figure-add" ng-class="error ? 'btn-info' : 'btn-default'" ng-bind="error || '+'"></button>
-        <hr>
-        <div class="container-fluid" ng-repeat="fig in selected">
-            <div class="row">
-                <div class="col-xs-4">
-                    <img class="thumbnail" ng-src="{{fig.URL}}">
-                </div>
-                <div class="col-xs-8">
-                    <button type="button" class="close pull-right" aria-label="Close" ng-click="remove($index)">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div ng-bind="fig.Caption"></div>
-                </div>
-            </div>
+            <p>
+                <button class="btn btn-lg btn-default btn-block">Create Collection</button>
+            </p>
+            <p>
+                <button class="btn btn-lg btn-primary btn-block">Edit Collection</button>
+            </p>
+            <button ng-click="figureAddStart()" class="btn btn-lg btn-block figure-add"
+                    ng-class="error ? 'btn-info' : 'btn-default'" ng-bind="error || '+'"></button>
             <hr>
+            <div class="container-fluid" ng-repeat="fig in selected">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <img class="thumbnail" ng-src="{{fig.URL}}">
+                    </div>
+                    <div class="col-xs-8">
+                        <button type="button" class="close pull-right" aria-label="Close" ng-click="remove($index)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div ng-bind="fig.Caption"></div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <!--<img src="/img/rf_proto.png" alt="sdf">-->
         </div>
-        <!--<img src="/img/rf_proto.png" alt="sdf">-->
     </div>
-    <found-figures></found-figures>
-
-    <script type="text/ng-template" id="/popup/components/foundFigures/foundFigures.html">
-    </script>
     <script src="/js/const.js"></script>
     <script src="/popup/app.js"></script>
     <script src="/popup/components/foundFigures/foundFigures.component.js"></script>

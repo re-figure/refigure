@@ -7,13 +7,23 @@
             controllerAs: 'vm'
         });
 
-    function CtrlFunction() {
+    CtrlFunction.$inject=["$scope"];
+    function CtrlFunction($scope) {
         var vm = this;
-        vm.qqq = '';
-
+        vm.figures = [];
         activate();
 
         //////////////////////////
+
+        vm.$onInit = function () {
+            chrome.storage.local.get('rfFigures', function (data) {
+                $scope.$apply(function() {
+                    vm.figures = data.rfFigures;
+                });
+                console.log(vm.figures);
+            });
+          //  console.log(vm.figures);
+        };
 
         function activate() {
             vm.qqq = 'dfgdfg';

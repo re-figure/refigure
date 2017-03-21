@@ -10,11 +10,15 @@
     <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/popup/popup.css">
 </head>
-<body ng-controller="MainCtrl">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header text-center">
-                <b class="navbar-text">< <span ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</b>
+<body ng-controller="MainCtrl" ng-class="{wide: showFoundFigures}">
+    <found-figures class="figures-left" ng-show="showFoundFigures"></found-figures>
+    <div class="fix" ng-class="{fixToRight: showFoundFigures}">
+        <div class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
+                    <b class="navbar-text vcenter"><span class="glyphicon glyphicon-menu-left"></span><span
+                            ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</b>
+                </div>
             </div>
         </div>
     </nav>
@@ -46,7 +50,6 @@
     </div>
     <found-figures></found-figures>
 
-    <script src="/js/const.js"></script>
     <div ng-if="!isAuthenticated" class="container-fluid">
         <form class="login-form" name="login_form" ng-submit="login()">
             <div class="form-group">

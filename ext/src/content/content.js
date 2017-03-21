@@ -66,15 +66,14 @@ function parseFigures() {
 function searchFigures() {
     parseFigures().then(function (result) {
         FIGURES = dedupFigures(result);
-        console.log(FIGURES);
+        console.log('FIGURES found', FIGURES);
         if (FIGURES.length > 0) {
-            sendCheckFiguresRequest(FIGURES);
-        } else {
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
                 figures: FIGURES,
                 count: FIGURES.length
             });
+            sendCheckFiguresRequest(FIGURES);
         }
     }, function (error) {
         console.error(error);
@@ -95,7 +94,6 @@ function sendCheckFiguresRequest(figures) {
                     if (json.data && json.data.figures && Array.isArray(json.data.figures)) {
                         count = json.data.figures.length;
                         foundFigures = json.data.figures;
-                        console.log(json);
                     } else {
                         console.log('Got broken response', json);
                         count = -1;
@@ -106,7 +104,7 @@ function sendCheckFiguresRequest(figures) {
                 count = -1;
             }
             chrome.runtime.sendMessage({
-                type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+                type: _gConst.MSG_TYPE_CHECK_COMPLETED,
                 count: count,
                 figures: foundFigures
             });

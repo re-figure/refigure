@@ -11,6 +11,7 @@ var _gConst = {
 
     MSG_TYPE_USER_LOGGED_IN: 4,
     MSG_TYPE_USER_LOGGED_OUT: 5,
+    MSG_TYPE_CHECK_COMPLETED: 6,
 
     POPUP_ERROR_FIG_NOT_PARSED: 'Figure was not parsed',
     POPUP_ERROR_FIG_DUPLICATE: 'Figure is already selected'

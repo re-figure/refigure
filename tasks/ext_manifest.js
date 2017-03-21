@@ -8,7 +8,7 @@ const args = require('yargs').argv;
 module.exports = function () {
     let phs = [];
 
-    if(args.env === 'dev'){
+    if(args.env === 'local'){
         extOpt.replace.REMOTE_API_URL = 'https://localhost:8181/api/'
     }
 

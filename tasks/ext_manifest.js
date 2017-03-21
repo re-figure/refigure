@@ -1,17 +1,10 @@
 'use strict';
 
 const gulp = require('gulp');
-const config = require('js.shared').config;
+const extOpt = require('js.shared').config.get('extension');
 const replace = require('gulp-batch-replace');
 
-const extOpt = config.get('extension');
-
 module.exports = function () {
-
-    gulp
-        .src(extOpt.src + '/img/**/*')
-        .pipe(gulp.dest(extOpt.dist + '/img'));
-
     let phs = [];
 
     Object.keys(extOpt.replace).forEach(function (ph) {
@@ -19,7 +12,7 @@ module.exports = function () {
     });
 
     return gulp
-        .src(extOpt.src + '/manifest.json')
+        .src(extOpt.manifest.json)
         .pipe(replace(phs))
         .pipe(gulp.dest(extOpt.dist));
 };

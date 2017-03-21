@@ -19,8 +19,9 @@
             chrome.storage.local.get('rfFigures', function (data) {
                 $scope.$apply(function() {
                     vm.figures = data.rfFigures;
+                    console.log(vm.figures);
                 });
-                console.log(vm.figures);
+
             });
           //  console.log(vm.figures);
         };

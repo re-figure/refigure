@@ -39,6 +39,27 @@ img{
     border: 1px solid #101010;
     border-radius: 2px;
     padding: 20px;
+    overflow: auto;
+}
+.figures-left .element {
+    margin-bottom: 20px;
+    background-color: lightslategray;
+}
+.figures-left img {
+    width: 60px;
+    float: left;
+    border: 1px solid #101010;
+    border-radius: 3px;
+    margin: 5px;
+}
+.figures-left .info{
+    margin-top: 5px;
+}
+.figures-left .info h1{
+    font-size: 8px;
+}
+.figures-left .info p{
+    font-size: 8px;
 }
 .wide {
     width: 700px;

@@ -28,10 +28,18 @@
 
     gulp.task('extension', function (cb) {
         runSequence(
-            ['ext_manifest', 'ext_background', 'ext_content', 'ext_popup'],
+            ['ext_manifest', 'ext_background', 'ext_content', 'ext_popup', 'ext_static'],
             'ext_zip',
             cb
         );
     });
+
+    /*gulp.task('ext_default', function (cb) {
+        runSequence(
+            'extension',
+            'ext_watch',
+            cb
+        );
+    });*/
 
 }());

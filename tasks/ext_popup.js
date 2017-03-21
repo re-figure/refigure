@@ -27,13 +27,10 @@ module.exports = function () {
         .pipe(uglify())
         .pipe(gulp.dest(extOpt.dist + '/popup'));
 
-    gulp.src(extOpt.src + '/popup/popup.html')
+    gulp.src(extOpt.popup.index)
         .pipe(gulp.dest(extOpt.dist + '/popup'));
 
-    gulp.src(extOpt.src + '/css/**/*')
-        .pipe(gulp.dest(extOpt.dist + '/css'));
-
-    gulp.src(extOpt.src + '/popup/popup.css')
+    gulp.src(extOpt.popup.css)
         .pipe(gulp.dest(extOpt.dist + '/popup'));
 
     let phs = [];
@@ -43,12 +40,7 @@ module.exports = function () {
     });
 
     return gulp
-        .src([
-            extOpt.src + '/js/angular/angular.min.js',
-            extOpt.src + '/js/const.js',
-            extOpt.src + '/popup/*.module.js',
-            extOpt.src + '/popup/**/*.js'
-        ])
+        .src(extOpt.popup.js)
         .pipe(concat('app.js'))
         .pipe(replace(phs))
         .pipe(gulp.dest(extOpt.dist + '/popup'));

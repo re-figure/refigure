@@ -25,18 +25,49 @@
       },
       "src": "./ext/src",
       "dist": "./ext/dist",
+      "content": {
+        "css": [
+          "./ext/src/content/content.css"
+        ],
+        "mainScripts":[
+          "./ext/src/js/sizzle/sizzle.min.js",
+          "./ext/src/js/const.js",
+          "./ext/src/content/content.js"
+        ],
+        "parsers": [
+          "./ext/src/content/parsers/*.js"
+        ]
+      },
       "background": {
         "dir": "/background",
+        "html": [
+          "./ext/src/background/background.html"
+        ],
         "js": [
           "./ext/src/js/const.js",
           "./ext/src/background/background.js"
         ]
       },
+      "manifest":{
+        "json": [
+          "./ext/src/manifest.json"
+        ]
+      },
       "popup": {
         "js": [
-          "/js/angular/angular.min.js",
-          "/popup/*.module.js",
-          "/popup/*.js"
+          "./ext/src/js/angular/angular.min.js",
+          "./ext/src/js/const.js",
+          "./ext/src/popup/*.module.js",
+          "./ext/src/popup/**/*.js"
+        ],
+        "html": [
+          "./ext/src/popup/**/!(*popup).html"
+        ],
+        "css":[
+          "./ext/src/popup/popup.css"
+        ],
+        "index": [
+          "./ext/src/popup/popup.html"
         ]
       }
     },

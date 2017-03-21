@@ -8,13 +8,14 @@ chrome.tabs.query({
 });
 
 angular.module('ReFigure', [])
-    .controller('MainCtrl', ['$scope', function ($scope) {
+    .controller('MainCtrl', ['$scope', 'Authn', function ($scope, Authn) {
 
         var FIGURES = [];
 
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
+        $scope.loginData = {email: 'blabla@test.org', password: 'Pa$$word'};
         $scope.isAuthenticated = false;
 
         $scope.figureAddStart = function () {
@@ -31,7 +32,17 @@ angular.module('ReFigure', [])
             });
         };
 
-        $scope.login = function () {
+        $scope.login = function (loginData) {
+            Authn.login(loginData).then(
+                function(response) {
+                    //success
+                    console.log(response.data.data);
+                },
+                function (error) {
+                    //error
+                    console.log(error);
+                }
+            );
             chrome.storage.local.set({
                 userInfo: {isAuthenticated: true}
             });
@@ -139,4 +150,11 @@ angular.module('ReFigure', [])
             return deduped;
         }
 
+    }])
+    .service('Authn', ['$http', function ($http) {
+        var authenticate = this;
+
+        authenticate.login = function (loginData) {
+            return $http.post(_gApiURL + "login", { Email: loginData.email, Password: loginData.password });
+        };
     }]);

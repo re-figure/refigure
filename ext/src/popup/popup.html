@@ -45,15 +45,15 @@
         </div>
     </div>
     <div ng-if="!isAuthenticated" class="container-fluid">
-        <form class="login-form" name="login_form" ng-submit="login()">
+        <form class="login-form" name="login_form" ng-submit="login(loginData)">
             <div class="form-group">
                 <div>
                     <label>Login</label>
-                    <input class="form-control" type="email" name="login_email"/>
+                    <input class="form-control" type="email" name="login_email" ng-model="loginData.email"/>
                 </div>
                 <div class="login-password">
                     <label>Password</label>
-                    <input class="form-control" type="password" name="login_password"/>
+                    <input class="form-control" type="password" name="login_password" ng-model="loginData.password"/>
                 </div>
             </div>
 

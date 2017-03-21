@@ -1,35 +1,31 @@
 CONTENT_BLOCK_SELECTOR = '.article-text';
 
 function parseFigures() {
-    //noinspection UnnecessaryLocalVariableJS
-    var dfd = new Promise(function (resolve) {
-        var figures = [],
-            pageDOI = getPageDOI(),
-            Authors = getAuthors();
+    var figures = [],
+        pageDOI = getPageDOI(),
+        Authors = getAuthors();
 
-        Sizzle(CONTENT_BLOCK_SELECTOR + ' .figure[data-doi]').forEach(function (figure) {
-            var DOIFigure = figure.dataset.uri ? figure.dataset.uri.replace(/^info:doi\//, '') : figure.dataset.doi,
-                figureImage = Sizzle('.img-box img', figure);
-            if (figureImage.length !== 1) {
-                logError('Figure has ', figureImage.length, 'images');
-            } else {
-                var Legend = Sizzle('>p:not([class])', figure).map(function (tag) {
-                    return prepareContent(tag);
-                }).join('');
-                figures.push({
-                    URL: figureImage[0].src,   //.replace('size=inline', 'size=large') collecting only large images
-                    Caption: getFigureCaption(figure, figureImage[0].title),
-                    Legend: Legend,
-                    Authors: Authors,
-                    DOI: pageDOI,
-                    DOIFigure: DOIFigure
-                });
-            }
-        });
-        resolve(figures);
+    Sizzle(CONTENT_BLOCK_SELECTOR + ' .figure[data-doi]').forEach(function (figure) {
+        var DOIFigure = figure.dataset.uri ? figure.dataset.uri.replace(/^info:doi\//, '') : figure.dataset.doi,
+            figureImage = Sizzle('.img-box img', figure);
+        if (figureImage.length !== 1) {
+            logError('Figure has ', figureImage.length, 'images');
+        } else {
+            var Legend = Sizzle('>p:not([class])', figure).map(function (tag) {
+                return prepareContent(tag);
+            }).join('');
+            figures.push({
+                URL: figureImage[0].src,   //.replace('size=inline', 'size=large') collecting only large images
+                Caption: getFigureCaption(figure, figureImage[0].title),
+                Legend: Legend,
+                Authors: Authors,
+                DOI: pageDOI,
+                DOIFigure: DOIFigure
+            });
+        }
     });
 
-    return dfd;
+    return Promise.resolve(figures);
 
     /////////////////////////////
 

@@ -1,32 +1,29 @@
 CONTENT_BLOCK_SELECTOR = '.fig-expansion';
 
 function parseFigures() {
-    var dfd = new Promise(function (resolve) {
-        var pageDOI = getPageDOI(),
-            Authors = getAuthors(),
-            figures = [];
-        Sizzle(CONTENT_BLOCK_SELECTOR).forEach(function (figure) {
-            var figureLink = Sizzle('.fig-inline-img img', figure);
-            if (figureLink.length !== 1) {
-                logError('Figure has ', figureLink.length, 'images');
-            } else {
-                var Legend = Sizzle('.fig-caption > p:not(:last)', figure).map(function (tag) {
-                    return prepareContent(tag);
-                }).join('');
-                figures.push({
-                    URL: figureLink[0].src,
-                    Caption: getFigureCaption(figure, figureLink[0].alt),
-                    Legend: Legend,
-                    Authors: Authors,
-                    DOI: pageDOI,
-                    DOIFigure: getFigureDOI(figure)
-                });
-            }
-        });
-        resolve(figures);
+    var pageDOI = getPageDOI(),
+        Authors = getAuthors(),
+        figures = [];
+    Sizzle(CONTENT_BLOCK_SELECTOR).forEach(function (figure) {
+        var figureLink = Sizzle('.fig-inline-img img', figure);
+        if (figureLink.length !== 1) {
+            logError('Figure has ', figureLink.length, 'images');
+        } else {
+            var Legend = Sizzle('.fig-caption > p:not(:last)', figure).map(function (tag) {
+                return prepareContent(tag);
+            }).join('');
+            figures.push({
+                URL: figureLink[0].src,
+                Caption: getFigureCaption(figure, figureLink[0].alt),
+                Legend: Legend,
+                Authors: Authors,
+                DOI: pageDOI,
+                DOIFigure: getFigureDOI(figure)
+            });
+        }
     });
 
-    return dfd;
+    return Promise.resolve(figures);
 
     /////////////////////////////
 

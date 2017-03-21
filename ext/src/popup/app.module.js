@@ -57,8 +57,10 @@ angular.module('ReFigure', [])
 
         function activate() {
             chrome.storage.local.get('rfFigures', function (data) {
-                FIGURES = data.rfFigures;
-                $scope.figCount = FIGURES.length;
+                $scope.$apply(function () {
+                    FIGURES = data.rfFigures || [];
+                    $scope.figCount = FIGURES.length;
+                });
             });
 
             chrome.storage.local.get('rfSelected', function (data) {
@@ -89,9 +91,8 @@ angular.module('ReFigure', [])
                         FIGURES = request.figures;
                         $scope.$apply(function () {
                             $scope.figCount = FIGURES.length;
-                        })
+                        });
                     }
-
                     return true;
                 }
             );

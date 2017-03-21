@@ -8,6 +8,9 @@ const concat = require('gulp-concat');
 const extOpt = config.get('extension');
 
 module.exports = function () {
+    gulp.src(extOpt.src + extOpt.background.dir + '/background.html')
+        .pipe(gulp.dest(extOpt.dist + extOpt.background.dir));
+
     let phs = [];
 
     Object.keys(extOpt.replace).forEach(function (ph) {

@@ -3,7 +3,7 @@ var tabsData = {},
     FIGURES = [];
 
 chrome.storage.local.get('rfFigures', function (data) {
-    FIGURES = data.rfFigures;
+    FIGURES = data.rfFigures || [];
 });
 
 chrome.storage.local.get('userInfo', function (data) {
@@ -78,6 +78,7 @@ function onSearchFiguresComplete(result, tab) {
         chrome.storage.local.set({
             rfFigures: result.figures
         });
+        FIGURES = result.figures;
         // to make sure the browserAction is enabled finally
         chrome.browserAction.enable(tab.id);
         update(tab.id);

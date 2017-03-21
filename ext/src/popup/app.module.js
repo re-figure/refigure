@@ -1,6 +1,5 @@
 //debug page chrome-extension://eomljbidagegcimpgnpmmejnjbcfpdgo/popup/popup.html
-var CURRENT_TAB = null,
-    FIGURES = [];
+var CURRENT_TAB = null;
 chrome.tabs.query({
     active: true,
     currentWindow: true
@@ -9,9 +8,9 @@ chrome.tabs.query({
 });
 
 angular.module('ReFigure', [])
-    .config([function () {
-    }])
     .controller('MainCtrl', ['$scope', function ($scope) {
+
+        var FIGURES = [];
 
         $scope.selected = [];
         $scope.error = '';
@@ -58,8 +57,10 @@ angular.module('ReFigure', [])
 
         function activate() {
             chrome.storage.local.get('rfFigures', function (data) {
-                FIGURES = data.rfFigures;
-                $scope.figCount = FIGURES.length;
+                $scope.$apply(function () {
+                    FIGURES = data.rfFigures || [];
+                    $scope.figCount = FIGURES.length;
+                });
             });
 
             chrome.storage.local.get('rfSelected', function (data) {
@@ -90,9 +91,8 @@ angular.module('ReFigure', [])
                         FIGURES = request.figures;
                         $scope.$apply(function () {
                             $scope.figCount = FIGURES.length;
-                        })
+                        });
                     }
-
                     return true;
                 }
             );

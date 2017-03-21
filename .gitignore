@@ -12,3 +12,4 @@ front/app/**/*.map
 upload/
 npm-debug.log
 *.bak
+ext/dist/

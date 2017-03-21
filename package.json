@@ -5,13 +5,72 @@
   "author": "Andrey Pavlov <andrew.m.pavlov@gmail.com>",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-batch-replace": "0.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^3.0.0",
     "gulp-load-tasks": "^0.8.4",
+    "gulp-ng-html2js": "^0.2.2",
+    "gulp-rename": "^1.2.2",
     "gulp-service": "0.0.3",
+    "gulp-uglify": "^2.1.2",
+    "gulp-zip": "^4.0.0",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
     "run-sequence": "^1.2.2",
     "yargs": "^6.6.0"
   },
   "locals": {
+    "extension": {
+      "replace": {
+        "REMOTE_API_URL": "https://refigure.noblecoz.com/api/"
+      },
+      "src": "./ext/src",
+      "dist": "./ext/dist",
+      "content": {
+        "css": [
+          "./ext/src/content/content.css"
+        ],
+        "mainScripts":[
+          "./ext/src/js/sizzle/sizzle.min.js",
+          "./ext/src/js/const.js",
+          "./ext/src/content/content.js"
+        ],
+        "parsers": [
+          "./ext/src/content/parsers/*.js"
+        ]
+      },
+      "background": {
+        "dir": "/background",
+        "html": [
+          "./ext/src/background/background.html"
+        ],
+        "js": [
+          "./ext/src/js/const.js",
+          "./ext/src/background/background.js"
+        ]
+      },
+      "manifest":{
+        "json": [
+          "./ext/src/manifest.json"
+        ]
+      },
+      "popup": {
+        "js": [
+          "./ext/src/js/angular/angular.min.js",
+          "./ext/src/js/const.js",
+          "./ext/src/popup/*.module.js",
+          "./ext/src/popup/**/*.js"
+        ],
+        "html": [
+          "./ext/src/popup/**/!(*popup).html"
+        ],
+        "css":[
+          "./ext/src/popup/popup.css"
+        ],
+        "index": [
+          "./ext/src/popup/popup.html"
+        ]
+      }
+    },
     "buildDir": "build",
     "tmpDir": "tmp",
     "mysql": {

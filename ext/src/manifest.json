@@ -1,0 +1,49 @@
+{
+  "manifest_version": 2,
+  "name": "ReFigure",
+  "version": "0.0.1",
+  "description": "ReFigure extension",
+  "icons": { "32": "/img/icon.png" },
+  "background": {
+    "persistent": true,
+    "page": "/background/background.html"
+  },
+  "browser_action": {
+    "default_icon": "/img/icon.png",
+    "default_popup": "/popup/popup.html",
+    "default_title": "ReFigure"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
+      "js": ["/content/content.js", "/content/parsers/plos.js"],
+      "css": ["/content/content.css"]
+    },
+    {
+      "matches": ["*://elifesciences.org/*"],
+      "js": ["/content/content.js", "/content/parsers/elifesciences.js"],
+      "css": ["/content/content.css"]
+    },
+    {
+      "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
+      "js": ["/content/content.js", "/content/parsers/pmc.js"],
+      "css": ["/content/content.css"]
+    },
+    {
+      "matches": ["*://figshare.com/articles/*"],
+      "js": ["/content/content.js", "/content/parsers/figshare.js"],
+      "css": ["/content/content.css"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["/content/content.js"],
+      "css": ["/content/content.css"]
+    }
+  ],
+  "permissions": [
+    "REMOTE_API_URL*",
+    "tabs",
+    "storage",
+    "contextMenus"
+  ]
+}

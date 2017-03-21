@@ -9,7 +9,6 @@
     <title>Getting Started Extension's Popup</title>
     <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/popup/popup.css">
-    <script src="/js/angular/angular.min.js"></script>
 </head>
 <body ng-controller="MainCtrl">
     <nav class="navbar navbar-default">
@@ -20,8 +19,8 @@
         </div>
     </nav>
     <div ng-if="isAuthenticated" class="container-fluid">
-        <form id="logout-form" ng-submit="logout()">
-            <div id="logout-identity">
+        <form class="logout-form" ng-submit="logout()">
+            <div class="logout-identity">
                 <label>Username</label>
                 <button type="submit" name="logout_submit" class="btn btn-default pull-right">Logout</button>
             </div>
@@ -46,27 +45,25 @@
         </div>
     </div>
     <div ng-if="!isAuthenticated" class="container-fluid">
-        <form id="login-form" name="login_form" ng-submit="login()">
+        <form class="login-form" name="login_form" ng-submit="login()">
             <div class="form-group">
-                <div id="login-email">
+                <div>
                     <label>Login</label>
                     <input class="form-control" type="email" name="login_email"/>
                 </div>
-
-                <div id="login-password">
+                <div class="login-password">
                     <label>Password</label>
                     <input class="form-control" type="password" name="login_password"/>
                 </div>
             </div>
 
-            <div id="login-submit" class="text-right">
+            <div class="text-right">
                 <button class="btn btn-default" name="login_submit" type="submit" >Login</button>
             </div>
             <hr>
         </form>
     </div>
-    <script src="/js/const.js"></script>
     <script src="/popup/app.js"></script>
-
+    <script src="/popup/templates.min.js"></script>
 </body>
 </html>

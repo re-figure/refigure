@@ -1,7 +1,7 @@
 var CONTENT_BLOCK_SELECTOR = 'body',
     FIGURES = [];
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    switch (request.type){
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    switch (request.type) {
         case _gConst.MSG_TYPE_ADD_START:
             figureAddStart();
             break;
@@ -9,18 +9,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             setTimeout(searchFigures(), 1);
             break;
     }
-    //return true;
 });
 
 function onClickImage(event) {
     event.stopPropagation();
     event.preventDefault();
-    console.log(event);
     figureAddStop();
-    chrome.runtime.sendMessage({
-        type: _gConst.MSG_TYPE_ADD_COMPLETED,
-        src: event.target.src
-    });
     addToSelected(event.target.src);
     return false;
 }
@@ -60,32 +54,30 @@ function dedupFigures(figures) {
     return deduped;
 }
 
-function searchFigures() {
+
+function parseFigures() {
     var figures = [];
-    if (typeof parseFigures === 'function') {
-        // figures = parseFigures();
-        parseFigures().then(function (result) {
-            figures = result;
-            figures = dedupFigures(figures);
-            FIGURES = figures;
-            console.log(figures);
-            /*if (figures.length > 0) {
-                sendCheckFiguresRequest(figures);
-            } else {*/
-                chrome.runtime.sendMessage({
-                    type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
-                    figures: figures,
-                    count: figures.length
-                });
-            //}
-        }, function (error) {
-            console.error(error);
-        });
-    } else {
-        for (var i = 0; i < document.images.length; i++) {
-            figures.push({URL: document.images[i].src});
-        }
+    for (var i = 0; i < document.images.length; i++) {
+        figures.push({URL: document.images[i].src});
     }
+    return Promise.resolve(figures);
+}
+
+function searchFigures() {
+    parseFigures().then(function (result) {
+        FIGURES = dedupFigures(result);
+        console.log('FIGURES found', FIGURES);
+        if (FIGURES.length > 0) {
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+                figures: FIGURES,
+                count: FIGURES.length
+            });
+            sendCheckFiguresRequest(FIGURES);
+        }
+    }, function (error) {
+        console.error(error);
+    });
 }
 
 function sendCheckFiguresRequest(figures) {
@@ -102,7 +94,6 @@ function sendCheckFiguresRequest(figures) {
                     if (json.data && json.data.figures && Array.isArray(json.data.figures)) {
                         count = json.data.figures.length;
                         foundFigures = json.data.figures;
-                        console.log(json);
                     } else {
                         console.log('Got broken response', json);
                         count = -1;
@@ -113,7 +104,7 @@ function sendCheckFiguresRequest(figures) {
                 count = -1;
             }
             chrome.runtime.sendMessage({
-                type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+                type: _gConst.MSG_TYPE_CHECK_COMPLETED,
                 count: count,
                 figures: foundFigures
             });
@@ -158,9 +149,9 @@ function addToSelected(src) {
     var img = FIGURES.find(function (el) {
         return el.URL === src;
     });
-    if(!img){
+    if (!img) {
         alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
-    }else{
+    } else {
         chrome.storage.local.get('rfSelected', function (data) {
             var selected = data.rfSelected || [];
             var isDup = selected.find(function (el) {
@@ -168,10 +159,14 @@ function addToSelected(src) {
             });
             if (isDup) {
                 alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
-            }else{
+            } else {
                 selected.push(img);
                 chrome.storage.local.set({
                     rfSelected: selected
+                });
+                chrome.runtime.sendMessage({
+                    type: _gConst.MSG_TYPE_ADD_COMPLETED,
+                    src: src
                 });
             }
         });

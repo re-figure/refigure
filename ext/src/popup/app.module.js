@@ -9,8 +9,6 @@ chrome.tabs.query({
 });
 
 angular.module('ReFigure', [])
-    .config([function () {
-    }])
     .controller('MainCtrl', ['$scope', function ($scope) {
 
         $scope.selected = [];

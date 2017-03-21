@@ -24,4 +24,9 @@
         'build',
         'server'
     ]);
+
+    gulp.task('extension', [
+        'ext_manifest',
+        'ext_background'
+    ]);
 }());

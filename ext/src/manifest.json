@@ -69,7 +69,7 @@
   ],
   "permissions": [
     "http://localhost:8181/api/*",
-    "https://refigure.noblecoz.com/api/*",
+    "REMOTE_API_URL*",
     "tabs",
     "storage",
     "contextMenus"

@@ -1,7 +1,7 @@
 var CONTENT_BLOCK_SELECTOR = 'body',
     FIGURES = [];
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    switch (request.type){
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    switch (request.type) {
         case _gConst.MSG_TYPE_ADD_START:
             figureAddStart();
             break;
@@ -9,7 +9,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             setTimeout(searchFigures(), 1);
             break;
     }
-    //return true;
 });
 
 function onClickImage(event) {
@@ -70,13 +69,13 @@ function searchFigures() {
             FIGURES = figures;
             console.log(figures);
             /*if (figures.length > 0) {
-                sendCheckFiguresRequest(figures);
-            } else {*/
-                chrome.runtime.sendMessage({
-                    type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
-                    figures: figures,
-                    count: figures.length
-                });
+             sendCheckFiguresRequest(figures);
+             } else {*/
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+                figures: figures,
+                count: figures.length
+            });
             //}
         }, function (error) {
             console.error(error);
@@ -158,9 +157,9 @@ function addToSelected(src) {
     var img = FIGURES.find(function (el) {
         return el.URL === src;
     });
-    if(!img){
+    if (!img) {
         alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
-    }else{
+    } else {
         chrome.storage.local.get('rfSelected', function (data) {
             var selected = data.rfSelected || [];
             var isDup = selected.find(function (el) {
@@ -168,7 +167,7 @@ function addToSelected(src) {
             });
             if (isDup) {
                 alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
-            }else{
+            } else {
                 selected.push(img);
                 chrome.storage.local.set({
                     rfSelected: selected

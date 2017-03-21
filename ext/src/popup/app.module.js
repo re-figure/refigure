@@ -1,6 +1,5 @@
 //debug page chrome-extension://eomljbidagegcimpgnpmmejnjbcfpdgo/popup/popup.html
-var CURRENT_TAB = null,
-    FIGURES = [];
+var CURRENT_TAB = null;
 chrome.tabs.query({
     active: true,
     currentWindow: true
@@ -10,6 +9,8 @@ chrome.tabs.query({
 
 angular.module('ReFigure', [])
     .controller('MainCtrl', ['$scope', function ($scope) {
+
+        var FIGURES = [];
 
         $scope.selected = [];
         $scope.error = '';

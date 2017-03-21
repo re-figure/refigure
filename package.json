@@ -7,8 +7,13 @@
     "gulp": "^3.9.1",
     "gulp-batch-replace": "0.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^3.0.0",
     "gulp-load-tasks": "^0.8.4",
+    "gulp-ng-html2js": "^0.2.2",
+    "gulp-rename": "^1.2.2",
     "gulp-service": "0.0.3",
+    "gulp-uglify": "^2.1.2",
+    "gulp-zip": "^4.0.0",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
     "run-sequence": "^1.2.2",
     "yargs": "^6.6.0"

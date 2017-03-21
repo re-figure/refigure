@@ -16,7 +16,9 @@ const errors = require('./errors');
 
 
 // various middleware parsers
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -25,6 +27,14 @@ app.use(auth.authFilter);
 
 // routes
 app.use(routes);
+// any other routes:
+if (config.get('server.html5-support', true)) {
+    app.all('/*', (req, res, next) => {
+        res.sendFile('index.html', {
+            root: 'build/'
+        });
+    });
+}
 
 // error handling
 app.use(errors);

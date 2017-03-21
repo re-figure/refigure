@@ -1,0 +1,156 @@
+<!-- Email -->
+<div class="r-main-content"
+     layout="column"
+     ng-if="vm.step === 'form'"
+>
+    <div class="r-heading">
+        <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">Sign up</h1>
+    </div>
+    <form name="vm.form"
+          novalidate
+          ng-submit="!vm.loading && vm.form.$valid && vm.register()"
+    >
+        <div layout="row" layout-margin>
+            <md-input-container flex>
+                <input name="FirstName"
+                       auto-focus
+                       ng-required="true"
+                       placeholder="First name"
+                       ng-model="vm.data.FirstName"/>
+            </md-input-container>
+            <md-input-container flex>
+                <input name="LastName"
+                       ng-required="true"
+                       placeholder="Last name"
+                       ng-model="vm.data.LastName"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-margin>
+            <md-input-container flex>
+                <input name="organization"
+                       placeholder="Organization"
+                       ng-model="vm.data.Organization"/>
+            </md-input-container>
+            <md-input-container flex>
+                <input name="Phone"
+                       placeholder="Phone"
+                       ng-model="vm.data.Phone"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-margin>
+            <md-input-container flex>
+                <input name="Email" type="email"
+                       ng-required="true"
+                       placeholder="Email address"
+                       ng-model="vm.data.Email"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-margin>
+            <md-input-container flex>
+                <input name="Password" type="password"
+                       ng-required="true"
+                       placeholder="Password"
+                       ng-model="vm.data.Password"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-margin>
+            <div flex="nogrow" class="r-auth-captcha">
+                <img ng-src="{{ vm.captchaUrl }}"/>
+            </div>
+            <md-input-container flex>
+                <input name="captcha"
+                       ng-required="true"
+                       autocomplete="off"
+                       placeholder="Type the characters you see in this image"
+                       ng-model="vm.data.captcha"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-margin>
+            <div flex>
+                <md-checkbox
+                        name="agreed"
+                        ng-required="true"
+                        aria-label="Terms of service"
+                        ng-model="vm.data.agreed">
+                    I agree to <a ui-sref="terms-of-use">Terms of service</a>
+                </md-checkbox>
+            </div>
+        </div>
+        <div layout="column" layout-margin>
+            <md-button type="submit"
+                       class="md-raised md-primary"
+                       ng-disabled="vm.loading || !vm.form.$valid"
+            >
+                Sign up
+            </md-button>
+            <md-button ui-sref="signin">Sign in</md-button>
+        </div>
+    </form>
+</div>
+
+<!-- Check mail -->
+<div class="r-main-content"
+     layout="column" layout-align=" center"
+     ng-if="vm.step === 'sent'"
+>
+    <div class="r-heading">
+        <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">Sign up</h1>
+    </div>
+    <div layout="column" layout-align=" center" layout-margin>
+        <md-icon class="md-primary"
+                 md-font-set="material-icons"
+                 ng-style="{'font-size': '48px', width: '48px', height: '48px'}"
+        >email</md-icon>
+    </div>
+    <p class="r-description">
+        An email with information on how to activate your account has been
+        sent to <b>{{ vm.data.Email }}</b>
+    </p>
+</div>
+
+
+<!-- We check your link -->
+<div class="r-main-content"
+     layout="column" layout-align=" center"
+     ng-if="vm.step === 'validate'"
+>
+    <div class="r-heading">
+        <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">Sign up</h1>
+    </div>
+    <div layout="row"
+         ng-if="vm.loading">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <div layout="column" layout-align=" center" layout-margin
+         ng-if="vm.error">
+        <md-icon class="md-warn"
+                 md-font-set="material-icons"
+                 ng-style="{'font-size': '48px', width: '48px', height: '48px'}"
+        >warning</md-icon>
+        <p ng-bind="vm.error"></p>
+    </div>
+</div>
+
+<!-- All done -->
+<div class="r-main-content"
+     layout="column" layout-align=" center"
+     ng-if="vm.step === 'complete'"
+>
+    <div class="r-heading">
+        <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">Welcome to ReFigure</h1>
+    </div>
+    <div layout="column" layout-align=" center" layout-margin>
+        <md-icon class="md-primary"
+                 md-font-set="material-icons"
+                 ng-style="{'font-size': '48px', width: '48px', height: '48px'}"
+        >done</md-icon>
+    </div>
+    <div class="r-description" layout="column" layout-align=" center" layout-margin>
+        <p>Dear <b>{{ vm.data.FirstName }} {{ vm.data.LastName }}</b>, your account has been activated.</p>
+        <p>Thank you for using our services.</p>
+    </div>
+    <md-button class="md-raised md-primary"
+               ng-click="vm.start()">
+        Start using ReFigure
+    </md-button>
+</div>

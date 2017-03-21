@@ -11,5 +11,7 @@ front/app/**/*.map
 .idea/
 upload/
 npm-debug.log
+.tags
+.tags1
 *.bak
 ext/dist/

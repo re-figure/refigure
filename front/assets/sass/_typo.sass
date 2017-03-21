@@ -1,0 +1,27 @@
+@mixin typography-old-style-settings()
+  -moz-font-feature-settings: "onum" 1, "kern" 1, "liga" 1
+  -moz-font-feature-settings: "onum=1, kern=1, liga=1"
+  -ms-font-feature-settings: "onum" 1, "kern" 1, "liga" 1
+  -o-font-feature-settings: "onum" 1, "kern" 1, "liga" 1
+  -webkit-font-feature-settings: "onum" 1, "kern" 1, "liga" 1
+  font-feature-settings: "onum" 1, "kern" 1, "liga" 1
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+  font-weight: 300
+
+@mixin typography-proportional-settings()
+  -moz-font-feature-settings: "pnum" 1, "kern" 1, "liga" 1
+  -moz-font-feature-settings: "pnum=1, kern=1, liga=1"
+  -ms-font-feature-settings: "pnum" 1, "kern" 1, "liga" 1
+  -o-font-feature-settings: "pnum" 1, "kern" 1, "liga" 1
+  -webkit-font-feature-settings: "pnum" 1, "kern" 1, "liga" 1
+  font-feature-settings: "pnum" 1, "kern" 1, "liga" 1
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+  font-weight: 300
+
+=web-fonts($family-name, $font-name, $weight: '400', $style: 'normal')
+  @import url('//fonts.googleapis.com/css?family=#{$family-name}:#{$weight}#{$style}')
+
+=roboto
+  font-family: "Roboto", Helvetica, Arial, sans-serif

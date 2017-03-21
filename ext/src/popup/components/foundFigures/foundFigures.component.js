@@ -2,7 +2,7 @@
 
     angular.module('ReFigure')
         .component('foundFigures', {
-            templateUrl: '/popup/components/foundFigures/foundFigures.html',
+            templateUrl: 'view/foundFigures.component.html',
             controller: CtrlFunction,
             controllerAs: 'vm'
         });

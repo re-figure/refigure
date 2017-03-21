@@ -1,6 +1,6 @@
 body {
-     min-width: 400px;
-     max-width: 600px;
+    width: 400px;
+    transition: width .3s;
  }
 .figure-add{
     color: rgb(220, 220, 220);
@@ -25,3 +25,61 @@ img{
 .login-password {
     margin-top: 10px;
 }
+
+/* FOUND-FIGURES*/
+.vcenter {
+    display: inline-block;
+    float: none;
+    vertical-align: middle;
+}
+.clickable{
+    cursor: pointer;
+}
+.navbar {
+    color: whitesmoke;
+    background-color: #101010;
+
+}
+.figures-left {
+    box-sizing: border-box;
+    position: absolute;
+    width: 278px;
+    left: 0;
+    margin: 10px;
+    border: 1px solid #101010;
+    border-radius: 2px;
+    padding: 20px;
+    overflow: auto;
+}
+.figures-left .element {
+    margin-bottom: 20px;
+    background-color: lightslategray;
+}
+.figures-left img {
+    width: 60px;
+    float: left;
+    border: 1px solid #101010;
+    border-radius: 3px;
+    margin: 5px;
+}
+.figures-left .info{
+    margin-top: 5px;
+}
+.figures-left .info h1{
+    font-size: 8px;
+}
+.figures-left .info p{
+    font-size: 8px;
+}
+.wide {
+    width: 700px;
+}
+.fix {
+    width: 400px;
+}
+.fixToRight {
+    position: relative;
+    left: 300px;
+}
+
+/* FOUND-FIGURES*/

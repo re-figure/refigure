@@ -1,13 +1,21 @@
-<!--
-<div class="container-fluid">
-<div ng-repeat="fig in vm.selected">
-    <img class="thumbnail" ng-src="{{fig.URL}}">
-    <div class="caption">
-        <h3>{{fig.Caption}}</h3>
-        <p>{{fig.DOI}}</p>
-       </div>
+<!--<div ng-repeat="fig in vm.figures">
+    <div class="element">
+        <img ng-src="{{fig.URL}}">
+        <div class="info">
+            <h1>{{fig.Caption}}</h1>
+            <p>moreInfo</p>
+        </div>
+    </div>
+</div>-->
+<div class="row">
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img ng-src="{{fig.URL}}">
+            <div class="caption">
+                <h3>Thumbnail label</h3>
+                <p>...</p>
 
-
+            </div>
+        </div>
+    </div>
 </div>
-</div>
--->

@@ -14,12 +14,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 function onClickImage(event) {
     event.stopPropagation();
     event.preventDefault();
-    console.log(event);
     figureAddStop();
-    chrome.runtime.sendMessage({
-        type: _gConst.MSG_TYPE_ADD_COMPLETED,
-        src: event.target.src
-    });
     addToSelected(event.target.src);
     return false;
 }
@@ -59,32 +54,31 @@ function dedupFigures(figures) {
     return deduped;
 }
 
-function searchFigures() {
+
+function parseFigures() {
     var figures = [];
-    if (typeof parseFigures === 'function') {
-        // figures = parseFigures();
-        parseFigures().then(function (result) {
-            figures = result;
-            figures = dedupFigures(figures);
-            FIGURES = figures;
-            console.log(figures);
-            /*if (figures.length > 0) {
-             sendCheckFiguresRequest(figures);
-             } else {*/
+    for (var i = 0; i < document.images.length; i++) {
+        figures.push({URL: document.images[i].src});
+    }
+    return Promise.resolve(figures);
+}
+
+function searchFigures() {
+    parseFigures().then(function (result) {
+        FIGURES = dedupFigures(result);
+        console.log(FIGURES);
+        if (FIGURES.length > 0) {
+            sendCheckFiguresRequest(FIGURES);
+        } else {
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
-                figures: figures,
-                count: figures.length
+                figures: FIGURES,
+                count: FIGURES.length
             });
-            //}
-        }, function (error) {
-            console.error(error);
-        });
-    } else {
-        for (var i = 0; i < document.images.length; i++) {
-            figures.push({URL: document.images[i].src});
         }
-    }
+    }, function (error) {
+        console.error(error);
+    });
 }
 
 function sendCheckFiguresRequest(figures) {
@@ -171,6 +165,10 @@ function addToSelected(src) {
                 selected.push(img);
                 chrome.storage.local.set({
                     rfSelected: selected
+                });
+                chrome.runtime.sendMessage({
+                    type: _gConst.MSG_TYPE_ADD_COMPLETED,
+                    src: src
                 });
             }
         });

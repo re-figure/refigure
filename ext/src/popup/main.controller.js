@@ -13,13 +13,13 @@
         .controller('MainCtrl', MainController);
 
     MainController.$inject = ['$scope', 'Authn'];
-    function MainController($scope, Authn) {
+    function MainController($scope) {
         var FIGURES = [];
 
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
-        $scope.userInfo = {},
+        $scope.userInfo = {};
         $scope.isAuthenticated = false;
 
         $scope.figureAddStart = function () {
@@ -38,7 +38,7 @@
 
         $scope.checkUserInfo = function (value) {
             console.log('Got userInfo object from component, value: ', value);
-            if (value && value.ID) {
+            if (value && value.Token) {
                 $scope.userInfo = value;
                 $scope.isAuthenticated = true;
             }
@@ -74,7 +74,7 @@
 
             chrome.storage.local.get('userInfo', function (data) {
                 $scope.$apply(function () {
-                    if (data.userInfo && data.userInfo.hasOwnProperty('ID')) {
+                    if (data.userInfo && data.userInfo.Token) {
                         $scope.userInfo = data.userInfo;
                         $scope.isAuthenticated = true;
                     }

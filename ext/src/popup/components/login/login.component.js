@@ -11,8 +11,8 @@
             }
         });
 
-        LoginController.$inject = ['$scope', 'Authn'];
-        function LoginController ($scope, Authn) {
+        LoginController.$inject = ['$scope', '$http', 'Authn'];
+        function LoginController ($scope, $http, Authn) {
             let vm = this;
 
             vm.error = '';
@@ -28,7 +28,11 @@
                         chrome.runtime.sendMessage({
                             type: _gConst.MSG_TYPE_USER_LOGGED_IN
                         });
+                        // put userInfo object to parent controller
                         vm.userInfo({value: response.data.data});
+
+                        // Set the token as header for requests
+                        $http.defaults.headers.common['Authentication'] = response.data.data.Token;
                     },
                     function (error) {
                         //error
@@ -36,6 +40,7 @@
                         chrome.storage.local.set({
                             userInfo: {}
                         });
+                        // put Error object to parent controller
                         vm.userInfo({value: error});
                         vm.error = error.data.message;
                     }
@@ -49,8 +54,9 @@
             vm.$onInit = function () {
                 chrome.storage.local.get('userInfo', function (data) {
                     $scope.$apply(function() {
-                        if (data.userInfo) {
+                        if (data.userInfo && data.userInfo.Token) {
                             vm.userInfo({value: data.userInfo});
+                            $http.defaults.headers.common['Authentication'] = data.userInfo.Token;
                         }
                         // console.log('Got authn info from storage!');
                     });
@@ -58,7 +64,7 @@
             };
 
             function activate() {
-                vm.loginData = {email: 'blabla@test.org', password: 'Pa$$word'};
+                vm.loginData = {email: 'blabla@test.org', password: 'Pa$$word'}; // TODO: test data, has to be removed!
             }
 
         }

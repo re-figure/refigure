@@ -3,6 +3,6 @@
 (function () {
     'use strict';
 
-    angular.module('ReFigure', []);
+    angular.module('ReFigure', ['ngRoute']);
 
 })();

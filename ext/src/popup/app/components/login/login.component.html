@@ -14,4 +14,7 @@
         <button class="btn btn-default" name="login_submit" type="submit" >Login</button>
     </div>
     <hr>
+    <div class="text-center" ng-show="vm.error">
+        <p class="text-danger" ng-bind="vm.error"></p>
+    </div>
 </form>

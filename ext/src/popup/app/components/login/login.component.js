@@ -13,10 +13,22 @@
     function LoginController(AuthService) {
         let vm = this;
 
-        vm.login = AuthService.login;
+        vm.login = login;
         vm.$onInit = activate;
+        vm.error = '';
 
         ////////////////////////////
+
+        function login(params) {
+            AuthService
+                .login(params)
+                .then(angular.noop, (error) => {
+                    //error
+                    console.log(error);
+                    // put Error object into parent controller
+                    vm.error = error.data.message;
+                })
+        }
 
         function activate() {
             //TODO: fake testing account, remove this

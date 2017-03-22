@@ -7,7 +7,7 @@ chrome.storage.local.get('rfFigures', function (data) {
 });
 
 chrome.storage.local.get('userInfo', function (data) {
-    data.userInfo && data.userInfo.Token ? createContextMenus() : removeContextMenus();
+    data.userInfo  ? createContextMenus() : removeContextMenus();
 });
 
 function updateBrowserAction(tab) {

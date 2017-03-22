@@ -7,7 +7,7 @@ chrome.storage.local.get('rfFigures', function (data) {
 });
 
 chrome.storage.local.get('userInfo', function (data) {
-    data.userInfo.isAuthenticated ? createContextMenus() : removeContextMenus();
+    data.userInfo && data.userInfo.hasOwnProperty('ID') ? createContextMenus() : removeContextMenus();
 });
 
 function updateBrowserAction(tab) {

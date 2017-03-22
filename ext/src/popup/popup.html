@@ -25,60 +25,8 @@
             </div>
         </div>
     </nav>
-    <div ng-if="isAuthenticated" class="container-fluid">
-        <form class="logout-form" ng-submit="logout()">
-            <div class="logout-identity">
-                <label>Username</label>
-                <button type="submit" name="logout_submit" class="btn btn-default pull-right">Logout</button>
-            </div>
-        </form>
-        <p>
-            <button class="btn btn-lg btn-default btn-block">Create Collection</button>
-        </p>
-        <p>
-            <button class="btn btn-lg btn-primary btn-block">Edit Collection</button>
-        </p>
-        <button ng-click="figureAddStart()" class="btn btn-lg btn-block figure-add"
-                ng-class="error ? 'btn-info' : 'btn-default'" ng-bind="error || '+'"></button>
-        <hr>
-
-        <div class="container-fluid" ng-repeat="fig in selected">
-            <div class="row">
-                <div class="col-xs-4">
-                    <img class="thumbnail" ng-src="{{fig.URL}}">
-                </div>
-                <div class="col-xs-8">
-                    <button type="button" class="close pull-right" aria-label="Close" ng-click="remove($index)">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div ng-bind="fig.Caption"></div>
-                </div>
-            </div>
-            <hr>
-        </div>
-    </div>
-
-    <div ng-if="!isAuthenticated" class="container-fluid">
-        <form class="login-form" name="login_form" ng-submit="login()">
-            <div class="form-group">
-                <div>
-                    <label>Login</label>
-                    <input class="form-control" type="email" name="login_email"/>
-                </div>
-                <div class="login-password">
-                    <label>Password</label>
-                    <input class="form-control" type="password" name="login_password"/>
-                </div>
-            </div>
-
-            <div class="text-right">
-                <button class="btn btn-default" name="login_submit" type="submit">Login</button>
-            </div>
-            <hr>
-        </form>
-    </div>
+    <div ng-view class="container-fluid"></div>
 </div>
-
 <script src="/popup/app.js"></script>
 <script src="/popup/templates.min.js"></script>
 </body>

@@ -56,6 +56,7 @@
       "popup": {
         "js": [
           "./ext/src/js/angular/angular.min.js",
+          "./ext/src/js/angular/angular-route.min.js",
           "./ext/src/js/const.js",
           "./ext/src/popup/*.module.js",
           "./ext/src/popup/**/*.js"

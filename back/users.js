@@ -10,8 +10,8 @@ const constants = require('./const');
 const auth = require('./auth');
 const db = require('./db');
 const rfUtils = require('./rf-utils');
-//const cookies = require('js.shared').cookies;
-//const captcha = require('./captcha');
+const cookies = require('js.shared').cookies;
+const captcha = require('./captcha');
 const mail = require('./email');
 
 exports.loginUserWithPassword = loginUserWithPassword;
@@ -225,12 +225,12 @@ function cbAddUser(user, cb) {
  */
 function register(req, res) {
     // check captcha first
-    /*if (config.getT('captcha.enabled', 'b')) {
+    if (config.getT('captcha.enabled', 'b')) {
         captcha.check(req, res);
-    }*/
+    }
 
     // reset captcha cookies
-    //cookies.clear(res, constants.CAPTCHA_COOKIE);
+    cookies.clear(res, constants.CAPTCHA_COOKIE);
 
     let user = req.body;
 
@@ -335,9 +335,9 @@ function registrationComplete(req, res) {
  */
 function passwordChangeRequest(req, res) {
     // check captcha first
-    /*if (config.getT('captcha.enabled', 'b')) {
+    if (config.getT('captcha.enabled', 'b')) {
         captcha.check(req, res);
-    }*/
+    }
 
     let email = req.body.email;
     if (!email) {

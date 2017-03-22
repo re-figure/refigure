@@ -19,6 +19,7 @@
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
+        $scope.userInfo = {},
         $scope.isAuthenticated = false;
 
         $scope.figureAddStart = function () {
@@ -37,7 +38,10 @@
 
         $scope.checkUserInfo = function (value) {
             console.log('Got userInfo object from component, value: ', value);
-            if (value && value.ID) {$scope.isAuthenticated = true;}
+            if (value && value.ID) {
+                $scope.userInfo = value;
+                $scope.isAuthenticated = true;
+            }
         };
 
         $scope.logout = function () {
@@ -70,7 +74,10 @@
 
             chrome.storage.local.get('userInfo', function (data) {
                 $scope.$apply(function () {
-                    $scope.isAuthenticated = !!(data.userInfo && data.userInfo.hasOwnProperty('ID'));
+                    if (data.userInfo && data.userInfo.hasOwnProperty('ID')) {
+                        $scope.userInfo = data.userInfo;
+                        $scope.isAuthenticated = true;
+                    }
                 })
             });
 

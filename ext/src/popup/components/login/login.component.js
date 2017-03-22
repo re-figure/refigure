@@ -15,6 +15,8 @@
         function LoginController ($scope, Authn) {
             let vm = this;
 
+            vm.error = '';
+
             vm.login = function (loginData) {
                 Authn.login(loginData).then(
                     function(response) {
@@ -31,6 +33,11 @@
                     function (error) {
                         //error
                         console.log(error);
+                        chrome.storage.local.set({
+                            userInfo: {}
+                        });
+                        vm.userInfo({value: error});
+                        vm.error = error.data.message;
                     }
                 );
             };

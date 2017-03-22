@@ -53,7 +53,7 @@ img{
 .figuresToLeft {
     box-sizing: border-box;
     position: absolute;
-    width: 300px;
+    width: 400px;
     padding: 15px 0;
     height: 100%;
     overflow: auto;
@@ -71,16 +71,17 @@ img{
 }
 
 .wide {
-    width: 700px;
+    width: 800px;
 }
 
 .fix {
     width: 400px;
+    margin-right: 20px;
 }
 
 .fixToRight {
     position: relative;
-    left: 300px;
+    left: 400px;
 }
 
 /* FOUND-FIGURES*/

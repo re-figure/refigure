@@ -3,12 +3,11 @@
     angular.module('ReFigure')
         .factory('AuthService', Controller);
 
-    Controller.$inject = ['$rootScope', '$q', '$location', '$http'];
+    Controller.$inject = ['$q', '$location', '$http'];
 
-    function Controller($rootScope, $q, $location, $http) {
-        //noinspection UnnecessaryLocalVariableJS
-        let userInfo = null,
-            exports = {
+    function Controller($q, $location, $http) {
+        let exports = {
+                userInfo: null,
                 login: login,
                 logout: logout,
                 isAuth: isAuth
@@ -19,7 +18,7 @@
         ////////////
 
         function logout() {
-            userInfo = null;
+            exports.userInfo = null;
             chrome.storage.local.remove('userInfo');
             $http.defaults.headers.common['Authentication'] = undefined;
             chrome.runtime.sendMessage({
@@ -33,7 +32,7 @@
                 .post(_gApiURL + "login", params)
                 .then((resp) => {
                     if (resp.data.data) {
-                        userInfo = resp.data.data;
+                        exports.userInfo = resp.data.data;
                         $http.defaults.headers.common['Authentication'] = resp.data.data.Token;
                         $location.path('/');
                         chrome.runtime.sendMessage({
@@ -49,13 +48,13 @@
 
         function isAuth() {
             let dfd = $q.defer();
-            if (userInfo !== null) {
+            if (exports.userInfo !== null) {
                 dfd.resolve(undefined);
             } else {
                 chrome.storage.local.get('userInfo', (data) => {
                     let resolve = '/auth';
                     if (data.userInfo) {
-                        userInfo = data.userInfo;
+                        exports.userInfo = data.userInfo;
                         resolve = undefined;
                     }
                     dfd.resolve(resolve);

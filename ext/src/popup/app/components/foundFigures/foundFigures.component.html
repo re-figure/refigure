@@ -1,13 +1,11 @@
 <div class="container-fluid" ng-repeat="fig in vm.figures">
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
             <img class="thumbnail" ng-src="{{fig.URL}}">
         </div>
-        <div class="col-xs-6 myCaption">
-            {{fig.Caption}}
-        </div>
-        <div class="col-xs-6 noPadding"><span class="bg-info inline"> in 0 collections</span></div>
-        <div class="col-xs-6 noPadding">
+        <div class="col-xs-8 myCaption" ng-bind="fig.Caption"></div>
+        <div class="col-xs-8 noPadding"><span class="bg-info inline"> in 0 collections</span></div>
+        <div class="col-xs-8 noPadding">
             <div type="button" class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
                 <span class="glyphicon"
                       ng-class="{'glyphicon-plus': !fig.showMoreInfo, 'glyphicon-minus': fig.showMoreInfo}"></span>
@@ -19,15 +17,15 @@
         <div class="col-xs-12">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <h5 class="list-group-item-heading">Caption</h5>
+                    <b class="list-group-item-heading">Caption</b>
                     <p class="list-group-item-text">{{fig.Caption}}</p>
                 </li>
                 <li class="list-group-item">
-                    <h5 class="list-group-item-heading">Authors</h5>
+                    <b class="list-group-item-heading">Authors</b>
                     <p class="list-group-item-text">{{fig.Authors}}</p>
                 </li>
                 <li class="list-group-item">
-                    <h5 class="list-group-item-heading">Legend</h5>
+                    <b class="list-group-item-heading">Legend</b>
                     <p class="list-group-item-text">{{fig.Legend}}</p>
                 </li>
             </ul>

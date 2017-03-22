@@ -17,6 +17,7 @@
         vm.selected = [];
         vm.error = '';
 
+        vm.userInfo = AuthService.userInfo;
         vm.logout = AuthService.logout;
         vm.figureAddStart = figureAddStart;
         vm.figureRemove = figureRemove;

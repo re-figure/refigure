@@ -9,10 +9,10 @@
 
     CtrlFunction.$inject=["$scope"];
     function CtrlFunction($scope) {
-        var vm = this;
+        let vm = this;
         vm.figures = [];
         vm.onShowMoreInfo = show;
-        var currentIndex = -1;
+        let currentIndex = -1;
    //     activate();
 
         //////////////////////////
@@ -30,7 +30,7 @@
                 vm.figures[index].showMoreInfo = true;
                 currentIndex = index;
             }
-            else if (index == currentIndex) {
+            else if (index === currentIndex) {
                 vm.figures[index].showMoreInfo = !vm.figures[index].showMoreInfo;
             }
             else {

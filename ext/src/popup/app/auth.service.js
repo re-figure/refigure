@@ -20,10 +20,12 @@
 
         function logout() {
             userInfo = null;
-            $location.path('/auth');
+            chrome.storage.local.remove('userInfo');
+            $http.defaults.headers.common['Authentication'] = undefined;
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_USER_LOGGED_OUT
             });
+            $location.path('/auth');
         }
 
         function login(params) {
@@ -32,6 +34,7 @@
                 .then((resp) => {
                     if (resp.data.data) {
                         userInfo = resp.data.data;
+                        $http.defaults.headers.common['Authentication'] = resp.data.data.Token;
                         $location.path('/');
                         chrome.runtime.sendMessage({
                             type: _gConst.MSG_TYPE_USER_LOGGED_IN

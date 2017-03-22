@@ -11,14 +11,17 @@
     <link rel="stylesheet" href="/popup/popup.css">
 </head>
 <body ng-controller="MainCtrl" ng-class="{wide: showFoundFigures}">
-    <found-figures class="figures-left" ng-show="showFoundFigures"></found-figures>
-    <div class="fix" ng-class="{fixToRight: showFoundFigures}">
-        <div class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
-                    <b class="navbar-text vcenter"><span class="glyphicon glyphicon-menu-left"></span><span
-                            ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</b>
-                </div>
+<found-figures class="figuresToLeft" ng-show="showFoundFigures"></found-figures>
+<div class="fix" ng-class="{fixToRight: showFoundFigures}">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
+                <b class="navbar-text vcenter">
+                    <span class="glyphicon"
+                          ng-class="{'glyphicon-menu-left': !showFoundFigures, 'glyphicon-menu-right': showFoundFigures}"></span>
+                    <div class="inline" ng-show="!showFoundFigures"><span ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</div>
+                    <div class="inline" ng-show="showFoundFigures">HIDE REFIGURES ON THIS PAGE</div>
+                </b>
             </div>
         </div>
     </nav>
@@ -29,10 +32,16 @@
                 <button type="submit" name="logout_submit" class="btn btn-default pull-right">Logout</button>
             </div>
         </form>
-        <p><button class="btn btn-lg btn-default btn-block">Create Collection</button></p>
-        <p><button class="btn btn-lg btn-primary btn-block">Edit Collection</button></p>
-        <button ng-click="figureAddStart()" class="btn btn-lg btn-block figure-add" ng-class="error ? 'btn-info' : 'btn-default'" ng-bind="error || '+'"></button>
+        <p>
+            <button class="btn btn-lg btn-default btn-block">Create Collection</button>
+        </p>
+        <p>
+            <button class="btn btn-lg btn-primary btn-block">Edit Collection</button>
+        </p>
+        <button ng-click="figureAddStart()" class="btn btn-lg btn-block figure-add"
+                ng-class="error ? 'btn-info' : 'btn-default'" ng-bind="error || '+'"></button>
         <hr>
+
         <div class="container-fluid" ng-repeat="fig in selected">
             <div class="row">
                 <div class="col-xs-4">
@@ -48,7 +57,6 @@
             <hr>
         </div>
     </div>
-    <found-figures></found-figures>
 
     <div ng-if="!isAuthenticated" class="container-fluid">
         <form class="login-form" name="login_form" ng-submit="login()">
@@ -64,12 +72,14 @@
             </div>
 
             <div class="text-right">
-                <button class="btn btn-default" name="login_submit" type="submit" >Login</button>
+                <button class="btn btn-default" name="login_submit" type="submit">Login</button>
             </div>
             <hr>
         </form>
     </div>
-    <script src="/popup/app.js"></script>
-    <script src="/popup/templates.min.js"></script>
+</div>
+
+<script src="/popup/app.js"></script>
+<script src="/popup/templates.min.js"></script>
 </body>
 </html>

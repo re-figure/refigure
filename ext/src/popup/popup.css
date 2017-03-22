@@ -1,6 +1,10 @@
+html{
+    height: 100%;
+}
 body {
     width: 400px;
     transition: width .3s;
+    height: 100%;
  }
 .figure-add{
     color: rgb(220, 220, 220);
@@ -32,51 +36,48 @@ img{
     float: none;
     vertical-align: middle;
 }
-.clickable{
+
+.inline {
+    display: inline-block;
+}
+
+.clickable {
     cursor: pointer;
 }
+
 .navbar {
     color: whitesmoke;
     background-color: #101010;
-
 }
-.figures-left {
+
+.figuresToLeft {
     box-sizing: border-box;
     position: absolute;
-    width: 278px;
-    left: 0;
-    margin: 10px;
-    border: 1px solid #101010;
-    border-radius: 2px;
-    padding: 20px;
+    width: 300px;
+    padding: 15px 0;
+    height: 100%;
     overflow: auto;
 }
-.figures-left .element {
-    margin-bottom: 20px;
-    background-color: lightslategray;
+
+.myCaption {
+    padding: 0;
+    height: 40px;
+    line-height: 18px;
+    overflow: hidden;
 }
-.figures-left img {
-    width: 60px;
-    float: left;
-    border: 1px solid #101010;
-    border-radius: 3px;
-    margin: 5px;
+
+.noPadding {
+    padding: 0;
 }
-.figures-left .info{
-    margin-top: 5px;
-}
-.figures-left .info h1{
-    font-size: 8px;
-}
-.figures-left .info p{
-    font-size: 8px;
-}
+
 .wide {
     width: 700px;
 }
+
 .fix {
     width: 400px;
 }
+
 .fixToRight {
     position: relative;
     left: 300px;

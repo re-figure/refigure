@@ -11,7 +11,9 @@
     function CtrlFunction($scope) {
         var vm = this;
         vm.figures = [];
-        activate();
+        vm.onShowMoreInfo = show;
+        var currentIndex = -1;
+   //     activate();
 
         //////////////////////////
 
@@ -19,15 +21,27 @@
             chrome.storage.local.get('rfFigures', function (data) {
                 $scope.$apply(function() {
                     vm.figures = data.rfFigures;
-                    console.log(vm.figures);
                 });
-
             });
-          //  console.log(vm.figures);
         };
 
-        function activate() {
-            vm.qqq = 'dfgdfg';
+        function show(index) {
+            if (currentIndex < 0) {
+                vm.figures[index].showMoreInfo = true;
+                currentIndex = index;
+            }
+            else if (index == currentIndex) {
+                vm.figures[index].showMoreInfo = !vm.figures[index].showMoreInfo;
+            }
+            else {
+                vm.figures[currentIndex].showMoreInfo = false;
+                vm.figures[index].showMoreInfo = true;
+                currentIndex = index;
+                //if(index > currentIndex){
+                //   window.scrollIntoView(element);
+                // }
+            }
         }
-    }
+     }
+
 })();

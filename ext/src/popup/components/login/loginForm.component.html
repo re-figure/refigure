@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <form class="login-form" name="login_form" ng-submit="vm.login(vm.loginData)">
+        <div class="form-group">
+            <div>
+                <label>Login</label>
+                <input class="form-control" type="email" name="login_email" ng-model="vm.loginData.email"/>
+            </div>
+            <div class="login-password">
+                <label>Password</label>
+                <input class="form-control" type="password" name="login_password" ng-model="vm.loginData.password"/>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <button class="btn btn-default" name="login_submit" type="submit" >Login</button>
+        </div>
+        <hr>
+    </form>
+</div>

@@ -1,6 +1,10 @@
+html{
+    height: 100%;
+}
 body {
-     min-width: 400px;
-     max-width: 600px;
+    width: 400px;
+    transition: width .3s;
+    height: 100%;
  }
 .figure-add{
     color: rgb(220, 220, 220);
@@ -25,3 +29,58 @@ img{
 .login-password {
     margin-top: 10px;
 }
+
+/* FOUND-FIGURES*/
+.vcenter {
+    display: inline-block;
+    float: none;
+    vertical-align: middle;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.navbar {
+    color: whitesmoke;
+    background-color: #101010;
+}
+
+.figuresToLeft {
+    box-sizing: border-box;
+    position: absolute;
+    width: 300px;
+    padding: 15px 0;
+    height: 100%;
+    overflow: auto;
+}
+
+.myCaption {
+    padding: 0;
+    height: 40px;
+    line-height: 18px;
+    overflow: hidden;
+}
+
+.noPadding {
+    padding: 0;
+}
+
+.wide {
+    width: 700px;
+}
+
+.fix {
+    width: 400px;
+}
+
+.fixToRight {
+    position: relative;
+    left: 300px;
+}
+
+/* FOUND-FIGURES*/

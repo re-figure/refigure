@@ -19,7 +19,6 @@
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
-        // $scope.loginData = {email: 'blabla@test.org', password: 'Pa$$word'};
         $scope.isAuthenticated = false;
 
         $scope.figureAddStart = function () {
@@ -71,7 +70,7 @@
 
             chrome.storage.local.get('userInfo', function (data) {
                 $scope.$apply(function () {
-                    $scope.isAuthenticated = data.userInfo.isAuthenticated ? data.userInfo.isAuthenticated : false;
+                    $scope.isAuthenticated = !!(data.userInfo && data.userInfo.hasOwnProperty('ID'));
                 })
             });
 

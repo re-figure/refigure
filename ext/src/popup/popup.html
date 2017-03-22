@@ -44,25 +44,8 @@
             <hr>
         </div>
     </div>
-    <div ng-if="!isAuthenticated" class="container-fluid">
-        <form class="login-form" name="login_form" ng-submit="login(loginData)">
-            <div class="form-group">
-                <div>
-                    <label>Login</label>
-                    <input class="form-control" type="email" name="login_email" ng-model="loginData.email"/>
-                </div>
-                <div class="login-password">
-                    <label>Password</label>
-                    <input class="form-control" type="password" name="login_password" ng-model="loginData.password"/>
-                </div>
-            </div>
+    <login-form user-info="checkUserInfo(value)" ng-if="!isAuthenticated"></login-form>
 
-            <div class="text-right">
-                <button class="btn btn-default" name="login_submit" type="submit" >Login</button>
-            </div>
-            <hr>
-        </form>
-    </div>
     <script src="/popup/app.js"></script>
     <script src="/popup/templates.min.js"></script>
 </body>

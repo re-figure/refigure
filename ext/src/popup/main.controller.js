@@ -19,7 +19,7 @@
         $scope.selected = [];
         $scope.error = '';
         $scope.figCount = 0;
-        $scope.loginData = {email: 'blabla@test.org', password: 'Pa$$word'};
+        // $scope.loginData = {email: 'blabla@test.org', password: 'Pa$$word'};
         $scope.isAuthenticated = false;
 
         $scope.figureAddStart = function () {
@@ -36,29 +36,14 @@
             });
         };
 
-        $scope.login = function (loginData) {
-            Authn.login(loginData).then(
-                function(response) {
-                    //success
-                    console.log(response.data.data);
-                },
-                function (error) {
-                    //error
-                    console.log(error);
-                }
-            );
-            chrome.storage.local.set({
-                userInfo: {isAuthenticated: true}
-            });
-            chrome.runtime.sendMessage({
-                type: _gConst.MSG_TYPE_USER_LOGGED_IN
-            });
-            $scope.isAuthenticated = true;
+        $scope.checkUserInfo = function (value) {
+            console.log('Got userInfo object from component, value: ', value);
+            if (value && value.ID) {$scope.isAuthenticated = true;}
         };
 
         $scope.logout = function () {
             chrome.storage.local.set({
-                userInfo: {isAuthenticated: false}
+                userInfo: {}
             });
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_USER_LOGGED_OUT

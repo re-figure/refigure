@@ -8,7 +8,7 @@
         </div>
         <div class="col-xs-8">
             <div class="my-caption" ng-bind="fig.Caption"></div>
-            <div class="no-padding"><span class="bg-info inline"> in 0 collections</span></div>
+            <div class="no-padding"><span class="bg-info inline"> in <span ng-bind="fig.FoundInCollectionsCounter"></span> collections</span></div>
             <div class="no-padding">
                 <div class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
                 <span class="glyphicon"

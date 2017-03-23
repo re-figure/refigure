@@ -33,6 +33,9 @@
             .when('/figure/edit/:id', {
                 template: '<figure-edit/>'
             })
+            .when('/create-figure', {
+                template: '<create-figure/>'
+            })
             .otherwise('/auth');
 
         IsAuthCtrl.$inject = ['AuthService'];

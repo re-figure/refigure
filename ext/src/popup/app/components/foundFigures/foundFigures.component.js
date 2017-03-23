@@ -13,14 +13,25 @@
         vm.figures = [];
         vm.onShowMoreInfo = show;
         let currentIndex = -1;
+
    //     activate();
 
         //////////////////////////
 
         vm.$onInit = function () {
-            chrome.storage.local.get('rfFigures', function (data) {
+            chrome.runtime.onMessage.addListener(
+                function(request, sender, sendResponse) {
+                    if (request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
+                        $scope.$apply(function() {
+                            vm.figures = request.figures;
+                        });
+                    }
+                    return true;
+                }
+            );
+            chrome.storage.local.get('foundFigures', function (data) {
                 $scope.$apply(function() {
-                    vm.figures = data.rfFigures;
+                    vm.figures = data.foundFigures;
                 });
             });
         };
@@ -38,7 +49,7 @@
                 vm.figures[index].showMoreInfo = true;
                 currentIndex = index;
                 //if(index > currentIndex){
-                //   window.scrollIntoView(element);
+                //   el.scrollIntoView(element);
                 // }
             }
         }

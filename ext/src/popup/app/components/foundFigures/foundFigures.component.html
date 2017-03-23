@@ -1,15 +1,20 @@
+<div class="container-fluid" ng-hide="vm.figures.length">
+    <h2>NO DATA IS AVAILABLE</h2>
+</div>
 <div class="container-fluid" ng-repeat="fig in vm.figures">
     <div class="row">
         <div class="col-xs-4">
             <img class="thumbnail" ng-src="{{fig.URL}}">
         </div>
-        <div class="col-xs-8 my-caption" ng-bind="fig.Caption"></div>
-        <div class="col-xs-8 no-padding"><span class="bg-info inline"> in 0 collections</span></div>
-        <div class="col-xs-8 no-padding">
-            <div type="button" class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
+        <div class="col-xs-8">
+            <div class="my-caption" ng-bind="fig.Caption"></div>
+            <div class="no-padding"><span class="bg-info inline"> in 0 collections</span></div>
+            <div class="no-padding">
+                <div class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
                 <span class="glyphicon"
                       ng-class="{'glyphicon-plus': !fig.showMoreInfo, 'glyphicon-minus': fig.showMoreInfo}"></span>
-                <span ng-show="!fig.showMoreInfo">more</span><span ng-show="fig.showMoreInfo">less</span> info
+                    <span ng-show="!fig.showMoreInfo">more</span><span ng-show="fig.showMoreInfo">less</span> info
+                </div>
             </div>
         </div>
     </div>

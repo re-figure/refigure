@@ -14,9 +14,10 @@
 <found-figures class="col-xs-6 figures-to-left" ng-show="showFoundFigures"></found-figures>
 <div ng-class="{'col-xs-6 mainblock-fix-width-one': showFoundFigures, 'col-xs-12 mainblock-fix-width-two': !showFoundFigures}">
     <nav class="navbar navbar-default">
+        <span class="home-icon"><a href="#!/"><span class="glyphicon glyphicon-home"></span></a></span>
         <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
             <b class="navbar-text vcenter">
-                    <span class="glyphicon"
+                <span class="glyphicon"
                           ng-class="{'glyphicon-menu-left': !showFoundFigures, 'glyphicon-menu-right': showFoundFigures}"></span>
                 <div class="inline" ng-show="!showFoundFigures"><span ng-bind="figCount">0</span> REFIGURES ON THIS
                     PAGE

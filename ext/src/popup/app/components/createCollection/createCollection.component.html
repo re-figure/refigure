@@ -1,0 +1,24 @@
+<form class="cc-form" name="cc-form" ng-submit="vm.createCollection(vm.formData)">
+    <div class="form-group">
+        <div>
+            <label>Collection title</label>
+            <input class="form-control" type="text" name="collection_title" ng-model="vm.formData.Title"/>
+        </div>
+        <div class="login-password">
+            <label>Hypothesis</label>
+            <textarea class="form-control" rows="5" name="collection_hypothesis" ng-model="vm.formData.Description"></textarea>
+        </div>
+        <div>
+            <label>Keywords</label>
+            <input class="form-control" type="text" name="collection_keywords" ng-model="vm.formData.Keywords"/>
+        </div>
+    </div>
+
+    <div class="text-right">
+        <button class="btn btn-default" name="cc_submit" type="submit" >Create</button>
+    </div>
+    <hr>
+    <div class="text-center" ng-show="vm.error">
+        <p class="text-danger" ng-bind="vm.error"></p>
+    </div>
+</form>

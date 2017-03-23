@@ -3,8 +3,9 @@ html{
 }
 body {
     width: 400px;
-    transition: width .3s;
+    transition: width .2s;
     height: 100%;
+  /*  overflow: auto;*/
  }
 .figure-add{
     color: rgb(220, 220, 220);
@@ -35,6 +36,8 @@ img{
     display: inline-block;
     float: none;
     vertical-align: middle;
+    margin-right: 15px;
+    margin-left: 15px;
 }
 
 .inline {
@@ -50,38 +53,45 @@ img{
     background-color: #101010;
 }
 
-.figuresToLeft {
-    box-sizing: border-box;
-    position: absolute;
+.figures-to-left {
     width: 400px;
     padding: 15px 0;
+    margin-left: 0px;
     height: 100%;
     overflow: auto;
 }
 
-.myCaption {
+.my-caption {
     padding: 0;
     height: 40px;
     line-height: 18px;
     overflow: hidden;
 }
 
-.noPadding {
+.no-padding {
     padding: 0;
 }
 
-.wide {
-    width: 800px;
+.body-to-wide {
+    width: 780px;
 }
 
-.fix {
+.mainblock-fix-width-one {
+    width: 380px;
+    padding: 0;
+   /* margin-right: 20px;
+    height: 100%;*/
+}
+.mainblock-fix-width-two {
     width: 400px;
-    margin-right: 20px;
+    padding: 0;
+    /* margin-right: 20px;
+     height: 100%;*/
 }
-
-.fixToRight {
-    position: relative;
-    left: 400px;
+.block-to-right {
+  /*  position: relative;
+    left: 400px;*/
+    margin-left: 400px;
 }
 
 /* FOUND-FIGURES*/

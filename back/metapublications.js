@@ -131,7 +131,7 @@ function getMetapublication(req, res) {
         } else {
             db.pool.query(`
                     INSERT INTO Visit (MetapublicationID, Count) VALUES (?, 1) ON DUPLICATE KEY UPDATE Count = Count + 1
-                `, [rec.Metapublication.ID], (err) => {
+                `, [id], (err) => {
                 if (err) {
                     console.log(err);
                 }

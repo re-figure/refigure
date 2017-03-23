@@ -19,22 +19,7 @@
         //////////////////////////
 
         vm.$onInit = function () {
-            vm.figures = STORAGE.FIGURES;
-            chrome.runtime.onMessage.addListener(
-                function(request, sender, sendResponse) {
-                    if (request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
-                        $scope.$apply(function() {
-                            vm.figures = request.figures;
-                        });
-                    }
-                    return true;
-                }
-            );
-            chrome.storage.local.get('foundFigures', function (data) {
-                $scope.$apply(function() {
-                    vm.figures = data.foundFigures;
-                });
-            });
+            vm.figures = STORAGE.FOUND_FIGURES;
         };
 
         function show(index) {

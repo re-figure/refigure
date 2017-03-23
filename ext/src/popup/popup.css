@@ -67,7 +67,7 @@ img{
     width: 400px;
     padding: 15px 0;
     margin-left: 0px;
-    max-height: 100%;
+    height: 100%;
     overflow: auto;
 }
 

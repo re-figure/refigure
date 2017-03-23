@@ -10,19 +10,19 @@
     <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/popup/popup.css">
 </head>
-<body ng-class="{wide: showFoundFigures}">
-<found-figures class="figuresToLeft" ng-show="showFoundFigures"></found-figures>
-<div class="fix" ng-class="{fixToRight: showFoundFigures}">
+<body ng-class="{'body-to-wide': showFoundFigures}">
+<found-figures class="col-xs-6 figures-to-left" ng-show="showFoundFigures"></found-figures>
+<div ng-class="{'col-xs-6 mainblock-fix-width-one': showFoundFigures, 'col-xs-12 mainblock-fix-width-two': !showFoundFigures}">
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
-                <b class="navbar-text vcenter">
+        <div class="navbar-header clickable" ng-click="showFoundFigures=!showFoundFigures">
+            <b class="navbar-text vcenter">
                     <span class="glyphicon"
                           ng-class="{'glyphicon-menu-left': !showFoundFigures, 'glyphicon-menu-right': showFoundFigures}"></span>
-                    <div class="inline" ng-show="!showFoundFigures"><span ng-bind="figCount">0</span> REFIGURES ON THIS PAGE</div>
-                    <div class="inline" ng-show="showFoundFigures">HIDE REFIGURES ON THIS PAGE</div>
-                </b>
-            </div>
+                <div class="inline" ng-show="!showFoundFigures"><span ng-bind="figCount">0</span> REFIGURES ON THIS
+                    PAGE
+                </div>
+                <div class="inline" ng-show="showFoundFigures">HIDE REFIGURES ON THIS PAGE</div>
+            </b>
         </div>
     </nav>
     <div ng-view class="container-fluid"></div>

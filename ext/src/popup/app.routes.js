@@ -18,6 +18,10 @@
                 template: '<create-collection-form/>',
                 resolveRedirectTo: IsAuthCtrl
             })
+            .when('/my-collections', {
+                template: '<collection-list/>',
+                resolveRedirectTo: IsAuthCtrl
+            })
             .otherwise('/auth');
 
         IsAuthCtrl.$inject = ['AuthService'];

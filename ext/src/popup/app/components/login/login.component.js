@@ -27,7 +27,7 @@
                     console.log(error);
                     // put Error object into parent controller
                     vm.error = error.data.message;
-                })
+                });
         }
 
         function activate() {

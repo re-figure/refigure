@@ -4,3 +4,48 @@
 .rf-addable-image:hover{
     outline: 3px solid green;
 }
+
+.rf-popup{
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    display: none;
+    z-index: 1000000;
+}
+.rf-popup.rf-popup-show{
+    display: block;
+}
+
+.rf-popup, .rf-popup *{
+    font: normal 14px/22px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    color: #222;
+}
+
+.rf-popup .rf-popup-header{
+    font-size: 16px;
+    line-height: 40px;
+    background-color: #4285f4;
+    color: #fff;
+    padding: 0 10px;
+}
+.rf-popup .rf-popup-wrp{
+    padding: 10px;
+}
+
+.rf-popup button.rf-popup-btn{
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background-color: #424;
+    color: #fff;
+    text-align: center;
+    display: block;
+    padding: 5px 10px;
+    width: auto!important;
+    margin: 0;
+    float: none;
+}

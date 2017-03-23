@@ -32,8 +32,7 @@
             }
             else if (index === currentIndex) {
                 vm.figures[index].showMoreInfo = !vm.figures[index].showMoreInfo;
-            }
-            else {
+            } else {
                 vm.figures[currentIndex].showMoreInfo = false;
                 vm.figures[index].showMoreInfo = true;
                 currentIndex = index;

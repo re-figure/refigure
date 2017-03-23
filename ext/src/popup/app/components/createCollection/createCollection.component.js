@@ -8,9 +8,9 @@
             controllerAs: 'vm'
         });
 
-    CreateCollectionController.$inject = ['AuthService', 'CollectionSvc'];
+    CreateCollectionController.$inject = ['$location', 'AuthService', 'CollectionSvc'];
 
-    function CreateCollectionController(AuthService, CollectionSvc) {
+    function CreateCollectionController($location, AuthService, CollectionSvc) {
         let vm = this;
 
         vm.$onInit = activate;
@@ -21,12 +21,13 @@
 
         function createCollection(params) {
             params.UserID = vm.userInfo.ID;
-            // params.Type = 0;
-            // params.Flags = 0;
-            // params.Flagged = 0;
+
             CollectionSvc
                 .create(params)
-                .then(null, (error) => {
+                .then((resp) => {
+                    console.log(resp.data);
+                    $location.path('/');
+                }, (error) => {
                     //error
                     console.log(error);
                     vm.error = error.data.message;

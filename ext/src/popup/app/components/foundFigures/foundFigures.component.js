@@ -7,8 +7,8 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject=["$scope"];
-    function CtrlFunction($scope) {
+    CtrlFunction.$inject=["$scope", 'STORAGE'];
+    function CtrlFunction($scope, STORAGE) {
         let vm = this;
         vm.figures = [];
         vm.onShowMoreInfo = show;
@@ -18,11 +18,7 @@
         //////////////////////////
 
         vm.$onInit = function () {
-            chrome.storage.local.get('rfFigures', function (data) {
-                $scope.$apply(function() {
-                    vm.figures = data.rfFigures;
-                });
-            });
+            vm.figures = STORAGE.FIGURES;
         };
 
         function show(index) {

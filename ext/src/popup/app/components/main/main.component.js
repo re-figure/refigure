@@ -8,17 +8,13 @@
         });
 
 
-    Controller.$inject = ['$scope', 'Opts', 'AuthService'];
+    Controller.$inject = ['$scope', 'STORAGE'];
 
-    function Controller($scope, Opts, AuthService) {
-        let vm = this,
-            FIGURES = [];
+    function Controller($scope, STORAGE) {
+        let vm = this;
 
-        vm.selected = [];
         vm.error = '';
 
-        vm.userInfo = AuthService.userInfo;
-        vm.logout = AuthService.logout;
         vm.figureAddStart = figureAddStart;
         vm.figureRemove = figureRemove;
 
@@ -26,17 +22,8 @@
 
         //////////////////
 
-         function activate() {
-            chrome.storage.local.get('rfFigures', function (data) {
-                FIGURES = data.rfFigures || [];
-            });
-
-            chrome.storage.local.get('rfSelected', function (data) {
-                $scope.$apply(function () {
-                    vm.selected = data.rfSelected ? dedupFigures(data.rfSelected) : vm.selected;
-                });
-            });
-
+        function activate() {
+            vm.selected = STORAGE.SELECTED;
             chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     if (sender.tab && request.type === _gConst.MSG_TYPE_ADD_COMPLETED) {
                         let selectedImage = searchImage(request.src);
@@ -49,13 +36,6 @@
                         }
                         $scope.$apply();
                     }
-                    if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
-                        FIGURES = request.figures;
-                        $scope.$apply(function () {
-                            vm.figCount = FIGURES.length;
-                        });
-                    }
-                    return true;
                 }
             );
         }
@@ -69,13 +49,13 @@
 
         function figureAddStart() {
             vm.error = '';
-            chrome.tabs.sendMessage(Opts.CURRENT_TAB, {
+            chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
                 type: _gConst.MSG_TYPE_ADD_START
             });
         }
 
         function searchImage(src) {
-            let img = FIGURES.find(function (el) {
+            let img = STORAGE.FIGURES.find(function (el) {
                 return el.URL === src;
             });
             if (!img) {

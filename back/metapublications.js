@@ -57,7 +57,7 @@ function arrangeVisitRecord(rec, id) {
 }
 
 /**
- * Retrieve a Metapublication with related data from he db by ID
+ * Retrieve a Metapublication with related data from the db by ID
  * @param {string} id Metapublication ID
  * @param {CommonCallback} cb
  */
@@ -67,6 +67,7 @@ function get(id, cb) {
           FROM Metapublication
           JOIN User ON User.ID = Metapublication.UserID          
           LEFT JOIN Visit ON Visit.MetapublicationID = Metapublication.ID
+         WHERE Metapublication.ID = ?
     `, nestTables: true}, [id], (err, results) => {
         if (err) {
             console.log(err);
@@ -505,7 +506,7 @@ function createMetapublication(req, res) {
     upd['UserID'] = req.User.ID;
 
     let params = [];
-    let q = 'INSERT INTO Metapubication (';
+    let q = 'INSERT INTO Metapublication (';
     let v = ' VALUES (';
     Object.keys(upd).forEach((key) => {
         if (params.length > 0) {
@@ -513,9 +514,10 @@ function createMetapublication(req, res) {
             v += ', ';
         }
         q += key;
+        v += '?';
         params.push(upd[key]);
     });
-    q += v + ')';
+    q += ')' + v + ')';
     db.pool.query(q, params, (err) => {
         if (err) {
             console.log('Failed to create new Metapublication', err);

@@ -178,7 +178,37 @@ function addToSelected(src) {
                     type: _gConst.MSG_TYPE_ADD_COMPLETED,
                     src: src
                 });
+                window.figurePopup.show();
             }
         });
     }
 }
+
+window.figurePopup = {
+    element: null,
+    show: function () {
+        if(!window.figurePopup.element){
+            window.figurePopup.create();
+        }
+        window.figurePopup.element.classList.add('rf-popup-show');
+    },
+    hide: function () {
+        window.figurePopup.element.classList.remove('rf-popup-show');
+    },
+    create: function () {
+        if(window.figurePopup.element){
+            return false;
+        }
+        window.figurePopup.element = document.createElement('div');
+        window.figurePopup.element.className = 'rf-popup';
+        window.figurePopup.element.innerHTML = [
+            '<div class="rf-popup-header">Add figure to collection</div>',
+            '<div class="rf-popup-wrp">',
+            'Some Content',
+            '<button class="rf-popup-btn">Submit</button>',
+            '</div>'
+        ].join('');
+        document.body.appendChild(window.figurePopup.element);
+        return true;
+    }
+};

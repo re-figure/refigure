@@ -16,10 +16,12 @@
 
         service.create = function (params) {
             return $http
-                .post(_gApiURL + "metapublication", params)
-                .then((resp) => {
-                    return resp.data;
-                });
+                .post(_gApiURL + "metapublication", params);
+        };
+
+        service.getUserCollections = function () {
+            return $http
+                .get(_gApiURL + "my-metapublications");
         };
     }
 

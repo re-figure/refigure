@@ -14,6 +14,7 @@
         let vm = this;
 
         vm.$onInit = activate;
+        vm.removeItem = removeItem;
         vm.error = '';
 
         ////////////////////////////
@@ -23,7 +24,6 @@
                 .getUserCollections()
                 .then((res) => {
                     vm.collections = res.data.data.results;
-                    console.log("My Collections: ", vm.collections);
                 }, (error) => {
                     //error
                     console.log(error);
@@ -34,6 +34,16 @@
         function activate() {
             vm.userInfo = AuthService.userInfo;
             getMyOwnCollections();
+        }
+
+        function removeItem(id) {
+            if (id) {
+                CollectionSvc.delete(id)
+                    .catch((err) => {
+                        console.log(err);
+                        vm.error = err.data.message;
+                    });
+            }
         }
     }
 

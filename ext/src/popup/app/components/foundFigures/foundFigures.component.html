@@ -4,7 +4,10 @@
 <div class="container-fluid" ng-repeat="fig in vm.figures">
     <div class="row">
         <div class="col-xs-4">
-            <img class="thumbnail" ng-src="{{fig.URL}}">
+            <a ng-show="fig.onClickable" ng-href="#!/figure/edit/{{fig.ID}}" class="custom-link">
+                <img class="thumbnail" ng-src="{{fig.URL}}">
+            </a>
+            <img  ng-show="!fig.onClickable" class="thumbnail" ng-src="{{fig.URL}}">
         </div>
         <div class="col-xs-8">
             <div class="my-caption" ng-bind="fig.Caption"></div>

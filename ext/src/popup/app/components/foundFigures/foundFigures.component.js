@@ -7,20 +7,22 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject=["$scope", 'STORAGE'];
-    function CtrlFunction($scope, STORAGE) {
+    CtrlFunction.$inject=["$scope", 'STORAGE', 'AuthService'];
+    function CtrlFunction($scope, STORAGE, AuthService) {
         let vm = this;
+        let currentIndex = -1;
         vm.figures = [];
         vm.onShowMoreInfo = show;
-        let currentIndex = -1;
+        vm.$onInit = activate;
 
-   //     activate();
-
-        //////////////////////////
-
-        vm.$onInit = function () {
+        function activate() {
             vm.figures = STORAGE.FOUND_FIGURES;
-        };
+            vm.figures.forEach(function(el){
+                if(el.UserID === AuthService.userInfo.ID){
+                    el.onClickable = true;
+                }
+             });
+        }
 
         function show(index) {
             if (currentIndex < 0) {
@@ -32,11 +34,7 @@
                 vm.figures[currentIndex].showMoreInfo = false;
                 vm.figures[index].showMoreInfo = true;
                 currentIndex = index;
-                //if(index > currentIndex){
-                //   el.scrollIntoView(element);
-                // }
             }
         }
-     }
-
+    }
 })();

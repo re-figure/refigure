@@ -11,9 +11,9 @@
         .config(ConfigController)
         .run(RunController);
 
-    ConfigController.$inject = ['STORAGE'];
+    ConfigController.$inject = ['STORAGE', '$compileProvider'];
 
-    function ConfigController(STORAGE) {
+    function ConfigController(STORAGE, $compileProvider) {
         chrome.storage.local.get('rfFigures', function (data) {
             STORAGE.FIGURES = data.rfFigures || [];
         });
@@ -32,6 +32,9 @@
         chrome.storage.local.get('foundFigures', function (data) {
             STORAGE.FOUND_FIGURES = data.foundFigures || [];
         });
+
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+
     }
 
     RunController.$inject = ['$rootScope', 'FoundFiguresService'];

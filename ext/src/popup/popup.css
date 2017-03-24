@@ -1,18 +1,21 @@
 html{
     height: 100%;
 }
+
 body {
     width: 400px;
-    transition: width .2s;
+    transition: width .3s linear;
     height: 100%;
-  /*  overflow: auto;*/
- }
+    position: relative;
+}
+
 .figure-add{
     color: rgb(220, 220, 220);
     font-size: 20px;
     border-radius: 4px;
     border: 2px dashed rgb(220, 220, 220);
 }
+
 img{
     max-width: 100%;
     min-height: 100%;
@@ -32,24 +35,11 @@ img{
 }
 
 /* FOUND-FIGURES*/
-.vcenter {
-    display: inline-block;
-    float: none;
-    vertical-align: middle;
-    margin-right: 15px;
+.block-with-custom-margin {
+    margin-right: 10px;
     margin-left: 15px;
 }
-.navbar{
-    position: relative;
-}
-.home-icon{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 5px;
-    height: 50%;
-    margin: auto;
-}
+
 .inline {
     display: inline-block;
 }
@@ -58,16 +48,21 @@ img{
     cursor: pointer;
 }
 
-.navbar {
+.dark-navbar {
     color: whitesmoke;
     background-color: #101010;
 }
 
+.navbar-text{
+    float: none;
+}
+
 .figures-to-left {
+    position: absolute;
     width: 400px;
     padding: 15px 0;
-    margin-left: 0px;
     max-height: 100%;
+    z-index: 99;
     overflow: auto;
 }
 
@@ -87,22 +82,23 @@ img{
     width: 780px;
 }
 
-.mainblock-fix-width-one {
-    width: 380px;
+.mainblock{
+    float: right;
+    background-color: white;
+    z-index: 999;
     padding: 0;
-   /* margin-right: 20px;
-    height: 100%;*/
-}
-.mainblock-fix-width-two {
-    width: 400px;
-    padding: 0;
-    /* margin-right: 20px;
-     height: 100%;*/
-}
-.block-to-right {
-  /*  position: relative;
-    left: 400px;*/
-    margin-left: 400px;
 }
 
+.mainblock-fix-width-one {
+    width: 380px;
+}
+
+.mainblock-fix-width-two {
+    width: 400px;
+}
+
+.custom-link:hover,
+.custom-link:focus{
+    outline: auto;
+}
 /* FOUND-FIGURES*/

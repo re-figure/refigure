@@ -14,6 +14,9 @@
             .when('/auth', {
                 template: '<login-form/>'
             })
+            .when('/figure/edit/:id', {
+                template: '<edit-figure/>'
+            })
             .otherwise('/auth');
 
         IsAuthCtrl.$inject = ['AuthService'];

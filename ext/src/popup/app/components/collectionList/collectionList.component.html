@@ -1,0 +1,21 @@
+<div class="container-fluid collection">
+    <h3 align="center">My Collections</h3>
+    <div class="row">
+        <div ng-repeat="collection in vm.collections">
+            <h4 ng-bind="collection.Metapublication.Title"></h4>
+            <p ng-bind="collection.Metapublication.Description"></p>
+            <div class="pull-right btn-group act-buttons">
+                <a ng-href="#!/collections/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+                <a ng-href="#!/collections/edit/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <button ng-click="vm.removeItem(collection.Metapublication.ID, $index)" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+            <hr class="clear">
+        </div>
+    </div>
+</div>

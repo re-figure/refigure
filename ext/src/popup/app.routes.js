@@ -14,8 +14,24 @@
             .when('/auth', {
                 template: '<login-form/>'
             })
+            .when('/collections/new', {
+                template: '<collection-edit-form/>',
+                resolveRedirectTo: IsAuthCtrl
+            })
+            .when('/collections/edit/:id', {
+                template: '<collection-edit-form/>',
+                resolveRedirectTo: IsAuthCtrl
+            })
+            .when('/collections/:id', {
+                template: '<collection-details/>',
+                resolveRedirectTo: IsAuthCtrl
+            })
+            .when('/my-collections', {
+                template: '<collection-list/>',
+                resolveRedirectTo: IsAuthCtrl
+            })
             .when('/figure/edit/:id', {
-                template: '<edit-figure/>'
+                template: '<figure-edit/>'
             })
             .otherwise('/auth');
 

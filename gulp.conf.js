@@ -77,11 +77,9 @@ module.exports = {
         src: extSrcDir,
         dist: extDir + '/dist',
         content: {
-            css: [
-                extSrcDir + '/content/content.css'
-            ],
+            css: extSrcDir + '/content/content.sass',
             mainScripts: [
-                extSrcDir + '/js/sizzle/sizzle.min.js',
+                extSrcDir + '/vendor/sizzle/sizzle.min.js',
                 extSrcDir + '/js/const.js',
                 extSrcDir + '/content/content.js'
             ],
@@ -96,14 +94,12 @@ module.exports = {
             ]
         },
         manifest: {
-            json: [
-                extSrcDir + '/manifest.json'
-            ]
+            json: extSrcDir + '/manifest.json'
         },
         popup: {
             js: [
-                extSrcDir + '/js/angular/angular.min.js',
-                extSrcDir + '/js/angular/angular-route.min.js',
+                extSrcDir + '/vendor/angular/angular.min.js',
+                extSrcDir + '/vendor/angular/angular-route.min.js',
                 extSrcDir + '/js/const.js',
                 extSrcDir + '/popup/*.module.js',
                 extSrcDir + '/popup/**/*.js'

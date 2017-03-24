@@ -2,23 +2,34 @@
 
 const gulp = require('gulp');
 const extOpt = require('./../gulp.conf').extension;
+const runSequence = require('run-sequence');
 
-module.exports = [['extension'], function () {
+module.exports = [['extension'], () => {
     let opts = {
         interval: 250
     };
 
-    gulp.watch(extOpt.manifest.json, opts, ['ext_manifest', 'ext_zip']);
-    gulp.watch(extOpt.background.js.concat(extOpt.background.html), opts, ['ext_background', 'ext_zip']);
-    gulp.watch(extOpt.content.parsers, opts, ['ext_content', 'ext_zip']);
+    gulp.watch(extOpt.manifest.json, opts, () => {
+        runSequence('ext_manifest', 'ext_zip');
+    });
+    gulp.watch(extOpt.background.js.concat(extOpt.background.html), opts, () => {
+        runSequence('ext_background', 'ext_zip');
+    });
+    gulp.watch(extOpt.content.parsers, opts, () => {
+        runSequence('ext_content', 'ext_zip');
+    });
     gulp.watch(
         extOpt.content.css.concat(extOpt.content.mainScripts, extOpt.content.css),
         opts,
-        ['ext_content', 'ext_zip']
+        () => {
+            runSequence('ext_content','ext_zip');
+        }
     );
     gulp.watch(
         extOpt.popup.js.concat(extOpt.popup.html, extOpt.popup.css, extOpt.popup.index),
         opts,
-        ['ext_popup', 'ext_zip']
+        () => {
+            runSequence('ext_popup', 'ext_zip');
+        }
     );
 }];

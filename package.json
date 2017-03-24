@@ -25,9 +25,10 @@
     "gulp-sass": "^3.1.0",
     "gulp-service": "0.0.3",
     "gulp-uglify": "^2.1.2",
-    "imagemin-pngquant": "^5.0.0",
     "gulp-zip": "^4.0.0",
+    "imagemin-pngquant": "^5.0.0",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
+    "merge-stream": "^1.0.1",
     "run-sequence": "^1.2.2",
     "yargs": "^6.6.0"
   },

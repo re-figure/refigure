@@ -29,9 +29,10 @@ app.use(auth.authFilter);
 app.use(routes);
 // any other routes:
 if (config.get('server.html5-support', true)) {
+    const homePage = __dirname + '/../build/';
     app.all('/*', (req, res, next) => {
         res.sendFile('index.html', {
-            root: 'build/'
+            root: homePage
         });
     });
 }

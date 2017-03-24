@@ -1,9 +1,12 @@
-<div class="container-fluid">
+<div class="container-fluid collection">
     <h3 align="center" ng-bind="vm.collection.Title"></h3>
     <div class="row">
 
         <p ng-bind="vm.collection.Description"></p>
-        <div class="text-right">
+        <div class="pull-right btn-group act-buttons">
+            <a ng-href="#!/my-collections" class="btn btn-sm btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
             <a ng-href="#!/collections/{{vm.collection.ID}}/edit" class="btn btn-sm btn-default">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
@@ -11,7 +14,7 @@
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
         </div>
-        <hr>
+        <hr class="clear">
 
     </div>
 </div>

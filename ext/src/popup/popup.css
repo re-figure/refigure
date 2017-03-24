@@ -7,6 +7,11 @@ body {
     height: 100%;
   /*  overflow: auto;*/
  }
+
+.clear {
+    clear: both;
+}
+
 .figure-add{
     color: rgb(220, 220, 220);
     font-size: 20px;
@@ -95,3 +100,11 @@ img{
 }
 
 /* FOUND-FIGURES*/
+
+/*COLLECTIONS-START*/
+
+.collection .act-buttons {
+    margin-bottom: 10px;
+}
+
+/*COLLECTIONS-END*/

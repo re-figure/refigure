@@ -19,10 +19,21 @@
                 .post(_gApiURL + "metapublication", params);
         };
 
+        service.read = function (id) {
+            return $http
+                .get(_gApiURL + "metapublication/" + id);
+        };
+
+        service.update = function (params) {
+            return $http
+                .put(_gApiURL + "metapublication", params);
+        };
+
         service.getUserCollections = function () {
             return $http
                 .get(_gApiURL + "my-metapublications");
         };
+
     }
 
 })(window.angular);

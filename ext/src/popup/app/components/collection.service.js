@@ -35,11 +35,11 @@
                 });
         };
 
-        service.delete = function (id) {
+        service.delete = function (id, cb, idx) {
             return $http
                 .delete(_gApiURL + "metapublication/" + id)
-                .then((resp) => {
-                    console.log("item deleted, resp: ", resp);
+                .then(() => {
+                    if (cb) {cb(idx);}
                     $location.path('/my-collections');
                 });
         };

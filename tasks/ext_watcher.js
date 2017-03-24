@@ -1,7 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
-const extOpt = require('js.shared').config.get('extension');
+const extOpt = require('./../gulp.conf').extension;
 
 module.exports = [['extension'], function () {
     let opts = {

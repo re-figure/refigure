@@ -1,7 +1,7 @@
 'use strict';
 
 const gulp = require('gulp');
-const extOpt = require('js.shared').config.get('extension');
+const extOpt = require('./../gulp.conf').extension;
 const replace = require('gulp-batch-replace');
 const args = require('yargs').argv;
 

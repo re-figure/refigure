@@ -1,0 +1,59 @@
+<div class="r-main-content" layout="row">
+    <div flex flex-offset-gt-xs="15">
+        <div class="r-heading" layout="column">
+            <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">ReFigure</h1>
+            <p class="r-description md-headline">
+                Create sets of related experiments from open-access research publications using the ReFigure chrome
+                plugin.
+            </p>
+        </div>
+
+        <form name="vm.form" ng-submit="vm.submit()">
+            <div class="r-search-input" layout="row">
+                    <md-input-container flex>
+                        <input name="term" autofocus ng-model="vm.searchTerm" placeholder="Search"/>
+                    </md-input-container>
+                    <md-button class="md-icon-button"
+                               md-colors="{background: 'accent-100'}" aria-label="Search"
+                               type="submit"
+                    >
+                        <md-icon md-font-set="material-icons">search</md-icon>
+                    </md-button>
+            </div>
+        </form>
+
+        <div class="r-download-extension" layout="column" layout-align="top center">
+            <md-button layout-padding class="md-raised md-cornered md-accent">
+                Install our Chrome Extension
+                <md-icon md-svg-src="img/chrome.svg">search</md-icon>
+            </md-button>
+        </div>
+    </div>
+    <div hide show-gt-xs flex="15"></div>
+</div>
+<div class="r-most-visited" layout="row">
+    <div flex flex-offset-gt-xs="5">
+        <div class="r-heading" layout="column">
+            Most visited collections
+        </div>
+        <md-content layout-padding layout-gt-sm="row" layout="column">
+            <div flex-sm flex-gt-sm="33" layout-gt-sm="row" layout="column"
+                 ng-repeat="item in vm.mostVisited"
+            >
+                <md-card md-theme="default">
+                    <md-card-title>
+                        <md-card-title-media>
+                            <div class="md-media-sm card-media">
+                                <img ng-src="{{ item.img.src }}" class="md-card-image" alt="Washed Out"/>
+                            </div>
+                        </md-card-title-media>
+                        <md-card-title-text>
+                            <span ng-bind="item.title"></span>
+                        </md-card-title-text>
+                    </md-card-title>
+                </md-card>
+            </div>
+        </md-content>
+    </div>
+    <div hide show-gt-xs flex="5"></div>
+</div>

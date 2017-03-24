@@ -1,11 +1,9 @@
 'use strict';
 
 const gulp = require('gulp');
-const config = require('js.shared').config;
+const extOpt = require('./../gulp.conf').extension;
 const replace = require('gulp-batch-replace');
 const concat = require('gulp-concat');
-
-const extOpt = config.get('extension');
 
 module.exports = function () {
     gulp.src(extOpt.background.html)

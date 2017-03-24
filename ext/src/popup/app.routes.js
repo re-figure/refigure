@@ -14,12 +14,16 @@
             .when('/auth', {
                 template: '<login-form/>'
             })
+            .when('/collections/new', {
+                template: '<edit-collection-form/>',
+                resolveRedirectTo: IsAuthCtrl
+            })
             .when('/collections/:id/edit', {
                 template: '<edit-collection-form/>',
                 resolveRedirectTo: IsAuthCtrl
             })
-            .when('/collections/new', {
-                template: '<edit-collection-form/>',
+            .when('/collections/:id', {
+                template: '<collection-details/>',
                 resolveRedirectTo: IsAuthCtrl
             })
             .when('/my-collections', {

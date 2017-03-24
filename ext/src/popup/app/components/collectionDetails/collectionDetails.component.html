@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <h3 align="center" ng-bind="vm.collection.Title"></h3>
+    <div class="row">
+
+        <p ng-bind="vm.collection.Description"></p>
+        <div class="text-right">
+            <a ng-href="#!/collections/{{vm.collection.ID}}/edit" class="btn btn-sm btn-default">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <a ng-click="vm.removeItem(vm.collection.ID)" class="btn btn-sm btn-default">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </div>
+        <hr>
+
+    </div>
+</div>

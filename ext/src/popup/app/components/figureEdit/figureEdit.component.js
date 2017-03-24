@@ -1,8 +1,8 @@
 (function () {
 
     angular.module('ReFigure')
-        .component('editFigure', {
-            templateUrl: 'view/editFigure.component.html',
+        .component('figureEdit', {
+            templateUrl: 'view/figureEdit.component.html',
             controller: CtrlFunction,
             controllerAs: 'vm'
         });
@@ -13,11 +13,11 @@
         vm.figure = {};
         vm.$onInit = activate;
 
+        ////////////////////
+
         function activate() {
-            let id = $routeParams.id;
-            let figures = STORAGE.FOUND_FIGURES;
-            vm.figure = figures.find(function(el){
-                return el.ID === id;
+            vm.figure = STORAGE.FOUND_FIGURES.find(function(el){
+                return el.ID === $routeParams.id;
             });
         }
     }

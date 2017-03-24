@@ -8,12 +8,12 @@
                 <a ng-href="#!/collections/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
                     <span class="glyphicon glyphicon-eye-open"></span>
                 </a>
-                <a ng-href="#!/collections/{{collection.Metapublication.ID}}/edit" class="btn btn-sm btn-default">
+                <a ng-href="#!/collections/edit/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a ng-click="vm.removeItem(collection.Metapublication.ID, $index)" class="btn btn-sm btn-default">
+                <button ng-click="vm.removeItem(collection.Metapublication.ID, $index)" class="btn btn-sm btn-default">
                     <span class="glyphicon glyphicon-remove"></span>
-                </a>
+                </button>
             </div>
             <hr class="clear">
         </div>

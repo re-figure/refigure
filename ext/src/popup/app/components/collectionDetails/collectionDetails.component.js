@@ -25,7 +25,6 @@
                 CollectionSvc.read($routeParams.id)
                     .then((resp) => {
                         vm.collection = resp.data.data.Metapublication;
-                        // console.log(vm.collection);
                     }, (err) => {
                         console.log(err);
                         vm.error = err.data.message;

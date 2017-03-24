@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('ReFigure')
-        .component("editCollectionForm", {
-            templateUrl: 'view/editCollection.component.html',
+        .component("collectionEditForm", {
+            templateUrl: 'view/collectionEdit.component.html',
             controller: EditCollectionController,
             controllerAs: 'vm'
         });

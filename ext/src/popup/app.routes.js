@@ -15,11 +15,11 @@
                 template: '<login-form/>'
             })
             .when('/collections/new', {
-                template: '<edit-collection-form/>',
+                template: '<collection-edit-form/>',
                 resolveRedirectTo: IsAuthCtrl
             })
-            .when('/collections/:id/edit', {
-                template: '<edit-collection-form/>',
+            .when('/collections/edit/:id', {
+                template: '<collection-edit-form/>',
                 resolveRedirectTo: IsAuthCtrl
             })
             .when('/collections/:id', {
@@ -31,7 +31,7 @@
                 resolveRedirectTo: IsAuthCtrl
             })
             .when('/figure/edit/:id', {
-                template: '<edit-figure/>'
+                template: '<figure-edit/>'
             })
             .otherwise('/auth');
 

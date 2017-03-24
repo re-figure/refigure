@@ -1,0 +1,43 @@
+<div class="r-main-content"
+     layout="column"
+>
+    <div class="r-heading">
+        <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">Sign in</h1>
+    </div>
+    <form name="vm.form"
+          novalidate
+          ng-submit="!vm.loading && vm.form.$valid && vm.submit()"
+    >
+        <div layout="row" layout-margin>
+            <md-input-container flex>
+                <input name="Email" type="email"
+                       auto-focus
+                       auto-select
+                       focus-delay="100"
+                       ng-required="true"
+                       placeholder="Email address"
+                       ng-model="vm.data.Email"/>
+            </md-input-container>
+        </div>
+        <div layout="row" layout-margin>
+            <md-input-container flex>
+                <input name="Password" type="password"
+                       ng-required="true"
+                       placeholder="Password"
+                       ng-model="vm.data.Password"/>
+                <md-button ui-sref="pwdreset" style="margin-left: 0">
+                    Forgot your password?
+                </md-button>
+            </md-input-container>
+        </div>
+        <div layout="column" layout-margin>
+            <md-button type="submit"
+                       class="md-raised md-primary"
+                       ng-disabled="vm.loading || !vm.form.$valid"
+            >
+                Sign in
+            </md-button>
+            <md-button ui-sref="signup">Sign up</md-button>
+        </div>
+    </form>
+</div>

@@ -1,13 +1,10 @@
 'use strict';
 
 const gulp = require('gulp');
-const config = require('js.shared').config;
-
-const buildDir = config.get('buildDir');
-const indexSource = 'front/index.html';
+const config = require('./../gulp.conf');
 
 module.exports = function () {
     return gulp
-        .src(indexSource)
-        .pipe(gulp.dest(buildDir));
+        .src(config.indexSource)
+        .pipe(gulp.dest(config.buildDir));
 };

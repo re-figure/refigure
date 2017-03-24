@@ -5,11 +5,11 @@ const zip = require('gulp-zip');
 const config = require('js.shared').config;
 
 const buildDir = config.get('buildDir');
-const extOpt = config.get('extension');
+const conf = require('./../gulp.conf');
 
 module.exports = function () {
-    return gulp.src(extOpt.dist + '/**/*')
+    return gulp.src(conf.extension.dist + '/**/*')
         .pipe(zip('refigure.zip'))
-        .pipe(gulp.dest(buildDir))
+        .pipe(gulp.dest(conf.buildDir))
 
 };

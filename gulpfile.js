@@ -13,17 +13,27 @@
     require('gulp-load-tasks')();
 
     gulp.task('build', [
+        'bower',
+        'htm',
+        'img',
+        'js',
+        'css',
         'index',
         'extension'
     ]);
 
-    gulp.task('deploy', [
-        'build'
-    ]);
+    gulp.task('deploy', function (done) {
+        runSequence(
+            'clean',
+            ['build', 'revision'],
+            done
+        );
+    });
 
     gulp.task('default', [
         'build',
-        'server'
+        'server',
+        'watch'
     ]);
 
     gulp.task('extension', function (cb) {

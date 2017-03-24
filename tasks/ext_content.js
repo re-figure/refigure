@@ -10,6 +10,7 @@ module.exports = function () {
 
     gulp
         .src(extOpt.content.css)
+        .pipe(concat('content.css'))
         .pipe(gulp.dest(extOpt.dist + '/content'));
 
     gulp

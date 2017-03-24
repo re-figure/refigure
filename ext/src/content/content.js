@@ -185,6 +185,10 @@ window.figurePopup = {
     hide: function () {
         window.figurePopup.element.classList.remove('rf-popup-show');
     },
+    submit: function (event) {
+        event.preventDefault();
+        console.log(event);
+    },
     create: function () {
         if(window.figurePopup.element){
             return false;
@@ -193,12 +197,42 @@ window.figurePopup = {
         window.figurePopup.element.className = 'rf-popup';
         window.figurePopup.element.innerHTML = [
             '<div class="rf-popup-header">Add figure to collection</div>',
-            '<div class="rf-popup-wrp">',
-            'Some Content',
-            '<button class="rf-popup-btn">Submit</button>',
-            '</div>'
+            '<form class="rf-popup-wrp">',
+                '<div class="rf-form-group">',
+                    '<label for="rf-input-url">Figure URL</label>',
+                    '<input name="URL" id="rf-input-url" type="text" placeholder="URL" readonly >',
+                '</div>',
+
+                '<div class="rf-form-group">',
+                    '<label for="rf-input-fig-doi">Figure DOI</label>',
+                    '<input name="FigureDOI" id="rf-input-fig-doi" type="text" placeholder="FigureDOI">',
+                '</div>',
+
+                '<div class="rf-form-group">',
+                    '<label for="rf-input-caption">Caption</label>',
+                    '<input name="Caption" id="rf-input-caption" type="text" placeholder="Caption">',
+                '</div>',
+
+                '<div class="rf-form-group">',
+                    '<label for="rf-input-legend">Legend</label>',
+                    '<textarea name="Legend" id="rf-input-legend" placeholder="Legend"></textarea>',
+                '</div>',
+
+                '<div class="rf-form-group">',
+                    '<label for="rf-input-article-doi">Article DOI</label>',
+                    '<input class="form-control" name="DOI" id="rf-input-article-doi" type="text" placeholder="Article DOI">',
+                '</div>',
+
+                '<div class="rf-form-group">',
+                    '<label for="rf-input-article-authors">Article authors</label>',
+                    '<textarea name="Authors" id="rf-input-article-authors" placeholder="Authors"></textarea>',
+                '</div>',
+
+                '<button id="rf-btn-submit" onclick="figurePopup.submit()" class="rf-popup-btn">Submit</button>',
+            '</form>'
         ].join('');
         document.body.appendChild(window.figurePopup.element);
+        document.getElementById('rf-btn-submit').addEventListener('submit', window.figurePopup.submit);
         return true;
     }
 };

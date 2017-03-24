@@ -27,6 +27,7 @@
       "dist": "./ext/dist",
       "content": {
         "css": [
+          "./ext/src/css/bootstrap/css/bootstrap.min.css",
           "./ext/src/content/content.css"
         ],
         "mainScripts":[

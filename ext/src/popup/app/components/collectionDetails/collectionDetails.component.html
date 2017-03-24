@@ -1,20 +1,20 @@
 <div class="container-fluid collection">
     <h3 align="center" ng-bind="vm.collection.Title"></h3>
     <div class="row">
-
         <p ng-bind="vm.collection.Description"></p>
-        <div class="pull-right btn-group act-buttons">
-            <a ng-href="#!/my-collections" class="btn btn-sm btn-default">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a ng-href="#!/collections/edit/{{vm.collection.ID}}" class="btn btn-sm btn-default">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-            <a ng-click="vm.removeItem(vm.collection.ID)" class="btn btn-sm btn-default">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
+        <div class="text-right">
+            <div class="btn-group">
+                <a ng-href="#!/my-collections" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a ng-href="#!/collections/edit/{{vm.collection.ID}}" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a ng-click="vm.removeItem(vm.collection.ID)" class="btn btn-sm btn-default">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
         </div>
-        <hr class="clear">
-
+        <hr>
     </div>
 </div>

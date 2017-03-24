@@ -25,7 +25,7 @@
     gulp.task('deploy', function (done) {
         runSequence(
             'clean',
-            ['build', 'minify'],
+            ['build', 'revision'],
             done
         );
     });

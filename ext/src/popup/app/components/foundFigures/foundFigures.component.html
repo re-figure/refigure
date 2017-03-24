@@ -4,10 +4,10 @@
 <div class="container-fluid" ng-repeat="fig in vm.figures">
     <div class="row">
         <div class="col-xs-4">
-            <a ng-show="fig.onClickable" ng-href="#!/figure/edit/{{fig.ID}}" class="custom-link">
+            <a ng-show="fig.isClickable" ng-href="#!/figure/edit/{{fig.ID}}" class="custom-link">
                 <img class="thumbnail" ng-src="{{fig.URL}}">
             </a>
-            <img  ng-show="!fig.onClickable" class="thumbnail" ng-src="{{fig.URL}}">
+            <img  ng-show="!fig.isClickable" class="thumbnail" ng-src="{{fig.URL}}">
         </div>
         <div class="col-xs-8">
             <div class="my-caption" ng-bind="fig.Caption"></div>
@@ -15,13 +15,13 @@
             <div class="no-padding">
                 <div class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
                 <span class="glyphicon"
-                      ng-class="{'glyphicon-plus': !fig.showMoreInfo, 'glyphicon-minus': fig.showMoreInfo}"></span>
-                    <span ng-show="!fig.showMoreInfo">more</span><span ng-show="fig.showMoreInfo">less</span> info
+                      ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
+                    <span ng-bind="vm.opened === $index ? 'less' : 'more'"></span> info
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" ng-show="fig.showMoreInfo">
+    <div class="row" ng-show="vm.opened === $index">
         <div class="col-xs-12">
             <ul class="list-group">
                 <li class="list-group-item">

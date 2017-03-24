@@ -7,34 +7,25 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject=["$scope", 'STORAGE', 'AuthService'];
-    function CtrlFunction($scope, STORAGE, AuthService) {
+    CtrlFunction.$inject = ['STORAGE', 'AuthService'];
+    function CtrlFunction(STORAGE, AuthService) {
         let vm = this;
-        let currentIndex = -1;
+        vm.opened = -1;
         vm.figures = [];
-        vm.onShowMoreInfo = show;
+        vm.onShowMoreInfo = onShowMoreInfo;
         vm.$onInit = activate;
 
         function activate() {
             vm.figures = STORAGE.FOUND_FIGURES;
-            vm.figures.forEach(function(el){
-                if(el.UserID === AuthService.userInfo.ID){
-                    el.onClickable = true;
+            vm.figures.forEach(function (el) {
+                if (el.UserID === AuthService.userInfo.ID) {
+                    el.isClickable = true;
                 }
-             });
+            });
         }
 
-        function show(index) {
-            if (currentIndex < 0) {
-                vm.figures[index].showMoreInfo = true;
-                currentIndex = index;
-            } else if (index === currentIndex) {
-                vm.figures[index].showMoreInfo = !vm.figures[index].showMoreInfo;
-            } else {
-                vm.figures[currentIndex].showMoreInfo = false;
-                vm.figures[index].showMoreInfo = true;
-                currentIndex = index;
-            }
+        function onShowMoreInfo(index) {
+            vm.opened = vm.opened === index ? -1 : index;
         }
     }
 })();

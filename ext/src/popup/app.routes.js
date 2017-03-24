@@ -30,6 +30,9 @@
                 template: '<collection-list/>',
                 resolveRedirectTo: IsAuthCtrl
             })
+            .when('/figure/edit/:id', {
+                template: '<edit-figure/>'
+            })
             .otherwise('/auth');
 
         IsAuthCtrl.$inject = ['AuthService'];

@@ -108,11 +108,21 @@ function sendCheckFiguresRequest(figures) {
                 count: count,
                 figures: foundFigures
             });
+            chrome.storage.local.set({
+                foundFigures: foundFigures
+            });
         }
     };
+
+    var filteredFigures = figures.map(function (el) {
+        return {
+            URL: el.URL,
+            DOIFigure: el.DOIFigure
+        }
+    });
     xhr.open("POST", _gApiURL + 'check-figures', true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify({figures: figures}));
+    xhr.send(JSON.stringify({figures: filteredFigures}));
 }
 
 function logError() {

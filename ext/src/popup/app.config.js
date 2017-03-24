@@ -5,15 +5,15 @@
         .constant('STORAGE', {
             CURRENT_TAB: null,
             FIGURES: [],
+            FOUND_FIGURES: [],
             SELECTED: []
         })
         .config(ConfigController)
         .run(RunController);
 
-    ConfigController.$inject = ['STORAGE'];
+    ConfigController.$inject = ['STORAGE', '$compileProvider'];
 
-    function ConfigController(STORAGE) {
-
+    function ConfigController(STORAGE, $compileProvider) {
         chrome.storage.local.get('rfFigures', function (data) {
             STORAGE.FIGURES = data.rfFigures || [];
         });
@@ -28,22 +28,31 @@
         chrome.storage.local.get('rfSelected', function (data) {
             STORAGE.SELECTED = data.rfSelected || [];
         });
+
+        chrome.storage.local.get('foundFigures', function (data) {
+            STORAGE.FOUND_FIGURES = data.foundFigures || [];
+        });
+
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+
     }
 
-    RunController.$inject = ['$rootScope', 'FoundFiguresService'];
+    RunController.$inject = ['$rootScope', 'STORAGE', 'FoundFiguresService'];
 
-    function RunController($rootScope, FoundFiguresService) {
+    function RunController($rootScope, STORAGE, FoundFiguresService) {
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {
                         STORAGE.FIGURES = request.figures;
                     });
+                } else if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED){
+                    $rootScope.$apply(function () {
+                        STORAGE.FOUND_FIGURES = request.figures;
+                    });
                 }
-                return true;
+            return true;
             }
         );
-
-
 
         $rootScope.figuresToggler = FoundFiguresService;
     }

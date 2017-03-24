@@ -3,9 +3,9 @@
     angular.module('ReFigure')
         .service('CollectionSvc', CollectionService);
 
-    CollectionService.$inject = ['$http', 'AuthService'];
+    CollectionService.$inject = ['$location', '$http', 'AuthService'];
 
-    function CollectionService($http, AuthService) {
+    function CollectionService($location, $http, AuthService) {
         let service = this;
 
         if (AuthService.userInfo) {
@@ -16,7 +16,10 @@
 
         service.create = function (params) {
             return $http
-                .post(_gApiURL + "metapublication", params);
+                .post(_gApiURL + "metapublication", params)
+                .then((resp) => {
+                    $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                });
         };
 
         service.read = function (id) {
@@ -26,7 +29,19 @@
 
         service.update = function (params) {
             return $http
-                .put(_gApiURL + "metapublication", params);
+                .put(_gApiURL + "metapublication", params)
+                .then((resp) => {
+                    $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                });
+        };
+
+        service.delete = function (id) {
+            return $http
+                .delete(_gApiURL + "metapublication/" + id)
+                .then((resp) => {
+                    console.log("item deleted, resp: ", resp);
+                    $location.path('/my-collections');
+                });
         };
 
         service.getUserCollections = function () {

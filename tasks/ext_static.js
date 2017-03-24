@@ -1,14 +1,12 @@
 'use strict';
 
 const gulp = require('gulp');
-const extOpt = require('js.shared').config.get('extension');
+const extOpt = require('./../gulp.conf').extension;
 
 module.exports = function () {
 
-    gulp
+    return gulp
         .src(extOpt.src + '/img/**/*')
         .pipe(gulp.dest(extOpt.dist + '/img'));
 
-    return gulp.src(extOpt.src + '/css/**/*')
-        .pipe(gulp.dest(extOpt.dist + '/css'));
 };

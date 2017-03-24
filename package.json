@@ -9,7 +9,6 @@
     "gulp-autoprefixer": "^3.1.1",
     "gulp-batch-replace": "0.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-cssimport": "^5.0.0",
     "gulp-cssnano": "^2.1.2",
     "gulp-embedlr": "^0.5.2",
     "gulp-filter": "^5.0.0",
@@ -29,6 +28,7 @@
     "gulp-zip": "^4.0.0",
     "imagemin-pngquant": "^5.0.0",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
+    "merge-stream": "^1.0.1",
     "run-sequence": "^1.2.2",
     "yargs": "^6.6.0"
   },

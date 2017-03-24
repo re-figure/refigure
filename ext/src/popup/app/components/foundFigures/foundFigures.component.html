@@ -1,42 +1,48 @@
-<div class="container-fluid" ng-hide="vm.figures.length">
-    <h2>NO DATA IS AVAILABLE</h2>
-</div>
-<div class="container-fluid" ng-repeat="fig in vm.figures">
-    <div class="row">
-        <div class="col-xs-4">
-            <a ng-show="fig.isClickable" ng-href="#!/figure/edit/{{fig.ID}}" class="custom-link">
-                <img class="thumbnail" ng-src="{{fig.URL}}">
-            </a>
-            <img  ng-show="!fig.isClickable" class="thumbnail" ng-src="{{fig.URL}}">
-        </div>
-        <div class="col-xs-8">
-            <div class="my-caption" ng-bind="fig.Caption"></div>
-            <div class="no-padding"><span class="bg-info inline"> in <span ng-bind="fig.FoundInCollectionsCounter"></span> collections</span></div>
-            <div class="no-padding">
-                <div class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
-                <span class="glyphicon"
-                      ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
+<div class="container-fluid">
+    <h4 ng-hide="vm.figures.length" class="text-center">NO DATA IS AVAILABLE</h4>
+
+    <div ng-repeat="fig in vm.figures">
+        <div class="row">
+            <div class="col-xs-4">
+                <a ng-show="fig.isClickable" ng-href="#!/figure/edit/{{fig.ID}}" class="custom-link">
+                    <img class="thumbnail" ng-src="{{fig.URL}}">
+                </a>
+                <img  ng-show="!fig.isClickable" class="thumbnail" ng-src="{{fig.URL}}">
+            </div>
+            <div class="col-xs-8">
+                <div class="caption" ng-bind="fig.Caption"></div>
+                <small class="help-block"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
+                <button class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
+                    <span class="glyphicon" ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
                     <span ng-bind="vm.opened === $index ? 'less' : 'more'"></span> info
-                </div>
+                </button>
             </div>
         </div>
-    </div>
-    <div class="row" ng-show="vm.opened === $index">
-        <div class="col-xs-12">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <b class="list-group-item-heading">Caption</b>
-                    <p class="list-group-item-text">{{fig.Caption}}</p>
-                </li>
-                <li class="list-group-item">
-                    <b class="list-group-item-heading">Authors</b>
-                    <p class="list-group-item-text">{{fig.Authors}}</p>
-                </li>
-                <li class="list-group-item">
-                    <b class="list-group-item-heading">Legend</b>
-                    <p class="list-group-item-text">{{fig.Legend}}</p>
-                </li>
-            </ul>
+        <div class="row" ng-show="vm.opened === $index">
+            <div class="col-xs-12">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-show="fig.Caption">
+                        <b class="list-group-item-heading">Caption</b>
+                        <p class="list-group-item-text">{{fig.Caption}}</p>
+                    </li>
+                    <li class="list-group-item" ng-show="fig.Authors">
+                        <b class="list-group-item-heading">Authors</b>
+                        <p class="list-group-item-text">{{fig.Authors}}</p>
+                    </li>
+                    <li class="list-group-item" ng-show="fig.Legend">
+                        <b class="list-group-item-heading">Legend</b>
+                        <p class="list-group-item-text">{{fig.Legend}}</p>
+                    </li>
+                    <li class="list-group-item" ng-show="fig.DOIFigure">
+                        <b class="list-group-item-heading">Figure DOI</b>
+                        <p class="list-group-item-text">{{fig.DOIFigure}}</p>
+                    </li>
+                    <li class="list-group-item" ng-show="fig.DOI">
+                        <b class="list-group-item-heading">Article DOI</b>
+                        <p class="list-group-item-text">{{fig.DOI}}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

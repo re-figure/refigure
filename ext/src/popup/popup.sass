@@ -6,12 +6,9 @@ html
 
 body
     width: 400px
-    transition: width .3s linear
+    transition: width .2s linear
     height: 100%
     position: relative
-
-.clear
-    clear: both
 
 .figure-add
     color: rgb(220, 220, 220)
@@ -23,6 +20,9 @@ img
     max-width: 100%
     min-height: 100%
 
+.no-padding
+    padding: 0
+
 .logout-form
     margin-bottom: 20px
 
@@ -33,67 +33,28 @@ img
 .login-password
     margin-top: 10px
 
-/* FOUND-FIGURES*/
-
-.block-with-custom-margin
-    margin-right: 10px
-    margin-left: 15px
-
-.inline
-    display: inline-block
+.navbar-text
+    float: none
+    margin-right: 0
+    margin-left: 0
 
 .clickable
     cursor: pointer
 
-.dark-navbar
-    color: whitesmoke
-    background-color: #101010
-
-.navbar-text
-    float: none
-
-.figures-to-left
-    position: absolute
-    width: 400px
-    padding: 15px 0
-    max-height: 100%
-    z-index: 99
-    overflow: auto
-
-.my-caption
-    padding: 0
-    max-height: 40px
-    line-height: 18px
-    overflow: hidden
-    padding-bottom: 5px
-
-.no-padding
-    padding: 0
-
 .body-to-wide
     width: 780px
 
-.mainblock
-    float: right
-    background-color: white
+.main-block
+    background-color: #fff
     z-index: 999
     padding: 0
 
-.mainblock-fix-width-one
-    width: 380px
+    &-scroll
+        float: right
+        width: 380px
 
-.mainblock-fix-width-two
-    width: 400px
+    &-no-scroll
+        float: right
+        width: 400px
 
-.custom-link:hover,
-.custom-link:focus
-    outline: auto
-
-/* FOUND-FIGURES*/
-
-/*COLLECTIONS-START*/
-
-.collection .act-buttons
-    margin-bottom: 10px
-
-/*COLLECTIONS-END*/
+@import "app/components/foundFigures/foundFigures"

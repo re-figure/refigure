@@ -1,4 +1,4 @@
-<form class="cc-form collection" name="cc-form" ng-submit="vm.editCollection(vm.formData)">
+<form class="collection" name="cc_form" ng-submit="vm.editCollection(vm.formData)">
     <div class="form-group">
         <div>
             <label>Collection title</label>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-right">
-        <button class="btn btn-default" name="cc_submit" type="submit" ng-bind="vm.buttonName">Submit</button>
+        <button ng-disabled="cc_form.$invalid" class="btn btn-default" type="submit" ng-bind="vm.buttonName">Submit</button>
         <a ng-href="#!/" class="btn btn-default">Cancel</a>
     </div>
     <hr>

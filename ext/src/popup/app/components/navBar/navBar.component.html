@@ -1,10 +1,14 @@
-<nav class="navbar navbar-default dark-navbar">
-    <div class="navbar-text block-with-custom-margin">
-            <span class="pull-right"><a href="#!/"><span class="glyphicon glyphicon-home"></span></a></span>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <p class="navbar-text">
+            <a class="pull-right" href="#!/"><span class="glyphicon glyphicon-home"></span></a>
             <span class="clickable" ng-click="vm.figuresToggler.toggle()">
               <span class="glyphicon" ng-class="vm.figuresToggler.isOpened ? 'glyphicon-menu-right' : 'glyphicon-menu-left'"></span>
-              <span><b ng-bind="vm.figuresToggler.isOpened ? 'HIDE REFIGURES ON THIS PAGE' : vm.store.FOUND_FIGURES.length + ' REFIGURES ON THIS PAGE'"></b></span>
+              <span>
+                  <b ng-bind="vm.figuresToggler.isOpened ? 'HIDE REFIGURES ON THIS PAGE' : vm.store.FOUND_FIGURES.length + ' REFIGURES ON THIS PAGE'"></b>
+              </span>
             </span>
+        </p>
     </div>
 </nav>
 <div ng-show="vm.userInfo" class="container-fluid">

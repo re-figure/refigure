@@ -4,18 +4,20 @@
         <div ng-repeat="collection in vm.collections">
             <h4 ng-bind="collection.Metapublication.Title"></h4>
             <p ng-bind="collection.Metapublication.Description"></p>
-            <div class="pull-right btn-group act-buttons">
-                <a ng-href="#!/collections/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
-                    <span class="glyphicon glyphicon-eye-open"></span>
-                </a>
-                <a ng-href="#!/collections/edit/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <button ng-click="vm.removeItem(collection.Metapublication.ID, $index)" class="btn btn-sm btn-default">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
+            <div class="text-right">
+                <div class="btn-group">
+                    <a ng-href="#!/collections/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a ng-href="#!/collections/edit/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <button ng-click="vm.removeItem(collection.Metapublication.ID, $index)" class="btn btn-sm btn-default">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
             </div>
-            <hr class="clear">
+            <hr>
         </div>
     </div>
 </div>

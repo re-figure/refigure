@@ -9,20 +9,17 @@ const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
-const cssimport = require("gulp-cssimport");
+const merge = require('merge-stream');
 
 module.exports = function () {
 
-    gulp
+    let css = gulp
         .src(extOpt.popup.css)
-        .pipe(sass({
-            processImport: true
-        }))
+        .pipe(sass())
         .pipe(concat('popup.css'))
-        .pipe(cssimport())
         .pipe(gulp.dest(extOpt.dist + '/popup'));
 
-    gulp
+    let templates = gulp
         .src(extOpt.src + '/popup/**/!(*popup).html')
         .pipe(rename({
             dirname: ''
@@ -38,11 +35,8 @@ module.exports = function () {
         .pipe(uglify())
         .pipe(gulp.dest(extOpt.dist + '/popup'));
 
-    gulp.src(extOpt.popup.index)
+    let index = gulp.src(extOpt.popup.index)
         .pipe(gulp.dest(extOpt.dist + '/popup'));
-
-    /*gulp.src(extOpt.popup.css)
-        .pipe(gulp.dest(extOpt.dist + '/popup'));*/
 
     let phs = [];
 
@@ -50,9 +44,11 @@ module.exports = function () {
         phs.push([ph, extOpt.replace[ph]]);
     });
 
-    return gulp
+    let js = gulp
         .src(extOpt.popup.js)
         .pipe(concat('app.js'))
         .pipe(replace(phs))
         .pipe(gulp.dest(extOpt.dist + '/popup'));
+
+    return merge(css, templates, index, js);
 };

@@ -11,5 +11,4 @@ module.exports = function () {
     return gulp.src(conf.extension.dist + '/**/*')
         .pipe(zip('refigure.zip'))
         .pipe(gulp.dest(conf.buildDir))
-
 };

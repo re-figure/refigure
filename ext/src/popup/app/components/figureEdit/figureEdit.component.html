@@ -1,27 +1,27 @@
-<form>
+<form name="editFigure">
     <div class="form-group">
-        <label>URL</label>
-        <input type="text" class="form-control" ng-model="vm.figure.URL" readonly>
+        <label for="edit-figure-url">URL</label>
+        <input id="edit-figure-url" type="text" class="form-control" ng-model="vm.figure.URL" readonly>
     </div>
     <div class="form-group">
-        <label>Caption</label>
-        <textarea class="form-control" ng-model="vm.figure.Caption"></textarea>
+        <label for="edit-figure-caption">Caption</label>
+        <textarea id="edit-figure-caption" class="form-control" ng-model="vm.figure.Caption"></textarea>
     </div>
     <div class="form-group">
-        <label>Legend</label>
-        <input type="text" class="form-control" ng-model="vm.figure.Legend">
+        <label for="edit-figure-legend">Legend</label>
+        <input id="edit-figure-legend" type="text" class="form-control" ng-model="vm.figure.Legend">
     </div>
     <div class="form-group">
-        <label>Article authors</label>
-        <input type="text" class="form-control" ng-model="vm.figure.Authors">
+        <label for="edit-figure-authors">Article authors</label>
+        <input id="edit-figure-authors" type="text" class="form-control" ng-model="vm.figure.Authors">
     </div>
     <div class="form-group">
-        <label>Article DOI</label>
-        <input type="text" class="form-control" ng-model="vm.figure.DOI">
+        <label for="edit-figure-doi">Article DOI</label>
+        <input id="edit-figure-doi" type="text" class="form-control" ng-model="vm.figure.DOI">
     </div>
     <div class="form-group">
-        <label>DOI Figure</label>
-        <input type="text" class="form-control" ng-model="vm.figure.DOIFigure">
+        <label for="edit-figure-doi-figure">DOI Figure</label>
+        <input id="edit-figure-doi-figure" type="text" class="form-control" ng-model="vm.figure.DOIFigure">
     </div>
     <p class="text-right">
         <a ng-href="#!/" class="btn btn-default">CANCEL</a>

@@ -10,6 +10,8 @@ let tmpDir = 'tmp';
 let bowerDir = './bower_components';
 let angularMaterialDir = bowerDir + '/angular-material';
 let restApiUri = argv.api || '/api';
+let extDir = './ext';
+let extSrcDir = extDir + '/src';
 
 module.exports = {
     stage: stage,
@@ -67,5 +69,48 @@ module.exports = {
     htmDir: buildDir + '/view',
     viewFileMin: 'partials.min.js',
     indexSource: clientDir + '/index.html',
-    indexHtml: buildDir + '/index.html'
+    indexHtml: buildDir + '/index.html',
+    extension: {
+        replace: {
+            'REMOTE_API_URL': 'https://refigure.noblecoz.com/api/'
+        },
+        src: extSrcDir,
+        dist: extDir + '/dist',
+        content: {
+            css: [
+                extSrcDir + '/content/content.css'
+            ],
+            mainScripts: [
+                extSrcDir + '/js/sizzle/sizzle.min.js',
+                extSrcDir + '/js/const.js',
+                extSrcDir + '/content/content.js'
+            ],
+            parsers: extSrcDir + '/content/parsers/*.js'
+        },
+        background: {
+            dir: '/background',
+            html: extSrcDir + '/background/background.html',
+            js: [
+                extSrcDir + '/js/const.js',
+                extSrcDir + '/background/background.js'
+            ]
+        },
+        manifest: {
+            json: [
+                extSrcDir + '/manifest.json'
+            ]
+        },
+        popup: {
+            js: [
+                extSrcDir + '/js/angular/angular.min.js',
+                extSrcDir + '/js/angular/angular-route.min.js',
+                extSrcDir + '/js/const.js',
+                extSrcDir + '/popup/*.module.js',
+                extSrcDir + '/popup/**/*.js'
+            ],
+            html: extSrcDir + '/popup/**/!(*popup).html',
+            css: extSrcDir + '/popup/popup.sass',
+            index: extSrcDir + '/popup/popup.html'
+        }
+    }
 };

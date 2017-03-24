@@ -4,6 +4,9 @@
         <div ng-repeat="collection in vm.collections">
             <h4 ng-bind="collection.Metapublication.Title"></h4>
             <p ng-bind="collection.Metapublication.Description"></p>
+            <div class="text-right">
+                <a ng-href="#!/collections/{{collection.Metapublication.ID}}/edit" class="btn btn-sm btn-default">Edit</a>
+            </div>
             <hr>
         </div>
     </div>

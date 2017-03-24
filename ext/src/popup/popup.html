@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="/popup/popup.css">
 </head>
 <body ng-class="{'body-to-wide': figuresToggler.isOpened}">
-<found-figures class="col-xs-6 figures-to-left" ng-if="figuresToggler.isOpened"></found-figures>
-<div ng-class="figuresToggler.isOpened ? 'col-xs-6 mainblock-fix-width-one' : 'col-xs-12 mainblock-fix-width-two'">
+<found-figures class="figures-to-left" ng-if="figuresToggler.isOpened"></found-figures>
+<div class="mainblock" ng-class="figuresToggler.isOpened ? 'col-xs-6 mainblock-fix-width-one pull-right' : 'col-xs-12 mainblock-fix-width-two'">
     <nav-bar></nav-bar>
     <div ng-view class="container-fluid"></div>
 </div>

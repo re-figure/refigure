@@ -5,8 +5,9 @@ html
 
 body
     width: 400px
-    transition: width .2s
+    transition: width .3s linear
     height: 100%
+    position: relative
 
 .figure-add
     color: rgb(220, 220, 220)
@@ -29,11 +30,9 @@ img
     margin-top: 10px
 
 /* FOUND-FIGURES*/
-.vcenter
-    display: inline-block
-    float: none
-    vertical-align: middle
-    margin-right: 15px
+
+.block-with-custom-margin
+    margin-right: 10px
     margin-left: 15px
 
 .inline
@@ -42,22 +41,27 @@ img
 .clickable
     cursor: pointer
 
-.navbar
+.dark-navbar
     color: whitesmoke
     background-color: #101010
 
+.navbar-text
+    float: none
+
 .figures-to-left
+    position: absolute
     width: 400px
     padding: 15px 0
-    margin-left: 0px
-    height: 100%
+    max-height: 100%
+    z-index: 99
     overflow: auto
 
 .my-caption
     padding: 0
-    height: 40px
+    max-height: 40px
     line-height: 18px
     overflow: hidden
+    padding-bottom: 5px
 
 .no-padding
     padding: 0
@@ -65,20 +69,20 @@ img
 .body-to-wide
     width: 780px
 
+.mainblock
+    float: right
+    background-color: white
+    z-index: 999
+    padding: 0
+
 .mainblock-fix-width-one
     width: 380px
-    padding: 0
-/* margin-right: 20px
- height: 100%*/
 
 .mainblock-fix-width-two
     width: 400px
-    padding: 0
-    /* margin-right: 20px
-     height: 100%*/
-.block-to-right
-    margin-left: 400px
-    /*  position: relative
-      left: 400px*/
+
+.custom-link:hover,
+.custom-link:focus
+    outline: auto
 
 /* FOUND-FIGURES*/

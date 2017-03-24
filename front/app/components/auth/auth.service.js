@@ -327,7 +327,7 @@
          */
         function saveAndSign(state, params) {
             saveCurrentUrl(state, params);
-            $state.go('signin', {}, {
+            $state.go('auth.signin', {}, {
                 // location: 'replace'
             });
         }
@@ -513,7 +513,7 @@
                 var $state = $injector.get('$state');
                 auth.saveCurrentUrl();
                 if (!auth.isAuthUrl($state.current)) {
-                    $state.go('signin');
+                    $state.go('auth.signin');
                 }
             }
             return $q.reject(resp);

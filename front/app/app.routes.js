@@ -9,42 +9,6 @@
         .run(appRun);
 
     var states = [{
-        state: 'home',
-        config: {
-            url: '/',
-            template: '<home-page></home-page>',
-            data: {
-                menuTitle: 'Home'
-            }
-        }
-    }, {
-        state: 'about',
-        config: {
-            url: '/about',
-            template: '<about-page></about-page>',
-            data: {
-                menuTitle: 'About'
-            }
-        }
-    }, {
-        state: 'news',
-        config: {
-            url: '/news',
-            template: '<news-page></news-page>',
-            data: {
-                menuTitle: 'News'
-            }
-        }
-    }, {
-        state: 'search-results',
-        config: {
-            url: '/search-results?term',
-            template: '<search-results-page></search-results-page>',
-            data: {
-                menuTitle: 'Results'
-            }
-        }
-    }, {
         state: 'some-file-to-donwload',
         config: {
             url: '//cdn.refigure.com/somefile.pdf'

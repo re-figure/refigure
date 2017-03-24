@@ -1,1 +1,53 @@
 @import "accountSettings/accountSettings.component"
+@import "myCollections/myCollections.component"
+
+.r-profile-page
+  overflow: hidden
+  max-width: 100%
+  max-height: 100%
+  height: 100%
+
+.r-profile-side-nav
+  width: 272px
+  min-width: 272px
+  max-width: 272px
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)
+
+.r-nav-header
+  //background-color: #106CC8
+  //background: -webkit-linear-gradient(#185694, #106cc8)
+  //background: linear-gradient(#185694, #106cc8)
+  //border-bottom: 1px solid #267ED5
+  flex-shrink: 0
+  z-index: 2
+
+.r-profile-logo
+  text-align: center
+  display: flex
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -webkit-flex-direction: column
+  flex-direction: column
+  -webkit-box-align: center
+  -webkit-align-items: center
+  align-items: center
+  padding: 0 0 16px
+  margin: 0 auto
+  border-bottom: none
+  text-decoration: none
+  >img
+    width: 90px
+    height: auto
+    display: block
+    transform-origin: 50% 0
+    transform: scale(1.2)
+    margin-top: 2rem
+  .r-profile-logo-text
+    color: #fff
+    text-decoration: none
+    font-size: 2.2rem
+
+.r-profile-toolbar
+  background: #f6f6f6 !important
+  color: #202020 !important
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.14), 0 0 2px 2px rgba(0, 0, 0, 0.098), 0 0 5px 1px rgba(0, 0, 0, 0.084)

@@ -1,0 +1,63 @@
+<md-sidenav class="md-sidenav-left r-profile-side-nav"
+            hide-print
+            md-colors="{background: 'primary-500'}"
+            md-component-id="profile-sidenav"
+            md-is-locked-open="$mdMedia('gt-sm')"
+>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <a ui-sref="home.search"><img alt="Brand" src="img/refigure_logo.png" class="r-nav-logo"/></a>
+            <h2 ng-bind="vm.projectName" class="r-nav-bar-heading"></h2>
+        </div>
+        <!--header class="r-nav-header">
+            <a ng-href="/" class="r-profile-logo">
+                <img src="img/refigure_logo.png" alt="" />
+                <h1 class="r-profile-logo-text">ReFigure</h1>
+            </a>
+        </header-->
+    </md-toolbar>
+
+    <md-content md-colors="{background: 'primary-500'}" flex>
+        <md-list-item class="md-2-line"
+                      ng-repeat="item in vm.menuItems"
+                      aria-label="{{ item.label }}"
+                      ui-sref="{{ item.state }}">
+            <div class="md-list-item-text" layout="column">
+                <h3 ng-bind="item.label"></h3>
+                <h4 ng-bind="item.description"></h4>
+            </div>
+        </md-list-item>
+        <md-list-item class="md-2-line"
+                      aria-label="Sign out"
+                      ng-click="vm.signOut()">
+            <div class="md-list-item-text" layout="column">
+                <h3>Sign out</h3>
+            </div>
+        </md-list-item>
+    </md-content>
+
+</md-sidenav>
+
+<div layout="column" flex>
+
+    <md-toolbar class="r-profile-toolbar">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button hide-gt-sm md-primary" ng-click="vm.toggleSideBar()" aria-label="Open menu">
+                <md-icon md-font-set="material-icons">menu</md-icon>
+            </md-button>
+
+            <h2 class="r-toolbar-breadcrumb r-nav-bar-heading" ng-bind="vm.state.current.data.label"></h2>
+
+            <span flex></span>
+
+            <!--md-button ui-sref="profile" class="md-icon-button md-primary" aria-label="My ReFigure">
+                <md-icon md-font-set="material-icons">account_box</md-icon>
+            </md-button-->
+        </div>
+    </md-toolbar>
+
+    <md-content class="r-page-content" md-scroll-y layout="column" flex>
+        <ui-view layout-padding flex="noshrink"></ui-view>
+        <main-footer layout="row" flex="noshrink"></main-footer>
+    </md-content>
+</div>

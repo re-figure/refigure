@@ -10,15 +10,15 @@
 
         <form name="vm.form" ng-submit="vm.submit()">
             <div class="r-search-input" layout="row">
-                    <md-input-container flex>
-                        <input name="term" autofocus ng-model="vm.searchTerm" placeholder="Search"/>
-                    </md-input-container>
-                    <md-button class="md-icon-button"
-                               md-colors="{background: 'accent-100'}" aria-label="Search"
-                               type="submit"
-                    >
-                        <md-icon md-font-set="material-icons">search</md-icon>
-                    </md-button>
+                <md-input-container flex>
+                    <input name="term" autofocus ng-model="vm.searchTerm" placeholder="Search"/>
+                </md-input-container>
+                <md-button class="md-icon-button"
+                           md-colors="{background: 'accent-100'}" aria-label="Search"
+                           type="submit"
+                >
+                    <md-icon md-font-set="material-icons">search</md-icon>
+                </md-button>
             </div>
         </form>
 
@@ -37,7 +37,7 @@
             Most visited collections
         </div>
         <md-content layout-padding layout-gt-sm="row" layout="column">
-            <div flex-sm flex-gt-sm="33" layout-gt-sm="row" layout="column"
+            <div flex-gt-sm="33"
                  ng-repeat="item in vm.mostVisited"
             >
                 <md-card md-theme="default">

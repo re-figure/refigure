@@ -1,1 +1,92 @@
-<h1>Sorry, this page is under construction</h1>
+<md-content>
+    <md-tabs md-dynamic-height md-border-bottom md-selected="vm.tab">
+        <md-tab label="General" id="account-general-tab">
+            <md-content class="md-padding">
+                <h1 class="md-display-2">General</h1>
+                <form name="vm.formGeneral"
+                      novalidate
+                      ng-submit="!vm.loading && vm.formGeneral.$valid && vm.update()"
+                      flex
+                >
+                    <div layout="column" layout-gt-sm="row" layout-margin>
+                        <md-input-container flex-gt-sm>
+                            <input name="FirstName"
+                                   auto-focus
+                                   ng-required="true"
+                                   placeholder="First name"
+                                   ng-model="vm.data.FirstName"/>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm>
+                            <input name="LastName"
+                                   ng-required="true"
+                                   placeholder="Last name"
+                                   ng-model="vm.data.LastName"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-sm="row" layout-margin>
+                        <md-input-container flex-gt-sm>
+                            <input name="organization"
+                                   placeholder="Organization"
+                                   ng-model="vm.data.Organization"/>
+                        </md-input-container>
+                        <md-input-container flex-gt-sm>
+                            <input name="Phone"
+                                   placeholder="Phone"
+                                   ng-model="vm.data.Phone"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-margin>
+                        <md-input-container flex>
+                            <input name="Email" type="email"
+                                   ng-required="true"
+                                   placeholder="Email address"
+                                   ng-model="vm.data.Email"/>
+                        </md-input-container>
+                    </div>
+                    <md-button type="submit"
+                               class="md-raised md-primary"
+                               ng-disabled="vm.loading || !vm.formGeneral.$dirty || !vm.formGeneral.$valid"
+                    >
+                        Save changes
+                    </md-button>
+                </form>
+            </md-content>
+        </md-tab>
+        <md-tab label="Change password" id="account-password-tab">
+            <md-content class="md-padding">
+                <h1 class="md-display-2">Change password</h1>
+                <form name="vm.formPassword"
+                      novalidate
+                      ng-submit="!vm.loading && vm.formPassword.$valid && vm.changePassword()"
+                      flex
+                >
+                    <div layout="column" layout-margin>
+                        <md-input-container>
+                            <input name="Password"
+                                   type="password"
+                                   placeholder="New password"
+                                   auto-focus
+                                   ng-required="true"
+                                   ng-model="vm.data.Password"/>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-margin>
+                        <md-input-container>
+                            <input name="PasswordConfirm"
+                                   type="password"
+                                   placeholder="Confirm password"
+                                   ng-required="true"
+                                   ng-model="vm.data.PasswordConfirm"/>
+                        </md-input-container>
+                    </div>
+                    <md-button type="submit"
+                               class="md-raised md-primary"
+                               ng-disabled="vm.loading || !vm.formPassword.$valid"
+                    >
+                        Change password
+                    </md-button>
+                </form>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</md-content>

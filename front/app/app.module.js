@@ -8,7 +8,7 @@
             'ngSanitize',
             'ngMaterial',
             'router.helper',
-            'ui.ap.autoFocus',
+            'ui.ap.auto-focus',
             // custom modules
             'refigureAuth',
             'refigureProfile',

@@ -1,19 +1,19 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:newsPage
+ * @name refigureApp.directive:about
  * @restrict E
  * @description
- * Home Page
+ * About Page
  * @example
- * <news-page></news-page>
+ * <about></about>
  */
 (function(angular) {
     'use strict';
 
     angular
         .module('refigureApp')
-        .component('newsPage', {
-            templateUrl: 'view/newsPage.component.html',
+        .component('about', {
+            templateUrl: 'view/about.component.html',
             controller: Controller,
             controllerAs: 'vm'
         });
@@ -27,6 +27,13 @@
 
         /////////////////////
 
+        /**
+         * @ngdoc method
+         * @name refigureApp.directive:about#activate
+         * @methodOf refigureApp.directive:about
+         * @description
+         * Activates controller
+         */
         function activate() {
 
         }

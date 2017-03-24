@@ -20,39 +20,53 @@
 
     Controller.$inject = [
         '$rootScope',
+        '$state',
         '$mdSidenav'
     ];
 
-    function Controller($rootScope, $mdSidenav) {
+    function Controller($rootScope, $state, $mdSidenav) {
         var vm = this;
         vm.projectName = $rootScope.projectName;
         vm.showSearch = true;
         vm.searchTerm = '';
         vm.menuItems = [{
-            state: 'home',
-            label: 'Home',
-            title: 'Home page'
+            state: 'home.search'
         }, {
-            state: 'about',
-            label: 'About',
-            title: 'About project'
+            state: 'home.about'
         }, {
-            state: 'news',
-            label: 'News',
-            title: 'The latest news'
+            state: 'home.news'
         }];
 
-        vm.toggleLeft = buildToggler('left');
-        vm.toggleRight = buildToggler('right');
+        vm.toggle = buildToggler('main-sidenav');
 
         activate();
 
         /////////////////////
 
+        /**
+         * @ngdoc method
+         * @name refigureApp.directive:mainHeader#activate
+         * @methodOf refigureApp.directive:mainHeader
+         * @description
+         * It activates controller
+         */
         function activate() {
-
+            vm.menuItems.forEach(function (_item) {
+                var info = $state.get(_item.state) || {};
+                angular.extend(_item, info.data);
+            });
         }
 
+        /**
+         **
+         * @ngdoc method
+         * @name refigureApp.directive:mainHeader#activate
+         * @methodOf refigureApp.directive:mainHeader
+         * @param componentId
+         * @returns {Function}
+         * @description
+         * Toggles the specified sidebar
+         */
         function buildToggler(componentId) {
             return function() {
                 $mdSidenav(componentId).toggle();

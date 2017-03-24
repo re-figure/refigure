@@ -1,6 +1,6 @@
 <md-toolbar class="r-main-toolbar">
     <div class="md-toolbar-tools">
-        <a ui-sref="home"><img alt="Brand" src="img/refigure_logo.png" class="r-nav-logo"/></a>
+        <a ui-sref="home.search"><img alt="Brand" src="img/refigure_logo.png" class="r-nav-logo"/></a>
         <h2 ng-bind="vm.projectName" class="r-nav-bar-heading"></h2>
 
         <span flex></span>
@@ -9,20 +9,20 @@
             <md-icon md-font-set="material-icons">account_box</md-icon>
         </md-button>
 
-        <md-button ng-click="vm.toggleLeft()" class="md-icon-button" aria-label="Menu">
+        <md-button ng-click="vm.toggle()" class="md-icon-button" aria-label="Menu">
             <md-icon md-font-set="material-icons">menu</md-icon>
         </md-button>
     </div>
 </md-toolbar>
 
-<md-sidenav class="md-sidenav-left" md-component-id="left"
+<md-sidenav class="md-sidenav-left" md-component-id="main-sidenav"
             md-disable-backdrop md-whiteframe="4">
 
-    <md-toolbar class="md-theme-indigo">
+    <md-toolbar>
         <div class="md-toolbar-tools">
-            <a ui-sref="home"><img alt="Brand" src="//refigure.org/img/refigure_logo.png" class="r-nav-logo"/></a>
+            <a ui-sref="home.search"><img alt="Brand" src="img/refigure_logo.png" class="r-nav-logo"/></a>
             <span flex></span>
-            <md-button aria-label="Close" ng-click="vm.toggleLeft()">
+            <md-button aria-label="Close" ng-click="vm.toggle()">
                 Close
                 <md-icon class="md-icon-button"
                          md-font-set="material-icons">close</md-icon>
@@ -30,15 +30,15 @@
         </div>
     </md-toolbar>
 
-    <md-content md-scroll-y layout-margin>
-        <md-list-item class="md-3-line"
+    <md-content md-scroll-y>
+        <md-list-item class="md-2-line"
                       ng-repeat="item in vm.menuItems"
                       aria-label="{{ item.label }}"
                       ui-sref="{{ item.state }}"
-                      ng-click="vm.toggleLeft()">
+                      ng-click="vm.toggle()">
             <div class="md-list-item-text" layout="column">
                 <h3 ng-bind="item.label"></h3>
-                <p ng-bind="item.title"></p>
+                <h4 ng-bind="item.description"></h4>
             </div>
         </md-list-item>
     </md-content>

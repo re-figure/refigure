@@ -5,43 +5,46 @@
     'use strict';
 
     angular
-        .module('refigureAuth')
+        .module('refigureApp')
         .run(appRun);
 
     var states = [{
-        state: 'auth.signin',
+        state: 'home.search',
         config: {
-            url: '/signin',
-            template: '<sign-in></sign-in>',
+            url: '/',
+            template: '<search></search>',
             data: {
-                auth: true
+                label: 'Home',
+                description: 'Home page'
             }
         }
     }, {
-        state: 'auth.signup',
+        state: 'home.search-results',
         config: {
-            url: '/signup/:hash?',
-            template: '<sign-up></sign-up>',
+            url: '/search-results?term',
+            template: '<search-results></search-results>',
             data: {
-                auth: true
+                menuTitle: 'Results'
             }
         }
     }, {
-        state: 'auth.pwdreset',
+        state: 'home.about',
         config: {
-            url: '/passwordreset/:hash?',
-            template: '<password-reset></password-reset>',
+            url: '/about',
+            template: '<about></about>',
             data: {
-                auth: true
+                label: 'About',
+                description: 'About project'
             }
         }
     }, {
-        state: 'auth.pwdset',
+        state: 'home.news',
         config: {
-            url: '/passwordset/:hash',
-            template: '<password-reset></password-reset>',
+            url: '/news',
+            template: '<news></news>',
             data: {
-                auth: true
+                label: 'News',
+                description: 'The latest news'
             }
         }
     }];
@@ -59,10 +62,10 @@
 
         function getStates() {
             return [{
-                state: 'auth',
+                state: 'home',
                 config: {
                     abstract: true,
-                    templateUrl: 'view/authPage.html'
+                    templateUrl: 'view/homePage.html'
                 }
             }]
                 .concat(states);

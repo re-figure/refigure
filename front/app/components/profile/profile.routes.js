@@ -9,12 +9,25 @@
         .run(appRun);
 
     var states = [{
-        state: 'profile',
+        state: 'profile.collections',
         config: {
-            url: '/profile',
-            template: '<account-setting></account-setting>',
+            url: '/collections',
+            template: '<my-collections></my-collections>',
             data: {
-                private: true
+                private: true,
+                label: 'My collections',
+                description: 'Collection management'
+            }
+        }
+    }, {
+        state: 'profile.account',
+        config: {
+            url: '/account',
+            template: '<account-settings></account-settings>',
+            data: {
+                private: true,
+                label: 'My account',
+                description: 'Account setting'
             }
         }
     }];
@@ -31,7 +44,16 @@
         //////////////////////
 
         function getStates() {
-            return states;
+            return [{
+                state: 'profile',
+                config: {
+                    // abstract: true,
+                    url: '/profile',
+                    redirectTo: 'profile.collections',
+                    template: '<profile-page class="r-page r-profile-page" layout="row"></profile-page>'
+                }
+            }]
+                .concat(states);
         }
     }
 })(window.angular);

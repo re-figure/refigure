@@ -11,7 +11,8 @@
         .module('refigureProfile', [
             'ui.router',
             'router.helper',
-            'refigureShared'
+            'refigureShared',
+            'refigureAuth'
         ])
         .constant('profileApiUri', '/api');
 

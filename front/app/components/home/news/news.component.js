@@ -1,19 +1,19 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:searchResultsPage
+ * @name refigureApp.directive:news
  * @restrict E
  * @description
- * Search Results page
+ * News Page
  * @example
- * <search-results-page></search-results-page>
+ * <news></news>
  */
 (function(angular) {
     'use strict';
 
     angular
         .module('refigureApp')
-        .component('searchResultsPage', {
-            templateUrl: 'view/searchResultsPage.component.html',
+        .component('news', {
+            templateUrl: 'view/news.component.html',
             controller: Controller,
             controllerAs: 'vm'
         });
@@ -27,6 +27,13 @@
 
         /////////////////////
 
+        /**
+         * @ngdoc method
+         * @name refigureApp.directive:news#activate
+         * @methodOf refigureApp.directive:news
+         * @description
+         * Activates controller
+         */
         function activate() {
 
         }

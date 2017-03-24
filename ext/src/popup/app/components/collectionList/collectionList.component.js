@@ -36,14 +36,18 @@
             getMyOwnCollections();
         }
 
-        function removeItem(id) {
-            if (id) {
-                CollectionSvc.delete(id)
+        function removeItem(id, idx) {
+            if (id && confirm("Are you sure?")) {
+                CollectionSvc.delete(id, removeElement, idx)
                     .catch((err) => {
                         console.log(err);
                         vm.error = err.data.message;
                     });
             }
+        }
+
+        function removeElement(idx) {
+            vm.collections.splice(idx, 1);
         }
     }
 

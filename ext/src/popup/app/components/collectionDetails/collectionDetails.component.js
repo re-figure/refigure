@@ -34,9 +34,9 @@
         }
 
         function removeItem(id) {
-            if (id) {
+            if (id && confirm("Are you sure?")) {
                 CollectionSvc.delete(id)
-                    .then(null, (err) => {
+                    .catch((err) => {
                         console.log(err);
                         vm.error = err.data.message;
                     });

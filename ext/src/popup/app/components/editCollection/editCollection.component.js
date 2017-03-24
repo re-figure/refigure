@@ -8,13 +8,14 @@
             controllerAs: 'vm'
         });
 
-    EditCollectionController.$inject = ['$location', '$routeParams', 'AuthService', 'CollectionSvc'];
+    EditCollectionController.$inject = ['$routeParams', 'AuthService', 'CollectionSvc'];
 
-    function EditCollectionController($location, $routeParams, AuthService, CollectionSvc) {
+    function EditCollectionController($routeParams, AuthService, CollectionSvc) {
         let vm = this;
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
+        vm.formData = {};
         vm.error = '';
         vm.buttonName = 'Create';
 

@@ -26,22 +26,14 @@
 
                 CollectionSvc
                     .create(params)
-                    .then((resp) => {
-                        console.log(resp.data);
-                        $location.path('/');
-                    }, (error) => {
-                        //error
+                    .then(null, (error) => {
                         console.log(error);
                         vm.error = error.data.message;
                     });
             } else {
                 CollectionSvc
                     .update(params)
-                    .then((resp) => {
-                        console.log(resp.data);
-                        $location.path('/my-collections');
-                    }, (error) => {
-                        //error
+                    .then(null, (error) => {
                         console.log(error);
                         vm.error = error.data.message;
                     });
@@ -58,7 +50,7 @@
                     }, (err) => {
                         console.log(err);
                         vm.error = err.data.message;
-                    })
+                    });
             }
         }
     }

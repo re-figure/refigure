@@ -28,7 +28,7 @@ function normaliseURL(url) {
 
 function normaliseCaption(caption) {
     if (rfUtils.checkStringNotEmpty(caption)) {
-        return url.toLowerCase().substr(0, 255);
+        return caption.toLowerCase().substr(0, 255);
     }
     return '';
 }

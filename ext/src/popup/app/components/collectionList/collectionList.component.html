@@ -4,7 +4,11 @@
         <div ng-repeat="collection in vm.collections">
             <div class="row">
                 <div class="col-xs-4">
-                    <img class="thumbnail" ng-src="{{collection.Metapublication.Figures[0].URL}}">
+                    <img ng-show="collection.Metapublication.Figures[0].URL" class="thumbnail" ng-src="{{collection.Metapublication.Figures[0].URL}}">
+                    <div ng-show="!collection.Metapublication.Figures[0].URL"
+                         style="border: 1px solid gray; background-color: #eeeeee; width: 100px; height: 100px; position: relative">
+                        <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">no image</p>
+                    </div>
                 </div>
                 <div class="col-xs-8">
                     <a href="#!/collections/edit/{{collection.Metapublication.ID}}">

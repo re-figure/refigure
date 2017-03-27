@@ -24,8 +24,7 @@
     </div>
     <div class="text-right">
         <button ng-show="cc_form.$dirty" ng-disabled="cc_form.$invalid" class="btn btn-default" type="submit" ng-bind="vm.buttonName">Submit</button>
-        <!--<a ng-href="#!/" class="btn btn-default">Cancel</a>-->
-        <button ng-show="vm.formData.ID" ng-click="vm.removeItem(vm.formData.ID)" class="btn btn-default">Delete</button>
+        <button ng-show="vm.formData.ID" ng-click="vm.removeItem(vm.formData.ID)" class="btn btn-default" type="button">Delete</button>
     </div>
     <hr>
     <div class="text-center" ng-show="vm.error">

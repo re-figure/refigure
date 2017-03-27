@@ -49,7 +49,7 @@
                     -->
                     <p class="text-right">
                         <a ng-show="editFigure.$dirty" class="btn btn-default" ng-click="tmpFig = vm.copy(fig)">Cancel</a>
-                        <button ng-show="editFigure.$dirty" class="btn btn-primary" ng-click="vm.save(tmpFig)">Save</button>
+                        <button ng-show="editFigure.$dirty && editFigure.$valid" class="btn btn-primary" ng-click="vm.save(tmpFig)">Save</button>
                     </p>
                 </form>
             </div>

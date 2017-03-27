@@ -7,8 +7,8 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject = ['STORAGE', 'AuthService', 'CollectionSvc', '$http', '$location'];
-    function CtrlFunction(STORAGE, AuthService, CollectionSvc, $http, $location) {
+    CtrlFunction.$inject = ['$http', '$location', 'STORAGE', 'AuthService', 'CollectionSvc'];
+    function CtrlFunction($http, $location, STORAGE, AuthService, CollectionSvc) {
         let vm = this;
         vm.copy = angular.copy;
         vm.opened = -1;

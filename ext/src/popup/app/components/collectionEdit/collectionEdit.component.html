@@ -1,25 +1,57 @@
+<div ng-if="vm.formData.ID" class="checkbox text-right">
+    <label>
+        <!--            <input  type="checkbox"
+                            ng-checked="!!vm.formData.Flagged"
+                            ng-model="vm.formData.Flagged"
+                            ng-change="vm.toggleFlag()"> Reported-->
+        <input  type="checkbox"
+                ng-model="vm.formData.Flagged"
+                ng-true-value="1"
+                ng-false-value="0"
+                ng-change="vm.toggleFlag()"> Reported
+    </label>
+</div>
 <form class="collection" name="cc_form" ng-submit="vm.editCollection(vm.formData)">
     <div class="form-group">
-        <div>
-            <label>Collection title</label>
-            <input class="form-control" type="text" name="collection_title" ng-model="vm.formData.Title" required/>
-        </div>
-        <div class="login-password">
-            <label>Hypothesis</label>
-            <textarea class="form-control" rows="5" name="collection_hypothesis" ng-model="vm.formData.Description"></textarea>
-        </div>
-        <div>
-            <label>Keywords</label>
-            <input class="form-control" type="text" name="collection_keywords" ng-model="vm.formData.Keywords"/>
-        </div>
+        <label>Collection title</label>
+        <input class="form-control" type="text" name="collection_title" ng-model="vm.formData.Title" required/>
     </div>
-
+    <div class="form-group">
+        <label>Hypothesis</label>
+        <textarea class="form-control" rows="5" name="collection_hypothesis" ng-model="vm.formData.Description"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Keywords</label>
+        <input class="form-control" type="text" name="collection_keywords" ng-model="vm.formData.Keywords"/>
+    </div>
     <div class="text-right">
-        <button ng-disabled="cc_form.$invalid" class="btn btn-default" type="submit" ng-bind="vm.buttonName">Submit</button>
-        <a ng-href="#!/" class="btn btn-default">Cancel</a>
+        <div class="btn-group">
+            <a ng-href="#!/my-collections" class="btn btn-sm btn-default">
+                <span class="glyphicon glyphicon-menu-left"></span>
+            </a>
+            <button ng-show="vm.formData.ID" ng-click="vm.removeItem(vm.formData.ID)" class="btn btn-sm btn-danger" type="button">Delete</button>
+            <button ng-show="cc_form.$dirty" ng-disabled="cc_form.$invalid" class="btn btn-sm btn-success" type="submit" ng-bind="vm.buttonName">Submit</button>
+        </div>
     </div>
     <hr>
-    <div class="text-center" ng-show="vm.error">
+    <div class="text-center" ng-show="vm.error && !vm.formData.ID">
         <p class="text-danger" ng-bind="vm.error"></p>
     </div>
 </form>
+
+<div ng-show="vm.formData.ID">
+    <button ng-click="vm.figureAddStart()" class="btn btn-lg btn-block figure-add" ng-class="vm.error ? 'btn-info' : 'btn-default'" ng-bind="vm.error || '+'"></button>
+    <hr>
+</div>
+
+<div ng-repeat="fig in vm.formData.Figures">
+    <div class="row">
+        <div class="col-xs-4">
+            <img class="thumbnail" ng-src="{{fig.URL}}">
+        </div>
+        <div class="col-xs-8">
+            <div ng-bind="fig.Caption"></div>
+        </div>
+    </div>
+    <hr>
+</div>

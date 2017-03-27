@@ -1,8 +1,10 @@
 'use strict';
 
 const httpStatus = require('http-status-codes');
+const uuid = require('node-uuid');
 
 const utils = require('js.shared').utils;
+const vars = require('js.shared').vars;
 
 const constants = require('./const');
 const db = require('./db');
@@ -27,7 +29,7 @@ function normaliseURL(url) {
 
 function normaliseCaption(caption) {
     if (rfUtils.checkStringNotEmpty(caption)) {
-        return url.toLowerCase().substr(0, 255);
+        return caption.toLowerCase().substr(0, 255);
     }
     return '';
 }
@@ -351,7 +353,7 @@ function getUpdateData(params) {
 function updateFigure(req, res) {
     let id = vars.get(req, 'ID');
     if (!utils.isset(id)) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Figure ID provided');
     }
 
     get(id, (r) => {
@@ -433,9 +435,10 @@ function createFigure(req, res) {
                 v += ', ';
             }
             q += key;
+            v += '?';
             params.push(upd[key]);
         });
-        q += v + ')';
+        q += ')' + v + ')';
         db.pool.query(q, params, (err) => {
             if (err) {
                 console.log('Failed to create new Figure', err);

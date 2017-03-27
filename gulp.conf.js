@@ -104,15 +104,9 @@ module.exports = {
                 extSrcDir + '/popup/*.module.js',
                 extSrcDir + '/popup/**/*.js'
             ],
-            html: [
-                extSrcDir + '/popup/**/!(*popup).html'
-            ],
-            css: [
-                extSrcDir + '/popup/**/*.sass'
-            ],
-            index: [
-                extSrcDir + '/popup/popup.html'
-            ]
+            html: extSrcDir + '/popup/**/!(*popup).html',
+            css: extSrcDir + '/popup/**/*.sass',
+            index: extSrcDir + '/popup/popup.html'
         }
     }
 };

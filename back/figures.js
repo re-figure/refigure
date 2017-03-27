@@ -1,6 +1,7 @@
 'use strict';
 
 const httpStatus = require('http-status-codes');
+const uuid = require('node-uuid');
 
 const utils = require('js.shared').utils;
 const vars = require('js.shared').vars;
@@ -434,9 +435,10 @@ function createFigure(req, res) {
                 v += ', ';
             }
             q += key;
+            v += '?';
             params.push(upd[key]);
         });
-        q += v + ')';
+        q += ')' + v + ')';
         db.pool.query(q, params, (err) => {
             if (err) {
                 console.log('Failed to create new Figure', err);

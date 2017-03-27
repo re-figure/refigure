@@ -552,11 +552,11 @@ function flagMetapublication(req, res) {
         }
         let flagged = true;
         if (typeof req.body.Flagged !== 'undefined') {
-            flagged = utils.boolValue(req.body.Flagged);
+            flagged = rfUtils.boolValue(req.body.Flagged);
         }
 
-        let q = 'UPDATE Metapublication SET Flagged = ?';
-        db.pool.query(q, [flagged], (err) => {
+        let q = 'UPDATE Metapublication SET Flagged = ? WHERE ID = ?';
+        db.pool.query(q, [flagged, id], (err) => {
             if (err) {
                 console.log('Failed to update Metapublication', err);
                 return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to update Metapublication');

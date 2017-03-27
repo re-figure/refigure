@@ -1,5 +1,31 @@
+$brand-primary:             #4285f4
+$border-radius-base:        0
+$border-radius-large:       0
+$border-radius-small:       0
+.rf-popup
+    @import "../vendor/bootstrap/stylesheets/bootstrap"
+
 .rf-addable-image
-    outline: 1px solid green
+    outline: 2px solid #5cb85c
 
 .rf-addable-image:hover
-    outline: 3px solid green
+    outline: 4px solid #5cb85c
+
+.rf-popup
+    position: fixed
+    top: 0
+    bottom: 0
+    right: 0
+    background-color: #fff
+    z-index: 1000000
+    display: none
+    opacity: 0
+    transition: opacity .3s
+    width: 400px
+
+    .panel
+        margin-bottom: 0
+
+    &.rf-popup-show
+        display: block
+        opacity: 1

@@ -56,8 +56,8 @@ function dedupFigures(figures) {
 
 
 function parseFigures() {
-    var figures = [];
-    for (var i = 0; i < document.images.length; i++) {
+    let figures = [];
+    for (let i = 0; i < document.images.length; i++) {
         figures.push({URL: document.images[i].src});
     }
     return Promise.resolve(figures);
@@ -81,52 +81,32 @@ function searchFigures() {
 }
 
 function sendCheckFiguresRequest(figures) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function (e) {
-        if (xhr.readyState === 4) {
-            var count = 0;
-            var foundFigures = [];
-            if (xhr.status === 200) {
-                var json = JSON.parse(xhr.responseText);
-                if (json.error) {
-                    console.log('Failed to send search request, got response ', json);
-                } else {
-                    if (json.data && json.data.figures && Array.isArray(json.data.figures)) {
-                        count = json.data.figures.length;
-                        foundFigures = json.data.figures;
-                    } else {
-                        console.log('Got broken response', json);
-                        count = -1;
-                    }
-                }
-            } else {
-                console.log('Failed to send search request, got status ', xhr.status);
-                count = -1;
-            }
-            chrome.runtime.sendMessage({
-                type: _gConst.MSG_TYPE_CHECK_COMPLETED,
-                count: count,
-                figures: foundFigures
-            });
-            chrome.storage.local.set({
-                foundFigures: foundFigures
-            });
-        }
-    };
-
-    var filteredFigures = figures.map(function (el) {
+    let filteredFigures = figures.map(function (el) {
         return {
             URL: el.URL,
             DOIFigure: el.DOIFigure
         }
     });
-    xhr.open("POST", _gApiURL + 'check-figures', true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify({figures: filteredFigures}));
+
+    sendRequest({
+        type: 'POST',
+        url: 'check-figures',
+        data: {
+            figures: filteredFigures
+        }
+    }).then((data) => {
+        chrome.runtime.sendMessage({
+            type: _gConst.MSG_TYPE_CHECK_COMPLETED,
+            figures: data.figures
+        });
+        chrome.storage.local.set({
+            foundFigures: data.figures
+        });
+    });
 }
 
 function logError() {
-    var args = Array.prototype.slice.call(arguments);
+    let args = Array.prototype.slice.call(arguments);
     args.unshift('ReFigure:');
     console.error.apply(null, args);
 }
@@ -138,9 +118,9 @@ function logError() {
  * @return {string} transformed html text
  */
 function prepareContent(node) {
-    var tmpEl = document.createElement('div');
+    let tmpEl = document.createElement('div');
     //replace image tags to save them after "innerHTML"
-    var tmpContent = node.innerHTML.replace(/<img/g, '||img||');
+    let tmpContent = node.innerHTML.replace(/<img/g, '||img||');
     //convert relative image srcs to absolute
     tmpContent = tmpContent.replace(/src="(?!http)(.*?)"/g, function (match, src) {
         tmpEl.innerHTML = '<a href="' + src + '">x</a>';
@@ -156,93 +136,211 @@ function prepareContent(node) {
 }
 
 function addToSelected(src) {
-    var img = FIGURES.find(function (el) {
+    let img = FIGURES.find(function (el) {
         return el.URL === src;
     });
     if (!img) {
         alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
     } else {
         chrome.storage.local.get('rfSelected', function (data) {
-            var selected = data.rfSelected || [];
-            var isDup = selected.find(function (el) {
+            let selected = data.rfSelected || [];
+            let isDup = selected.find(function (el) {
                 return el.URL === src;
             });
             if (isDup) {
                 alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
             } else {
-                selected.push(img);
+                /*selected.push(img);
                 chrome.storage.local.set({
                     rfSelected: selected
                 });
                 chrome.runtime.sendMessage({
                     type: _gConst.MSG_TYPE_ADD_COMPLETED,
                     src: src
-                });
-                window.figurePopup.show();
+                });*/
+                window.figurePopup.show(img);
             }
         });
     }
 }
 
+function sendRequest(params) {
+    let requestParams = Object.assign({
+        url: '',
+        type: 'GET',
+        data: {},
+        headers: {}
+    }, params);
+
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    let json = JSON.parse(xhr.responseText);
+                    if (json.error) {
+                        console.error('Failed to send search request, got response ', json);
+                        reject(json);
+                    } else {
+                        if (json.data) {
+                            resolve(json.data);
+                        } else {
+                            console.error('Got broken response', json);
+                            reject(json);
+                        }
+                    }
+                } else {
+                    console.error('Failed to send search request, got status ' + xhr.status, xhr);
+                    reject(xhr);
+                }
+            }
+        };
+        xhr.open(requestParams.type, _gApiURL + requestParams.url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        Object.keys(requestParams.headers).forEach((key) => {
+            xhr.setRequestHeader(key, requestParams.headers[key]);
+        });
+        xhr.send(JSON.stringify(requestParams.data));
+    });
+}
+
 window.figurePopup = {
-    element: null,
-    show: function () {
-        if(!window.figurePopup.element){
-            window.figurePopup.create();
+    _getCollections: () => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get('userInfo', (data) => {
+                if (data.userInfo) {
+                    sendRequest({
+                        url: 'my-metapublications',
+                        headers: {
+                            Authentication: data.userInfo.Token
+                        }
+                    }).then((data) => {
+                        resolve(data.results);
+                    });
+                } else {
+                    reject(_gConst.ERROR_NOT_LOGGED);
+                }
+            });
+        });
+    },
+    _element: null,
+    _fillForm: (data, collections) => {
+        let inputs = window.figurePopup._element.getElementsByClassName('form-control');
+        let optionsHtml = [];
+
+        collections.forEach((el) => {
+            optionsHtml.push(
+                '<option value="' + el.Metapublication.ID + '">' +
+                    el.Metapublication.Title + ' (' + el.Metapublication.FiguresCount + ')' +
+                '</option>'
+            );
+        });
+        for (let index = 0; index < inputs.length; index++) {
+            if (inputs[index].name === 'MetapublicationID') {
+                inputs[index].innerHTML = optionsHtml.join('');
+            }
+            inputs[index].value = data[inputs[index].name] || '';
         }
-        window.figurePopup.element.classList.add('rf-popup-show');
     },
-    hide: function () {
-        window.figurePopup.element.classList.remove('rf-popup-show');
+    show: (data) => {
+        !window.figurePopup._element && window.figurePopup.create();
+
+        window.figurePopup._getCollections().then(
+            (collections) => {
+                window.figurePopup._fillForm(data, collections);
+                window.figurePopup._element.classList.add('rf-popup-show');
+            }, (text) => {
+                alert(text);
+            }
+        );
     },
-    submit: function (event) {
+    hide: () => {
+        window.figurePopup._element.classList.remove('rf-popup-show');
+    },
+    submit: (event) => {
+        chrome.storage.local.get('userInfo', (data) => {
+            if (data.userInfo) {
+                let formData = {};
+                let inputs = window.figurePopup._element.getElementsByClassName('form-control');
+                for (let index = 0; index < inputs.length; index++) {
+                    formData[inputs[index].name] = inputs[index].value;
+                }
+                sendRequest({
+                    type: 'POST',
+                    url: 'figure',
+                    data: formData,
+                    headers: {
+                        Authentication: data.userInfo.Token
+                    }
+                }).then((data) => {
+                    console.log('data', data);
+                    alert(_gConst.FIGURE_ADDED);
+                    window.figurePopup.hide();
+                }, (data) => {
+                    console.log(data);
+                });
+            } else {
+                alert(_gConst.ERROR_NOT_LOGGED);
+            }
+        });
+
         event.preventDefault();
-        console.log(event);
+        return false;
     },
-    create: function () {
-        if(window.figurePopup.element){
+    create: () => {
+        if (window.figurePopup._element) {
             return false;
         }
-        window.figurePopup.element = document.createElement('div');
-        window.figurePopup.element.className = 'rf-popup';
-        window.figurePopup.element.innerHTML = [
-            '<div class="rf-popup-header">Add figure to collection</div>',
-            '<form class="rf-popup-wrp">',
-                '<div class="rf-form-group">',
-                    '<label for="rf-input-url">Figure URL</label>',
-                    '<input name="URL" id="rf-input-url" type="text" placeholder="URL" readonly >',
-                '</div>',
+        window.figurePopup._element = document.createElement('div');
+        window.figurePopup._element.className = 'rf-popup';
+        window.figurePopup._element.innerHTML = [
+            '<form id="rf-add-figure-form" name="addFigureForm" class="panel panel-primary">',
+                '<div class="panel-heading text-center">Add figure to collection</div>',
+                '<div class="panel-body">',
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-url">Figure URL</label>',
+                        '<input class="form-control" name="URL" id="rf-input-url" type="text" placeholder="URL" readonly>',
+                    '</div>',
 
-                '<div class="rf-form-group">',
-                    '<label for="rf-input-fig-doi">Figure DOI</label>',
-                    '<input name="FigureDOI" id="rf-input-fig-doi" type="text" placeholder="FigureDOI">',
-                '</div>',
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-metapublication">Metapublication</label>',
+                        '<select class="form-control" name="MetapublicationID" id="rf-input-metapublication"></select>',
+                    '</div>',
 
-                '<div class="rf-form-group">',
-                    '<label for="rf-input-caption">Caption</label>',
-                    '<input name="Caption" id="rf-input-caption" type="text" placeholder="Caption">',
-                '</div>',
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-fig-doi">Figure DOI</label>',
+                        '<input class="form-control" name="FigureDOI" id="rf-input-fig-doi" type="text" placeholder="FigureDOI">',
+                    '</div>',
 
-                '<div class="rf-form-group">',
-                    '<label for="rf-input-legend">Legend</label>',
-                    '<textarea name="Legend" id="rf-input-legend" placeholder="Legend"></textarea>',
-                '</div>',
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-caption">Caption</label>',
+                        '<input class="form-control" name="Caption" id="rf-input-caption" type="text" placeholder="Caption">',
+                    '</div>',
 
-                '<div class="rf-form-group">',
-                    '<label for="rf-input-article-doi">Article DOI</label>',
-                    '<input class="form-control" name="DOI" id="rf-input-article-doi" type="text" placeholder="Article DOI">',
-                '</div>',
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-legend">Legend</label>',
+                        '<textarea class="form-control" rows="5" name="Legend" id="rf-input-legend" placeholder="Legend"></textarea>',
+                    '</div>',
 
-                '<div class="rf-form-group">',
-                    '<label for="rf-input-article-authors">Article authors</label>',
-                    '<textarea name="Authors" id="rf-input-article-authors" placeholder="Authors"></textarea>',
-                '</div>',
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-article-doi">Article DOI</label>',
+                        '<input class="form-control" name="DOI" id="rf-input-article-doi" type="text" placeholder="Article DOI">',
+                    '</div>',
 
-                '<button id="rf-btn-submit" onclick="figurePopup.submit()" class="rf-popup-btn">Submit</button>',
-            '</form>'
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-article-authors">Article authors</label>',
+                        '<textarea class="form-control" rows="5" name="Authors" id="rf-input-article-authors" placeholder="Authors"></textarea>',
+                    '</div>',
+                '</div>',
+                '<div class="panel-footer">',
+                    '<button class="btn btn-block btn-primary">Submit</button>',
+                '</div>',
+            '</form>',
         ].join('');
-        document.body.appendChild(window.figurePopup.element);
-        document.getElementById('rf-btn-submit').addEventListener('submit', window.figurePopup.submit);
+        document.body.appendChild(window.figurePopup._element);
+        document.getElementById('rf-add-figure-form').addEventListener('submit', window.figurePopup.submit, false);
+
         return true;
     }
 };

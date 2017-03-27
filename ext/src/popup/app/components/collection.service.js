@@ -18,7 +18,8 @@
             return $http
                 .post(_gApiURL + "metapublication", params)
                 .then((resp) => {
-                    $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                    // $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                    $location.path('/my-collections');
                 });
         };
 
@@ -31,15 +32,15 @@
             return $http
                 .put(_gApiURL + "metapublication", params)
                 .then((resp) => {
-                    $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                    // $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                    $location.path('/my-collections');
                 });
         };
 
-        service.delete = function (id, cb, idx) {
+        service.delete = function (id) {
             return $http
                 .delete(_gApiURL + "metapublication/" + id)
                 .then(() => {
-                    if (cb) {cb(idx);}
                     $location.path('/my-collections');
                 });
         };
@@ -48,6 +49,11 @@
             return $http
                 .get(_gApiURL + "my-metapublications");
         };
+
+        service.toggleFlag = function (params) {
+            return $http
+                .put(_gApiURL + "metapublication-flag", params);
+        }
 
     }
 

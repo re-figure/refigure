@@ -15,10 +15,14 @@
     </div>
     <div ng-if="vm.formData.ID" class="checkbox pull-left">
         <label>
-            <input
-                    type="checkbox"
+<!--            <input  type="checkbox"
                     ng-checked="!!vm.formData.Flagged"
                     ng-model="vm.formData.Flagged"
+                    ng-change="vm.toggleFlag()"> Reported-->
+            <input  type="checkbox"
+                    ng-model="vm.formData.Flagged"
+                    ng-true-value="1"
+                    ng-false-value="0"
                     ng-change="vm.toggleFlag()"> Reported
         </label>
     </div>

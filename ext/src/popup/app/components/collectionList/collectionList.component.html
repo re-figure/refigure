@@ -4,10 +4,12 @@
         <div ng-repeat="collection in vm.collections">
             <div class="row">
                 <div class="col-xs-4">
-                    <img ng-show="collection.Metapublication.Figures[0].URL" class="thumbnail" ng-src="{{collection.Metapublication.Figures[0].URL}}">
+                    <a href="#!/collections/edit/{{collection.Metapublication.ID}}">
+                        <img ng-show="collection.Metapublication.Figures[0].URL" class="thumbnail" ng-src="{{collection.Metapublication.Figures[0].URL}}">
+                    </a>
                     <div ng-show="!collection.Metapublication.Figures[0].URL"
                          style="border: 1px solid gray; background-color: #eeeeee; width: 100px; height: 100px; position: relative">
-                        <p style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">no image</p>
+                        <p style="text-align: center;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">no image</p>
                     </div>
                 </div>
                 <div class="col-xs-8">
@@ -17,19 +19,6 @@
                     <p ng-bind="collection.Metapublication.Description"></p>
                 </div>
             </div>
-<!--            <div class="text-right">
-                <div class="btn-group">
-                    <a ng-href="#!/collections/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                    </a>
-                    <a ng-href="#!/collections/edit/{{collection.Metapublication.ID}}" class="btn btn-sm btn-default">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                    <button ng-click="vm.removeItem(collection.Metapublication.ID, $index)" class="btn btn-sm btn-default">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
-            </div>-->
             <hr>
         </div>
 </div>

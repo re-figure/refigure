@@ -22,10 +22,6 @@
                 template: '<collection-edit-form/>',
                 resolveRedirectTo: IsAuthCtrl
             })
-            .when('/collections/:id', {
-                template: '<collection-details/>',
-                resolveRedirectTo: IsAuthCtrl
-            })
             .when('/my-collections', {
                 template: '<collection-list/>',
                 resolveRedirectTo: IsAuthCtrl

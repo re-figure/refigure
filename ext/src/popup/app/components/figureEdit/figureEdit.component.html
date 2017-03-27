@@ -24,7 +24,8 @@
         <input id="edit-figure-doi-figure" type="text" class="form-control" ng-model="vm.figure.DOIFigure">
     </div>
     <p class="text-right">
-        <a ng-href="#!/" class="btn btn-default">CANCEL</a>
+        <button ng-hide="vm.figure.ID" type="button" class="btn btn-primary" ng-click="vm.addCancel()">CANCEL</button>
+        <a ng-show="vm.figure.ID" ng-href="#!/" class="btn btn-default">CANCEL</a>
         <button class="btn btn-primary">SAVE</button>
     </p>
 </form>

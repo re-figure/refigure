@@ -8,9 +8,9 @@
             controllerAs: 'vm'
         });
 
-    EditCollectionController.$inject = ['$routeParams', 'AuthService', 'CollectionSvc'];
+    EditCollectionController.$inject = ['$routeParams', 'AuthService', 'CollectionSvc', 'STORAGE'];
 
-    function EditCollectionController($routeParams, AuthService, CollectionSvc) {
+    function EditCollectionController($routeParams, AuthService, CollectionSvc, STORAGE) {
         let vm = this;
 
         vm.$onInit = activate;
@@ -72,7 +72,6 @@
 
         function toggleFlag() {
             vm.formData.Flag = !vm.formData.Flag;
-            // console.log(vm.formData.Flag);
             CollectionSvc.toggleFlag({ID: vm.formData.ID, Flagged: vm.formData.Flagged})
                 .catch((err) => {
                     console.log(err);

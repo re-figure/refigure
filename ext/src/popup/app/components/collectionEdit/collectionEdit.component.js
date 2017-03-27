@@ -20,6 +20,7 @@
         vm.toggleFlag = toggleFlag;
         vm.error = '';
         vm.buttonName = 'Create';
+        vm.figureAddStart = figureAddStart;
 
         ////////////////////////////
 
@@ -77,6 +78,14 @@
                     console.log(err);
                     vm.error = err.data.message;
                 });
+        }
+
+        function figureAddStart() {
+            vm.error = '';
+            chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
+                type: _gConst.MSG_TYPE_ADD_START,
+                metapublicationId: vm.formData.ID
+            });
         }
     }
 

@@ -3,6 +3,7 @@
 const httpStatus = require('http-status-codes');
 
 const utils = require('js.shared').utils;
+const vars = require('js.shared').vars;
 
 const constants = require('./const');
 const db = require('./db');

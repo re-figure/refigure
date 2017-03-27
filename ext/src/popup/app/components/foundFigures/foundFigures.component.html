@@ -1,17 +1,16 @@
 <div class="container-fluid">
     <h4 ng-hide="vm.figures.length" class="text-center">NO DATA IS AVAILABLE</h4>
 
-    <div ng-repeat="fig in vm.figures">
+    <div ng-repeat="fig in vm.figures" ng-init="tmpFig = vm.copy(fig)">
         <div class="row">
             <div class="col-xs-4">
-                <a ng-show="fig.isClickable" ng-href="#!/figure/edit/{{fig.ID}}" class="custom-link">
-                    <img class="thumbnail" ng-src="{{fig.URL}}">
+                <a ng-click="vm.onShowMoreInfo($index)" class="clickable custom-link">
+                    <img class="thumbnail" ng-src="{{tmpFig.URL}}">
                 </a>
-                <img  ng-show="!fig.isClickable" class="thumbnail" ng-src="{{fig.URL}}">
             </div>
             <div class="col-xs-8">
-                <div class="caption" ng-bind="fig.Caption"></div>
-                <small class="help-block"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
+                <div class="caption" ng-bind="tmpFig.Caption"></div>
+                <small class="help-block"> IN <span ng-bind="tmpFig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
                 <button class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
                     <span class="glyphicon" ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
                     <span ng-bind="vm.opened === $index ? 'less' : 'more'"></span> info
@@ -19,30 +18,42 @@
             </div>
         </div>
         <div class="row" ng-show="vm.opened === $index">
-            <div class="col-xs-12">
-                <ul class="list-group">
-                    <li class="list-group-item" ng-show="fig.Caption">
-                        <b class="list-group-item-heading">Caption</b>
-                        <p class="list-group-item-text">{{fig.Caption}}</p>
-                    </li>
-                    <li class="list-group-item" ng-show="fig.Authors">
-                        <b class="list-group-item-heading">Authors</b>
-                        <p class="list-group-item-text">{{fig.Authors}}</p>
-                    </li>
-                    <li class="list-group-item" ng-show="fig.Legend">
-                        <b class="list-group-item-heading">Legend</b>
-                        <p class="list-group-item-text">{{fig.Legend}}</p>
-                    </li>
-                    <li class="list-group-item" ng-show="fig.DOIFigure">
-                        <b class="list-group-item-heading">Figure DOI</b>
-                        <p class="list-group-item-text">{{fig.DOIFigure}}</p>
-                    </li>
-                    <li class="list-group-item" ng-show="fig.DOI">
-                        <b class="list-group-item-heading">Article DOI</b>
-                        <p class="list-group-item-text">{{fig.DOI}}</p>
-                    </li>
-                </ul>
+            <div class="container-fluid">
+                <form name="editFigure">
+                    <div class="form-group">
+                        <label for="edit-figure-url">URL</label>
+                        <input id="edit-figure-url" type="text" class="form-control" ng-model="tmpFig.URL" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-figure-caption">Caption</label>
+                        <textarea id="edit-figure-caption" ng-disabled="tmpFig.userID === vm.userInfo.ID" class="form-control" ng-model="tmpFig.Caption"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-figure-legend">Legend</label>
+                        <input id="edit-figure-legend" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Legend">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-figure-authors">Article authors</label>
+                        <input id="edit-figure-authors" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Authors">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-figure-doi">Article DOI</label>
+                        <input id="edit-figure-doi" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.DOI">
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <label for="select-collection">My collections</label>
+                        <select id="select-collection" class="form-control" ng-options="collection.Metapublication.ID as collection.Metapublication.Title for collection in vm.collections" ng-model="tmpFig.MetapublicationID">
+                        </select>
+                    </div>
+                    -->
+                    <p class="text-right">
+                        <a ng-show="editFigure.$dirty" class="btn btn-default" ng-click="tmpFig = vm.copy(fig)">Cancel</a>
+                        <button ng-show="editFigure.$dirty && editFigure.$valid" class="btn btn-primary" ng-click="vm.save(tmpFig)">Save</button>
+                    </p>
+                </form>
             </div>
         </div>
+        <hr>
     </div>
 </div>

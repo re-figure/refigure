@@ -8,11 +8,10 @@
         });
 
 
-    Controller.$inject = ['$scope', 'AuthService', 'FoundFiguresService', 'STORAGE'];
+    Controller.$inject = ['$scope', 'AuthService', 'STORAGE'];
 
-    function Controller($scope, AuthService, FoundFiguresService, STORAGE) {
+    function Controller($scope, AuthService, STORAGE) {
         let vm = this;
-        vm.figuresToggler = FoundFiguresService;
         vm.$onInit = activate;
         vm.logout = AuthService.logout;
         vm.store = STORAGE;

@@ -34,6 +34,9 @@
                 template: '<figure-edit/>',
                 resolveRedirectTo: IsAuthCtrl
             })
+            .when('/foundfigures', {
+                template: '<found-figures/>'
+            })
             .otherwise('/auth');
 
         IsAuthCtrl.$inject = ['AuthService'];

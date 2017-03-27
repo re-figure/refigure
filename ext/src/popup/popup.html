@@ -9,9 +9,8 @@
     <title>Getting Started Extension's Popup</title>
     <link rel="stylesheet" href="/popup/popup.css">
 </head>
-<body ng-class="{'body-to-wide': figuresToggler.isOpened}">
-<found-figures class="found-figures" ng-if="figuresToggler.isOpened"></found-figures>
-<div class="main-block" ng-class="figuresToggler.isOpened ? 'col-xs-6 main-block-scroll' : 'col-xs-12 main-block-no-scroll'">
+<body>
+<div>
     <nav-bar></nav-bar>
     <div ng-view class="container-fluid"></div>
 </div>

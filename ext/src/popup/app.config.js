@@ -37,9 +37,9 @@
 
     }
 
-    RunController.$inject = ['$rootScope', 'STORAGE', 'FoundFiguresService'];
+    RunController.$inject = ['$rootScope', 'STORAGE'];
 
-    function RunController($rootScope, STORAGE, FoundFiguresService) {
+    function RunController($rootScope, STORAGE) {
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {
@@ -54,7 +54,6 @@
             }
         );
 
-        $rootScope.figuresToggler = FoundFiguresService;
     }
 
 })(window.angular);

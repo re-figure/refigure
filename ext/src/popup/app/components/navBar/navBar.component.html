@@ -2,12 +2,12 @@
     <div class="container-fluid">
         <p class="navbar-text">
             <a class="pull-right" href="#!/"><span class="glyphicon glyphicon-home"></span></a>
-            <span class="clickable" ng-click="vm.figuresToggler.toggle()">
-              <span class="glyphicon" ng-class="vm.figuresToggler.isOpened ? 'glyphicon-menu-right' : 'glyphicon-menu-left'"></span>
+            <a href="#!/foundfigures">
+              <span class="glyphicon glyphicon-menu-down"></span>
               <span>
-                  <b ng-bind="vm.figuresToggler.isOpened ? 'HIDE REFIGURES ON THIS PAGE' : vm.store.FOUND_FIGURES.length + ' REFIGURES ON THIS PAGE'"></b>
+                  <b ng-bind="vm.store.FOUND_FIGURES.length + ' REFIGURES ON THIS PAGE'"></b>
               </span>
-            </span>
+            </a>
         </p>
     </div>
 </nav>

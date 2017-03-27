@@ -30,8 +30,8 @@
                 template: '<collection-list/>',
                 resolveRedirectTo: IsAuthCtrl
             })
-            .when('/figure/edit/:id', {
-                template: '<figure-edit/>'
+            .when('/foundfigures', {
+                template: '<found-figures/>'
             })
             .otherwise('/auth');
 

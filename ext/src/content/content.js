@@ -1,12 +1,16 @@
 var CONTENT_BLOCK_SELECTOR = 'body',
-    FIGURES = [];
+    FIGURES = [],
+    METAPUBLICATION_ID = null;
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
         case _gConst.MSG_TYPE_ADD_START:
-            figureAddStart();
+            figureAddStart(request.metapublicationId);
             break;
         case _gConst.MSG_TYPE_START_SEARCH:
             setTimeout(searchFigures(), 1);
+            break;
+        case _gConst.MSG_TYPE_CREATE_IN_POPUP:
+            window.figurePopup.hide();
             break;
     }
 });
@@ -19,7 +23,8 @@ function onClickImage(event) {
     return false;
 }
 
-function figureAddStart() {
+function figureAddStart(metapublicationId) {
+    METAPUBLICATION_ID = metapublicationId;
     Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
@@ -150,14 +155,6 @@ function addToSelected(src) {
             if (isDup) {
                 alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
             } else {
-                /*selected.push(img);
-                chrome.storage.local.set({
-                    rfSelected: selected
-                });
-                chrome.runtime.sendMessage({
-                    type: _gConst.MSG_TYPE_ADD_COMPLETED,
-                    src: src
-                });*/
                 window.figurePopup.show(img);
             }
         });
@@ -174,7 +171,7 @@ function sendRequest(params) {
 
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     let json = JSON.parse(xhr.responseText);
@@ -228,7 +225,9 @@ window.figurePopup = {
     _fillForm: (data, collections) => {
         let inputs = window.figurePopup._element.getElementsByClassName('form-control');
         let optionsHtml = [];
-
+        if(METAPUBLICATION_ID){
+            data.MetapublicationID = METAPUBLICATION_ID;
+        }
         collections.forEach((el) => {
             optionsHtml.push(
                 '<option value="' + el.Metapublication.ID + '">' +
@@ -250,6 +249,7 @@ window.figurePopup = {
             (collections) => {
                 window.figurePopup._fillForm(data, collections);
                 window.figurePopup._element.classList.add('rf-popup-show');
+                window.figurePopup.onChange();
             }, (text) => {
                 alert(text);
             }
@@ -258,7 +258,17 @@ window.figurePopup = {
     hide: () => {
         window.figurePopup._element.classList.remove('rf-popup-show');
     },
-    submit: (event) => {
+    onChange: () => {
+        let formData = {};
+        let inputs = window.figurePopup._element.getElementsByClassName('form-control');
+        for (let index = 0; index < inputs.length; index++) {
+            formData[inputs[index].name] = inputs[index].value;
+        }
+        chrome.storage.local.set({
+            rfAddFigure: formData
+        });
+    },
+    onSubmit: (event) => {
         chrome.storage.local.get('userInfo', (data) => {
             if (data.userInfo) {
                 let formData = {};
@@ -277,6 +287,7 @@ window.figurePopup = {
                     console.log('data', data);
                     alert(_gConst.FIGURE_ADDED);
                     window.figurePopup.hide();
+                    chrome.storage.local.remove('rfAddFigure');
                 }, (data) => {
                     console.log(data);
                 });
@@ -339,7 +350,7 @@ window.figurePopup = {
             '</form>',
         ].join('');
         document.body.appendChild(window.figurePopup._element);
-        document.getElementById('rf-add-figure-form').addEventListener('submit', window.figurePopup.submit, false);
+        document.getElementById('rf-add-figure-form').addEventListener('submit', window.figurePopup.onSubmit, false);
 
         return true;
     }

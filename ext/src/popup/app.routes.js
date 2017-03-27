@@ -31,10 +31,12 @@
                 resolveRedirectTo: IsAuthCtrl
             })
             .when('/figure/edit/:id', {
-                template: '<figure-edit/>'
+                template: '<figure-edit/>',
+                resolveRedirectTo: IsAuthCtrl
             })
-            .when('/create-figure', {
-                template: '<create-figure/>'
+            .when('/figure/new', {
+                template: '<figure-edit/>',
+                resolveRedirectTo: IsAuthCtrl
             })
             .otherwise('/auth');
 

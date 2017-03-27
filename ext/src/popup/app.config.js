@@ -6,7 +6,8 @@
             CURRENT_TAB: null,
             FIGURES: [],
             FOUND_FIGURES: [],
-            SELECTED: []
+            SELECTED: [],
+            ADD_FIGURE: null
         })
         .config(ConfigController)
         .run(RunController);
@@ -37,9 +38,9 @@
 
     }
 
-    RunController.$inject = ['$rootScope', 'STORAGE', 'FoundFiguresService'];
+    RunController.$inject = ['$rootScope', '$location', 'STORAGE', 'FoundFiguresService'];
 
-    function RunController($rootScope, STORAGE, FoundFiguresService) {
+    function RunController($rootScope, $location, STORAGE, FoundFiguresService) {
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {
@@ -53,6 +54,15 @@
             return true;
             }
         );
+
+        chrome.storage.local.get('rfAddFigure', (data) => {
+            if(data.rfAddFigure){
+                STORAGE.ADD_FIGURE = data.rfAddFigure;
+                $rootScope.$apply(() => {
+                    $location.path('/figure/new');
+                });
+            }
+        });
 
         $rootScope.figuresToggler = FoundFiguresService;
     }

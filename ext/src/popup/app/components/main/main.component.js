@@ -47,12 +47,12 @@
             });
         }
 
-        function figureAddStart() {
+        /*function figureAddStart() {
             vm.error = '';
             chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
                 type: _gConst.MSG_TYPE_ADD_START
             });
-        }
+        }*/
 
         function searchImage(src) {
             let img = STORAGE.FIGURES.find(function (el) {

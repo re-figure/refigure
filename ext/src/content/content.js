@@ -258,6 +258,10 @@ window.figurePopup = {
     hide: () => {
         window.figurePopup._element && window.figurePopup._element.classList.remove('rf-popup-show');
     },
+    onCancel: () => {
+        window.figurePopup.hide();
+        chrome.storage.local.remove('rfAddFigure');
+    },
     onChange: () => {
         let formData = {};
         let inputs = window.figurePopup._element.getElementsByClassName('form-control');
@@ -306,7 +310,7 @@ window.figurePopup = {
         window.figurePopup._element = document.createElement('div');
         window.figurePopup._element.className = 'rf-popup';
         window.figurePopup._element.innerHTML = [
-            '<form id="rf-add-figure-form" name="addFigureForm" class="panel panel-primary">',
+            '<form id="rf-add-figure-submit" name="addFigureForm" class="panel panel-primary">',
                 '<div class="panel-heading text-center">Add figure to collection</div>',
                 '<div class="panel-body">',
                     '<div class="form-group">',
@@ -345,12 +349,16 @@ window.figurePopup = {
                     '</div>',
                 '</div>',
                 '<div class="panel-footer">',
-                    '<button class="btn btn-block btn-primary">Submit</button>',
+                    '<div class="row">',
+                        '<div class="col-xs-6"><button type="button" id="rf-add-figure-cancel" class="btn btn-block btn-info">Cancel</button></div>',
+                        '<div class="col-xs-6"><button class="btn btn-block btn-primary">Submit</button></div>',
+                    '</div>',
                 '</div>',
             '</form>',
         ].join('');
         document.body.appendChild(window.figurePopup._element);
-        document.getElementById('rf-add-figure-form').addEventListener('submit', window.figurePopup.onSubmit, false);
+        document.getElementById('rf-add-figure-submit').addEventListener('submit', window.figurePopup.onSubmit, false);
+        document.getElementById('rf-add-figure-cancel').addEventListener('click', window.figurePopup.onCancel, false);
 
         return true;
     }

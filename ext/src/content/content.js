@@ -256,7 +256,7 @@ window.figurePopup = {
         );
     },
     hide: () => {
-        window.figurePopup._element.classList.remove('rf-popup-show');
+        window.figurePopup._element && window.figurePopup._element.classList.remove('rf-popup-show');
     },
     onChange: () => {
         let formData = {};

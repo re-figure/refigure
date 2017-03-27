@@ -25,7 +25,7 @@
             } else {
                 //create
                 vm.figure = STORAGE.ADD_FIGURE;
-                chrome.runtime.sendMessage({
+                chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
                     type: _gConst.MSG_TYPE_CREATE_IN_POPUP
                 });
             }

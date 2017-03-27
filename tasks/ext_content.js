@@ -9,7 +9,8 @@ const extOpt = require('./../gulp.conf').extension;
 
 module.exports = function () {
 
-    return merge(gulp
+    return merge(
+        gulp
             .src(extOpt.content.mainScripts)
             .pipe(concat('content.js'))
             .pipe(gulp.dest(extOpt.dist + '/content')),

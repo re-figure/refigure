@@ -353,7 +353,7 @@ function getUpdateData(params) {
 function updateFigure(req, res) {
     let id = vars.get(req, 'ID');
     if (!utils.isset(id)) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Figure ID provided');
     }
 
     get(id, (r) => {

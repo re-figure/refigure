@@ -33,6 +33,7 @@
             .when('/figure/new', {
                 template: '<figure-edit/>',
                 resolveRedirectTo: IsAuthCtrl
+            })
             .when('/foundfigures', {
                 template: '<found-figures/>'
             })

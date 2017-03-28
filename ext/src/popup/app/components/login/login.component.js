@@ -34,7 +34,7 @@
                 .logout();
             vm.userInfo = AuthService.userInfo;
         }
-        
+
         function setUserInfo() {
             vm.userInfo = AuthService.userInfo;
         }

@@ -1,7 +1,9 @@
 <div ng-show="vm.userInfo" class="container-fluid">
     <form class="logout-form" ng-submit="vm.logout()">
         <div class="logout-identity">
-            <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
+            <a href="https://refigure.noblecoz.com/profile" target="_blank">
+                <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
+            </a>
             <button type="submit" name="logout_submit" class="btn btn-default pull-right">Logout</button>
         </div>
     </form>
@@ -18,6 +20,8 @@
             <input class="form-control" type="password" name="login_password" ng-model="vm.loginData.Password"/>
         </div>
     </div>
+
+    <a href="https://refigure.noblecoz.com/passwordreset/" target="_blank">Forgot your password?</a>
 
     <div class="text-right">
         <button class="btn btn-default" name="login_submit" type="submit" >Login</button>

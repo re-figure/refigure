@@ -83,7 +83,7 @@
             vm.error = '';
             chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
                 type: _gConst.MSG_TYPE_ADD_START,
-                metapublicationId: vm.formData.ID
+                Metapublication: vm.formData
             });
             window.close();
         }

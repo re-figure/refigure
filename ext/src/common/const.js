@@ -12,14 +12,14 @@ var _gConst = {
     MSG_TYPE_USER_LOGGED_IN: 4,
     MSG_TYPE_USER_LOGGED_OUT: 5,
     MSG_TYPE_CHECK_COMPLETED: 6,
-    MSG_TYPE_CREATE_IN_POPUP: 7,
+    MSG_TYPE_POPUP_OPENED: 7,
     MSG_TYPE_ADD_FIGURE_TO_COLLECTION: 8,
 
     POPUP_ERROR_FIG_NOT_PARSED: 'Figure was not parsed',
     POPUP_ERROR_FIG_DUPLICATE: 'Figure is already selected',
 
     ERROR_NOT_LOGGED: 'Please log in first.',
-    FIGURE_ADDED: 'Figure was successfully added'
+    FIGURE_ADDED: 'Figures were successfully added'
 
 };
 

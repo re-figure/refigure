@@ -84,6 +84,7 @@ module.exports = {
             css: extSrcDir + '/content/content.sass',
             mainScripts: [
                 extSrcDir + '/vendor/sizzle/sizzle.min.js',
+                extSrcDir + '/vendor/angular/angular.min.js',
                 extSrcDir + '/common/const.js',
                 extSrcDir + '/content/content.js'
             ],

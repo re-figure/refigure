@@ -24,10 +24,10 @@
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_USER_LOGGED_OUT
             });
-            $location.path('/auth');
+            $location.path('/');
         }
 
-        function login(params) {
+        function login(params, cb) {
             return $http
                 .post(_gApiURL + "login", params)
                 .then(function (resp) {
@@ -41,6 +41,9 @@
                         chrome.storage.local.set({
                             userInfo: resp.data.data
                         });
+                        if (cb) {
+                            cb();
+                        }
                     }
                     return resp.data.data;
                 });

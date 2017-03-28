@@ -16,10 +16,10 @@
                 template: '<main/>',
                 resolveRedirectTo: IsAuthCtrl
             })
-            .when('/user', {
+            .when('/auth', {
                 config: {
                     name: 'user',
-                    title: 'User info',
+                    title: 'User account',
                 },
                 template: '<login-form/>'
             })

@@ -12,7 +12,7 @@
     Controller.$inject = ['$scope', '$window', 'AuthService', 'STORAGE'];
 
     function Controller($scope, $window, AuthService, STORAGE) {
-        let vm = this;
+        var vm = this;
         vm.$onInit = activate;
         vm.logout = AuthService.logout;
         vm.auth = AuthService;

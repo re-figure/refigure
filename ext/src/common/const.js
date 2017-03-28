@@ -29,9 +29,9 @@ var _gApiURL;
 (function () {
     var permissions = chrome.runtime.getManifest().permissions,
         i;
-    for (i=0; i < permissions.length; i++){
-        if(permissions[i].match(/^http/)) {
-            _gApiURL = permissions[i].replace(/\*$/,"");
+    for (i = 0; i < permissions.length; i++) {
+        if (permissions[i].match(/^http/)) {
+            _gApiURL = permissions[i].replace(/\*$/, "");
             break;
         }
     }

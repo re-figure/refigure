@@ -33,18 +33,18 @@
 
     RunController.$inject = ['$rootScope', 'STORAGE'];
 
-    function RunController($rootScope,  STORAGE) {
+    function RunController($rootScope, STORAGE) {
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {
                         STORAGE.FIGURES = request.figures;
                     });
-                } else if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED){
+                } else if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
                     $rootScope.$apply(function () {
                         STORAGE.FOUND_FIGURES = request.figures;
                     });
                 }
-            return true;
+                return true;
             }
         );
     }

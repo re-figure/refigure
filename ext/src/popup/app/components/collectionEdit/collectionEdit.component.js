@@ -11,7 +11,7 @@
     EditCollectionController.$inject = ['$routeParams', 'AuthService', 'CollectionSvc', 'STORAGE'];
 
     function EditCollectionController($routeParams, AuthService, CollectionSvc, STORAGE) {
-        let vm = this;
+        var vm = this;
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
@@ -29,9 +29,9 @@
             if ($routeParams.id) {
                 vm.buttonName = 'Update';
                 CollectionSvc.read($routeParams.id)
-                    .then((resp) => {
+                    .then(function (resp) {
                         vm.formData = resp.data.data.Metapublication;
-                    }, (err) => {
+                    }, function (err) {
                         console.log(err);
                         vm.error = err.data.message;
                     });
@@ -44,7 +44,7 @@
 
                 CollectionSvc
                     .create(params)
-                    .then(null, (error) => {
+                    .then(null, function (error) {
                         console.log(error);
                         vm.error = error.data.message;
                     });
@@ -53,7 +53,7 @@
                 // console.log(params);
                 CollectionSvc
                     .update(params)
-                    .then(null, (error) => {
+                    .then(null, function (error) {
                         console.log(error);
                         vm.error = error.data.message;
                     });
@@ -63,7 +63,7 @@
         function removeItem(id) {
             if (id && confirm("Are you sure?")) {
                 CollectionSvc.delete(id)
-                    .catch((err) => {
+                    .catch(function (err) {
                         console.log(err);
                         vm.error = err.data.message;
                     });
@@ -73,7 +73,7 @@
         function toggleFlag() {
             vm.formData.Flag = !vm.formData.Flag;
             CollectionSvc.toggleFlag({ID: vm.formData.ID, Flagged: vm.formData.Flagged})
-                .catch((err) => {
+                .catch(function (err) {
                     console.log(err);
                     vm.error = err.data.message;
                 });

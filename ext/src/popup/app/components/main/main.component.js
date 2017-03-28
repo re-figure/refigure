@@ -11,7 +11,7 @@
     Controller.$inject = ['STORAGE'];
 
     function Controller(STORAGE) {
-        let vm = this;
+        var vm = this;
 
         vm.$onInit = activate;
 

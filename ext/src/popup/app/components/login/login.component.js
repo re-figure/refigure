@@ -11,7 +11,7 @@
     LoginController.$inject = ['AuthService'];
 
     function LoginController(AuthService) {
-        let vm = this;
+        var vm = this;
 
         vm.login = login;
         vm.$onInit = activate;
@@ -22,7 +22,7 @@
         function login(params) {
             AuthService
                 .login(params)
-                .then(angular.noop, (error) => {
+                .then(angular.noop, function (error) {
                     //error
                     console.log(error);
                     // put Error object into parent controller

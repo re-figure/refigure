@@ -24,7 +24,7 @@
 
         function save(index, params) {
             FoundFiguresSvc.save(params)
-                .then((resp) => {
+                .then(function (resp) {
                     vm.figures[index] = resp.data.data.Figure;
                  });
         }

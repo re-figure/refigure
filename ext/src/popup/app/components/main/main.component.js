@@ -15,7 +15,7 @@
 
         vm.error = '';
 
-        vm.figureAddStart = figureAddStart;
+        //vm.figureAddStart = figureAddStart;
         vm.figureRemove = figureRemove;
 
         vm.$onInit = activate;

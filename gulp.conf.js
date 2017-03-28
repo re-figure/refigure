@@ -76,11 +76,15 @@ module.exports = {
         },
         src: extSrcDir,
         dist: extDir + '/dist',
+        common: {
+            css: extSrcDir + '/common/variables.sass',
+            js: extSrcDir + '/common/const.js'
+        },
         content: {
             css: extSrcDir + '/content/content.sass',
             mainScripts: [
                 extSrcDir + '/vendor/sizzle/sizzle.min.js',
-                extSrcDir + '/js/const.js',
+                extSrcDir + '/common/const.js',
                 extSrcDir + '/content/content.js'
             ],
             parsers: extSrcDir + '/content/parsers/*.js'
@@ -89,7 +93,7 @@ module.exports = {
             dir: '/background',
             html: extSrcDir + '/background/background.html',
             js: [
-                extSrcDir + '/js/const.js',
+                extSrcDir + '/common/const.js',
                 extSrcDir + '/background/background.js'
             ]
         },
@@ -100,7 +104,7 @@ module.exports = {
             js: [
                 extSrcDir + '/vendor/angular/angular.min.js',
                 extSrcDir + '/vendor/angular/angular-route.min.js',
-                extSrcDir + '/js/const.js',
+                extSrcDir + '/common/const.js',
                 extSrcDir + '/popup/*.module.js',
                 extSrcDir + '/popup/**/*.js'
             ],

@@ -1,11 +1,13 @@
-$icon-font-path: "/fonts/"
+$icon-font-path:            "/fonts/"
 $brand-primary:             #4285f4
 $border-radius-base:        0
 $border-radius-large:       0
 $border-radius-small:       0
+$hr-border:                 '#777'
 @import "../vendor/bootstrap/stylesheets/bootstrap"
 
 body
+    padding-top: 70px
     width: 400px
 
 .figure-add
@@ -34,4 +36,5 @@ img
 .clickable
     cursor: pointer
 
-@import "app/components/foundFigures/foundFigures"
+@import "app/components/foundFigures/foundFigures.component"
+@import "app/components/navBar/navBar.component"

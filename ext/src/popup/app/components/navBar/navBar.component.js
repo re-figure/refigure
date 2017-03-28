@@ -1,4 +1,5 @@
 (function (angular) {
+    'use strict';
 
     angular.module('ReFigure')
         .component('navBar', {
@@ -8,20 +9,27 @@
         });
 
 
-    Controller.$inject = ['$scope', 'AuthService', 'STORAGE'];
+    Controller.$inject = ['$scope', '$window', 'AuthService', 'STORAGE'];
 
-    function Controller($scope, AuthService, STORAGE) {
+    function Controller($scope, $window, AuthService, STORAGE) {
         let vm = this;
         vm.$onInit = activate;
         vm.logout = AuthService.logout;
+        vm.auth = AuthService;
         vm.store = STORAGE;
+        vm.historyBack = historyBack;
 
         //////////////////
 
         function activate() {
-            $scope.$on('$routeChangeSuccess', function () {
+            $scope.$on('$routeChangeSuccess', function ($event, $curr) {
+                vm.page = $curr.$$route.config;
                 vm.userInfo = AuthService.userInfo;
             });
+        }
+
+        function historyBack() {
+            $window.history.back();
         }
     }
 

@@ -33,7 +33,7 @@
 
         function activate() {
             vm.userInfo = AuthService.userInfo;
-            getMyOwnCollections();
+            AuthService.userInfo && getMyOwnCollections();
         }
 
         function removeItem(id, idx) {

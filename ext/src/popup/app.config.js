@@ -1,13 +1,11 @@
 (function (angular) {
+    'use strict';
 
-    //debug page chrome-extension://eomljbidagegcimpgnpmmejnjbcfpdgo/popup/popup.html
     angular.module('ReFigure')
         .constant('STORAGE', {
             CURRENT_TAB: null,
             FIGURES: [],
-            FOUND_FIGURES: [],
-            SELECTED: [],
-            ADD_FIGURE: null
+            FOUND_FIGURES: []
         })
         .config(ConfigController)
         .run(RunController);
@@ -26,21 +24,16 @@
             STORAGE.CURRENT_TAB = res[0].id;
         });
 
-        chrome.storage.local.get('rfSelected', function (data) {
-            STORAGE.SELECTED = data.rfSelected || [];
-        });
-
         chrome.storage.local.get('foundFigures', function (data) {
             STORAGE.FOUND_FIGURES = data.foundFigures || [];
         });
 
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
-
     }
 
-    RunController.$inject = ['$rootScope', '$location', 'STORAGE'];
+    RunController.$inject = ['$rootScope', 'STORAGE'];
 
-    function RunController($rootScope, $location, STORAGE) {
+    function RunController($rootScope,  STORAGE) {
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {
@@ -54,15 +47,6 @@
             return true;
             }
         );
-
-        chrome.storage.local.get('rfAddFigure', (data) => {
-            if(data.rfAddFigure){
-                STORAGE.ADD_FIGURE = data.rfAddFigure;
-                $rootScope.$apply(() => {
-                    $location.path('/figure/new');
-                });
-            }
-        });
     }
 
 })(window.angular);

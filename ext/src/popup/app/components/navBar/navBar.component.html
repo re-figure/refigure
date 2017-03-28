@@ -1,21 +1,18 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
-        <p class="navbar-text">
-            <a class="pull-right" href="#!/"><span class="glyphicon glyphicon-home"></span></a>
-            <a href="#!/foundfigures">
-              <span class="glyphicon glyphicon-menu-down"></span>
-              <span>
-                  <b ng-bind="vm.store.FOUND_FIGURES.length + ' REFIGURES ON THIS PAGE'"></b>
-              </span>
-            </a>
-        </p>
+        <div class="row">
+            <div class="col-xs-2">
+                <a class="brand-link" ng-hide="vm.page.name==='main'" href="#" ng-click="vm.historyBack()">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="brand-link" ng-show="vm.page.name==='main'" href="https://refigure.noblecoz.com" target="_blank">
+                    <img src="/img/icon.png" alt="ReFigure">
+                </a>
+            </div>
+            <span ng-bind="vm.page.title"></span>
+            <div class="col-xs-2 pull-right">
+                <a href="#!/user">USER</a>
+            </div>
+        </div>
     </div>
 </nav>
-<div ng-show="vm.userInfo" class="container-fluid">
-    <form class="logout-form" ng-submit="vm.logout()">
-        <div class="logout-identity">
-            <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
-            <button type="submit" name="logout_submit" class="btn btn-default pull-right">Logout</button>
-        </div>
-    </form>
-</div>

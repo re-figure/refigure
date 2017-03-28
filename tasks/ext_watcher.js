@@ -16,14 +16,14 @@ module.exports = [['extension'], () => {
         runSequence('ext_background', 'ext_zip');
     });
     gulp.watch(
-        extOpt.content.mainScripts.concat(extOpt.content.css, extOpt.content.parsers),
+        extOpt.content.mainScripts.concat(extOpt.common.css, extOpt.content.css, extOpt.content.parsers),
         opts,
         () => {
             runSequence('ext_content','ext_zip');
         }
     );
     gulp.watch(
-        extOpt.popup.js.concat(extOpt.popup.html, extOpt.popup.css, extOpt.popup.index),
+        extOpt.popup.js.concat(extOpt.popup.html, extOpt.common.css, extOpt.popup.css, extOpt.popup.index),
         opts,
         () => {
             runSequence('ext_popup', 'ext_zip');

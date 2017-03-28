@@ -11,7 +11,10 @@
             </div>
             <span ng-bind="vm.page.title"></span>
             <div class="col-xs-2 pull-right">
-                <a href="#!/user">USER</a>
+                <a href="#!/auth">
+                    <span ng-show="vm.userInfo" class="glyphicon glyphicon-user"></span>
+                    <span ng-hide="vm.userInfo" class="glyphicon glyphicon-log-in"></span>
+                </a>
             </div>
         </div>
     </div>

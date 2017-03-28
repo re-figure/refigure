@@ -11,7 +11,7 @@
     CollectionListController.$inject = ['AuthService', 'CollectionSvc'];
 
     function CollectionListController(AuthService, CollectionSvc) {
-        let vm = this;
+        var vm = this;
 
         vm.$onInit = activate;
         vm.removeItem = removeItem;
@@ -22,9 +22,9 @@
         function getMyOwnCollections() {
             return CollectionSvc
                 .getUserCollections()
-                .then((res) => {
+                .then(function (res) {
                     vm.collections = res.data.data.results;
-                }, (error) => {
+                }, function (error) {
                     //error
                     console.log(error);
                     vm.error = error.data.message;
@@ -33,13 +33,13 @@
 
         function activate() {
             vm.userInfo = AuthService.userInfo;
-            getMyOwnCollections();
+            AuthService.userInfo && getMyOwnCollections();
         }
 
         function removeItem(id, idx) {
             if (id && confirm("Are you sure?")) {
                 CollectionSvc.delete(id, removeElement, idx)
-                    .catch((err) => {
+                    .catch(function (err) {
                         console.log(err);
                         vm.error = err.data.message;
                     });

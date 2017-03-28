@@ -6,7 +6,7 @@
     FoundFiguresSvc.$inject = ['$location', '$http', 'AuthService'];
 
     function FoundFiguresSvc($location, $http, AuthService) {
-        let service = this;
+        var service = this;
         service.save = save;
         service.getUserCollections = getUserCollections;
 

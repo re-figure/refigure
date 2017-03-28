@@ -6,7 +6,7 @@
     CollectionService.$inject = ['$location', '$http', 'AuthService'];
 
     function CollectionService($location, $http, AuthService) {
-        let service = this;
+        var service = this;
 
         if (AuthService.userInfo) {
             $http.defaults.headers.common['Authentication'] = AuthService.userInfo.Token;
@@ -17,7 +17,7 @@
         service.create = function (params) {
             return $http
                 .post(_gApiURL + "metapublication", params)
-                .then((resp) => {
+                .then(function (resp) {
                     // $location.path('/collections/' + resp.data.data.Metapublication.ID);
                     $location.path('/my-collections');
                 });
@@ -31,7 +31,7 @@
         service.update = function (params) {
             return $http
                 .put(_gApiURL + "metapublication", params)
-                .then((resp) => {
+                .then(function (resp) {
                     // $location.path('/collections/' + resp.data.data.Metapublication.ID);
                     $location.path('/my-collections');
                 });
@@ -40,7 +40,7 @@
         service.delete = function (id) {
             return $http
                 .delete(_gApiURL + "metapublication/" + id)
-                .then(() => {
+                .then(function () {
                     $location.path('/my-collections');
                 });
         };

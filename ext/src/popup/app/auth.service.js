@@ -6,12 +6,12 @@
     Controller.$inject = ['$q', '$location', '$http'];
 
     function Controller($q, $location, $http) {
-        let exports = {
-                userInfo: null,
-                login: login,
-                logout: logout,
-                isAuth: isAuth
-            };
+        var exports = {
+            userInfo: null,
+            login: login,
+            logout: logout,
+            isAuth: isAuth
+        };
 
         return exports;
 
@@ -30,7 +30,7 @@
         function login(params) {
             return $http
                 .post(_gApiURL + "login", params)
-                .then((resp) => {
+                .then(function (resp) {
                     if (resp.data.data) {
                         exports.userInfo = resp.data.data;
                         $http.defaults.headers.common['Authentication'] = resp.data.data.Token;
@@ -47,12 +47,12 @@
         }
 
         function isAuth() {
-            let dfd = $q.defer();
+            var dfd = $q.defer();
             if (exports.userInfo !== null) {
                 dfd.resolve(undefined);
             } else {
-                chrome.storage.local.get('userInfo', (data) => {
-                    let resolve = '/auth';
+                chrome.storage.local.get('userInfo', function (data) {
+                    var resolve = '/auth';
                     if (data.userInfo) {
                         exports.userInfo = data.userInfo;
                         resolve = undefined;

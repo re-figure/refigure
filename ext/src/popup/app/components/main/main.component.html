@@ -1,18 +1,4 @@
-<a href="#!/collections/new" class="btn btn-lg btn-primary btn-block">Create Collection</a>
-<a href="#!/my-collections" class="btn btn-lg btn-info btn-block">My Collections</a>
-<!--<button ng-click="vm.figureAddStart()" class="btn btn-lg btn-block figure-add" ng-class="vm.error ? 'btn-info' : 'btn-default'" ng-bind="vm.error || '+'"></button>-->
+<a href="#!/foundfigures" class="btn btn-sm btn-primary btn-block" ng-bind="vm.store.FOUND_FIGURES.length + ' ReFigures on this page'"></a>
+<a href="#!/collections/new" class="btn btn-sm btn-primary btn-block">Create Collection</a>
 <hr>
-<div ng-repeat="fig in vm.selected">
-    <div class="row">
-        <div class="col-xs-4">
-            <img class="thumbnail" ng-src="{{fig.URL}}">
-        </div>
-        <div class="col-xs-8">
-            <button type="button" class="close pull-right" aria-label="Close" ng-click="vm.figureRemove($index)">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div ng-bind="fig.Caption"></div>
-        </div>
-    </div>
-    <hr>
-</div>
+<collection-list/>

@@ -1,16 +1,3 @@
-<div ng-if="vm.formData.ID" class="checkbox text-right">
-    <label>
-        <!--            <input  type="checkbox"
-                            ng-checked="!!vm.formData.Flagged"
-                            ng-model="vm.formData.Flagged"
-                            ng-change="vm.toggleFlag()"> Reported-->
-        <input  type="checkbox"
-                ng-model="vm.formData.Flagged"
-                ng-true-value="1"
-                ng-false-value="0"
-                ng-change="vm.toggleFlag()"> Reported
-    </label>
-</div>
 <form class="collection" name="cc_form" ng-submit="vm.editCollection(vm.formData)">
     <div class="form-group">
         <label>Collection title</label>
@@ -24,13 +11,22 @@
         <label>Keywords</label>
         <input class="form-control" type="text" name="collection_keywords" ng-model="vm.formData.Keywords"/>
     </div>
+    <div ng-if="vm.formData.ID" class="pull-left">
+        <label>
+            <input  type="checkbox"
+                    ng-model="vm.formData.Flagged"
+                    ng-true-value="1"
+                    ng-false-value="0"
+                    ng-change="vm.toggleFlag()"
+                    no-dirty> Reported
+        </label>
+    </div>
     <div class="text-right">
         <div class="btn-group">
-            <a ng-href="#!/my-collections" class="btn btn-sm btn-default">
-                <span class="glyphicon glyphicon-menu-left"></span>
-            </a>
-            <button ng-show="vm.formData.ID" ng-click="vm.removeItem(vm.formData.ID)" class="btn btn-sm btn-danger" type="button">Delete</button>
-            <button ng-show="cc_form.$dirty" ng-disabled="cc_form.$invalid" class="btn btn-sm btn-success" type="submit" ng-bind="vm.buttonName">Submit</button>
+            <button ng-show="cc_form.$dirty" ng-disabled="cc_form.$invalid" class="btn btn-sm btn-primary" type="submit" ng-bind="vm.buttonName">Submit</button>
+            <button ng-show="vm.formData.ID" ng-click="vm.removeItem(vm.formData.ID)" class="btn btn-sm btn-default" type="button">
+                <span class="glyphicon glyphicon-warning-sign text-danger"></span> Delete
+            </button>
         </div>
     </div>
     <hr>

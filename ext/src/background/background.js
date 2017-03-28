@@ -1,10 +1,5 @@
 
-var tabsData = {},
-    FIGURES = [];
-
-chrome.storage.local.get('rfFigures', function (data) {
-    FIGURES = data.rfFigures || [];
-});
+var tabsData = {};
 
 chrome.storage.local.get('userInfo', function (data) {
     data.userInfo  ? createContextMenus() : removeContextMenus();
@@ -19,15 +14,12 @@ function updateBrowserAction(tab) {
         } else if (t.status === _gConst.STATUS_INPROCESS) {
             chrome.browserAction.setBadgeText({tabId: tab.id, text: 'L'});
         } else {
-            if (t.count === -1) {
-                // an error occurred while search figures
-                chrome.browserAction.setBadgeText({tabId: tab.id, text: 'E'});
-            } else if (t.count === 0) {
-                // no figures found on the page
+            if (t.count === 0) {
+                // no figures found on the page or an error occurred
                 chrome.browserAction.setBadgeText({tabId: tab.id, text: '0'});
             } else {
                 // found figures on the page
-                chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.count)});
+                chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.foundFigures.length)});
             }
         }
     } else {
@@ -56,6 +48,9 @@ chrome.runtime.onMessage.addListener(
 
     function(request, sender, sendResponse) {
         if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
+            onParseFiguresComplete(request, sender.tab);
+        }
+        if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
             onSearchFiguresComplete(request, sender.tab);
         }
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_IN) {
@@ -69,17 +64,18 @@ chrome.runtime.onMessage.addListener(
 
 );
 
+function onParseFiguresComplete(result, tab) {
+    var t = tabsData[tab.id];
+    if (t) {
+        t.figures = result.figures;
+    }
+}
+
 function onSearchFiguresComplete(result, tab) {
     var t = tabsData[tab.id];
     if (t) {
         t.status = _gConst.STATUS_COMPLETE;
-        t.count = result.count;
-        t.figures = result.figures;
-        chrome.storage.local.set({
-            rfFigures: result.figures
-        });
-        FIGURES = result.figures;
-        // to make sure the browserAction is enabled finally
+        t.foundFigures = result.figures;
         chrome.browserAction.enable(tab.id);
         update(tab.id);
     }
@@ -95,9 +91,9 @@ function update(tabId) {
 function createNewTabData(tabId) {
     tabsData[tabId] = {
         status: 0,
-        count: 0,
         url: '',
-        figures: []
+        figures: [],
+        foundFigures: []
     };
 }
 
@@ -156,19 +152,12 @@ function createContextMenus() {
     /*
      Create all the context menu items.
      */
-    var createCollectionItemOptions = {
-            id: "create-collection",
-            title: "Create Collection",
-            contexts: ["image"]},
-
-        addToExistingItemOptions = {
+    var addToExistingItemOptions = {
             id: "add-to-existing",
-            title: "Add to existing",
+            title: "Add figure to collection",
             contexts: ["image"]
         };
-    chrome.contextMenus.create(createCollectionItemOptions, onCreated);
     chrome.contextMenus.create(addToExistingItemOptions, onCreated);
-
     chrome.contextMenus.onClicked.addListener(contextMenuClickListener);
 }
 
@@ -181,41 +170,9 @@ function removeContextMenus() {
 
 function contextMenuClickListener(info, tab) {
     switch (info.menuItemId) {
-        case "create-collection":
-            console.log("Create Collection");
-            console.log("Image URL: ", info.srcUrl);
-            break;
         case "add-to-existing":
-            console.log("Add to existing");
-            addToSelected(info.srcUrl);
+            console.log("Add an image to the current collection");
+            chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION, src: info.srcUrl});
             break;
-    }
-}
-
-function addToSelected(src) {
-    var img = FIGURES.find(function (el) {
-        return el.URL === src;
-    });
-    if(!img){
-        alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
-    }else{
-        chrome.storage.local.get('rfSelected', function (data) {
-            var selected = data.rfSelected || [];
-            var isDup = selected.find(function (el) {
-                return el.URL === src;
-            });
-            if (isDup) {
-                alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
-            }else{
-                selected.push(img);
-                chrome.storage.local.set({
-                    rfSelected: selected
-                });
-                chrome.runtime.sendMessage({
-                    type: _gConst.MSG_TYPE_ADD_COMPLETED,
-                    src: src
-                });
-            }
-        });
     }
 }

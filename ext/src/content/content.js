@@ -1,7 +1,12 @@
-var CONTENT_BLOCK_SELECTOR = 'body',
-    FIGURES = [],
-    METAPUBLICATION_ID = null;
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+var CONTENT_BLOCK_SELECTOR = 'body';
+
+var refigure = {
+    METAPUBLICATION_ID : null,
+    figures: [],
+    foundFigures: []
+};
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.type) {
         case _gConst.MSG_TYPE_ADD_START:
             figureAddStart(request.metapublicationId);
@@ -12,6 +17,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         case _gConst.MSG_TYPE_CREATE_IN_POPUP:
             window.figurePopup.hide();
             break;
+        case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
+            addToSelected(request.src);
     }
 });
 
@@ -24,15 +31,15 @@ function onClickImage(event) {
 }
 
 function figureAddStart(metapublicationId) {
-    METAPUBLICATION_ID = metapublicationId;
-    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
+    refigure.METAPUBLICATION_ID = metapublicationId;
+    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function(el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
     });
 }
 
 function figureAddStop() {
-    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
+    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function(el) {
         el.classList.remove('rf-addable-image');
         el.removeEventListener('click', onClickImage);
     });
@@ -61,32 +68,51 @@ function dedupFigures(figures) {
 
 
 function parseFigures() {
-    let figures = [];
-    for (let i = 0; i < document.images.length; i++) {
+    var figures = [];
+    for (var i = 0; i < document.images.length; i++) {
         figures.push({URL: document.images[i].src});
     }
     return Promise.resolve(figures);
 }
 
-function searchFigures() {
-    parseFigures().then(function (result) {
-        FIGURES = dedupFigures(result);
-        console.log('FIGURES found', FIGURES);
-        if (FIGURES.length > 0) {
-            chrome.runtime.sendMessage({
-                type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
-                figures: FIGURES,
-                count: FIGURES.length
-            });
-            sendCheckFiguresRequest(FIGURES);
-        }
-    }, function (error) {
-        console.error(error);
+function parsingCompleted(figures) {
+    console.log('Parsed out from the current page the following figures: ', figures);
+    refigure.figures = figures;
+    chrome.runtime.sendMessage({
+        type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
+        figures: figures
     });
 }
 
+function searchCompleted(figures) {
+    console.log('Found on the current page the following figures: ', figures);
+    refigure.foundFigures = figures;
+    chrome.runtime.sendMessage({
+        type: _gConst.MSG_TYPE_CHECK_COMPLETED,
+        figures: figures
+    });
+}
+
+function searchFigures() {
+    parseFigures().then(
+        function(result) {
+            var figures = dedupFigures(result);
+            parsingCompleted(figures);
+            if (figures.length > 0) {
+                sendCheckFiguresRequest(figures);
+            } else {
+                searchCompleted([]);
+            }
+        },
+        function(error) {
+            console.error(error);
+            searchCompleted([]);
+        }
+    );
+}
+
 function sendCheckFiguresRequest(figures) {
-    let filteredFigures = figures.map(function (el) {
+    var filteredFigures = figures.map(function(el) {
         return {
             URL: el.URL,
             DOIFigure: el.DOIFigure
@@ -99,19 +125,19 @@ function sendCheckFiguresRequest(figures) {
         data: {
             figures: filteredFigures
         }
-    }).then((data) => {
-        chrome.runtime.sendMessage({
-            type: _gConst.MSG_TYPE_CHECK_COMPLETED,
-            figures: data.figures
-        });
-        chrome.storage.local.set({
-            foundFigures: data.figures
-        });
-    });
+    }).then(
+        function(data) {
+            searchCompleted(data.figures);
+        },
+        function(error) {
+            console.log(error);
+            searchCompleted([]);
+        }
+    );
 }
 
 function logError() {
-    let args = Array.prototype.slice.call(arguments);
+    var args = Array.prototype.slice.call(arguments);
     args.unshift('ReFigure:');
     console.error.apply(null, args);
 }
@@ -123,11 +149,11 @@ function logError() {
  * @return {string} transformed html text
  */
 function prepareContent(node) {
-    let tmpEl = document.createElement('div');
+    var tmpEl = document.createElement('div');
     //replace image tags to save them after "innerHTML"
-    let tmpContent = node.innerHTML.replace(/<img/g, '||img||');
+    var tmpContent = node.innerHTML.replace(/<img/g, '||img||');
     //convert relative image srcs to absolute
-    tmpContent = tmpContent.replace(/src="(?!http)(.*?)"/g, function (match, src) {
+    tmpContent = tmpContent.replace(/src="(?!http)(.*?)"/g, function(match, src) {
         tmpEl.innerHTML = '<a href="' + src + '">x</a>';
         return 'src="' + tmpEl.firstChild.href + '"';
     });
@@ -141,40 +167,33 @@ function prepareContent(node) {
 }
 
 function addToSelected(src) {
-    let img = FIGURES.find(function (el) {
+    // check if the selected figure exists in the site-specific figures parsed out from the current page
+    var img = refigure.figures.find(function(el) {
         return el.URL === src;
     });
     if (!img) {
-        alert(_gConst.POPUP_ERROR_FIG_NOT_PARSED);
-    } else {
-        chrome.storage.local.get('rfSelected', function (data) {
-            let selected = data.rfSelected || [];
-            let isDup = selected.find(function (el) {
-                return el.URL === src;
-            });
-            if (isDup) {
-                alert(_gConst.POPUP_ERROR_FIG_DUPLICATE);
-            } else {
-                window.figurePopup.show(img);
-            }
-        });
+        // if figure was not parsed out then just use image src
+        img = {
+            URL: src
+        };
     }
+    window.figurePopup.show(img);
 }
 
 function sendRequest(params) {
-    let requestParams = Object.assign({
+    var requestParams = Object.assign({
         url: '',
         type: 'GET',
         data: {},
         headers: {}
     }, params);
 
-    return new Promise((resolve, reject) => {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    let json = JSON.parse(xhr.responseText);
+                    var json = JSON.parse(xhr.responseText);
                     if (json.error) {
                         console.error('Failed to send search request, got response ', json);
                         reject(json);
@@ -195,7 +214,7 @@ function sendRequest(params) {
         xhr.open(requestParams.type, _gApiURL + requestParams.url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
-        Object.keys(requestParams.headers).forEach((key) => {
+        Object.keys(requestParams.headers).forEach(function(key) {
             xhr.setRequestHeader(key, requestParams.headers[key]);
         });
         xhr.send(JSON.stringify(requestParams.data));
@@ -203,16 +222,16 @@ function sendRequest(params) {
 }
 
 window.figurePopup = {
-    _getCollections: () => {
-        return new Promise((resolve, reject) => {
-            chrome.storage.local.get('userInfo', (data) => {
+    _getCollections: function() {
+        return new Promise(function(resolve, reject) {
+            chrome.storage.local.get('userInfo', function(data) {
                 if (data.userInfo) {
                     sendRequest({
                         url: 'my-metapublications',
                         headers: {
                             Authentication: data.userInfo.Token
                         }
-                    }).then((data) => {
+                    }).then(function(data) {
                         resolve(data.results);
                     });
                 } else {
@@ -222,62 +241,63 @@ window.figurePopup = {
         });
     },
     _element: null,
-    _fillForm: (data, collections) => {
-        let inputs = window.figurePopup._element.getElementsByClassName('form-control');
-        let optionsHtml = [];
-        if(METAPUBLICATION_ID){
-            data.MetapublicationID = METAPUBLICATION_ID;
+    _fillForm: function(data, collections) {
+        var inputs = window.figurePopup._element.getElementsByClassName('form-control');
+        var optionsHtml = [];
+        if (refigure.METAPUBLICATION_ID) {
+            data.MetapublicationID = refigure.METAPUBLICATION_ID;
         }
-        collections.forEach((el) => {
+        collections.forEach(function(el) {
             optionsHtml.push(
                 '<option value="' + el.Metapublication.ID + '">' +
                     el.Metapublication.Title + ' (' + el.Metapublication.FiguresCount + ')' +
                 '</option>'
             );
         });
-        for (let index = 0; index < inputs.length; index++) {
+        for (var index = 0; index < inputs.length; index++) {
             if (inputs[index].name === 'MetapublicationID') {
                 inputs[index].innerHTML = optionsHtml.join('');
             }
             inputs[index].value = data[inputs[index].name] || '';
         }
     },
-    show: (data) => {
+    show: function(data) {
         !window.figurePopup._element && window.figurePopup.create();
-
+        // TODO check if the figure exists in the current collection
+        // if so, then use UPDATE then not CREATE
         window.figurePopup._getCollections().then(
-            (collections) => {
+            function(collections) {
                 window.figurePopup._fillForm(data, collections);
                 window.figurePopup._element.classList.add('rf-popup-show');
                 window.figurePopup.onChange();
-            }, (text) => {
+            }, function(text) {
                 alert(text);
             }
         );
     },
-    hide: () => {
+    hide: function() {
         window.figurePopup._element && window.figurePopup._element.classList.remove('rf-popup-show');
     },
-    onCancel: () => {
+    onCancel: function() {
         window.figurePopup.hide();
         chrome.storage.local.remove('rfAddFigure');
     },
-    onChange: () => {
-        let formData = {};
-        let inputs = window.figurePopup._element.getElementsByClassName('form-control');
-        for (let index = 0; index < inputs.length; index++) {
+    onChange: function() {
+        var formData = {};
+        var inputs = window.figurePopup._element.getElementsByClassName('form-control');
+        for (var index = 0; index < inputs.length; index++) {
             formData[inputs[index].name] = inputs[index].value;
         }
         chrome.storage.local.set({
             rfAddFigure: formData
         });
     },
-    onSubmit: (event) => {
-        chrome.storage.local.get('userInfo', (data) => {
+    onSubmit: function(event) {
+        chrome.storage.local.get('userInfo', function(data) {
             if (data.userInfo) {
-                let formData = {};
-                let inputs = window.figurePopup._element.getElementsByClassName('form-control');
-                for (let index = 0; index < inputs.length; index++) {
+                var formData = {};
+                var inputs = window.figurePopup._element.getElementsByClassName('form-control');
+                for (var index = 0; index < inputs.length; index++) {
                     formData[inputs[index].name] = inputs[index].value;
                 }
                 sendRequest({
@@ -287,12 +307,12 @@ window.figurePopup = {
                     headers: {
                         Authentication: data.userInfo.Token
                     }
-                }).then((data) => {
+                }).then(function(data) {
                     console.log('data', data);
                     alert(_gConst.FIGURE_ADDED);
                     window.figurePopup.hide();
                     chrome.storage.local.remove('rfAddFigure');
-                }, (data) => {
+                }, function(data) {
                     console.log(data);
                 });
             } else {
@@ -303,7 +323,7 @@ window.figurePopup = {
         event.preventDefault();
         return false;
     },
-    create: () => {
+    create: function() {
         if (window.figurePopup._element) {
             return false;
         }

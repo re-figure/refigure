@@ -1,10 +1,11 @@
 <div ng-show="vm.userInfo" class="container-fluid">
     <form class="logout-form" ng-submit="vm.logout()">
         <div class="logout-identity">
-            <a href="https://refigure.noblecoz.com/profile" target="_blank">
-                <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
-            </a>
+            <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
             <button type="submit" name="logout_submit" class="btn btn-default pull-right">Logout</button>
+        </div>
+        <div>
+            <a href="https://refigure.noblecoz.com/profile" target="_blank">ReFigure website</a>
         </div>
     </form>
 </div>
@@ -22,6 +23,7 @@
     </div>
 
     <a href="https://refigure.noblecoz.com/passwordreset/" target="_blank">Forgot your password?</a>
+    <a href="https://refigure.noblecoz.com/signup/" target="_blank" class="pull-right">Sign up!</a>
 
     <div class="text-right">
         <button class="btn btn-default" name="login_submit" type="submit" >Login</button>

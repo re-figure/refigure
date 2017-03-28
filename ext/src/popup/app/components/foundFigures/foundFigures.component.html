@@ -13,7 +13,7 @@
                 <small class="help-block"> IN <span ng-bind="tmpFig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
                 <button class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
                     <span class="glyphicon" ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
-                    <span ng-bind="vm.opened === $index ? 'less' : 'more'"></span> info
+                    <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> details
                 </button>
             </div>
         </div>
@@ -31,6 +31,10 @@
                     <div class="form-group">
                         <label for="edit-figure-legend">Legend</label>
                         <input id="edit-figure-legend" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Legend">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-figure-features">Features</label>
+                        <input id="edit-figure-features" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Features">
                     </div>
                     <div class="form-group">
                         <label for="edit-figure-authors">Article authors</label>

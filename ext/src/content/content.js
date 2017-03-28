@@ -319,15 +319,16 @@ window.figurePopup = {
                     '</div>',
 
                     '<div class="form-group">',
-                        '<label class="control-label" for="rf-input-metapublication">Metapublication</label>',
+                        '<label class="control-label" for="rf-input-metapublication">Collection</label>',
                         '<select class="form-control" name="MetapublicationID" id="rf-input-metapublication"></select>',
                     '</div>',
 
+            /*
                     '<div class="form-group">',
                         '<label class="control-label" for="rf-input-fig-doi">Figure DOI</label>',
                         '<input class="form-control" name="FigureDOI" id="rf-input-fig-doi" type="text" placeholder="FigureDOI">',
                     '</div>',
-
+            */
                     '<div class="form-group">',
                         '<label class="control-label" for="rf-input-caption">Caption</label>',
                         '<input class="form-control" name="Caption" id="rf-input-caption" type="text" placeholder="Caption">',
@@ -336,6 +337,11 @@ window.figurePopup = {
                     '<div class="form-group">',
                         '<label class="control-label" for="rf-input-legend">Legend</label>',
                         '<textarea class="form-control" rows="5" name="Legend" id="rf-input-legend" placeholder="Legend"></textarea>',
+                    '</div>',
+
+                    '<div class="form-group">',
+                        '<label class="control-label" for="rf-input-features">Features</label>',
+                        '<textarea class="form-control" rows="5" name="Features" id="rf-input-features" placeholder="Features"></textarea>',
                     '</div>',
 
                     '<div class="form-group">',
@@ -350,7 +356,7 @@ window.figurePopup = {
                 '</div>',
                 '<div class="panel-footer">',
                     '<div class="row">',
-                        '<div class="col-xs-6"><button type="button" id="rf-add-figure-cancel" class="btn btn-block btn-info">Cancel</button></div>',
+                        '<div class="col-xs-6"><button type="button" id="rf-add-figure-cancel" class="btn btn-block btn-info">Dismiss</button></div>',
                         '<div class="col-xs-6"><button class="btn btn-block btn-primary">Submit</button></div>',
                     '</div>',
                 '</div>',

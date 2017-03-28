@@ -12,6 +12,10 @@
         <input id="edit-figure-legend" type="text" class="form-control" ng-model="vm.figure.Legend">
     </div>
     <div class="form-group">
+        <label for="edit-figure-features">Features</label>
+        <input id="edit-figure-features" type="text" class="form-control" ng-model="vm.figure.Features">
+    </div>
+    <div class="form-group">
         <label for="edit-figure-authors">Article authors</label>
         <input id="edit-figure-authors" type="text" class="form-control" ng-model="vm.figure.Authors">
     </div>
@@ -19,13 +23,15 @@
         <label for="edit-figure-doi">Article DOI</label>
         <input id="edit-figure-doi" type="text" class="form-control" ng-model="vm.figure.DOI">
     </div>
+    <!--
     <div class="form-group">
         <label for="edit-figure-doi-figure">DOI Figure</label>
         <input id="edit-figure-doi-figure" type="text" class="form-control" ng-model="vm.figure.DOIFigure">
     </div>
+    -->
     <p class="text-right">
-        <button ng-hide="vm.figure.ID" type="button" class="btn btn-primary" ng-click="vm.addCancel()">CANCEL</button>
-        <a ng-show="vm.figure.ID" ng-href="#!/" class="btn btn-default">CANCEL</a>
-        <button ng-disabled="editFigure.$invalid" ng-click="vm.save()" class="btn btn-primary">SAVE</button>
+        <button ng-hide="vm.figure.ID" type="button" class="btn btn-primary" ng-click="vm.addCancel()">Cancel</button>
+        <a ng-show="vm.figure.ID" ng-href="#!/" class="btn btn-default">Cancel</a>
+        <button ng-disabled="editFigure.$invalid" ng-click="vm.save()" class="btn btn-primary">Save</button>
     </p>
 </form>

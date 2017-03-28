@@ -85,6 +85,7 @@
                 type: _gConst.MSG_TYPE_ADD_START,
                 metapublicationId: vm.formData.ID
             });
+            window.close();
         }
     }
 

@@ -4,14 +4,14 @@
     <div ng-repeat="fig in vm.figures" ng-init="tmpFig = vm.copy(fig)">
         <div class="row">
             <div class="col-xs-4">
-                <a ng-click="vm.onShowMoreInfo($index)" class="clickable custom-link">
+                <a ng-click="vm.opened = vm.opened === $index ? -1 : $index" class="clickable custom-link">
                     <img class="thumbnail" ng-src="{{tmpFig.URL}}">
                 </a>
             </div>
             <div class="col-xs-8">
                 <div class="caption" ng-bind="tmpFig.Caption"></div>
                 <small class="help-block"> IN <span ng-bind="tmpFig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
-                <button class="btn btn-link btn-xs" ng-click="vm.onShowMoreInfo($index)">
+                <button class="btn btn-link btn-xs" ng-click="vm.opened = vm.opened === $index ? -1 : $index">
                     <span class="glyphicon" ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
                     <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> details
                 </button>
@@ -19,30 +19,30 @@
         </div>
         <div class="row" ng-show="vm.opened === $index">
             <div class="container-fluid">
-                <form name="editFigure">
+                <form name="editFigure" ng-init="disabled = tmpFig.userID === vm.userInfo.ID" novalidate>
                     <div class="form-group">
                         <label for="edit-figure-url">URL</label>
                         <input id="edit-figure-url" type="text" class="form-control" ng-model="tmpFig.URL" readonly>
                     </div>
                     <div class="form-group">
                         <label for="edit-figure-caption">Caption</label>
-                        <textarea id="edit-figure-caption" ng-disabled="tmpFig.userID === vm.userInfo.ID" class="form-control" ng-model="tmpFig.Caption"></textarea>
+                        <textarea id="edit-figure-caption" ng-disabled="disabled" class="form-control" ng-model="tmpFig.Caption"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="edit-figure-legend">Legend</label>
-                        <input id="edit-figure-legend" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Legend">
+                        <input id="edit-figure-legend" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.Legend">
                     </div>
                     <div class="form-group">
                         <label for="edit-figure-features">Features</label>
-                        <input id="edit-figure-features" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Features">
+                        <input id="edit-figure-features" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.Features">
                     </div>
                     <div class="form-group">
                         <label for="edit-figure-authors">Article authors</label>
-                        <input id="edit-figure-authors" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.Authors">
+                        <input id="edit-figure-authors" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.Authors">
                     </div>
                     <div class="form-group">
                         <label for="edit-figure-doi">Article DOI</label>
-                        <input id="edit-figure-doi" ng-disabled="tmpFig.userID === vm.userInfo.ID" type="text" class="form-control" ng-model="tmpFig.DOI">
+                        <input id="edit-figure-doi" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.DOI">
                     </div>
                     <!--
                     <div class="form-group">
@@ -52,8 +52,8 @@
                     </div>
                     -->
                     <p class="text-right">
-                        <a ng-show="editFigure.$dirty" class="btn btn-default" ng-click="tmpFig = vm.copy(fig)">Cancel</a>
-                        <button ng-show="editFigure.$dirty && editFigure.$valid" class="btn btn-primary" ng-click="vm.save(tmpFig)">Save</button>
+                        <a ng-disabled="editFigure.$pristine" class="btn btn-default" ng-click="editFigure.$setPristine(); tmpFig = vm.copy(fig)">Cancel</a>
+                        <button ng-disabled="editFigure.$pristine || editFigure.$invalid || editFigure.$submitted" class="btn btn-primary" ng-click="vm.save($index, tmpFig)">Save</button>
                     </p>
                 </form>
             </div>

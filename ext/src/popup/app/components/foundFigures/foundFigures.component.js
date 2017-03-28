@@ -7,46 +7,26 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject = ['$http', '$location', 'STORAGE', 'AuthService', 'CollectionSvc'];
-    function CtrlFunction($http, $location, STORAGE, AuthService, CollectionSvc) {
+    CtrlFunction.$inject = ['STORAGE', 'AuthService', 'FoundFiguresSvc', '$timeout'];
+    function CtrlFunction(STORAGE, AuthService, FoundFiguresSvc, $timeout) {
         let vm = this;
-        vm.copy = angular.copy;
-        vm.opened = -1;
         vm.figures = [];
-        vm.onShowMoreInfo = onShowMoreInfo;
+        vm.userInfo = {};
+        vm.opened = -1;
         vm.save = save;
+        vm.copy = angular.copy;
         vm.$onInit = activate;
 
         function activate() {
             vm.figures = STORAGE.FOUND_FIGURES;
             vm.userInfo = AuthService.userInfo;
-            getMyOwnCollections();
         }
 
-        function onShowMoreInfo(index) {
-            vm.opened = vm.opened === index ? -1 : index;
-        }
-
-        function getMyOwnCollections() {
-            return CollectionSvc
-                .getUserCollections()
-                .then((res) => {
-                    vm.collections = res.data.data.results;
-                }, (error) => {
-                    //error
-                    console.log(error);
-                    vm.error = error.data.message;
-                });
-        }
-
-        function save(params){
-           return $http
-                .put(_gApiURL + "figure", params)
+        function save(index, params) {
+            FoundFiguresSvc.save(params)
                 .then((resp) => {
-                  //  $location.path('/collections/' + resp.data.data);
-                    console.log(resp.data.data);
-                   // $location.path('/');
-                });
+                    vm.figures[index] = resp.data.data.Figure;
+                 });
         }
     }
 })();

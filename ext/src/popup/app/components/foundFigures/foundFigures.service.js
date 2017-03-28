@@ -9,14 +9,11 @@
         let service = this;
         service.save = save;
         service.getUserCollections = getUserCollections;
-        activate();
 
-        function activate(){
-            if (AuthService.userInfo) {
-                $http.defaults.headers.common['Authentication'] = AuthService.userInfo.Token;
-            } else {
-                $http.defaults.headers.common['Authentication'] = undefined;
-            }
+        if (AuthService.userInfo) {
+            $http.defaults.headers.common['Authentication'] = AuthService.userInfo.Token;
+        } else {
+            $http.defaults.headers.common['Authentication'] = undefined;
         }
 
         function save(params){

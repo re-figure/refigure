@@ -7,9 +7,9 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject = ['STORAGE', 'AuthService', 'FoundFiguresSvc', '$timeout'];
-    function CtrlFunction(STORAGE, AuthService, FoundFiguresSvc, $timeout) {
-        let vm = this;
+    CtrlFunction.$inject = ['STORAGE', 'AuthService', 'FoundFiguresSvc'];
+    function CtrlFunction(STORAGE, AuthService, FoundFiguresSvc) {
+        var vm = this;
         vm.figures = [];
         vm.userInfo = {};
         vm.opened = -1;

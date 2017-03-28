@@ -22,6 +22,10 @@
             currentWindow: true
         }, function (res) {
             STORAGE.CURRENT_TAB = res[0].id;
+            //send message to force content's edit dialog close
+            chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
+                type: _gConst.MSG_TYPE_POPUP_OPENED
+            });
         });
 
         chrome.storage.local.get('foundFigures', function (data) {

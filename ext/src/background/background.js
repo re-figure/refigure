@@ -9,17 +9,19 @@ function updateBrowserAction(tab) {
     if (isTabToProceed(tab)) {
         var t = tabsData[tab.id];
         //TODO change icon accordingly status and number of found figures
-        if (t.status === _gConst.STATUS_NEW) {
-            chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
-        } else if (t.status === _gConst.STATUS_INPROCESS) {
-            chrome.browserAction.setBadgeText({tabId: tab.id, text: 'L'});
-        } else {
-            if (t.count === 0) {
-                // no figures found on the page or an error occurred
-                chrome.browserAction.setBadgeText({tabId: tab.id, text: '0'});
+        if (t) {
+            if (t.status === _gConst.STATUS_NEW) {
+                chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
+            } else if (t.status === _gConst.STATUS_INPROCESS) {
+                chrome.browserAction.setBadgeText({tabId: tab.id, text: 'L'});
             } else {
-                // found figures on the page
-                chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.foundFigures.length)});
+                if (t.foundFigures.length === 0) {
+                    // no figures found on the page or an error occurred
+                    chrome.browserAction.setBadgeText({tabId: tab.id, text: '0'});
+                } else {
+                    // found figures on the page
+                    chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.foundFigures.length)});
+                }
             }
         }
     } else {
@@ -35,11 +37,17 @@ function isTabToProceed(tab) {
 function startSearchFiguresIfNeed(tab) {
     if (isTabToProceed(tab)) {
         var t = tabsData[tab.id];
-        if (t.url !== tab.url) {
-            // the tab URL has changed, so start search figures
-            t.status = _gConst.STATUS_INPROCESS;
-            t.url = tab.url;
-            chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+        if (t) {
+            if (t.url && t.url !== tab.url) {
+                // the tab URL has changed, so start search figures
+                t.status = _gConst.STATUS_INPROCESS;
+                t.url = tab.url;
+                chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+            } else if (!t.url) {
+                t.status = _gConst.STATUS_INPROCESS;
+                t.url = tab.url;
+                chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+            }
         }
     }
 }
@@ -98,11 +106,13 @@ function createNewTabData(tabId) {
 }
 
 chrome.tabs.onCreated.addListener(function(tab) {
+    console.log('created tab', tab.id);
     createNewTabData(tab.id);
     update(tab.id);
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
+    console.log('updated tab', tabId, tab.id);
     if (change.status === 'complete') {
         if (change.url === undefined) {
             // reload the current page
@@ -116,10 +126,12 @@ chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
 });
 
 chrome.tabs.onActivated.addListener(function (activeInfo) {
+    console.log('activated tab', activeInfo);
     update(activeInfo.tabId);
 });
 
 chrome.tabs.onReplaced.addListener(function(addedTabId, removedTabId) {
+    console.log('replaced tab', addedTabId, removedTabId);
     var t = tabsData[removedTabId];
     if (t) {
         tabsData[addedTabId] = t;

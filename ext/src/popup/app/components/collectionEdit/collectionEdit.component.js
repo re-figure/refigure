@@ -61,7 +61,7 @@
         }
 
         function removeItem(id) {
-            if (id && confirm("Are you sure?")) {
+            if (id && confirm("Would you like to remove the collection?")) {
                 CollectionSvc.delete(id)
                     .catch(function (err) {
                         console.log(err);

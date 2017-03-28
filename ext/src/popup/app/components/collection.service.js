@@ -19,7 +19,7 @@
                 .post(_gApiURL + "metapublication", params)
                 .then(function (resp) {
                     // $location.path('/collections/' + resp.data.data.Metapublication.ID);
-                    $location.path('/my-collections');
+                    $location.path('/');
                 });
         };
 
@@ -33,7 +33,7 @@
                 .put(_gApiURL + "metapublication", params)
                 .then(function (resp) {
                     // $location.path('/collections/' + resp.data.data.Metapublication.ID);
-                    $location.path('/my-collections');
+                    $location.path('/');
                 });
         };
 
@@ -41,7 +41,7 @@
             return $http
                 .delete(_gApiURL + "metapublication/" + id)
                 .then(function () {
-                    $location.path('/my-collections');
+                    $location.path('/');
                 });
         };
 

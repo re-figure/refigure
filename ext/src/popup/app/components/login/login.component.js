@@ -13,31 +13,12 @@
     function LoginController(AuthService) {
         var vm = this;
 
-        vm.login = login;
-        vm.logout = logout;
+        vm.login = AuthService.login;
+        vm.logout = AuthService.logout;
         vm.$onInit = activate;
         vm.error = '';
 
         ////////////////////////////
-
-        function login(params) {
-            AuthService
-                .login(params, setUserInfo)
-                .catch(function (error) {
-                    console.log(error);
-                    vm.error = error.data.message;
-                });
-        }
-
-        function logout() {
-            AuthService
-                .logout();
-            vm.userInfo = AuthService.userInfo;
-        }
-
-        function setUserInfo() {
-            vm.userInfo = AuthService.userInfo;
-        }
 
         function activate() {
             vm.userInfo = AuthService.userInfo;

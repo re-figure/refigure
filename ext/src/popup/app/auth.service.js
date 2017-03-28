@@ -27,7 +27,7 @@
             $location.path('/');
         }
 
-        function login(params, cb) {
+        function login(params) {
             return $http
                 .post(_gApiURL + "login", params)
                 .then(function (resp) {
@@ -41,9 +41,6 @@
                         chrome.storage.local.set({
                             userInfo: resp.data.data
                         });
-                        if (cb) {
-                            cb();
-                        }
                     }
                     return resp.data.data;
                 });

@@ -271,18 +271,18 @@ window.figurePopup = {
             '       </div>',
 
             '       <div class="form-group">',
-            '           <label class="control-label" for="rf-input-caption">Caption</label>',
-            '           <input class="form-control" ng-model="figuresToAdd[opts.current].Caption" id="rf-input-caption" type="text" placeholder="Caption">',
+            '           <label class="control-label">Caption</label>',
+            '           <div contenteditable="true" class="form-control" ng-model="figuresToAdd[opts.current].Caption"></div>',
             '       </div>',
 
             '       <div class="form-group">',
             '           <label class="control-label" for="rf-input-legend">Legend</label>',
-            '           <textarea class="form-control" rows="5" ng-model="figuresToAdd[opts.current].Legend" id="rf-input-legend" placeholder="Legend"></textarea>',
+            '           <div contenteditable="true" class="form-control" ng-model="figuresToAdd[opts.current].Legend"></div>',
             '       </div>',
 
             '       <div class="form-group">',
-            '           <label class="control-label" for="rf-input-features">Features</label>',
-            '           <textarea class="form-control" rows="5" ng-model="figuresToAdd[opts.current].Features" id="rf-input-features" placeholder="Features"></textarea>',
+            '           <label class="control-label">Features</label>',
+            '           <div contenteditable="true" class="form-control" ng-model="figuresToAdd[opts.current].Features"></div>',
             '       </div>',
 
             '       <div class="form-group">',
@@ -291,8 +291,8 @@ window.figurePopup = {
             '       </div>',
 
             '       <div class="form-group">',
-            '           <label class="control-label" for="rf-input-article-authors">Article authors</label>',
-            '           <textarea class="form-control" rows="5" ng-model="figuresToAdd[opts.current].Authors" id="rf-input-article-authors" placeholder="Authors"></textarea>',
+            '           <label class="control-label">Article authors</label>',
+            '           <div contenteditable="true" class="form-control"ng-model="figuresToAdd[opts.current].Authors"></div>',
             '       </div>',
             '       <div>',
             '           <div class="rf-fig-list-item" ng-repeat="fig in figuresToAdd">',
@@ -361,4 +361,36 @@ angular.module('EditFigureDialog', [])
             });
             figureAddStop();
         }
-    }]);
+    }])
+
+    .directive('contenteditable', function() {
+        return {
+            restrict: 'A', // only activate on element attribute
+            require: '?ngModel', // get a hold of NgModelController
+            link: function(scope, element, attrs, ngModel) {
+                if (!ngModel) return; // do nothing if no ng-model
+
+                // Specify how UI should be updated
+                ngModel.$render = function() {
+                    element.html(ngModel.$viewValue || '');
+                };
+
+                // Listen for change events to enable binding
+                element.on('blur keyup change', function() {
+                    scope.$evalAsync(read);
+                });
+                read(); // initialize
+
+                // Write data to the model
+                function read() {
+                    var html = element.html();
+                    // When we clear the content editable the browser leaves a <br> behind
+                    // If strip-br attribute is provided then we strip this out
+                    if (attrs.stripBr && html === '<br>') {
+                        html = '';
+                    }
+                    ngModel.$setViewValue(html);
+                }
+            }
+        };
+    });

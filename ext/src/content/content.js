@@ -172,7 +172,7 @@ function addToSelected(src) {
         return el.URL === src;
     });
     if (!img) {
-        // if figure was not p
+        // if figure was not parsed out then just use image src
         img = {
             URL: src
         };

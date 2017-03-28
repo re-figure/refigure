@@ -36,6 +36,7 @@ function onClickImage(event) {
 
 function figureAddStart(Metapublication) {
     refigure.Metapublication = Metapublication || refigure.Metapublication;
+    window.figurePopup.show();
     Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
@@ -236,12 +237,13 @@ window.figurePopup = {
         !window.figurePopup._element && window.figurePopup.create();
         // TODO check if the figure exists in the current collection
         // if so, then use UPDATE then not CREATE
-        var $scope = angular.element(window.figurePopup._element.getElementsByTagName('form')[0]).scope();
-        $scope.$apply(function () {
-            $scope.figuresToAdd.push(data);
-            $scope.opts.current = $scope.figuresToAdd.length - 1;
-            console.log('$scope.figuresToAdd', $scope.figuresToAdd);
-        });
+        if(data){
+            var $scope = angular.element(window.figurePopup._element.getElementsByTagName('form')[0]).scope();
+            $scope.$apply(function () {
+                $scope.figuresToAdd.push(data);
+                $scope.opts.current = $scope.figuresToAdd.length - 1;
+            });
+        }
         window.figurePopup._element.classList.add('rf-popup-show');
     },
     hide: function () {
@@ -260,6 +262,9 @@ window.figurePopup = {
             '<form ng-controller="MainController" ng-submit="submit()" name="addFigureForm" class="panel panel-primary">',
             '   <div class="panel-heading text-center">Add figure to collection "{{refigure.Metapublication.Title}}"</div>',
             '   <div class="panel-body">',
+            '       <div class="alert alert-info text-center" ng-hide="figuresToAdd.length">Select an image</div>',
+            '   </div>',
+            '   <div class="panel-body" ng-show="figuresToAdd.length">',
             '       <div class="form-group">',
             '           <label class="control-label" for="rf-input-url">Figure URL</label>',
             '           <input class="form-control" ng-model="figuresToAdd[opts.current].URL" id="rf-input-url" type="text" placeholder="URL" readonly>',
@@ -289,15 +294,15 @@ window.figurePopup = {
             '           <label class="control-label" for="rf-input-article-authors">Article authors</label>',
             '           <textarea class="form-control" rows="5" ng-model="figuresToAdd[opts.current].Authors" id="rf-input-article-authors" placeholder="Authors"></textarea>',
             '       </div>',
+            '       <div>',
+            '           <div class="rf-fig-list-item" ng-repeat="fig in figuresToAdd">',
+            '               <img ng-class="opts.current === $index?\'rf-fig-list-item-current\':\'\'" ng-click="opts.current = $index" ng-src="{{fig.URL}}">',
+            '           </div>',
+            '       </div>',
             '   </div>',
 
-            '   <div class="panel-body">',
-            '       <div class="rf-fig-list-item" ng-repeat="fig in figuresToAdd">',
-            '          <img ng-class="opts.current === $index?\'rf-fig-list-item-current\':\'\'" ng-click="opts.current = $index" ng-src="{{fig.URL}}">',
-            '      </div>',
-            '   </div>',
 
-            '   <div class="panel-footer">',
+            '   <div class="panel-footer" ng-show="figuresToAdd.length">',
             '       <div class="row">',
             '           <div class="col-xs-6"><button ng-click="dismiss()" type="button" class="btn btn-block btn-info">Dismiss</button></div>',
             '           <div class="col-xs-6"><button class="btn btn-block btn-primary">Submit</button></div>',
@@ -314,7 +319,6 @@ window.figurePopup = {
 angular.module('EditFigureDialog', [])
     .controller('MainController', ['$scope', function ($scope) {
         $scope.refigure = refigure;
-        console.log(refigure);
         $scope.opts = {
             current: -1
         };

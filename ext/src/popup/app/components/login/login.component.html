@@ -7,7 +7,7 @@
     </form>
 </div>
 
-<form class="login-form" name="login_form" ng-submit="vm.login(vm.loginData)">
+<form ng-hide="vm.userInfo" class="login-form" name="login_form" ng-submit="vm.login(vm.loginData)">
     <div class="form-group">
         <div>
             <label>Login</label>

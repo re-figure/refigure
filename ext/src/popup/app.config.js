@@ -6,7 +6,7 @@
             CURRENT_TAB: null,
             FIGURES: [],
             FOUND_FIGURES: [],
-            CURRENT_METAPUBLICATION: null
+            CURRENT_METAPUBLICATION: {}
         })
         .config(ConfigController)
         .run(RunController);

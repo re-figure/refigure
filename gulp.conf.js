@@ -81,12 +81,14 @@ module.exports = {
             js: extSrcDir + '/common/const.js'
         },
         content: {
+            html: extSrcDir + '/content/templates/**/*.html',
             css: extSrcDir + '/content/content.sass',
             mainScripts: [
                 extSrcDir + '/vendor/sizzle/sizzle.min.js',
                 extSrcDir + '/vendor/angular/angular.min.js',
                 extSrcDir + '/common/const.js',
-                extSrcDir + '/content/content.js'
+                extSrcDir + '/content/content.js',
+                extSrcDir + '/content/dialog.js'
             ],
             parsers: extSrcDir + '/content/parsers/*.js'
         },

@@ -86,7 +86,8 @@ module.exports = {
                 extSrcDir + '/vendor/sizzle/sizzle.min.js',
                 extSrcDir + '/vendor/angular/angular.min.js',
                 extSrcDir + '/common/const.js',
-                extSrcDir + '/content/content.js'
+                extSrcDir + '/content/content.js',
+                extSrcDir + '/content/dialog.js'
             ],
             parsers: extSrcDir + '/content/parsers/*.js'
         },

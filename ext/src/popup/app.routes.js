@@ -50,7 +50,7 @@
             .when('/foundfigures', {
                 config: {
                     name: 'figureEdit',
-                    title: 'Edit figure'
+                    title: 'Found figures'
                 },
                 template: '<found-figures/>'
             })

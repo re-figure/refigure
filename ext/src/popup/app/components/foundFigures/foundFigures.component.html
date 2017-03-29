@@ -19,45 +19,33 @@
         </div>
         <div class="row" ng-show="vm.opened === $index">
             <div class="container-fluid">
-                <form name="editFigure" ng-init="disabled = tmpFig.userID === vm.userInfo.ID" novalidate>
-                    <div class="form-group">
-                        <label for="edit-figure-url">URL</label>
-                        <input id="edit-figure-url" type="text" class="form-control" ng-model="tmpFig.URL" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-figure-caption">Caption</label>
-                        <textarea id="edit-figure-caption" ng-disabled="disabled" class="form-control" ng-model="tmpFig.Caption"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-figure-legend">Legend</label>
-                        <input id="edit-figure-legend" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.Legend">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-figure-features">Features</label>
-                        <input id="edit-figure-features" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.Features">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-figure-authors">Article authors</label>
-                        <input id="edit-figure-authors" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.Authors">
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-figure-doi">Article DOI</label>
-                        <input id="edit-figure-doi" ng-disabled="disabled" type="text" class="form-control" ng-model="tmpFig.DOI">
-                    </div>
-                    <!--
-                    <div class="form-group">
-                        <label for="select-collection">My collections</label>
-                        <select id="select-collection" class="form-control" ng-options="collection.Metapublication.ID as collection.Metapublication.Title for collection in vm.collections" ng-model="tmpFig.MetapublicationID">
-                        </select>
-                    </div>
-                    -->
-                    <p class="text-right">
-                        <a ng-disabled="editFigure.$pristine" class="btn btn-default" ng-click="editFigure.$setPristine(); tmpFig = vm.copy(fig)">Cancel</a>
-                        <button ng-disabled="editFigure.$pristine || editFigure.$invalid || editFigure.$submitted" class="btn btn-primary" ng-click="vm.save($index, tmpFig)">Save</button>
-                    </p>
-                </form>
+
+                <div class="form-group">
+                    <label>URL</label>
+                    <div ng-bind="tmpFig.URL"></div>
+                </div>
+                <div class="form-group">
+                    <label>Caption</label>
+                    <div ng-bind="tmpFig.Caption"></div>
+                </div>
+                <div class="form-group">
+                    <label>Legend</label>
+                    <div ng-bind="tmpFig.Legend"></div>
+                </div>
+                <div class="form-group">
+                    <label>Features</label>
+                    <div ng-bind="tmpFig.Features"></div>
+                </div>
+                <div class="form-group">
+                    <label>Article authors</label>
+                    <div ng-bind="tmpFig.Authors"></div>
+                </div>
+                <div class="form-group">
+                    <label>Article DOI</label>
+                    <div ng-bind="tmpFig.DOI"></div>
+                </div>
             </div>
         </div>
-        <hr>
+        <hr ng-hide="$last">
     </div>
 </div>

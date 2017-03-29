@@ -1,4 +1,4 @@
-var CONTENT_BLOCK_SELECTOR = 'body:not(.rf-popup)';
+var CONTENT_BLOCK_SELECTOR = 'body:not(.rf-dialog)';
 
 var refigure = {
     Metapublication: null,
@@ -21,6 +21,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
         case _gConst.MSG_TYPE_POPUP_OPENED:
             window.figurePopup.hide();
+            figureAddStop();
             break;
         case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
             addToSelected(request.src);

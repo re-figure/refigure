@@ -16,27 +16,27 @@
   "content_scripts": [
     {
       "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
-      "js": ["/content/content.js", "/content/parsers/plos.js"],
+      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/plos.js"],
       "css": ["/content/content.css"]
     },
     {
       "matches": ["*://elifesciences.org/*"],
-      "js": ["/content/content.js", "/content/parsers/elifesciences.js"],
+      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/elifesciences.js"],
       "css": ["/content/content.css"]
     },
     {
       "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
-      "js": ["/content/content.js", "/content/parsers/pmc.js"],
+      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/pmc.js"],
       "css": ["/content/content.css"]
     },
     {
       "matches": ["*://figshare.com/articles/*"],
-      "js": ["/content/content.js", "/content/parsers/figshare.js"],
+      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshare.js"],
       "css": ["/content/content.css"]
     },
     {
       "matches": ["*://*/*"],
-      "js": ["/content/content.js"],
+      "js": ["/content/content.js", "/content/templates.min.js"],
       "css": ["/content/content.css"]
     }
   ],

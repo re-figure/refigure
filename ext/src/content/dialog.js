@@ -17,6 +17,7 @@
                 _scope.collection.Figures.push(data);
                 _scope.opts.current = _scope.collection.Figures.length - 1;
             }
+            _scope.minimized = false
         });
     };
 
@@ -31,90 +32,41 @@
             return false;
         }
         var domEl = document.createElement('div');
-        domEl.innerHTML = _tpl;
+        //domEl.setAttribute('ng-include', "'view/dialog.html'");
+        //domEl.setAttribute('src', 'view/dialog.html');
+        domEl.innerHTML = '<div ng-include="\'view/dialog.html\'"></div>';
         document.body.appendChild(domEl);
-        angular.bootstrap(domEl, ['EditFigureDialog'], {strictDi: true});
+        angular.bootstrap(domEl, ['ReFigureContent'], {strictDi: true});
         _scope = angular.element(domEl).scope();
         return true;
     };
 
-    var _tpl="";
-    _tpl += "<div class=\"rf-popup\" ng-hide=\"hidden\">";
-    _tpl += "    <div class=\"panel panel-primary\">";
-    _tpl += "        <div class=\"panel-heading text-center\">Add figure to collection \"{{collection.Title}}\"<\/div>";
-    _tpl += "        <div class=\"panel-body\">";
-    _tpl += "            <div class=\"alert alert-info text-center\" ng-hide=\"collection.Figures.length\">Select an image to add to collection<\/div>";
-    _tpl += "            <form name=\"figureForm_{{$index}}\" ng-repeat=\"fig in collection.Figures\">";
-    _tpl += "                <div class=\"row\">";
-    _tpl += "                    <div class=\"col-xs-4\">";
-    _tpl += "                        <a href=\"#\" ng-click=\"opts.current = opts.current === $index ? -1 : $index\">";
-    _tpl += "                            <img class=\"thumbnail\" ng-src=\"{{fig.URL}}\">";
-    _tpl += "                        <\/a>";
-    _tpl += "                    <\/div>";
-    _tpl += "                    <div class=\"col-xs-8\">";
-    _tpl += "                        <div class=\"caption\" ng-bind=\"fig.Caption\"><\/div>";
-    _tpl += "                        <button type=\"button\" class=\"btn btn-link btn-xs\" ng-click=\"opts.current = opts.current === $index ? -1 : $index\">";
-    _tpl += "                            <span ng-bind=\"opts.current === $index ? '-' : '+'\"><\/span>";
-    _tpl += "                            <span ng-bind=\"opts.current === $index ? 'hide' : 'show'\"><\/span> details";
-    _tpl += "                        <\/button>";
-    _tpl += "                    <\/div>";
-    _tpl += "                <\/div>";
-    _tpl += "                <div class=\"row\" ng-show=\"opts.current === $index\">";
-    _tpl += "                    <div class=\"container-fluid\">";
-    _tpl += "                        <div class=\"form-group\">";
-    _tpl += "                            <label for=\"edit-figure-url\">URL<\/label>";
-    _tpl += "                            <input id=\"edit-figure-url\" type=\"text\" class=\"form-control\" ng-model=\"fig.URL\" readonly>";
-    _tpl += "                        <\/div>";
-    _tpl += "                        <div class=\"form-group\">";
-    _tpl += "                            <label>Caption<\/label>";
-    _tpl += "                            <div contenteditable=\"true\" class=\"form-control\" ng-model=\"collection.Figures[$index].Caption\"><\/div>";
-    _tpl += "                        <\/div>";
-    _tpl += "                        <div class=\"form-group\">";
-    _tpl += "                            <label>Legend<\/label>";
-    _tpl += "                            <div contenteditable=\"true\" class=\"form-control\" ng-model=\"fig.Legend\"><\/div>";
-    _tpl += "                        <\/div>";
-    _tpl += "                        <div class=\"form-group\">";
-    _tpl += "                            <label for=\"edit-figure-features\">Features<\/label>";
-    _tpl += "                            <input id=\"edit-figure-features\" type=\"text\" class=\"form-control\" ng-model=\"fig.Features\">";
-    _tpl += "                        <\/div>";
-    _tpl += "                        <div class=\"form-group\">";
-    _tpl += "                            <label>Article authors<\/label>";
-    _tpl += "                            <div contenteditable=\"true\" class=\"form-control\" ng-model=\"fig.Authors\"><\/div>";
-    _tpl += "                        <\/div>";
-    _tpl += "                        <div class=\"form-group\">";
-    _tpl += "                            <label for=\"edit-figure-doi\">Article DOI<\/label>";
-    _tpl += "                            <input id=\"edit-figure-doi\" type=\"text\" class=\"form-control\" ng-model=\"fig.DOI\">";
-    _tpl += "                        <\/div>";
-    _tpl += "                    <\/div>";
-    _tpl += "                <\/div>";
-    _tpl += "                <hr ng-hide=\"$last\">";
-    _tpl += "            <\/form>";
-    _tpl += "        <\/div>";
-    _tpl += "        <div class=\"panel-footer\" ng-show=\"collection.Figures.length\">";
-    _tpl += "            <div class=\"row\">";
-    _tpl += "                <div class=\"col-xs-6\">";
-    _tpl += "                    <button ng-click=\"dismiss()\" type=\"button\" class=\"btn btn-block btn-info\">Dismiss<\/button>";
-    _tpl += "                <\/div>";
-    _tpl += "                <div class=\"col-xs-6\">";
-    _tpl += "                    <button ng-click=\"submit()\" class=\"btn btn-block btn-primary\">Submit<\/button>";
-    _tpl += "                <\/div>";
-    _tpl += "            <\/div>";
-    _tpl += "        <\/div>";
-    _tpl += "    <\/div>";
-    _tpl += "<\/div>";
-
 })(window.figurePopup || {});
 
-angular.module('EditFigureDialog', [])
+angular.module('ReFigureContent', [])
     .run(['$rootScope', function ($scope) {
         $scope.collection = {};
         $scope.opts = {
             current: -1
         };
 
-        $scope.dismiss = function () {
+        $scope.minimized = false;
+
+        $scope.close = function () {
             figureAddStop();
             $scope.hidden = true;
+        };
+
+        $scope.toggle = function (index) {
+            $scope.opts.current = $scope.opts.current === index ? -1 : index;
+        };
+
+        $scope.remove = function (index) {
+            if ($scope.collection.Figures[index].ID) {
+                console.error('!!!removing from server!!!');
+            } else {
+                $scope.collection.Figures.splice(index, 1)
+            }
         };
 
         $scope.submit = function (index) {
@@ -163,13 +115,13 @@ angular.module('EditFigureDialog', [])
                 // Specify how UI should be updated
                 ngModel.$render = function () {
                     element.html(ngModel.$viewValue || '');
+                    read(); // initialize
                 };
 
                 // Listen for change events to enable binding
                 element.on('blur keyup change', function () {
                     scope.$evalAsync(read);
                 });
-                read(); // initialize
 
                 // Write data to the model
                 function read() {

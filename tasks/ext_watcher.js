@@ -16,7 +16,12 @@ module.exports = [['extension'], () => {
         runSequence('ext_background', 'ext_zip');
     });
     gulp.watch(
-        extOpt.content.mainScripts.concat(extOpt.common.css, extOpt.content.css, extOpt.content.parsers),
+        extOpt.content.mainScripts.concat(
+            extOpt.common.css,
+            extOpt.content.css,
+            extOpt.content.parsers,
+            extOpt.content.html
+        ),
         opts,
         () => {
             runSequence('ext_content','ext_zip');

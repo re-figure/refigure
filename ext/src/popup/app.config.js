@@ -5,7 +5,8 @@
         .constant('STORAGE', {
             CURRENT_TAB: null,
             FIGURES: [],
-            FOUND_FIGURES: []
+            FOUND_FIGURES: [],
+            CURRENT_METAPUBLICATION: null
         })
         .config(ConfigController)
         .run(RunController);
@@ -15,6 +16,11 @@
     function ConfigController(STORAGE, $compileProvider) {
         chrome.storage.local.get('rfFigures', function (data) {
             STORAGE.FIGURES = data.rfFigures || [];
+        });
+
+        chrome.storage.local.get('Metapublication', function (data) {
+            STORAGE.CURRENT_METAPUBLICATION = data.Metapublication || null;
+            console.log("ddddd: ", data);
         });
 
         chrome.tabs.query({

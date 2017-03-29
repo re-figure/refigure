@@ -9,7 +9,7 @@
     <div ng-repeat="collection in vm.collections | filter: vm.search">
         <!--<a href="#!/collections/edit/{{collection.Metapublication.ID}}"><div class="panel panel-default">-->
         <a href="#" ng-click="vm.editCollection(collection.Metapublication)">
-            <div class="panel panel-default">
+            <div class="panel" ng-class="(collection.Metapublication.ID === vm.metapublication.ID) ? 'panel-primary' : 'panel-default'">
                 <div class="panel-heading">
                     <h1 class="panel-title" ng-bind="collection.Metapublication.Title"></h1>
                 </div>

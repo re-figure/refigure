@@ -15,6 +15,7 @@
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
+        vm.metapublication = null;
         vm.search = '';
         vm.error = '';
 
@@ -35,6 +36,7 @@
         function activate() {
             vm.userInfo = AuthService.userInfo;
             AuthService.userInfo && getMyOwnCollections();
+            vm.metapublication = STORAGE.CURRENT_METAPUBLICATION;
         }
 
         function editCollection(metapub) {

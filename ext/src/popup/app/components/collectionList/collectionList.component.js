@@ -8,13 +8,13 @@
             controllerAs: 'vm'
         });
 
-    CollectionListController.$inject = ['AuthService', 'CollectionSvc'];
+    CollectionListController.$inject = ['AuthService', 'CollectionSvc', 'STORAGE'];
 
-    function CollectionListController(AuthService, CollectionSvc) {
+    function CollectionListController(AuthService, CollectionSvc, STORAGE) {
         var vm = this;
 
         vm.$onInit = activate;
-        vm.removeItem = removeItem;
+        vm.editCollection = editCollection;
         vm.error = '';
 
         ////////////////////////////
@@ -36,19 +36,18 @@
             AuthService.userInfo && getMyOwnCollections();
         }
 
-        function removeItem(id, idx) {
-            if (id && confirm("Are you sure?")) {
-                CollectionSvc.delete(id, removeElement, idx)
-                    .catch(function (err) {
-                        console.log(err);
-                        vm.error = err.data.message;
-                    });
-            }
+        function editCollection(metapub) {
+            chrome.storage.local.set({
+                Metapublication: metapub
+            }, function () {
+                chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
+                    type: _gConst.MSG_TYPE_ADD_START,
+                    Metapublication: metapub
+                });
+                window.close();
+            });
         }
 
-        function removeElement(idx) {
-            vm.collections.splice(idx, 1);
-        }
     }
 
 })(window.angular);

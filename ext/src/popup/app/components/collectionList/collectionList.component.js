@@ -15,6 +15,7 @@
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
+        vm.search = '';
         vm.error = '';
 
         ////////////////////////////

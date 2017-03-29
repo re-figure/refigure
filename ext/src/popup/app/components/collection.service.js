@@ -3,9 +3,9 @@
     angular.module('ReFigure')
         .service('CollectionSvc', CollectionService);
 
-    CollectionService.$inject = ['$location', '$http', 'AuthService'];
+    CollectionService.$inject = ['$location', '$http', 'AuthService', 'STORAGE'];
 
-    function CollectionService($location, $http, AuthService) {
+    function CollectionService($location, $http, AuthService, STORAGE) {
         var service = this;
 
         if (AuthService.userInfo) {
@@ -18,7 +18,10 @@
             return $http
                 .post(_gApiURL + "metapublication", params)
                 .then(function (resp) {
-                    // $location.path('/collections/' + resp.data.data.Metapublication.ID);
+                    STORAGE.CURRENT_METAPUBLICATION = resp.data.data.Metapublication;
+                    chrome.storage.local.set({
+                        Metapublication: resp.data.data.Metapublication
+                    });
                     $location.path('/');
                 });
         };

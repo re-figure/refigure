@@ -14,6 +14,7 @@ var _gConst = {
     MSG_TYPE_CHECK_COMPLETED: 6,
     MSG_TYPE_POPUP_OPENED: 7,
     MSG_TYPE_ADD_FIGURE_TO_COLLECTION: 8,
+    MSG_TYPE_GET_FOUND_FIGURES: 9,
 
     POPUP_ERROR_FIG_NOT_PARSED: 'Figure was not parsed',
     POPUP_ERROR_FIG_DUPLICATE: 'Figure is already selected',

@@ -1,4 +1,8 @@
-<a href="#!/foundfigures" class="btn btn-sm btn-primary btn-block" ng-bind="vm.store.FOUND_FIGURES.length + ' ReFigures on this page'"></a>
+<a ng-show="vm.store.FOUND_FIGURES.length > 0" href="#!/foundfigures">
+    <div class="text-center" ng-bind="'Show ' + vm.store.FOUND_FIGURES.length + ' ReFigure(s) on this page'"></div>
+</a>
+<div ng-hide="vm.store.FOUND_FIGURES.length > 0" class="text-center">No ReFigures found on this page</div>
+<br>
 <a href="#!/collections/new" class="btn btn-sm btn-primary btn-block">Create Collection</a>
 <hr>
 <collection-list/>

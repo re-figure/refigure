@@ -5,7 +5,8 @@
         .constant('STORAGE', {
             CURRENT_TAB: null,
             FIGURES: [],
-            FOUND_FIGURES: []
+            FOUND_FIGURES: [],
+            CURRENT_METAPUBLICATION: {}
         })
         .config(ConfigController)
         .run(RunController);
@@ -17,6 +18,10 @@
             STORAGE.FIGURES = data.rfFigures || [];
         });
 
+        chrome.storage.local.get('Metapublication', function (data) {
+            STORAGE.CURRENT_METAPUBLICATION = data.Metapublication || null;
+        });
+
         chrome.tabs.query({
             active: true,
             currentWindow: true
@@ -25,6 +30,15 @@
             //send message to force content's edit dialog close
             chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
                 type: _gConst.MSG_TYPE_POPUP_OPENED
+            });
+
+            //send to BG
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_GET_FOUND_FIGURES,
+                tabId: STORAGE.CURRENT_TAB
+            }, function (resp) {
+                // console.log("Got foundFigures response: ", resp.foundFigures);
+                STORAGE.FOUND_FIGURES = resp.foundFigures || [];
             });
         });
 

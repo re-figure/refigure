@@ -67,6 +67,11 @@ chrome.runtime.onMessage.addListener(
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_OUT) {
             removeContextMenus();
         }
+        if (request.type === _gConst.MSG_TYPE_GET_FOUND_FIGURES) {
+            sendResponse({
+                foundFigures: tabsData[request.tabId].foundFigures
+            });
+        }
         return true;
     }
 

@@ -1,9 +1,9 @@
 $panel-primary-border:        #fff
 $panel-primary-heading-bg:    #222
-$icon-font-path:            'fonts/'
+$rf-dialog-controls-width:    50px
 
 @import "../common/variables"
-.rf-popup
+.rf-dialog
     @import "../vendor/bootstrap/stylesheets/bootstrap"
 
 .rf-addable-image
@@ -12,10 +12,11 @@ $icon-font-path:            'fonts/'
 .rf-addable-image:hover
     outline: 4px solid #5cb85c
 
-.rf-popup
+.rf-dialog
     overflow: auto
     box-shadow: 0 2px 2px rgba(0, 0, 0, .5)
     font-size: 14px
+    line-height: 21px
     position: fixed
     top: 0
     max-height: 100%
@@ -24,18 +25,49 @@ $icon-font-path:            'fonts/'
     z-index: 1000000
     width: 400px
 
-    .alert
-        margin-top: 50px
-        margin-bottom: 50px
+    .panel-heading
+        position: relative
+        padding-right: $rf-dialog-controls-width
+        white-space: nowrap
+
+        .rf-heading-title
+            overflow: hidden
+            text-overflow: ellipsis
+
+        .rf-dialog-controls
+            position: absolute
+            top: 5px
+            bottom: 5px
+            right: 0
+            border-left: 1px solid #fff
+            width: $rf-dialog-controls-width
+            line-height: 30px
+            text-align: center
+            span
+                display: inline-block
+                cursor: pointer
+
+    &.rf-minimized .panel-body,
+    &.rf-minimized .panel-footer
+        height: 0
+        padding: 0
+        border: 0
+        overflow: hidden
+
+    img.thumbnail
+        max-width: 100px
+        max-height: 100px
+        margin-bottom: 0
+
+    &-caption
+        max-height: 40px
+        overflow: hidden
+        margin-bottom: 10px
 
     .form-control[contenteditable]
         overflow: auto
         height: auto
-        max-height: 200px
-
-    .row
-        max-width: none
-        width: auto
+        max-height: 80px
 
     .panel
         margin-bottom: 0

@@ -40,7 +40,7 @@
 
                 CollectionSvc
                     .create(params)
-                    .then(null, function (error) {
+                    .catch(function (error) {
                         console.log(error);
                         vm.error = error.data.message;
                     });

@@ -26,6 +26,15 @@
             chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
                 type: _gConst.MSG_TYPE_POPUP_OPENED
             });
+
+            //send to BG
+            chrome.runtime.sendMessage({
+                type: _gConst.MSG_TYPE_GET_FOUND_FIGURES,
+                tabId: STORAGE.CURRENT_TAB
+            }, function (resp) {
+                // console.log("Got foundFigures response: ", resp.foundFigures);
+                STORAGE.FOUND_FIGURES = resp.foundFigures || [];
+            });
         });
 
         chrome.storage.local.get('foundFigures', function (data) {

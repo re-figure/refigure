@@ -20,7 +20,6 @@
 
         chrome.storage.local.get('Metapublication', function (data) {
             STORAGE.CURRENT_METAPUBLICATION = data.Metapublication || null;
-            console.log("ddddd: ", data);
         });
 
         chrome.tabs.query({

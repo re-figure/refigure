@@ -16,7 +16,6 @@
         vm.login = AuthService.login;
         vm.logout = AuthService.logout;
         vm.auth = AuthService;
-        vm.error = '';
         vm.userInfo = AuthService.userInfo;
 
         vm.$onInit = activate;

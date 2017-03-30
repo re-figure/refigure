@@ -18,7 +18,6 @@
         vm.metapublication = STORAGE.Metapublication;
         vm.userInfo = AuthService.userInfo;
         vm.search = '';
-        vm.error = '';
 
         ////////////////////////////
 
@@ -27,10 +26,6 @@
                 .getUserCollections()
                 .then(function (res) {
                     vm.collections = res.data.data.results;
-                }, function (error) {
-                    //error
-                    console.log(error);
-                    vm.error = error.data.message;
                 });
         }
 

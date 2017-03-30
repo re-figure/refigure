@@ -1,0 +1,10 @@
+<div ng-click="vm.svc.loader=false" class="rf-loader" ng-class="vm.svc.loader ? '' : 'loaded'">
+    <div class="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<div
+        ng-click="vm.svc.message.text=''"
+        ng-class="!vm.svc.message.text ? 'hidden' : 'alert-' + vm.svc.message.type"
+        class="rf-message alert"
+        ng-bind="vm.svc.message.text"></div>

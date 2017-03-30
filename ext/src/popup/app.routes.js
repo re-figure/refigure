@@ -13,8 +13,7 @@
                     name: 'main',
                     title: 'ReFigures'
                 },
-                template: '<main/>',
-                resolveRedirectTo: IsAuthCtrl
+                template: '<main/>'
             })
             .when('/auth', {
                 config: {

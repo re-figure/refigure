@@ -1,4 +1,4 @@
-<div ng-show="vm.userInfo" class="container-fluid">
+<div ng-show="vm.auth.userInfo.ID" class="container-fluid">
     <form class="logout-form" ng-submit="vm.logout()">
         <div class="logout-identity">
             <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
@@ -10,7 +10,7 @@
     </form>
 </div>
 
-<form ng-hide="vm.userInfo" class="login-form" name="login_form" ng-submit="vm.login(vm.loginData)">
+<form ng-hide="vm.auth.userInfo.ID" class="login-form" name="login_form" ng-submit="vm.login(vm.loginData)">
     <div class="form-group">
         <div>
             <label>Login</label>
@@ -28,7 +28,6 @@
     <div class="text-right">
         <button class="btn btn-default" name="login_submit" type="submit">Sign in</button>
     </div>
-    <hr>
     <div class="text-center" ng-show="vm.error">
         <p class="text-danger" ng-bind="vm.error"></p>
     </div>

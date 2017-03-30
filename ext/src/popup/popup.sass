@@ -2,8 +2,9 @@
 @import "../vendor/bootstrap/stylesheets/bootstrap"
 
 body
-    padding-top: 70px
+    padding-top: 65px
     width: 400px
+    padding-bottom: 15px
 
 .figure-add
     color: rgb(220, 220, 220)
@@ -39,13 +40,31 @@ img
 textarea
     resize: vertical
 
-div.collection a
-  text-decoration: none
-  color: #000
+.collection
+    .panel
+        border: none
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
+        cursor: pointer
+        p
+            max-height: 40px
+            overflow: hidden
+        &.is-current-collection
+            box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
+        &:last-of-type
+            margin-bottom: 0
 
-.collection div.panel p
-    max-height: 40px
-    overflow: hidden
+    &-add
+        position: fixed
+        right: 10px
+        bottom: 10px
+        border-radius: 50%
+        width: 50px
+        height: 50px
+        line-height: 50px
+        text-align: center
+        background-color: rgb(255,82,82)
+        color: #fff
+        box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
 
 .counter-info
   color: #9d9d9d
@@ -58,6 +77,53 @@ div.collection a
   overflow: hidden
   text-overflow: ellipsis
 
+.nav-default-collection
+    position: relative
+    i
+        position: absolute
+        left: 5px
+        top: 5px
+        font-size: 10px
+        line-height: 10px
+        color: #999
+
+.material-input
+    padding-top: 20px
+    margin-bottom: 15px
+    position: relative
+
+    label
+        cursor: pointer
+        position: absolute
+        top: 28px
+        left: 12px
+        transition: all .3s
+        color: #999
+        font-weight: normal
+
+    input
+        display: block
+        width: 100%
+        height: 34px
+        padding: 6px 12px
+        font-size: 14px
+        line-height: 1.42857
+        color: #555555
+        background: #fff
+        border: 0
+        border-bottom: 1px solid #ccc
+        transition: border-bottom .3s
+
+        &:focus, &:valid
+            outline: none
+            border-bottom-color: $brand-primary
+
+        &:focus + label,
+        &:valid + label
+            color: $brand-primary
+            top: 5px
+            left: 0
+            font-size: 10px
 
 @import "app/components/foundFigures/foundFigures.component"
 @import "app/components/navBar/navBar.component"

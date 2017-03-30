@@ -4,16 +4,14 @@
  "browser_action" field in manifest.json contains the "default_popup" key with
  value "popup.html".
  -->
-<html ng-app="ReFigure">
+<html>
 <head>
     <title>ReFigure</title>
     <link rel="stylesheet" href="/popup/popup.css">
 </head>
 <body>
-<div>
-    <nav-bar></nav-bar>
-    <div ng-view class="container-fluid"></div>
-</div>
+<nav-bar></nav-bar>
+<div ng-view class="container-fluid"></div>
 <script src="/popup/app.js"></script>
 <script src="/popup/templates.min.js"></script>
 </body>

@@ -15,13 +15,15 @@
 
         vm.login = AuthService.login;
         vm.logout = AuthService.logout;
-        vm.$onInit = activate;
+        vm.auth = AuthService;
         vm.error = '';
+        vm.userInfo = AuthService.userInfo;
+
+        vm.$onInit = activate;
 
         ////////////////////////////
 
         function activate() {
-            vm.userInfo = AuthService.userInfo;
             //TODO: fake testing account, remove this
             vm.loginData = {
                 Email: 'blabla@test.org',

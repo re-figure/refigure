@@ -1,16 +1,16 @@
 <div class="container-fluid">
     <h4 ng-hide="vm.figures.length" class="text-center">NO DATA IS AVAILABLE</h4>
 
-    <div ng-repeat="fig in vm.figures" ng-init="tmpFig = vm.copy(fig)">
+    <div ng-repeat="fig in vm.figures">
         <div class="row">
             <div class="col-xs-4">
                 <a ng-click="vm.opened = vm.opened === $index ? -1 : $index" class="clickable custom-link">
-                    <img class="thumbnail" ng-src="{{tmpFig.URL}}">
+                    <img class="thumbnail" ng-src="{{fig.URL}}">
                 </a>
             </div>
             <div class="col-xs-8">
-                <div class="caption" ng-bind="tmpFig.Caption"></div>
-                <small class="help-block"> IN <span ng-bind="tmpFig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
+                <div class="caption" ng-bind="fig.Caption"></div>
+                <small class="help-block"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
                 <button class="btn btn-link btn-xs" ng-click="vm.opened = vm.opened === $index ? -1 : $index">
                     <span class="glyphicon" ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
                     <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> details
@@ -22,27 +22,27 @@
 
                 <div class="form-group">
                     <label>URL</label>
-                    <div ng-bind="tmpFig.URL"></div>
+                    <div ng-bind="fig.URL"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="fig.Caption">
                     <label>Caption</label>
-                    <div ng-bind="tmpFig.Caption"></div>
+                    <div ng-bind="fig.Caption"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group"  ng-show="fig.Legend">
                     <label>Legend</label>
-                    <div ng-bind="tmpFig.Legend"></div>
+                    <div ng-bind="fig.Legend"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="fig.Features">
                     <label>Features</label>
-                    <div ng-bind="tmpFig.Features"></div>
+                    <div ng-bind="fig.Features"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="fig.Authors">
                     <label>Article authors</label>
-                    <div ng-bind="tmpFig.Authors"></div>
+                    <div ng-bind="fig.Authors"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="fig.DOI">
                     <label>Article DOI</label>
-                    <div ng-bind="tmpFig.DOI"></div>
+                    <div ng-bind="fig.DOI"></div>
                 </div>
             </div>
         </div>

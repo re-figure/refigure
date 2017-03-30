@@ -8,17 +8,12 @@
     function CollectionService($location, $http, AuthService, STORAGE) {
         var service = this;
 
-        if (AuthService.userInfo) {
-            $http.defaults.headers.common['Authentication'] = AuthService.userInfo.Token;
-        } else {
-            $http.defaults.headers.common['Authentication'] = undefined;
-        }
-
         service.create = function (params) {
+            setHeaders();
             return $http
                 .post(_gApiURL + "metapublication", params)
                 .then(function (resp) {
-                    STORAGE.CURRENT_METAPUBLICATION = resp.data.data.Metapublication;
+                    STORAGE.Metapublication = resp.data.data.Metapublication;
                     chrome.storage.local.set({
                         Metapublication: resp.data.data.Metapublication
                     });
@@ -27,11 +22,13 @@
         };
 
         service.read = function (id) {
+            setHeaders();
             return $http
                 .get(_gApiURL + "metapublication/" + id);
         };
 
         service.update = function (params) {
+            setHeaders();
             return $http
                 .put(_gApiURL + "metapublication", params)
                 .then(function (resp) {
@@ -41,6 +38,7 @@
         };
 
         service.delete = function (id) {
+            setHeaders();
             return $http
                 .delete(_gApiURL + "metapublication/" + id)
                 .then(function () {
@@ -49,13 +47,23 @@
         };
 
         service.getUserCollections = function () {
+            setHeaders();
             return $http
                 .get(_gApiURL + "my-metapublications");
         };
 
         service.toggleFlag = function (params) {
+            setHeaders();
             return $http
                 .put(_gApiURL + "metapublication-flag", params);
+        };
+
+        function setHeaders() {
+            if (AuthService.userInfo) {
+                $http.defaults.headers.common['Authentication'] = AuthService.userInfo.Token;
+            } else {
+                $http.defaults.headers.common['Authentication'] = undefined;
+            }
         }
 
     }

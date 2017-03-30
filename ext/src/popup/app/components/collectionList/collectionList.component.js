@@ -15,9 +15,9 @@
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
-        vm.metapublication = STORAGE.CURRENT_METAPUBLICATION;
+        vm.metapublication = STORAGE.Metapublication;
+        vm.userInfo = AuthService.userInfo;
         vm.search = '';
-        vm.error = '';
 
         ////////////////////////////
 
@@ -26,31 +26,24 @@
                 .getUserCollections()
                 .then(function (res) {
                     vm.collections = res.data.data.results;
-                }, function (error) {
-                    //error
-                    console.log(error);
-                    vm.error = error.data.message;
                 });
         }
 
         function activate() {
-            vm.userInfo = AuthService.userInfo;
             AuthService.userInfo && getMyOwnCollections();
-            //vm.metapublication = STORAGE.CURRENT_METAPUBLICATION;
         }
 
         function editCollection(metapub) {
             chrome.storage.local.set({
                 Metapublication: metapub
             }, function () {
-                chrome.tabs.sendMessage(STORAGE.CURRENT_TAB, {
+                chrome.tabs.sendMessage(STORAGE.currentTab, {
                     type: _gConst.MSG_TYPE_ADD_START,
                     Metapublication: metapub
                 });
                 window.close();
             });
         }
-
     }
 
 })(window.angular);

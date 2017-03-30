@@ -1,35 +1,26 @@
-<div ng-show="vm.userInfo" class="container-fluid">
-    <form class="logout-form" ng-submit="vm.logout()">
-        <div class="logout-identity">
-            <label ng-bind="vm.userInfo.Login || vm.userInfo.Email">Username</label>
-            <button type="submit" name="logout_submit" class="btn btn-default pull-right">Sign out</button>
-        </div>
-        <div>
-            <a href="https://refigure.noblecoz.com/profile" target="_blank">ReFigure website</a>
-        </div>
-    </form>
+<div ng-show="vm.auth.userInfo.ID">
+    <p><b ng-bind="vm.userInfo.Login || vm.userInfo.Email">%Username%</b></p>
+    <a href="https://refigure.noblecoz.com/profile" target="_blank">ReFigure website</a>
+    <div class="text-right">
+        <button ng-click="vm.logout()" class="btn btn-default">Sign out</button>
+    </div>
 </div>
 
-<form ng-hide="vm.userInfo" class="login-form" name="login_form" ng-submit="vm.login(vm.loginData)">
-    <div class="form-group">
-        <div>
-            <label>Login</label>
-            <input class="form-control" type="email" name="login_email" ng-model="vm.loginData.Email"/>
-        </div>
-        <div class="login-password">
-            <label>Password</label>
-            <input class="form-control" type="password" name="login_password" ng-model="vm.loginData.Password"/>
-        </div>
+<form ng-hide="vm.auth.userInfo.ID" name="loginForm" ng-submit="vm.login(vm.loginData)">
+    <div class="material-input" ng-class="loginForm.login.$invalid && loginForm.login.$dirty ? 'has-error' : ''">
+        <input id="login-form-login" type="email" name="login" ng-model="vm.loginData.Email" required/>
+        <label for="login-form-login">Login</label>
     </div>
-
-    <a href="https://refigure.noblecoz.com/passwordreset/" target="_blank">Forgot your password?</a>
-    <a href="https://refigure.noblecoz.com/signup/" target="_blank" class="pull-right">Sign up</a>
+    <div class="material-input" ng-class="loginForm.password.$invalid && loginForm.password.$dirty ? 'has-error' : ''">
+        <input id="login-form-pass" type="password" name="password" ng-model="vm.loginData.Password" required/>
+        <label for="login-form-pass">Password</label>
+    </div>
+    <div class="form-group">
+        <a href="https://refigure.noblecoz.com/signup/" target="_blank" class="pull-right">Sign up</a>
+        <a href="https://refigure.noblecoz.com/passwordreset/" target="_blank">Forgot your password?</a>
+    </div>
 
     <div class="text-right">
-        <button class="btn btn-default" name="login_submit" type="submit">Sign in</button>
-    </div>
-    <hr>
-    <div class="text-center" ng-show="vm.error">
-        <p class="text-danger" ng-bind="vm.error"></p>
+        <button class="btn btn-default" ng-disabled="loginForm.$invalid">Sign in</button>
     </div>
 </form>

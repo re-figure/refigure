@@ -8,51 +8,28 @@
             controllerAs: 'vm'
         });
 
-    EditCollectionController.$inject = ['$routeParams', 'AuthService', 'CollectionSvc'];
+    EditCollectionController.$inject = ['AuthService', 'CollectionSvc'];
 
-    function EditCollectionController($routeParams, AuthService, CollectionSvc) {
+    function EditCollectionController(AuthService, CollectionSvc) {
         var vm = this;
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
         vm.formData = {};
-        vm.error = '';
+        vm.userInfo = AuthService.userInfo;
 
         ////////////////////////////
 
         function activate() {
-            vm.userInfo = AuthService.userInfo;
-            if ($routeParams.id) {
-                vm.buttonName = 'Update';
-                CollectionSvc.read($routeParams.id)
-                    .then(function (resp) {
-                        vm.formData = resp.data.data.Metapublication;
-                    }, function (err) {
-                        console.log(err);
-                        vm.error = err.data.message;
-                    });
-            }
         }
 
         function editCollection(params) {
             if (!params.ID) {
                 params.UserID = vm.userInfo.ID;
-
-                CollectionSvc
-                    .create(params)
-                    .catch(function (error) {
-                        console.log(error);
-                        vm.error = error.data.message;
-                    });
+                CollectionSvc.create(params);
             } else {
                 delete params.Flagged;
-                // console.log(params);
-                CollectionSvc
-                    .update(params)
-                    .then(null, function (error) {
-                        console.log(error);
-                        vm.error = error.data.message;
-                    });
+                CollectionSvc.update(params);
             }
         }
 

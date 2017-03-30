@@ -1,25 +1,23 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-1 nav-title">
-                <a class="brand-link" ng-hide="vm.page.name==='main'" href="#" ng-click="vm.historyBack()">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-                <a class="brand-link" ng-show="vm.page.name==='main'" href="https://refigure.noblecoz.com"
-                   target="_blank">
-                    <img src="/img/icon.png" alt="ReFigure">
-                </a>
-            </div>
-            <div class="col-xs-4 nav-title">
+            <a class="col-xs-5 nav-title" ng-hide="vm.page.name==='main'" href="#" ng-click="vm.historyBack()">
+                <span class="glyphicon glyphicon-chevron-left"></span>
                 <span ng-bind="vm.page.title"></span>
-            </div>
-            <div class="col-xs-6 nav-title">
-                <span ng-bind="vm.store.CURRENT_METAPUBLICATION.Title"></span>
+            </a>
+            <a class="col-xs-5 nav-title" ng-show="vm.page.name==='main'" href="https://refigure.noblecoz.com" target="_blank">
+                <img src="/img/icon.png" alt="ReFigure">
+                <span ng-bind="vm.page.title"></span>
+            </a>
+            <div class="col-xs-6 nav-title nav-default-collection">
+                <span ng-show="vm.store.userInfo.ID">
+                    <i>default collection</i>
+                    <span ng-bind="vm.store.Metapublication.Title"></span>
+                </span>
             </div>
             <div class="col-xs-1 nav-title">
                 <a href="#!/auth">
-                    <span ng-show="vm.userInfo" class="glyphicon glyphicon-user"></span>
-                    <span ng-hide="vm.userInfo" class="glyphicon glyphicon-log-in"></span>
+                    <span class="glyphicon" ng-class="vm.store.userInfo.ID ? 'glyphicon-user' : 'glyphicon-log-in'"></span>
                 </a>
             </div>
         </div>

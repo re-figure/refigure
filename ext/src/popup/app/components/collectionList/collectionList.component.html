@@ -1,40 +1,37 @@
 <div class="collection">
-    <h4 align="center">My Collections</h4>
-
-    <div class="form-group">
-        <label>
-            <small>Search:</small>
-        </label>
-        <input class="form-control" type="text" placeholder="text to search" ng-model="vm.search">
+    <div class="material-input">
+        <input id="collections-search" type="text" ng-model="vm.search" required>
+        <label for="collections-search">Search</label>
     </div>
 
-    <div ng-repeat="collection in vm.collections | filter: vm.search">
-        <!--<a href="#!/collections/edit/{{collection.Metapublication.ID}}"><div class="panel panel-default">-->
-        <a href="#" ng-click="vm.editCollection(collection.Metapublication)">
-            <div class="panel"
-                 ng-class="(collection.Metapublication.ID === vm.metapublication.ID) ? 'panel-primary' : 'panel-default'">
-                <div class="panel-heading">
-                    <h1 class="panel-title" ng-bind="collection.Metapublication.Title"></h1>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <img ng-show="collection.Metapublication.Figures[0].URL"
-                                 class="thumbnail-sm"
-                                 ng-src="{{collection.Metapublication.Figures[0].URL}}">
+    <div class="panel panel-default"
+         ng-repeat="collection in vm.collections | filter: vm.search"
+         ng-click="vm.editCollection(collection.Metapublication)"
+         ng-class="(collection.Metapublication.ID === vm.metapublication.ID) ? 'is-current-collection': ''">
+        <div class="panel-heading">
+            <h1 class="panel-title" ng-bind="collection.Metapublication.Title"></h1>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img ng-show="collection.Metapublication.Figures[0].URL"
+                         class="thumbnail-sm"
+                         ng-src="{{collection.Metapublication.Figures[0].URL}}">
 
-                            <img ng-hide="collection.Metapublication.Figures[0].URL"
-                                 class="thumbnail-sm"
-                                 src="/img/no_image.png">
-                        </div>
-                        <div class="col-xs-8">
-                            <p ng-bind="collection.Metapublication.Description"></p>
-                            <div ng-bind="collection.Metapublication.FiguresCount + ' figure(s) in collection'"
-                                 class="counter-info"></div>
-                        </div>
+                    <img ng-hide="collection.Metapublication.Figures[0].URL"
+                         class="thumbnail-sm"
+                         src="/img/no_image.png">
+                </div>
+                <div class="col-xs-8">
+                    <p ng-bind="collection.Metapublication.Description"></p>
+                    <div class="counter-info">
+                        <span ng-bind="collection.Metapublication.FiguresCount"></span>
+                        <span plural="collection.Metapublication.FiguresCount"> figure</span> in collection
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
+
+    <a href="#!/collections/new" class="collection-add">+</a>
 </div>

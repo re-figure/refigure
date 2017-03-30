@@ -15,7 +15,6 @@
         var vm = this;
         vm.$onInit = activate;
         vm.logout = AuthService.logout;
-        vm.auth = AuthService;
         vm.store = STORAGE;
         vm.historyBack = historyBack;
 
@@ -24,7 +23,6 @@
         function activate() {
             $scope.$on('$routeChangeSuccess', function ($event, $curr) {
                 vm.page = $curr.$$route.config;
-                vm.userInfo = AuthService.userInfo;
             });
         }
 

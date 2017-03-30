@@ -3,11 +3,11 @@
     angular.module('ReFigure')
         .factory('AuthService', Controller);
 
-    Controller.$inject = ['$q', '$location', '$http'];
+    Controller.$inject = ['$q', '$location', '$http', 'STORAGE'];
 
-    function Controller($q, $location, $http) {
+    function Controller($q, $location, $http, STORAGE) {
         var exports = {
-            userInfo: null,
+            userInfo: STORAGE.userInfo,
             login: login,
             logout: logout,
             isAuth: isAuth
@@ -18,9 +18,8 @@
         ////////////
 
         function logout() {
-            exports.userInfo = null;
+            STORAGE.userInfo.ID = null;
             chrome.storage.local.remove('userInfo');
-            $http.defaults.headers.common['Authentication'] = undefined;
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_USER_LOGGED_OUT
             });
@@ -32,8 +31,7 @@
                 .post(_gApiURL + "login", params)
                 .then(function (resp) {
                     if (resp.data.data) {
-                        exports.userInfo = resp.data.data;
-                        $http.defaults.headers.common['Authentication'] = resp.data.data.Token;
+                        angular.extend(STORAGE.userInfo, resp.data.data);
                         $location.path('/');
                         chrome.runtime.sendMessage({
                             type: _gConst.MSG_TYPE_USER_LOGGED_IN
@@ -48,17 +46,10 @@
 
         function isAuth() {
             var dfd = $q.defer();
-            if (exports.userInfo !== null) {
+            if (STORAGE.userInfo.ID) {
                 dfd.resolve(undefined);
             } else {
-                chrome.storage.local.get('userInfo', function (data) {
-                    var resolve = '/auth';
-                    if (data.userInfo) {
-                        exports.userInfo = data.userInfo;
-                        resolve = undefined;
-                    }
-                    dfd.resolve(resolve);
-                });
+                dfd.resolve('/');
             }
             return dfd.promise;
         }

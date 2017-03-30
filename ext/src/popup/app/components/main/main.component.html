@@ -1,8 +1,8 @@
-<a ng-show="vm.store.FOUND_FIGURES.length > 0" href="#!/foundfigures">
-    <div class="text-center" ng-bind="'Show ' + vm.store.FOUND_FIGURES.length + ' ReFigure(s) on this page'"></div>
-</a>
-<div ng-hide="vm.store.FOUND_FIGURES.length > 0" class="text-center">No ReFigures found on this page</div>
-<br>
-<a href="#!/collections/new" class="btn btn-sm btn-primary btn-block">Create Collection</a>
-<hr>
-<collection-list/>
+<div class="text-center">
+    <a class="btn btn-link btn-lg btn-block" ng-show="vm.store.foundFigures.length > 0" href="#!/foundfigures">
+        <span>Show <b ng-bind="vm.store.foundFigures.length"></b> <span plural="vm.store.foundFigures.length">ReFigure</span> on this page</span>
+    </a>
+    <div ng-hide="vm.store.foundFigures.length > 0">No ReFigures found on this page</div>
+    <div ng-hide="vm.store.userInfo.ID" >Please click <a href="#!/auth">here</a> to sign in</div>
+</div>
+<collection-list ng-if="vm.store.userInfo.ID"></collection-list>

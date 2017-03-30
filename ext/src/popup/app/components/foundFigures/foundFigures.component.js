@@ -7,26 +7,15 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject = ['STORAGE', 'AuthService', 'FoundFiguresSvc'];
-    function CtrlFunction(STORAGE, AuthService, FoundFiguresSvc) {
+    CtrlFunction.$inject = ['STORAGE'];
+    function CtrlFunction(STORAGE) {
         var vm = this;
-        vm.figures = [];
-        vm.userInfo = {};
+        vm.figures = STORAGE.foundFigures;
         vm.opened = -1;
-        vm.save = save;
-        vm.copy = angular.copy;
         vm.$onInit = activate;
 
-        function activate() {
-            vm.figures = STORAGE.FOUND_FIGURES;
-            vm.userInfo = AuthService.userInfo;
-        }
+        /////////////////////
 
-        function save(index, params) {
-            FoundFiguresSvc.save(params)
-                .then(function (resp) {
-                    vm.figures[index] = resp.data.data.Figure;
-                 });
-        }
+        function activate() {}
     }
 })();

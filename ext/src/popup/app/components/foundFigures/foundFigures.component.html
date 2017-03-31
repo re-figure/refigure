@@ -1,45 +1,63 @@
-<h4 ng-hide="vm.figures.length" class="text-center">NO DATA IS AVAILABLE</h4>
+<div class="found-figures">
+    <h4 ng-hide="vm.figures.length" class="text-center">NO DATA IS AVAILABLE</h4>
 
-<div ng-repeat="fig in vm.figures">
-    <div class="row">
-        <div class="col-xs-4">
-            <img ng-click="vm.showFull(fig.URL)" class="thumbnail clickable" ng-src="{{fig.URL}}">
+    <div ng-repeat="fig in vm.figures">
+        <div class="row">
+            <div class="col-xs-4">
+                <img ng-click="vm.showFull(fig.URL)" class="thumbnail clickable" ng-src="{{fig.URL}}">
+            </div>
+            <div class="col-xs-8">
+                <div class="caption" ng-bind="fig.Caption"></div>
+                <small class="help-block"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
+                <button class="btn btn-link btn-xs" ng-click="vm.opened = vm.opened === $index ? -1 : $index">
+                    <span class="glyphicon"
+                          ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
+                    <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> details
+                </button>
+            </div>
         </div>
-        <div class="col-xs-8">
-            <div class="caption" ng-bind="fig.Caption"></div>
-            <small class="help-block"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> COLLECTIONS</small>
-            <button class="btn btn-link btn-xs" ng-click="vm.opened = vm.opened === $index ? -1 : $index">
-                <span class="glyphicon" ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
-                <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> details
-            </button>
+        <div class="container-fluid found-figures-details" ng-show="vm.opened === $index">
+            <div class="form-group">
+                <label>URL</label>
+                <div class="found-figures-clipboard">
+                    <span ng-show="fig.clip.url==='ok'" class="glyphicon glyphicon-ok"></span>
+                    <span ng-show="fig.clip.url==='error'" class="glyphicon exclamation-sign"></span>
+                    <span ng-hide="fig.clip.url"
+                          title="Copy to clipboard"
+                          class="glyphicon glyphicon-copy"
+                          ng-click="vm.toClipboard($event, 'url', fig)"></span>
+                    <a target="_blank" ng-href="{{fig.URL}}" ng-bind="fig.URL"></a>
+                </div>
+            </div>
+            <div class="form-group" ng-show="fig.Caption">
+                <label>Caption</label>
+                <div ng-bind="fig.Caption"></div>
+            </div>
+            <div class="form-group" ng-show="fig.Legend">
+                <label>Legend</label>
+                <div ng-bind="fig.Legend"></div>
+            </div>
+            <div class="form-group" ng-show="fig.Features">
+                <label>Features</label>
+                <div ng-bind="fig.Features"></div>
+            </div>
+            <div class="form-group" ng-show="fig.Authors">
+                <label>Article authors</label>
+                <div ng-bind="fig.Authors"></div>
+            </div>
+            <div ng-show="fig.DOI">
+                <label>Article DOI</label>
+                <div class="found-figures-clipboard">
+                    <span ng-show="fig.clip.doi==='ok'" class="glyphicon glyphicon-ok"></span>
+                    <span ng-show="fig.clip.doi==='error'" class="glyphicon exclamation-sign"></span>
+                    <span ng-hide="fig.clip.doi"
+                          title="Copy to clipboard"
+                          class="glyphicon glyphicon-copy"
+                          ng-click="vm.toClipboard($event, 'doi', fig)"></span>
+                    <a target="_blank" ng-href="http://dx.doi.org/{{fig.DOI}}" ng-bind="fig.DOI"></a>
+                </div>
+            </div>
         </div>
+        <hr ng-hide="$last">
     </div>
-    <div class="container-fluid" ng-show="vm.opened === $index">
-        <p></p>
-        <div class="form-group">
-            <label>URL</label>
-            <div ng-bind="fig.URL"></div>
-        </div>
-        <div class="form-group" ng-show="fig.Caption">
-            <label>Caption</label>
-            <div ng-bind="fig.Caption"></div>
-        </div>
-        <div class="form-group"  ng-show="fig.Legend">
-            <label>Legend</label>
-            <div ng-bind="fig.Legend"></div>
-        </div>
-        <div class="form-group" ng-show="fig.Features">
-            <label>Features</label>
-            <div ng-bind="fig.Features"></div>
-        </div>
-        <div class="form-group" ng-show="fig.Authors">
-            <label>Article authors</label>
-            <div ng-bind="fig.Authors"></div>
-        </div>
-        <div ng-show="fig.DOI">
-            <label>Article DOI</label>
-            <div ng-bind="fig.DOI"></div>
-        </div>
-    </div>
-    <hr ng-hide="$last">
 </div>

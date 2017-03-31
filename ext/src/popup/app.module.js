@@ -56,21 +56,21 @@
     function ConfigController($httpProvider, $compileProvider, STORAGE) {
         angular.extend(STORAGE, _store);
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
-
+        $compileProvider.debugInfoEnabled(false);
         $httpProvider.interceptors.push(['$q', 'MessageService', function ($q, MessageService) {
             return {
-                'request': function(config) {
+                'request': function (config) {
                     console.log('request');
                     MessageService.loader = true;
                     return config;
                 },
 
-                'response': function(response) {
+                'response': function (response) {
                     MessageService.loader = false;
                     return response;
                 },
 
-                'responseError': function(rejection) {
+                'responseError': function (rejection) {
                     console.info(rejection);
                     MessageService.showMessage({
                         text: rejection.data && rejection.data.message || 'Something went wrong. Please try again later',

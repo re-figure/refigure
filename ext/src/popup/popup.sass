@@ -78,6 +78,23 @@ textarea
         &:hover
             background-color: #000
 
+    .collection-search
+        position: relative
+        &-reset
+            visibility: hidden
+            width: 34px
+            position: absolute
+            right: 0
+            top: 20px
+            bottom: 1px
+            background-color: #fff
+            outline: none
+            transition: opacity .3s
+        input
+            padding-right: 34px
+            &.ng-not-empty + label + button
+                visibility: visible
+
 .counter-info
   color: #9d9d9d
 

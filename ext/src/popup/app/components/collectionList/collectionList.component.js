@@ -18,6 +18,7 @@
         vm.metapublication = STORAGE.Metapublication;
         vm.userInfo = AuthService.userInfo;
         vm.showFull = showFull;
+        vm.handleESC = handleESC;
         vm.search = '';
 
         ////////////////////////////
@@ -30,7 +31,7 @@
                     // try to put the currently selected collection on top
                     // if the current collection is not found in results then clear selection
                     if (vm.metapublication) {
-                        var idx = arr.findIndex(function(elem) {
+                        var idx = arr.findIndex(function (elem) {
                             return (elem.Metapublication.ID === vm.metapublication.ID);
                         });
                         if (idx > 0) {
@@ -64,8 +65,15 @@
         function showFull(event, src) {
             event.stopPropagation();
             MessageService.showWindow({
-                content: '<img src="'+src+'">'
+                content: '<img src="' + src + '">'
             });
+        }
+
+        function handleESC(event) {
+            if (event.keyCode === 27) {
+                vm.search = '';
+                event.preventDefault();
+            }
         }
     }
 

@@ -1,7 +1,8 @@
 <div class="collection">
-    <div class="material-input">
-        <input id="collections-search" type="text" ng-model="vm.search" required>
+    <div class="material-input collection-search">
+        <input id="collections-search" type="text" ng-model="vm.search" ng-keydown="vm.handleESC($event)">
         <label for="collections-search">Search my collections</label>
+        <button ng-click="vm.search = ''" type="button" class="close collection-search-reset">&times;</button>
     </div>
 
     <div class="panel panel-default"

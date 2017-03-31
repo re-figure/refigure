@@ -14,8 +14,9 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-4">
-                    <img ng-show="collection.Metapublication.Figures[0].URL"
-                         class="thumbnail-sm"
+                    <img ng-click="vm.showFull($event, collection.Metapublication.Figures[0].URL)"
+                         ng-show="collection.Metapublication.Figures[0].URL"
+                         class="thumbnail-sm has-image"
                          ng-src="{{collection.Metapublication.Figures[0].URL}}">
 
                     <img ng-hide="collection.Metapublication.Figures[0].URL"

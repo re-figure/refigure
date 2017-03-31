@@ -4,7 +4,12 @@
     <div class="loader-section section-right"></div>
 </div>
 <div
-        ng-click="vm.svc.message.text=''"
-        ng-class="!vm.svc.message.text ? 'hidden' : 'alert-' + vm.svc.message.type"
+        ng-click="vm.svc.message.show=false"
+        ng-class="[vm.svc.message.show ? 'rf-shown': '', 'alert-' + vm.svc.message.type]"
         class="rf-message alert"
         ng-bind="vm.svc.message.text"></div>
+<div
+        ng-click="vm.svc.window.show = false"
+        ng-class="vm.svc.window.show ? 'rf-shown' : ''"
+        class="rf-window"
+        ng-bind-html="vm.svc.window.content"></div>

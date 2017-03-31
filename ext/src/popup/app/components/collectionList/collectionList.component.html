@@ -7,7 +7,7 @@
 
     <div class="panel panel-default"
          ng-repeat="collection in vm.collections | filter: vm.search"
-         ng-click="vm.editCollection(collection.Metapublication)"
+         ng-click="vm.editCollection(collection.Metapublication.ID)"
          ng-class="(collection.Metapublication.ID === vm.metapublication.ID) ? 'is-current': ''">
         <div class="panel-heading">
             <h1 class="panel-title" ng-bind="collection.Metapublication.Title"></h1>

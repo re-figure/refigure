@@ -50,15 +50,17 @@
             AuthService.userInfo && getMyOwnCollections();
         }
 
-        function editCollection(metapub) {
-            chrome.storage.local.set({
-                Metapublication: metapub
-            }, function () {
-                chrome.tabs.sendMessage(STORAGE.currentTab, {
-                    type: _gConst.MSG_TYPE_ADD_START,
-                    Metapublication: metapub
+        function editCollection(id) {
+            CollectionSvc.read(id).then(function (resp) {
+                chrome.storage.local.set({
+                    Metapublication: resp.data.data.Metapublication
+                }, function () {
+                    chrome.tabs.sendMessage(STORAGE.currentTab, {
+                        type: _gConst.MSG_TYPE_ADD_START,
+                        Metapublication: resp.data.data.Metapublication
+                    });
+                    window.close();
                 });
-                window.close();
             });
         }
 

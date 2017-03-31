@@ -49,7 +49,7 @@
         service.getUserCollections = function () {
             setHeaders();
             return $http
-                .get(_gApiURL + "my-metapublications");
+                .get(_gApiURL + "my-metapublications?size=50");
         };
 
         service.toggleFlag = function (params) {

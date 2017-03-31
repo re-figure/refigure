@@ -19,6 +19,7 @@
 
         function logout() {
             STORAGE.userInfo.ID = null;
+            STORAGE.Metapublication = null;
             chrome.storage.local.remove('userInfo');
             chrome.runtime.sendMessage({
                 type: _gConst.MSG_TYPE_USER_LOGGED_OUT
@@ -32,6 +33,7 @@
                 .then(function (resp) {
                     if (resp.data.data) {
                         angular.extend(STORAGE.userInfo, resp.data.data);
+                        STORAGE.Metapublication = null;
                         $location.path('/');
                         chrome.runtime.sendMessage({
                             type: _gConst.MSG_TYPE_USER_LOGGED_IN

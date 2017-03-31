@@ -25,7 +25,22 @@
             return CollectionSvc
                 .getUserCollections()
                 .then(function (res) {
-                    vm.collections = res.data.data.results;
+                    var arr = res.data.data.results;
+                    // try to put the currently selected collection on top
+                    // if the current collection is not found in results then clear selection
+                    if (vm.metapublication) {
+                        var idx = arr.findIndex(function(elem) {
+                            return (elem.Metapublication.ID === vm.metapublication.ID);
+                        });
+                        if (idx > 0) {
+                            arr.unshift(arr.splice(idx, 1)[0]);
+                        } else if (idx !== 0) {
+                            // if the selected collection is not found then clear selection
+                            vm.metapublication = null;
+                            STORAGE.Metapublication = null;
+                        }
+                    }
+                    vm.collections = arr;
                 });
         }
 

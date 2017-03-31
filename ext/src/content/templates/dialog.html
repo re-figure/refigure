@@ -12,7 +12,7 @@
         </div>
         <div class="panel-body">
             <div class="alert bg-primary text-center">Select an image to add to collection</div>
-            <form name="figureForm_{{$index}}" ng-repeat="fig in collection.Figures">
+            <div ng-repeat="fig in collection.Figures">
                 <div class="row">
                     <div class="col-xs-4">
                         <a href="#" ng-click="opts.current = opts.current === $index ? -1 : $index">
@@ -38,34 +38,34 @@
                 </div>
                 <div class="row" ng-show="opts.current === $index">
                     <div class="container-fluid">
-                        <div class="form-group">
+                        <div class="material-input">
+                            <input id="edit-figure-url" type="text" ng-model="fig.URL" readonly>
                             <label for="edit-figure-url">URL</label>
-                            <input id="edit-figure-url" type="text" class="form-control" ng-model="fig.URL" readonly>
                         </div>
-                        <div class="form-group">
+                        <div class="material-input">
+                            <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Caption"></div>
                             <label>Caption</label>
-                            <div contenteditable="true" class="form-control" ng-model="fig.Caption"></div>
                         </div>
-                        <div class="form-group">
+                        <div class="material-input">
+                            <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Legend"></div>
                             <label>Legend</label>
-                            <div contenteditable="true" class="form-control" ng-model="fig.Legend"></div>
                         </div>
-                        <div class="form-group">
+                        <div class="material-input">
+                            <input ng-blur="saveFigure(fig)" id="edit-figure-features" type="text" ng-model="fig.Features">
                             <label for="edit-figure-features">Features</label>
-                            <input id="edit-figure-features" type="text" class="form-control" ng-model="fig.Features">
                         </div>
-                        <div class="form-group">
+                        <div class="material-input">
+                            <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Authors"></div>
                             <label>Article authors</label>
-                            <div contenteditable="true" class="form-control" ng-model="fig.Authors"></div>
                         </div>
-                        <div class="form-group">
+                        <div class="material-input">
+                            <input ng-blur="saveFigure(fig)" id="edit-figure-doi" type="text" ng-model="fig.DOI">
                             <label for="edit-figure-doi">Article DOI</label>
-                            <input id="edit-figure-doi" type="text" class="form-control" ng-model="fig.DOI">
                         </div>
                     </div>
                 </div>
                 <hr ng-hide="$last">
-            </form>
+            </div>
         </div>
         <div class="panel-footer" ng-show="collection.Figures.length">
             <button ng-click="close()" type="button" class="btn btn-block btn-default">Close</button>

@@ -1,3 +1,9 @@
+.rf-addable-image
+    outline: 2px solid #5cb85c
+
+.rf-addable-image:hover
+    outline: 4px solid #5cb85c
+
 $panel-primary-border:        #fff
 $panel-primary-heading-bg:    #222
 $rf-dialog-controls-width:    50px
@@ -5,25 +11,25 @@ $rf-dialog-controls-width:    50px
 @import "../common/variables"
 .rf-dialog
     @import "../vendor/bootstrap/stylesheets/bootstrap"
-
-.rf-addable-image
-    outline: 2px solid #5cb85c
-
-.rf-addable-image:hover
-    outline: 4px solid #5cb85c
+    @import "../common/material-input"
 
 .rf-dialog
-    overflow: auto
     box-shadow: 0 2px 2px rgba(0, 0, 0, .5)
     font-size: 14px
     line-height: 21px
     position: fixed
     top: 0
-    max-height: 100%
+    bottom: 0
     right: 0
+    height: auto
+    overflow: auto
     background-color: #fff
     z-index: 1000000
     width: 400px
+
+    .row
+        max-width: none
+        width: auto
 
     .panel-heading
         position: relative

@@ -11,12 +11,9 @@
             if (collection && _scope.collection.ID !== collection.ID) {
                 _scope.collection = angular.copy(collection);
                 console.log('Starting collection:', angular.copy(_scope.collection));
-                _scope.opts.current = 0;
+                _scope.opts.current = -1;
             }
-            if(data){
-                _scope.collection.Figures.push(data);
-                _scope.opts.current = _scope.collection.Figures.length - 1;
-            }
+            data && _scope.addFigure(data);
             _scope.minimized = false
         });
     };
@@ -32,8 +29,6 @@
             return false;
         }
         var domEl = document.createElement('div');
-        //domEl.setAttribute('ng-include', "'view/dialog.html'");
-        //domEl.setAttribute('src', 'view/dialog.html');
         domEl.innerHTML = '<div ng-include="\'view/dialog.html\'"></div>';
         document.body.appendChild(domEl);
         angular.bootstrap(domEl, ['ReFigureContent'], {strictDi: true});
@@ -44,7 +39,17 @@
 })(window.figurePopup || {});
 
 angular.module('ReFigureContent', [])
-    .run(['$rootScope', function ($scope) {
+    .config(['$httpProvider', function ($httpProvider) {
+        chrome.storage.local.get('userInfo', function (data) {
+            if (!data.userInfo) {
+                alert(_gConst.ERROR_NOT_LOGGED);
+            } else {
+                $httpProvider.defaults.headers.common['Authentication'] = data.userInfo.Token;
+            }
+        });
+    }])
+    .run(['$rootScope', '$http', function ($scope, $http) {
+
         $scope.collection = {};
         $scope.opts = {
             current: -1
@@ -62,46 +67,35 @@ angular.module('ReFigureContent', [])
         };
 
         $scope.remove = function (index) {
-            if ($scope.collection.Figures[index].ID) {
-                console.error('!!!removing from server!!!');
-            } else {
-                $scope.collection.Figures.splice(index, 1)
+            if (confirm('Remove this figure?')) {
+                $http
+                    .delete(_gApiURL + "figure/" + $scope.collection.Figures[index].ID)
+                    .then(function () {
+                        $scope.collection.Figures.splice(index, 1);
+                    });
             }
         };
 
-        $scope.submit = function (index) {
-            /*chrome.storage.local.get('userInfo', function (data) {
-                if (data.userInfo) {
-                    var requestNumber = $scope.collection.Figures.length;
-                    var requestCounter = 0;
-                    var figures = angular.copy($scope.collection.Figures);
-                    var figure = figures.pop();
-                    while (figure) {
-                        figure.MetapublicationID = $scope.collection.ID;
-                        sendRequest({
-                            type: 'POST',
-                            url: 'figure',
-                            data: figure,
-                            headers: {
-                                Authentication: data.userInfo.Token
-                            }
-                        }).then(function () {
-                            requestCounter++;
-                            if (requestCounter === requestNumber) {
-                                window.figurePopup.hide();
-                                alert(_gConst.FIGURE_ADDED);
-                            }
-                        }, function (data) {
-                            console.log(data);
-                        });
-                        figure = figures.pop();
-                    }
-                } else {
-                    alert(_gConst.ERROR_NOT_LOGGED);
-                }
-            });*/
-            console.log(index, $scope.collection.Figures);
-            //figureAddStop();
+        $scope.saveFigure = function (data) {
+            return $http
+                .put(_gApiURL + "figure", data)
+                .then(function (resp) {
+                    return resp.data.data.Figure;
+                });
+        };
+
+        $scope.addFigure = function (data) {
+            if (data.ID) {
+                $scope.opts.current = $scope.collection.Figures.findIndex(function (el) {
+                    return el.ID === data.ID;
+                });
+            } else {
+                data.MetapublicationID = $scope.collection.ID;
+                $scope.saveFigure(data).then(function (fig) {
+                    $scope.collection.Figures.push(fig);
+                    $scope.opts.current = $scope.collection.Figures.length - 1;
+                });
+            }
         }
     }])
 

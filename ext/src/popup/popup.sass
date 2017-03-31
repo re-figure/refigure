@@ -1,10 +1,13 @@
 @import "../common/variables"
+@import "../common/material-input"
 @import "../vendor/bootstrap/stylesheets/bootstrap"
 
 body
     padding-top: 65px
     width: 400px
     padding-bottom: 15px
+    &.rf-route-main
+        padding-bottom: 50px
 
 .figure-add
     color: rgb(220, 220, 220)
@@ -41,46 +44,6 @@ img
 textarea
     resize: vertical
 
-.collection
-    .panel
-        border: none
-        //box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
-        outline: 1px solid #eee
-        cursor: pointer
-        p
-            max-height: 40px
-            overflow: hidden
-        &.is-current-collection
-            outline: none
-            //box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
-            box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)
-            .panel-heading
-                background-color: rgb(150, 150, 150)
-                color: #fff
-        &:last-of-type
-            margin-bottom: 0
-
-    a.collection-add
-        position: fixed
-        right: 10px
-        bottom: 10px
-        border-radius: 50%
-        text-decoration: none
-        font-size: 25px
-        width: 50px
-        height: 50px
-        line-height: 50px
-        text-align: center
-        background-color: rgb(255,82,82)
-        color: #fff
-        box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
-        transition: background-color .3s
-        &:hover
-            background-color: #000
-
-.counter-info
-  color: #9d9d9d
-
 .nav-title
   //width: 100%
   padding-left: 10px
@@ -99,53 +62,6 @@ textarea
         line-height: 10px
         color: #999
 
-.material-input
-    padding-top: 20px
-    margin-bottom: 15px
-    position: relative
-
-    label
-        cursor: pointer
-        position: absolute
-        top: 28px
-        left: 12px
-        transition: all .3s
-        color: #999
-        font-weight: normal
-
-    input, textarea, div[contenteditable]
-        display: block
-        width: 100%
-        height: 34px
-        padding: 6px 12px
-        font-size: 14px
-        line-height: 1.42857
-        color: #555555
-        background: #fff
-        border: 0
-        border-bottom: 1px solid #ccc
-        transition: border-bottom .3s
-
-        &:focus, &.ng-not-empty
-            outline: none
-            border-bottom-color: $brand-primary
-
-        &:focus + label,
-        &.ng-not-empty + label
-            color: $brand-primary
-            top: 5px
-            left: 0
-            font-size: 10px
-
-    div[contenteditable], textarea
-        height: auto
-        min-height: 34px
-
-    &.has-error
-        label
-            color: $brand-danger!important
-        input, textarea, div[contenteditable]
-            border-bottom-color: $brand-danger!important
-
 @import "app/components/foundFigures/foundFigures.component"
 @import "app/components/messages/messages.component"
+@import "app/components/collectionList/collectionList.component"

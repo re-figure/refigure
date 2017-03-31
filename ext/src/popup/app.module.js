@@ -56,21 +56,21 @@
     function ConfigController($httpProvider, $compileProvider, STORAGE) {
         angular.extend(STORAGE, _store);
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
-
+        $compileProvider.debugInfoEnabled(false);
         $httpProvider.interceptors.push(['$q', 'MessageService', function ($q, MessageService) {
             return {
-                'request': function(config) {
+                'request': function (config) {
                     console.log('request');
                     MessageService.loader = true;
                     return config;
                 },
 
-                'response': function(response) {
+                'response': function (response) {
                     MessageService.loader = false;
                     return response;
                 },
 
-                'responseError': function(rejection) {
+                'responseError': function (rejection) {
                     console.info(rejection);
                     MessageService.showMessage({
                         text: rejection.data && rejection.data.message || 'Something went wrong. Please try again later',
@@ -86,6 +86,9 @@
     RunController.$inject = ['$rootScope', 'STORAGE'];
 
     function RunController($rootScope, STORAGE) {
+        $rootScope.$on('$routeChangeSuccess', function ($event, $curr) {
+            document.body.className = 'rf-route-' + $curr.$$route.config.name
+        });
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {

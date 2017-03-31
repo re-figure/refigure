@@ -1,0 +1,45 @@
+.collection
+    .panel
+        border: none
+        //box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
+        outline: 1px solid #eee
+        cursor: pointer
+        p
+            max-height: 40px
+            overflow: hidden
+        &.is-current
+            outline: none
+            //box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
+            box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)
+            .panel-heading
+                background-color: rgb(150, 150, 150)
+                color: #fff
+        &:last-of-type
+            margin-bottom: 0
+
+    &-fig-count
+        color: #9d9d9d
+
+    &-add
+        text-transform: uppercase
+        position: fixed
+        right: 0
+        left: 0
+        bottom: 0
+
+    &-search
+        position: relative
+        &-reset
+            visibility: hidden
+            width: 34px
+            position: absolute
+            right: 0
+            top: 20px
+            bottom: 1px
+            background-color: #fff
+            outline: none
+            transition: opacity .3s
+        input
+            padding-right: 34px
+            &.ng-not-empty + label + button
+                visibility: visible

@@ -10,9 +10,15 @@
             loader: true,
             message: {
                 text: '',
-                type: ''
+                type: '',
+                show: false
             },
-            showMessage: showMessage
+            window: {
+                content: '',
+                show: false
+            },
+            showMessage: showMessage,
+            showWindow: showWindow
         };
 
         return exports;
@@ -28,11 +34,19 @@
 
             exports.message.text = params.text;
             exports.message.type = params.type;
+            exports.message.show = true;
             $timeout(function () {
-                exports.message.text = '';
+                exports.message.show = false;
             }, params.delay);
         }
 
+        function showWindow(params) {
+            params = angular.extend({
+                content: ''
+            }, params);
+            exports.window.content = params.content;
+            exports.window.show = true;
+        }
 
     }
 

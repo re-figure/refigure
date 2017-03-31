@@ -40,7 +40,7 @@
         angular.bootstrap(document, ['ReFigure'], {strictDi: true})
     });
 
-    angular.module('ReFigure', ['ngRoute'])
+    angular.module('ReFigure', ['ngRoute', 'ngSanitize'])
         .constant('STORAGE', {
             currentTab: null,
             rfFigures: null,

@@ -7,15 +7,22 @@
             controllerAs: 'vm'
         });
 
-    CtrlFunction.$inject = ['STORAGE'];
-    function CtrlFunction(STORAGE) {
+    CtrlFunction.$inject = ['STORAGE', 'MessageService'];
+    function CtrlFunction(STORAGE, MessageService) {
         var vm = this;
         vm.figures = STORAGE.foundFigures;
         vm.opened = -1;
         vm.$onInit = activate;
+        vm.showFull = showFull;
 
         /////////////////////
 
         function activate() {}
+
+        function showFull(src) {
+            MessageService.showWindow({
+                content: '<img src="'+src+'">'
+            });
+        }
     }
 })();

@@ -14,32 +14,31 @@
             </button>
         </div>
     </div>
-    <div ng-show="vm.opened === $index">
-        <div class="container-fluid">
-            <div class="form-group">
-                <label>URL</label>
-                <div ng-bind="fig.URL"></div>
-            </div>
-            <div class="form-group" ng-show="fig.Caption">
-                <label>Caption</label>
-                <div ng-bind="fig.Caption"></div>
-            </div>
-            <div class="form-group"  ng-show="fig.Legend">
-                <label>Legend</label>
-                <div ng-bind="fig.Legend"></div>
-            </div>
-            <div class="form-group" ng-show="fig.Features">
-                <label>Features</label>
-                <div ng-bind="fig.Features"></div>
-            </div>
-            <div class="form-group" ng-show="fig.Authors">
-                <label>Article authors</label>
-                <div ng-bind="fig.Authors"></div>
-            </div>
-            <div class="form-group" ng-show="fig.DOI">
-                <label>Article DOI</label>
-                <div ng-bind="fig.DOI"></div>
-            </div>
+    <div class="container-fluid" ng-show="vm.opened === $index">
+        <p></p>
+        <div class="form-group">
+            <label>URL</label>
+            <div ng-bind="fig.URL"></div>
+        </div>
+        <div class="form-group" ng-show="fig.Caption">
+            <label>Caption</label>
+            <div ng-bind="fig.Caption"></div>
+        </div>
+        <div class="form-group"  ng-show="fig.Legend">
+            <label>Legend</label>
+            <div ng-bind="fig.Legend"></div>
+        </div>
+        <div class="form-group" ng-show="fig.Features">
+            <label>Features</label>
+            <div ng-bind="fig.Features"></div>
+        </div>
+        <div class="form-group" ng-show="fig.Authors">
+            <label>Article authors</label>
+            <div ng-bind="fig.Authors"></div>
+        </div>
+        <div ng-show="fig.DOI">
+            <label>Article DOI</label>
+            <div ng-bind="fig.DOI"></div>
         </div>
     </div>
     <hr ng-hide="$last">

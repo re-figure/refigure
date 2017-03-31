@@ -5,6 +5,8 @@ body
     padding-top: 65px
     width: 400px
     padding-bottom: 15px
+    &.rf-route-main
+        padding-bottom: 50px
 
 .figure-add
     color: rgb(220, 220, 220)
@@ -40,63 +42,6 @@ img
 
 textarea
     resize: vertical
-
-.collection
-    .panel
-        border: none
-        //box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
-        outline: 1px solid #eee
-        cursor: pointer
-        p
-            max-height: 40px
-            overflow: hidden
-        &.is-current-collection
-            outline: none
-            //box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
-            box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)
-            .panel-heading
-                background-color: rgb(150, 150, 150)
-                color: #fff
-        &:last-of-type
-            margin-bottom: 0
-
-    a.collection-add
-        position: fixed
-        right: 10px
-        bottom: 10px
-        border-radius: 50%
-        text-decoration: none
-        font-size: 25px
-        width: 50px
-        height: 50px
-        line-height: 50px
-        text-align: center
-        background-color: rgb(255,82,82)
-        color: #fff
-        box-shadow: 0 5px 6px -3px rgba(0,0,0,.2), 0 9px 12px 1px rgba(0,0,0,.14), 0 3px 16px 2px rgba(0,0,0,.12)
-        transition: background-color .3s
-        &:hover
-            background-color: #000
-
-    .collection-search
-        position: relative
-        &-reset
-            visibility: hidden
-            width: 34px
-            position: absolute
-            right: 0
-            top: 20px
-            bottom: 1px
-            background-color: #fff
-            outline: none
-            transition: opacity .3s
-        input
-            padding-right: 34px
-            &.ng-not-empty + label + button
-                visibility: visible
-
-.counter-info
-  color: #9d9d9d
 
 .nav-title
   //width: 100%
@@ -166,3 +111,4 @@ textarea
 
 @import "app/components/foundFigures/foundFigures.component"
 @import "app/components/messages/messages.component"
+@import "app/components/collectionList/collectionList.component"

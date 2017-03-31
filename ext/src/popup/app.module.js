@@ -86,6 +86,9 @@
     RunController.$inject = ['$rootScope', 'STORAGE'];
 
     function RunController($rootScope, STORAGE) {
+        $rootScope.$on('$routeChangeSuccess', function ($event, $curr) {
+            document.body.className = 'rf-route-' + $curr.$$route.config.name
+        });
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {

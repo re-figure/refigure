@@ -8,7 +8,7 @@
     <div class="panel panel-default"
          ng-repeat="collection in vm.collections | filter: vm.search"
          ng-click="vm.editCollection(collection.Metapublication)"
-         ng-class="(collection.Metapublication.ID === vm.metapublication.ID) ? 'is-current-collection': ''">
+         ng-class="(collection.Metapublication.ID === vm.metapublication.ID) ? 'is-current': ''">
         <div class="panel-heading">
             <h1 class="panel-title" ng-bind="collection.Metapublication.Title"></h1>
         </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-xs-8">
                     <p ng-bind="collection.Metapublication.Description"></p>
-                    <div class="counter-info">
+                    <div class="collection-fig-count">
                         <span ng-bind="collection.Metapublication.FiguresCount"></span>
                         <span plural="collection.Metapublication.FiguresCount"> figure</span> in collection
                     </div>
@@ -35,5 +35,5 @@
         </div>
     </div>
 
-    <a href="#!/collections/new" class="collection-add">+</a>
+    <a href="#!/collections/new" class="btn btn-primary collection-add">Create new collection</a>
 </div>

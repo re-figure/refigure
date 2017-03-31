@@ -19,10 +19,14 @@
         });
 
     Controller.$inject = [
+        'collections'
     ];
 
-    function Controller() {
+    function Controller(collections) {
         var vm = this;
+        vm.error = null;
+        vm.loading = false;
+        vm.items = [];
 
         activate();
 
@@ -47,7 +51,16 @@
          * Loads component data
          */
         function load() {
-
+            vm.error = null;
+            vm.loading = true;
+            collections
+                .myCollections()
+                .then(function (data) {
+                    vm.items = data;
+                })
+                .finally(function () {
+                    vm.loading = false;
+                });
         }
     }
 })(window.angular);

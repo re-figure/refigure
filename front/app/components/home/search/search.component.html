@@ -40,15 +40,15 @@
             <div flex-gt-sm="33"
                  ng-repeat="item in vm.mostVisited"
             >
-                <md-card md-theme="default">
+                <md-card class="r-collection-card" md-theme="default">
                     <md-card-title>
                         <md-card-title-media>
                             <div class="md-media-sm card-media">
-                                <img ng-src="{{ item.img.src }}" class="md-card-image" alt="Washed Out"/>
+                                <img ng-src="{{ item.$ui.img.src }}" class="md-card-image" alt="Washed Out"/>
                             </div>
                         </md-card-title-media>
                         <md-card-title-text>
-                            <span ng-bind="item.title"></span>
+                            <span ng-bind="item.$ui.title"></span>
                         </md-card-title-text>
                     </md-card-title>
                 </md-card>

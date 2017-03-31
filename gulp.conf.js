@@ -77,7 +77,7 @@ module.exports = {
         src: extSrcDir,
         dist: extDir + '/dist',
         common: {
-            css: extSrcDir + '/common/variables.sass',
+            css: extSrcDir + '/common/**/*.sass',
             js: extSrcDir + '/common/const.js'
         },
         content: {

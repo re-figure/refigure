@@ -107,6 +107,7 @@ module.exports = {
             js: [
                 extSrcDir + '/vendor/angular/angular.min.js',
                 extSrcDir + '/vendor/angular/angular-route.min.js',
+                extSrcDir + '/vendor/angular/angular-sanitize.min.js',
                 extSrcDir + '/common/const.js',
                 extSrcDir + '/popup/*.module.js',
                 extSrcDir + '/popup/**/*.js'

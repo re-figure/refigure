@@ -21,5 +21,8 @@
         "angular-material.js"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "1.6.3"
   }
 }

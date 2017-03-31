@@ -1,7 +1,7 @@
 .rf-loader
     z-index: 1000
     position: fixed
-    top: 0
+    top: 50px
     bottom: 0
     left: 0
     right: 0
@@ -20,7 +20,6 @@
         border: 3px solid transparent
         border-top-color: #4285f4
 
-        -webkit-animation: spin 2s linear infinite /* Chrome, Opera 15+, Safari 5+ */
         animation: spin 2s linear infinite /* Chrome, Firefox 16+, IE 10+, Opera */
         z-index: 1001
 
@@ -48,6 +47,12 @@
             border-top-color: rgb(248, 149, 31)
             animation: spin 1.5s linear infinite
 
+        @keyframes spin
+            0%
+                transform: rotate(0deg)
+            100%
+                transform: rotate(360deg)
+
     .loader-section
         position: fixed
         top: 0
@@ -59,18 +64,6 @@
             left: 0
         &.section-right
             right: 0
-    @-webkit-keyframes spin
-        0%
-            transform: rotate(0deg)
-
-        100%
-            transform: rotate(360deg)
-
-    @keyframes spin
-        0%
-            transform: rotate(0deg)
-        100%
-            transform: rotate(360deg)
 
     &.loaded
         visibility: hidden
@@ -82,21 +75,41 @@
 
         .loader-section
             .section-left
-                transform: translateX(-100%)  /* Firefox 16+, IE 10+, Opera */
+                transform: translateX(-100%)
                 transition: all .7s .3s cubic-bezier(0.645, 0.045, 0.355, 1.000)
             .section-right
-                transform: translateX(100%)  /* Firefox 16+, IE 10+, Opera */
+                transform: translateX(100%)
                 transition: all .7s .3s cubic-bezier(0.645, 0.045, 0.355, 1.000)
 
 .rf-message
     z-index: 1001
     position: fixed
-    top: 100px
-    left: 50px
-    right: 50px
+    top: -200px
+    right: 10px
     text-align: center
+    transition: all .5s ease-out
 
-    .hidden
-        visibility: hidden
-        transform: translateY(-100%)
-        transition: all .3s .5s ease-out
+    &.rf-shown
+        top: 60px
+
+.rf-window
+    background-color: rgba(255, 255, 255, .7)
+    z-index: 1001
+    position: fixed
+    left: 0
+    right: 0
+    height: 100%
+    text-align: center
+    top: -100%
+    transition: top .2s ease-out
+
+    &:after
+        vertical-align: middle
+        content: ''
+        height: 100%
+        width: 0
+        display: inline-block
+
+    &.rf-shown
+        top: 50px
+

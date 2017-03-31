@@ -14,7 +14,7 @@ body
 
 img
     max-width: 100%
-    min-height: 100%
+    max-height: 100%
 
 .no-padding
     padding: 0
@@ -27,8 +27,11 @@ img
 
 .thumbnail-sm
     height: 50px
+    &.has-image:hover
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
 
 .navbar
+    z-index: 10000
     line-height: 50px
     color: #fff
     a

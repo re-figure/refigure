@@ -3,9 +3,7 @@
 <div ng-repeat="fig in vm.figures">
     <div class="row">
         <div class="col-xs-4">
-            <a ng-click="vm.opened = vm.opened === $index ? -1 : $index" class="clickable custom-link">
-                <img class="thumbnail" ng-src="{{fig.URL}}">
-            </a>
+            <img ng-click="vm.showFull(fig.URL)" class="thumbnail clickable" ng-src="{{fig.URL}}">
         </div>
         <div class="col-xs-8">
             <div class="caption" ng-bind="fig.Caption"></div>
@@ -18,7 +16,6 @@
     </div>
     <div ng-show="vm.opened === $index">
         <div class="container-fluid">
-
             <div class="form-group">
                 <label>URL</label>
                 <div ng-bind="fig.URL"></div>

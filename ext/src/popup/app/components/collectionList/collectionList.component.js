@@ -8,15 +8,16 @@
             controllerAs: 'vm'
         });
 
-    CollectionListController.$inject = ['AuthService', 'CollectionSvc', 'STORAGE'];
+    CollectionListController.$inject = ['AuthService', 'CollectionSvc', 'STORAGE', 'MessageService'];
 
-    function CollectionListController(AuthService, CollectionSvc, STORAGE) {
+    function CollectionListController(AuthService, CollectionSvc, STORAGE, MessageService) {
         var vm = this;
 
         vm.$onInit = activate;
         vm.editCollection = editCollection;
         vm.metapublication = STORAGE.Metapublication;
         vm.userInfo = AuthService.userInfo;
+        vm.showFull = showFull;
         vm.search = '';
 
         ////////////////////////////
@@ -42,6 +43,13 @@
                     Metapublication: metapub
                 });
                 window.close();
+            });
+        }
+
+        function showFull(event, src) {
+            event.stopPropagation();
+            MessageService.showWindow({
+                content: '<img src="'+src+'">'
             });
         }
     }

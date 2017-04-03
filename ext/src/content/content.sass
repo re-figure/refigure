@@ -1,4 +1,4 @@
-//all classed will be prefixed with "rf-". See ext_content.js task
+//All classed will be prefixed with "rf-". See ext_content.js task
 .addable-image
     outline: 2px solid #5cb85c
 
@@ -7,7 +7,7 @@
 
 $panel-primary-border:        #fff
 $panel-primary-heading-bg:    #222
-$rf-dialog-controls-width:    50px
+$rf-dialog-control-width:    30px
 
 @import "../common/variables"
 .dialog
@@ -18,43 +18,54 @@ $rf-dialog-controls-width:    50px
     line-height: 21px
     position: fixed
     top: 0
-    bottom: 0
-    right: 0
+    max-height: 100%
     height: auto
+    right: 0
     overflow: auto
     background-color: #fff
     z-index: 1000000
     width: 400px
 
+    &.minimized
+        bottom: auto
+        .panel-heading
+            border-bottom: 0
+        .panel-body, .panel-footer
+            height: 0
+            padding: 0
+            border: 0
+            overflow: hidden
+
     .panel-heading
         position: relative
-        padding-right: $rf-dialog-controls-width
+        padding-right: $rf-dialog-control-width * 3 + 1px
         white-space: nowrap
 
         .heading-title
             overflow: hidden
             text-overflow: ellipsis
 
-        .dialog-controls
+        .controls
             position: absolute
-            top: 5px
-            bottom: 5px
+            top: 10px
+            bottom: 10px
             right: 0
             border-left: 1px solid #fff
-            width: $rf-dialog-controls-width
-            line-height: 30px
-            text-align: center
+            width: $rf-dialog-control-width * 3 + 1px
+            line-height: 20px
+            text-align: justify
             span
+                text-align: center
+                width: $rf-dialog-control-width
                 display: inline-block
                 cursor: pointer
 
-    &.minimized
-        bottom: auto
-        .panel-body, .panel-footer
-            height: 0
-            padding: 0
-            border: 0
-            overflow: hidden
+                &.controls-move
+                    cursor: move
+
+    .btn-link
+        &:hover, &:focus
+            text-decoration: none
 
     img.thumbnail
         max-width: 100px
@@ -67,6 +78,7 @@ $rf-dialog-controls-width:    50px
         margin-bottom: 10px
 
     .panel
+        border: 0
         margin-bottom: 0
 
     .fig-list-item

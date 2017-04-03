@@ -96,7 +96,51 @@ angular.module('ReFigureContent', [])
                     $scope.opts.current = $scope.collection.Figures.length - 1;
                 });
             }
-        }
+        };
+    }])
+
+    .directive('draggable', ['$document', function ($document) {
+        return function (scope, element) {
+            var startX = 0, startY = 0, x = 0, y = 0;
+            var dialog = element.parent().parent().parent().parent();
+            var dialogWidth = 400;
+            var scrollWidth = 17;   //main body scroll width in chrome
+            console.log(dialog);
+            element.on('mousedown', function (event) {
+                event.preventDefault();
+                startX = window.innerWidth - event.screenX - x;
+                startY = event.screenY - y;
+                $document.on('mousemove', mousemove);
+                $document.on('mouseup', mouseup);
+            });
+
+            function mousemove(event) {
+                x = window.innerWidth - event.screenX - startX;
+                y = event.screenY - startY;
+                if (y < 0) {
+                    y = 0;
+                }
+                if (y > window.innerHeight - dialog[0].offsetHeight) {
+                    y = window.innerHeight - dialog[0].offsetHeight;
+                }
+
+                if (x < 0) {
+                    x = 0;
+                }
+                if (x > window.innerWidth - dialogWidth - scrollWidth) {
+                    x = window.innerWidth - dialogWidth - scrollWidth;
+                }
+                dialog.css({
+                    right: x + 'px',
+                    top: y + 'px'
+                });
+            }
+
+            function mouseup() {
+                $document.off('mousemove', mousemove);
+                $document.off('mouseup', mouseup);
+            }
+        };
     }])
 
     .directive('contenteditable', [function () {

@@ -1,4 +1,4 @@
-var CONTENT_BLOCK_SELECTOR = 'body:not(.rf-dialog)';
+var CONTENT_BLOCK_SELECTOR = 'body';
 
 var refigure = {
     Metapublication: null,
@@ -37,11 +37,11 @@ function onClickImage(event) {
 
 function figureAddStart(Metapublication) {
     refigure.Metapublication = Metapublication || refigure.Metapublication;
-    window.figurePopup.show(false, refigure.Metapublication);
     Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
     });
+    window.figurePopup.show(false, refigure.Metapublication);
 }
 
 function figureAddStop() {

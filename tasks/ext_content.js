@@ -8,6 +8,7 @@ const rename = require('gulp-rename');
 const htmlmin = require('gulp-htmlmin');
 const ngHtml2Js = require('gulp-ng-html2js');
 const uglify = require('gulp-uglify');
+const classPrefix = require('gulp-class-prefix');
 
 const extOpt = require('./../gulp.conf').extension;
 
@@ -29,20 +30,21 @@ module.exports = function () {
         .pipe(uglify())
         .pipe(gulp.dest(extOpt.dist + '/content'));
 
-    return merge(
-        templates,
-        gulp
-            .src(extOpt.content.mainScripts)
-            .pipe(concat('content.js'))
-            .pipe(gulp.dest(extOpt.dist + '/content')),
-        gulp
-            .src(extOpt.content.css)
-            .pipe(sass())
-            .pipe(concat('content.css'))
-            .pipe(gulp.dest(extOpt.dist + '/content')),
-        gulp
-            .src(extOpt.content.parsers)
-            .pipe(gulp.dest(extOpt.dist + '/content/parsers'))
-    )
+    let scripts = gulp
+        .src(extOpt.content.mainScripts)
+        .pipe(concat('content.js'))
+        .pipe(gulp.dest(extOpt.dist + '/content'));
 
+    let styles = gulp
+        .src(extOpt.content.css)
+        .pipe(sass())
+        .pipe(concat('content.css'))
+        .pipe(classPrefix('rf-'))
+        .pipe(gulp.dest(extOpt.dist + '/content'));
+
+    let parsers = gulp
+        .src(extOpt.content.parsers)
+        .pipe(gulp.dest(extOpt.dist + '/content/parsers'));
+
+    return merge(templates, scripts, styles, parsers);
 };

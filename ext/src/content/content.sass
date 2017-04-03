@@ -1,7 +1,8 @@
-.rf-addable-image
+//all classed will be prefixed with "rf-". See ext_content.js task
+.addable-image
     outline: 2px solid #5cb85c
 
-.rf-addable-image:hover
+.addable-image:hover
     outline: 4px solid #5cb85c
 
 $panel-primary-border:        #fff
@@ -9,11 +10,9 @@ $panel-primary-heading-bg:    #222
 $rf-dialog-controls-width:    50px
 
 @import "../common/variables"
-.rf-dialog
+.dialog
     @import "../vendor/bootstrap/stylesheets/bootstrap"
     @import "../common/material-input"
-
-.rf-dialog
     box-shadow: 0 2px 2px rgba(0, 0, 0, .5)
     font-size: 14px
     line-height: 21px
@@ -27,20 +26,16 @@ $rf-dialog-controls-width:    50px
     z-index: 1000000
     width: 400px
 
-    .row
-        max-width: none
-        width: auto
-
     .panel-heading
         position: relative
         padding-right: $rf-dialog-controls-width
         white-space: nowrap
 
-        .rf-heading-title
+        .heading-title
             overflow: hidden
             text-overflow: ellipsis
 
-        .rf-dialog-controls
+        .dialog-controls
             position: absolute
             top: 5px
             bottom: 5px
@@ -53,12 +48,13 @@ $rf-dialog-controls-width:    50px
                 display: inline-block
                 cursor: pointer
 
-    &.rf-minimized .panel-body,
-    &.rf-minimized .panel-footer
-        height: 0
-        padding: 0
-        border: 0
-        overflow: hidden
+    &.minimized
+        bottom: auto
+        .panel-body, .panel-footer
+            height: 0
+            padding: 0
+            border: 0
+            overflow: hidden
 
     img.thumbnail
         max-width: 100px
@@ -70,15 +66,10 @@ $rf-dialog-controls-width:    50px
         overflow: hidden
         margin-bottom: 10px
 
-    .form-control[contenteditable]
-        overflow: auto
-        height: auto
-        max-height: 80px
-
     .panel
         margin-bottom: 0
 
-    .rf-fig-list-item
+    .fig-list-item
         display: inline-block
         padding: 10px
 

@@ -8,7 +8,6 @@ const rename = require('gulp-rename');
 const htmlmin = require('gulp-htmlmin');
 const ngHtml2Js = require('gulp-ng-html2js');
 const uglify = require('gulp-uglify');
-const classPrefix = require('gulp-class-prefix');
 
 const extOpt = require('./../gulp.conf').extension;
 
@@ -39,7 +38,6 @@ module.exports = function () {
         .src(extOpt.content.css)
         .pipe(sass())
         .pipe(concat('content.css'))
-        .pipe(classPrefix('rf-', {ignored: [/\.ng-/]}))
         .pipe(gulp.dest(extOpt.dist + '/content'));
 
     let parsers = gulp

@@ -10,7 +10,7 @@ $panel-primary-heading-bg:    #222
 $rf-dialog-control-width:    30px
 
 @import "../common/variables"
-.dialog
+.rf-dialog
     @import "../vendor/bootstrap/stylesheets/bootstrap"
     @import "../common/material-input"
     box-shadow: 0 2px 2px rgba(0, 0, 0, .5)
@@ -26,7 +26,11 @@ $rf-dialog-control-width:    30px
     z-index: 1000000
     width: 400px
 
-    &.minimized
+    .row
+        width: auto
+        max-width: none
+
+    &.rf-minimized
         bottom: auto
         .panel-heading
             border-bottom: 0
@@ -41,11 +45,11 @@ $rf-dialog-control-width:    30px
         padding-right: $rf-dialog-control-width * 3 + 1px
         white-space: nowrap
 
-        .heading-title
+        .rf-heading-title
             overflow: hidden
             text-overflow: ellipsis
 
-        .controls
+        .rf-controls
             position: absolute
             top: 10px
             bottom: 10px
@@ -60,7 +64,7 @@ $rf-dialog-control-width:    30px
                 display: inline-block
                 cursor: pointer
 
-                &.controls-move
+                &.rf-controls-move
                     cursor: move
 
     .btn-link
@@ -81,7 +85,7 @@ $rf-dialog-control-width:    30px
         border: 0
         margin-bottom: 0
 
-    .fig-list-item
+    .rf-fig-list-item
         display: inline-block
         padding: 10px
 

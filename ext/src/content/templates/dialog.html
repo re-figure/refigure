@@ -1,6 +1,6 @@
 <div class="rf-dialog" ng-hide="hidden" ng-class="minimized ? 'rf-minimized' : ''">
-    <div class="rf-panel rf-panel-primary">
-        <div class="rf-panel-heading">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
             <div class="rf-controls"><span class="rf-controls-move" draggable="true" title="Move"
                 >&#10021;</span><span title="Minimize" ng-click="minimized=!minimized" ng-bind="minimized ? '&#9744;' : '&#9601;'"
                 ></span><span title="Close" ng-click="close()"
@@ -9,26 +9,26 @@
                 Add figure to collection "<span ng-bind="collection.Title"></span>"
             </div>
         </div>
-        <div class="rf-panel-body">
-            <div class="rf-alert rf-bg-primary rf-text-center">Select an image to add to collection</div>
+        <div class="panel-body">
+            <div class="alert bg-primary text-center">Select an image to add to collection</div>
             <div ng-repeat="fig in collection.Figures">
-                <div class="rf-row">
-                    <div class="rf-col-xs-4">
+                <div class="row">
+                    <div class="col-xs-4">
                         <a href="#" ng-click="opts.current = opts.current === $index ? -1 : $index">
-                            <img class="rf-thumbnail" ng-src="{{fig.URL}}">
+                            <img class="thumbnail" ng-src="{{fig.URL}}">
                         </a>
                     </div>
-                    <div class="rf-col-xs-8">
+                    <div class="col-xs-8">
                         <div class="rf-dialog-caption" ng-bind="fig.Caption"></div>
-                        <div class="rf-row">
-                            <div class="rf-col-xs-6">
-                                <button type="button" class="rf-btn rf-btn-link rf-btn-xs" ng-click="toggle($index)">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-link btn-xs" ng-click="toggle($index)">
                                     <span ng-bind="opts.current === $index ? '&#10134;' : '&#10133;'"></span>
                                     <span ng-bind="opts.current === $index ? 'hide' : 'show'"></span> details
                                 </button>
                             </div>
-                            <div class="rf-col-xs-6">
-                                <button type="button" class="rf-btn rf-btn-danger rf-btn-xs rf-btn-block" ng-click="remove($index)">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-danger btn-xs btn-block" ng-click="remove($index)">
                                     <span aria-hidden="true">&#10007;</span>&nbsp;&nbsp;remove
                                 </button>
                             </div>
@@ -36,28 +36,28 @@
                     </div>
                 </div>
                 <div class="row" ng-show="opts.current === $index">
-                    <div class="rf-container-fluid">
-                        <div class="rf-material-input">
+                    <div class="container-fluid">
+                        <div class="material-input">
                             <input id="rf-edit-figure-url" type="text" ng-model="fig.URL" readonly>
                             <label for="rf-edit-figure-url">URL</label>
                         </div>
-                        <div class="rf-material-input">
+                        <div class="material-input">
                             <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Caption"></div>
                             <label>Caption</label>
                         </div>
-                        <div class="rf-material-input">
+                        <div class="material-input">
                             <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Legend"></div>
                             <label>Legend</label>
                         </div>
-                        <div class="rf-material-input">
+                        <div class="material-input">
                             <input ng-blur="saveFigure(fig)" id="rf-edit-figure-features" type="text" ng-model="fig.Features">
                             <label for="rf-edit-figure-features">Features</label>
                         </div>
-                        <div class="rf-material-input">
+                        <div class="material-input">
                             <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Authors"></div>
                             <label>Article authors</label>
                         </div>
-                        <div class="rf-material-input">
+                        <div class="material-input">
                             <input ng-blur="saveFigure(fig)" id="rf-edit-figure-doi" type="text" ng-model="fig.DOI">
                             <label for="rf-edit-figure-doi">Article DOI</label>
                         </div>
@@ -66,8 +66,8 @@
                 <hr ng-hide="$last">
             </div>
         </div>
-        <div class="rf-panel-footer" ng-show="collection.Figures.length">
-            <button ng-click="close()" type="button" class="rf-btn rf-btn-block rf-btn-default">Close</button>
+        <div class="panel-footer" ng-show="collection.Figures.length">
+            <button ng-click="close()" type="button" class="btn btn-block btn-default">Close</button>
         </div>
     </div>
 </div>

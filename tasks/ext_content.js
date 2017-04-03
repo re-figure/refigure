@@ -39,7 +39,7 @@ module.exports = function () {
         .src(extOpt.content.css)
         .pipe(sass())
         .pipe(concat('content.css'))
-        .pipe(classPrefix('rf-'))
+        .pipe(classPrefix('rf-', {ignored: [/\.ng-/]}))
         .pipe(gulp.dest(extOpt.dist + '/content'));
 
     let parsers = gulp

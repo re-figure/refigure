@@ -9,6 +9,15 @@ $panel-primary-border:        #fff
 $panel-primary-heading-bg:    #222
 $rf-dialog-control-width:    30px
 
+body
+    //attempt to blind bugfix http://stackoverflow.com/questions/17219286/why-does-the-general-sibling-combinator-allow-toggling-pseudo-elements-content
+    -webkit-animation: bugfix infinite 1s
+@-webkit-keyframes bugfix
+    from
+        padding: 0
+    to
+        padding: 0
+
 @import "../common/variables"
 .rf-dialog
     @import "../vendor/bootstrap/stylesheets/bootstrap"

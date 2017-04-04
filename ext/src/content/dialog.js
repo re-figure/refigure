@@ -11,7 +11,7 @@
             if (collection && _scope.collection.ID !== collection.ID) {
                 //TODO why copy? there should be just a reference
                 _scope.collection = collection; //angular.copy(collection);
-                console.log('Starting collection:', angular.copy(_scope.collection));
+                console.info('Starting collection:', angular.copy(_scope.collection));
                 _scope.opts.current = -1;
             }
             data && _scope.addFigure(data);
@@ -106,7 +106,6 @@ angular.module('ReFigureContent', [])
             var dialog = element.parent().parent().parent().parent();
             var dialogWidth = 400;
             var scrollWidth = 17;   //main body scroll width in chrome
-            console.log(dialog);
             element.on('mousedown', function (event) {
                 event.preventDefault();
                 startX = window.innerWidth - event.screenX - x;

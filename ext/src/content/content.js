@@ -10,7 +10,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
         case _gConst.MSG_TYPE_ADD_START:
             if (!request.Metapublication && !refigure.Metapublication) {
-                console.log(request);
                 alert('Please select collection to add to');
             } else {
                 figureAddStart(request.Metapublication);
@@ -85,7 +84,7 @@ function parseFigures() {
 }
 
 function parsingCompleted(figures) {
-    console.log('Parsed out from the current page the following figures: ', figures);
+    console.info('Parsed out from the current page the following figures: ', figures);
     refigure.figures = figures;
     chrome.runtime.sendMessage({
         type: _gConst.MSG_TYPE_SEARCH_COMPLETED,
@@ -94,7 +93,7 @@ function parsingCompleted(figures) {
 }
 
 function searchCompleted(figures) {
-    console.log('Found on the current page the following figures: ', figures);
+    console.info('Found on the current page the following figures: ', figures);
     refigure.foundFigures = figures;
     chrome.runtime.sendMessage({
         type: _gConst.MSG_TYPE_CHECK_COMPLETED,
@@ -139,7 +138,7 @@ function sendCheckFiguresRequest(figures) {
             searchCompleted(data.figures);
         },
         function (error) {
-            console.log(error);
+            console.error(error);
             searchCompleted([]);
         }
     );

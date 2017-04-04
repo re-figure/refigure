@@ -24,7 +24,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             figureAddStop();
             break;
         case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
-            addToSelected(request.src);
+            if (!refigure.Metapublication) {
+                alert('Please select collection to add to');
+            } else {
+                addToSelected(request.src);
+            }
     }
 });
 

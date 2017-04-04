@@ -9,7 +9,8 @@
         _scope.$apply(function () {
             _scope.hidden = false;
             if (collection && _scope.collection.ID !== collection.ID) {
-                _scope.collection = angular.copy(collection);
+                //TODO why copy? there should be just a reference
+                _scope.collection = collection; //angular.copy(collection);
                 console.log('Starting collection:', angular.copy(_scope.collection));
                 _scope.opts.current = -1;
             }

@@ -11,7 +11,7 @@
             .when('/', {
                 config: {
                     name: 'main',
-                    title: 'ReFigures'
+                    title: 'ReFigure'
                 },
                 template: '<main/>'
             })

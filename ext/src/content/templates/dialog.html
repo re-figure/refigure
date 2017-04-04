@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <div class="alert bg-primary text-center">Select an image to add to collection</div>
+            <div class="alert bg-primary text-center">Click on image to add to collection</div>
             <div ng-repeat="fig in collection.Figures">
                 <div class="row">
                     <div class="col-xs-4">
@@ -23,7 +23,10 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <button type="button" class="btn btn-link btn-xs" ng-click="toggle($index)">
-                                    <span ng-bind="opts.current === $index ? '&#10134;' : '&#10133;'"></span>
+                                    <!--
+                                    <span ng-bind="opts.current === $index ? '&#10134;' : '&#10133;'"></span> -->
+                                    <span class="glyphicon"
+                                          ng-class="opts.current === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
                                     <span ng-bind="opts.current === $index ? 'hide' : 'show'"></span> details
                                 </button>
                             </div>

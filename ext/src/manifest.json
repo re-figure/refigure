@@ -40,6 +40,9 @@
       "css": ["/content/content.css"]
     }
   ],
+  "web_accessible_resources": [
+    "fonts/*"
+  ],
   "permissions": [
     "REMOTE_API_URL*",
     "tabs",

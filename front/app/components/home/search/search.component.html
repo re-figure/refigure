@@ -47,8 +47,12 @@
                                 <img ng-src="{{ item.$ui.img.src }}" class="md-card-image" alt="Washed Out"/>
                             </div>
                         </md-card-title-media>
-                        <md-card-title-text>
+                        <md-card-title-text layout="column" layout-align="space-between start">
                             <span ng-bind="item.$ui.title"></span>
+                            <span class="md-subhead">
+                                <span ng-bind="item.FiguresCount"></span>
+                                figure<span ng-bind="item.FiguresCount === 1 ? '' : 's'"></span> in collection
+                            </span>
                         </md-card-title-text>
                     </md-card-title>
                 </md-card>

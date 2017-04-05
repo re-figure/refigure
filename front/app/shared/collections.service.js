@@ -8,18 +8,16 @@
     'use strict';
 
     var _apiUrl = '/api';
-    var _itemDescriptionLength = 60;
+    var _itemDescriptionLength = 55;
 
     angular
         .module('refigure.collections', [])
         .factory('collections', serviceFunc);
 
-    serviceFunc.$inject = [
-        '$http',
-        '$log'
-    ];
+    serviceFunc.$inject = ['$http'];
 
-    function serviceFunc($http, $log) {
+    function serviceFunc($http) {
+        //noinspection UnnecessaryLocalVariableJS
         var exports = {
             mostVisited: mostVisited,
             search: search,
@@ -68,7 +66,9 @@
                 })
                 .then(function (res) {
                     var items = utils.get(res, 'data.data');
-                    return itemsUIData(items);
+                    items.results = itemsUIData(items.results);
+                    console.log(items);
+                    return items;
                 });
         }
 
@@ -123,9 +123,10 @@
 
             var uiData = item.$ui;
 
-            uiData.title = (item.Description || '').substring(0, _itemDescriptionLength);
-            if (uiData.title !== item.Description) {
-                uiData.title += '...';
+            uiData.title = item.Title;
+            uiData.description = (item.Description || '').substring(0, _itemDescriptionLength);
+            if (item.Description && uiData.description !== item.Description) {
+                uiData.description += '...';
             }
 
             uiData.img = {};

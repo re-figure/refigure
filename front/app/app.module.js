@@ -20,7 +20,7 @@
 
     appConfig.$inject = [
         '$httpProvider',
-        '$locationProvider',
+        '$locationProvider'
     ];
 
     function appConfig($httpProvider, $locationProvider) {

@@ -14,7 +14,7 @@
             url: '//cdn.refigure.com/somefile.pdf'
         }
     }];
-    
+
     appRun.$inject = [
         '$rootScope',
         'routerHelper',

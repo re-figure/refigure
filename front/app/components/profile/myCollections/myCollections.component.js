@@ -19,14 +19,17 @@
         });
 
     Controller.$inject = [
+        '$scope',
         'collections'
     ];
 
-    function Controller(collections) {
+    function Controller($scope, collections) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
-        vm.items = [];
+        vm.response = {};
+        vm.searchParams = {};
+        vm.remove = remove;
 
         activate();
 
@@ -40,7 +43,7 @@
          * Activates controller
          */
         function activate() {
-            load();
+            $scope.$watchCollection('vm.searchParams', load);
         }
 
         /**
@@ -54,12 +57,20 @@
             vm.error = null;
             vm.loading = true;
             collections
-                .myCollections()
+                .myCollections(vm.searchParams)
                 .then(function (data) {
-                    vm.items = data;
+                    vm.response = data;
                 })
                 .finally(function () {
                     vm.loading = false;
+                });
+        }
+
+        function remove(index) {
+            collections
+                .remove(vm.response.results[index].ID)
+                .then(function () {
+                    vm.response.results.splice(index, 1);
                 });
         }
     }

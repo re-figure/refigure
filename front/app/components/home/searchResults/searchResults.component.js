@@ -23,31 +23,16 @@
     function Controller($scope, collections, $stateParams) {
         var vm = this;
 
-        vm.sortDirIcons = {
-            ASC: 'keyboard_arrow_up',
-            DESC: 'keyboard_arrow_down'
-        };
-
-        vm.sortFieldVariant = {
-            'Visit.Count': 'visits',
-            'FiguresCount': 'figures count',
-            'Metapublication.Title': 'name'
-        };
-
         vm.results = [];
 
         $scope.term = $stateParams.term;
 
+        vm.total = 0;
+
         vm.searchParams = {
-            query: $stateParams.term,
-            from: 0,
-            size: 5,
-            sortDirection: 'ASC',
-            sortField: 'Visit.Count',
-            filters: []
+            query: $stateParams.term
         };
 
-        vm.switchDirection = switchDirection;
         vm.submit = submit;
 
         activate();
@@ -62,9 +47,7 @@
          * Activates controller
          */
         function activate() {
-            $scope.$watchCollection('vm.searchParams', function () {
-                load();
-            });
+            $scope.$watchCollection('vm.searchParams', load);
         }
 
         /**
@@ -76,26 +59,13 @@
          */
         function load() {
             collections.search(vm.searchParams).then(function (res) {
-                countPaging(res.found);
                 vm.results = res.results;
+                vm.total = res.found;
             });
-        }
-
-        function countPaging(found) {
-            vm.paging = {
-                curr: vm.searchParams.from,
-                found: found,
-                pages: Math.ceil(found / vm.searchParams.size)
-            };
-            vm.paging.pageArr = new Array(vm.paging.pages);
         }
 
         function submit(term) {
             vm.searchParams.query = term;
-        }
-
-        function switchDirection() {
-            vm.searchParams.sortDirection = vm.searchParams.sortDirection === 'ASC' ? 'DESC' : 'ASC';
         }
     }
 })(window.angular);

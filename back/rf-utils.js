@@ -165,7 +165,7 @@ function parseQuery(tables, params) {
 
     if (!_sortDirection) {
         let _s = params.sortDirection || params['sort_dir'] || params['dir'];
-        if (!utils.isset(_s)) {
+        if (utils.isset(_s)) {
             _s = String(_s);
             let _re = new RegExp('^' +
                 constants.SORT_DIRECTION_ASCENDING + '|' +

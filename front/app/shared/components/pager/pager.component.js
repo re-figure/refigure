@@ -18,7 +18,8 @@
             controllerAs: 'vm',
             bindings: {
                 total: '<',
-                searchParams: '='
+                searchParams: '=',
+                defaultSort: '@'
             }
         });
 
@@ -27,15 +28,6 @@
     function PagerCtrl($scope) {
         var vm = this;
         var inited = false;
-
-        var searchParams = {
-            query: '',
-            from: 0,
-            size: 5,
-            sortDirection: '',
-            sortField: '',
-            filters: []
-        };
 
         vm.sortKey = 'relevance';
 
@@ -48,13 +40,16 @@
             relevance: {
                 action: function () {
                     var query = vm.searchParams.query;
-                    vm.searchParams = searchParams;
+                    vm.searchParams.from = 0;
+                    vm.searchParams.sortDirection = '';
+                    vm.searchParams.sortField = '';
                     vm.searchParams.query = query;
                 },
                 name: 'by relevance'
             },
             figCountDesc: {
                 action: function () {
+                    vm.searchParams.from = 0;
                     vm.searchParams.sortDirection = 'DESC';
                     vm.searchParams.sortField = 'FiguresCount';
                 },
@@ -62,6 +57,7 @@
             },
             figCountAsc: {
                 action: function () {
+                    vm.searchParams.from = 0;
                     vm.searchParams.sortDirection = 'ASC';
                     vm.searchParams.sortField = 'FiguresCount';
                 },
@@ -69,6 +65,7 @@
             },
             nameAsc: {
                 action: function () {
+                    vm.searchParams.from = 0;
                     vm.searchParams.sortDirection = 'ASC';
                     vm.searchParams.sortField = 'Metapublication.Title';
                 },
@@ -76,6 +73,7 @@
             },
             nameDesc: {
                 action: function () {
+                    vm.searchParams.from = 0;
                     vm.searchParams.sortDirection = 'DESC';
                     vm.searchParams.sortField = 'Metapublication.Title';
                 },
@@ -83,6 +81,7 @@
             },
             visitsDesc: {
                 action: function () {
+                    vm.searchParams.from = 0;
                     vm.searchParams.sortDirection = 'DESC';
                     vm.searchParams.sortField = 'Visit.Count';
                 },
@@ -90,6 +89,7 @@
             },
             visitsAsc: {
                 action: function () {
+                    vm.searchParams.from = 0;
                     vm.searchParams.sortDirection = 'ASC';
                     vm.searchParams.sortField = 'Visit.Count';
                 },
@@ -111,7 +111,9 @@
         //////////////////////////////////////////
 
         function activate() {
-            angular.extend(vm.searchParams, searchParams);
+            if (vm.defaultSort) {
+                vm.sortKey = vm.defaultSort;
+            }
             inited = true;
             $scope.$on('$mdMenuOpen', toggleMenu);
             $scope.$on('$mdMenuClose', toggleMenu);

@@ -30,7 +30,12 @@
         vm.total = 0;
 
         vm.searchParams = {
-            query: $stateParams.term
+            query: $stateParams.term,
+            from: 0,
+            size: 5,
+            sortDirection: '',
+            sortField: '',
+            filters: []
         };
 
         vm.submit = submit;

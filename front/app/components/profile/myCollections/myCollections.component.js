@@ -20,15 +20,24 @@
 
     Controller.$inject = [
         '$scope',
-        'collections'
+        'collections',
+        'modalDialog'
     ];
 
-    function Controller($scope, collections) {
+    function Controller($scope, collections, modalDialog) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
         vm.response = {};
-        vm.searchParams = {};
+        vm.searchParams = {
+            query: '',
+            from: 0,
+            size: 5,
+            sortDirection: 'ASC',
+            sortField: 'Metapublication.Title',
+            filters: []
+        };
+
         vm.remove = remove;
 
         activate();
@@ -67,10 +76,14 @@
         }
 
         function remove(index) {
-            collections
-                .remove(vm.response.results[index].ID)
+            modalDialog
+                .confirm('Delete this collection?')
                 .then(function () {
-                    vm.response.results.splice(index, 1);
+                    collections
+                        .remove(vm.response.results[index].ID)
+                        .then(function () {
+                            vm.response.results.splice(index, 1);
+                        });
                 });
         }
     }

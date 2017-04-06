@@ -1,4 +1,4 @@
-<pager total="vm.response.found" search-params="vm.searchParams"></pager>
+<pager total="vm.response.found" search-params="vm.searchParams" default-sort="nameAsc"></pager>
 <div class="r-collection" ng-repeat="item in vm.response.results">
     <collection-row item="item" ></collection-row>
     <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">

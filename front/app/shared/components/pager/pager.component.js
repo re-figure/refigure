@@ -50,7 +50,7 @@
             figCountDesc: {
                 action: function () {
                     vm.searchParams.from = 0;
-                    vm.searchParams.sortDirection = 'DESC';
+                    vm.searchParams.sortDirection = 'ASC';
                     vm.searchParams.sortField = 'FiguresCount';
                 },
                 name: 'by number of figures - largest at top'
@@ -58,7 +58,7 @@
             figCountAsc: {
                 action: function () {
                     vm.searchParams.from = 0;
-                    vm.searchParams.sortDirection = 'ASC';
+                    vm.searchParams.sortDirection = 'DESC';
                     vm.searchParams.sortField = 'FiguresCount';
                 },
                 name: 'by number of figures - smallest at top'

@@ -34,8 +34,7 @@
             from: 0,
             size: 5,
             sortDirection: '',
-            sortField: '',
-            filters: []
+            sortField: ''
         };
 
         vm.submit = submit;

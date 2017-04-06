@@ -34,8 +34,7 @@
             from: 0,
             size: 5,
             sortDirection: 'ASC',
-            sortField: 'Metapublication.Title',
-            filters: []
+            sortField: 'Metapublication.Title'
         };
 
         vm.remove = remove;

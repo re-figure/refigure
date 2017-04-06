@@ -21,7 +21,8 @@
         var exports = {
             mostVisited: mostVisited,
             search: search,
-            myCollections: myCollections
+            myCollections: myCollections,
+            remove: remove
         };
 
         return exports;
@@ -67,9 +68,21 @@
                 .then(function (res) {
                     var items = utils.get(res, 'data.data');
                     items.results = itemsUIData(items.results);
-                    console.log(items);
                     return items;
                 });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collection#remove
+         * @methodOf refigure.collections.services:collections
+         * @param {String} id id of element to delete
+         * @returns {Object} promise
+         * @description
+         * Removes collection
+         */
+        function remove(id) {
+            return $http.delete(_apiUrl + '/metapublication/' + id);
         }
 
         /**
@@ -87,9 +100,10 @@
                     params: opts
                 })
                 .then(function (res) {
-                    var items = utils.get(res, 'data.data.results');
+                    var items = utils.get(res, 'data.data');
+                    items.results = itemsUIData(items.results);
                     console.log(items);
-                    return itemsUIData(items);
+                    return items;
                 });
         }
 

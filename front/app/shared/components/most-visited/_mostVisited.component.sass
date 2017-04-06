@@ -1,0 +1,24 @@
+$most-visited-height: 25px
+most-visited
+    background-color: $primary-color
+    color: #fff
+    position: absolute
+    top: 0
+    right: 0
+    height: $most-visited-height
+    padding-right: 5px
+    width: 50px
+    text-align: center
+    &:after
+        content: ''
+        position: absolute
+        left: -$most-visited-height
+        top: 0
+        width: 0
+        height: 0
+        border-style: solid
+        border-width: 0 $most-visited-height $most-visited-height 0
+        border-color: transparent $primary-color transparent transparent
+
+    md-icon.material-icons
+        color: #fff

@@ -57,6 +57,7 @@
         "$": false
     },
     "predef": [
+        "utils",
         "jasmine",
         "describe",
         "xdescribe",

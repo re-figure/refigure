@@ -1,16 +1,8 @@
-<md-content layout-padding layout="column">
-    <div ng-repeat="item in vm.items">
-        <md-card class="r-collection-card" md-theme="default">
-            <md-card-title>
-                <md-card-title-media>
-                    <div class="md-media-sm card-media">
-                        <img ng-src="{{ item.$ui.img.src }}" class="md-card-image" alt="Washed Out"/>
-                    </div>
-                </md-card-title-media>
-                <md-card-title-text>
-                    <span ng-bind="item.$ui.title"></span>
-                </md-card-title-text>
-            </md-card-title>
-        </md-card>
+<pager total="vm.response.found" search-params="vm.searchParams"></pager>
+<div class="r-collection" ng-repeat="item in vm.response.results">
+    <collection-row item="item" ></collection-row>
+    <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">
+        <md-icon flex>delete</md-icon>
+        <md-tooltip>delete collection</md-tooltip>
     </div>
-</md-content>
+</div>

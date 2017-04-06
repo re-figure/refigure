@@ -259,7 +259,7 @@ function myMetapublications(req, res) {
         if (!valid) {
             return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'Wrong sort provided');
         }
-        q += ' ORDER BY ? ' + query.sortDirection;
+        q += ' ORDER BY ?? ' + query.sortDirection;
         params.push(query.sortField);
     } else {
         if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
@@ -362,7 +362,7 @@ function searchMetapublications(req, res) {
         if (!valid) {
             return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'Wrong sort provided');
         }
-        q += ' ORDER BY ? ' + query.sortDirection;
+        q += ' ORDER BY ?? ' + query.sortDirection;
         params.push(query.sortField);
     } else {
         if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {

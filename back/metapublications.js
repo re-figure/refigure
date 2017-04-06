@@ -215,6 +215,7 @@ function myMetapublications(req, res) {
     let params = [];
     let q = `
         SELECT SQL_CALC_FOUND_ROWS *, 
+         MATCH(Metapublication.Keywords, Metapublication.Title, Metapublication.Description) AGAINST (?) AS Relevance,
          (SELECT COUNT(*) FROM Figure WHERE Figure.MetapublicationID = Metapublication.ID) AS FiguresCount
           FROM Metapublication
           JOIN User AS UserMetapublication ON UserMetapublication.ID = Metapublication.UserID
@@ -235,6 +236,7 @@ function myMetapublications(req, res) {
     `;
     params.push(req.User.ID);
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
+        params.push(query.query);
         q += `
             AND Metapublication.ID IN (
 			          SELECT DISTINCT MetapublicationID
@@ -246,7 +248,7 @@ function myMetapublications(req, res) {
     }
     if (query.sortField) {
         let valid = false;
-        for (let f of ['Visit.Count', 'FiguresCount', 'Metapublication.Title']) {
+        for (let f of ['Relevance', 'Visit.Count', 'FiguresCount', 'Metapublication.Title']) {
             valid = true;
             break;
         }
@@ -256,8 +258,11 @@ function myMetapublications(req, res) {
         q += ' ORDER BY ? ' + query.sortDirection;
         params.push(query.sortField);
     } else {
-        q += ' ORDER BY Visit.Count DESC';
-
+        if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
+            q += ' ORDER BY Relevance DESC';
+        } else {
+            q += ' ORDER BY Metapublication.Title ASC';
+        }
     }
     q += ' LIMIT ' + query.from + ', ' + query.size;
     q += '; SELECT FOUND_ROWS() AS count;';
@@ -282,6 +287,7 @@ function myMetapublications(req, res) {
                     x.Metapublication.Figures.push(r.Figure);
                 }
                 x.Metapublication.FiguresCount = r[''].FiguresCount;
+                x.Relevance = r[''].Relevance;
                 recs.push(x);
             }
         }
@@ -311,7 +317,8 @@ function searchMetapublications(req, res) {
 
     let params = [];
     let q = `
-        SELECT SQL_CALC_FOUND_ROWS *, 
+        SELECT SQL_CALC_FOUND_ROWS *,
+         MATCH(Metapublication.Keywords, Metapublication.Title, Metapublication.Description) AGAINST (?) AS Relevance,
          (SELECT COUNT(*) FROM Figure WHERE Figure.MetapublicationID = Metapublication.ID) AS FiguresCount
           FROM Metapublication
           JOIN User AS UserMetapublication ON UserMetapublication.ID = Metapublication.UserID
@@ -330,6 +337,7 @@ function searchMetapublications(req, res) {
                    )
     `;
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
+        params.push(query.query);
         q += `
             WHERE Metapublication.ID IN (
 			          SELECT DISTINCT MetapublicationID
@@ -338,10 +346,12 @@ function searchMetapublications(req, res) {
                  )
         `;
         params.push(query.query);
+    } else {
+        params.push('');
     }
     if (query.sortField) {
         let valid = false;
-        for (let f of ['Visit.Count', 'FiguresCount', 'Metapublication.Title']) {
+        for (let f of ['Relevance', 'Visit.Count', 'FiguresCount', 'Metapublication.Title']) {
             valid = true;
             break;
         }
@@ -351,8 +361,11 @@ function searchMetapublications(req, res) {
         q += ' ORDER BY ? ' + query.sortDirection;
         params.push(query.sortField);
     } else {
-        q += ' ORDER BY Visit.Count DESC';
-
+        if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
+            q += ' ORDER BY Relevance DESC';
+        } else {
+            q += ' ORDER BY Metapublication.Title ASC';
+        }
     }
     q += ' LIMIT ' + query.from + ', ' + query.size;
     q += '; SELECT FOUND_ROWS() AS count;';
@@ -377,6 +390,7 @@ function searchMetapublications(req, res) {
                     x.Metapublication.Figures.push(r.Figure);
                 }
                 x.Metapublication.FiguresCount = r[''].FiguresCount;
+                x.Relevance = r[''].Relevance;
                 recs.push(x);
             }
         }

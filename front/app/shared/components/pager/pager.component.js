@@ -126,7 +126,7 @@
         function onChanges() {
             if (inited) {
                 vm.paging = {
-                    curr: vm.searchParams.from,
+                    //curr: vm.searchParams.from,
                     pages: Math.ceil(vm.total / vm.searchParams.size)
                 };
                 vm.paging.pageArr = new Array(vm.paging.pages);

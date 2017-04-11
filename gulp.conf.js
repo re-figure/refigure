@@ -88,7 +88,9 @@ module.exports = {
                 extSrcDir + '/vendor/angular/angular.min.js',
                 extSrcDir + '/common/const.js',
                 extSrcDir + '/content/content.js',
-                extSrcDir + '/content/dialog.js'
+                extSrcDir + '/content/app.js',
+                extSrcDir + '/content/imagePopup.js',
+                extSrcDir + '/content/refigurePopup.js'
             ],
             parsers: extSrcDir + '/content/parsers/*.js'
         },

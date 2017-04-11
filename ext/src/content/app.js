@@ -1,54 +1,18 @@
-(function (self) {
-
-    var _scope = null;
-
-    self.show = function (data, collection) {
-        !_scope && self.create();
-        // TODO check if the figure exists in the current collection
-        // if so, then use UPDATE then not CREATE
-        _scope.$apply(function () {
-            _scope.hidden = false;
-            if (collection && _scope.collection.ID !== collection.ID) {
-                //TODO why copy? there should be just a reference
-                _scope.collection = collection;
-                console.info('Starting refigure:', angular.copy(_scope.collection));
-                _scope.opts.current = -1;
-            }
-            data && _scope.addFigure(data);
-            _scope.minimized = false;
-        });
-    };
-
-    self.hide = function () {
-        _scope && _scope.$apply(function () {
-            _scope.hidden = true;
-        });
-    };
-
-    self.create = function () {
-        if (_scope) {
-            return false;
-        }
-        var domEl = document.createElement('div');
-        domEl.innerHTML = '<div ng-include="\'view/dialog.html\'"></div>';
-        document.body.appendChild(domEl);
-        angular.bootstrap(domEl, ['ReFigureContent'], {strictDi: true});
-        _scope = angular.element(domEl).scope();
-        return true;
-    };
-
-})(window.figurePopup || {});
-
 angular.module('ReFigureContent', [])
-    .config(['$httpProvider', function ($httpProvider) {
+    .constant('USER_INFO', {})
+    .config(['$httpProvider', 'USER_INFO', function ($httpProvider, USER_INFO) {
+        //noinspection JSUnresolvedVariable
         chrome.storage.local.get('userInfo', function (data) {
             if (!data.userInfo) {
-                alert(_gConst.ERROR_NOT_LOGGED);
+                window.alert(_gConst.ERROR_NOT_LOGGED);
             } else {
+                USER_INFO = data.userInfo;
                 $httpProvider.defaults.headers.common['Authentication'] = data.userInfo.Token;
             }
         });
     }])
+
+    //add image functionality
     .run(['$rootScope', '$http', function ($scope, $http) {
 
         $scope.collection = {};
@@ -59,7 +23,7 @@ angular.module('ReFigureContent', [])
         $scope.minimized = false;
 
         $scope.close = function () {
-            figureAddStop();
+            window.figureAddStop();
             $scope.hidden = true;
         };
 
@@ -68,9 +32,9 @@ angular.module('ReFigureContent', [])
         };
 
         $scope.remove = function (index) {
-            if (confirm('Remove this figure?')) {
+            if (window.confirm('Remove this figure?')) {
                 $http
-                    .delete(_gApiURL + "figure/" + $scope.collection.Figures[index].ID)
+                    .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)
                     .then(function () {
                         $scope.collection.Figures.splice(index, 1);
                     });
@@ -79,7 +43,7 @@ angular.module('ReFigureContent', [])
 
         $scope.saveFigure = function (data) {
             return $http
-                .put(_gApiURL + "figure", data)
+                .put(_gApiURL + 'figure', data)
                 .then(function (resp) {
                     return resp.data.data.Figure;
                 });
@@ -87,6 +51,7 @@ angular.module('ReFigureContent', [])
 
         $scope.addFigure = function (data) {
             if (data.ID) {
+                //noinspection JSUnresolvedFunction
                 $scope.opts.current = $scope.collection.Figures.findIndex(function (el) {
                     return el.ID === data.ID;
                 });
@@ -100,6 +65,38 @@ angular.module('ReFigureContent', [])
         };
     }])
 
+    //add collection functionality
+    .run(['$rootScope', '$http', 'USER_INFO', function ($scope, $http, USER_INFO) {
+
+        $scope.minimized = false;
+
+        $scope.close = function () {
+            $scope.hidden = true;
+        };
+
+        $scope.saveCollection = saveCollection;
+        $scope.formData = {};
+
+        ////////////////////////////
+
+        function saveCollection(params) {
+            if (!params.ID) {
+                params.UserID = USER_INFO.ID;
+                $http
+                    .post(_gApiURL + 'metapublication', params)
+                    .then(function (resp) {
+                        $scope.close();
+                        //noinspection JSUnresolvedVariable
+                        chrome.storage.local.set({
+                            Metapublication: resp.data.data.Metapublication
+                        }, function () {
+                            figureAddStart(resp.data.data.Metapublication);
+                        });
+                    });
+            }
+        }
+    }])
+
     .directive('draggable', ['$document', function ($document) {
         return function (scope, element) {
             var startX = 0, startY = 0, x = 0, y = 0;
@@ -110,11 +107,11 @@ angular.module('ReFigureContent', [])
                 event.preventDefault();
                 startX = window.innerWidth - event.screenX - x;
                 startY = event.screenY - y;
-                $document.on('mousemove', mousemove);
-                $document.on('mouseup', mouseup);
+                $document.on('mousemove', mouseMove);
+                $document.on('mouseup', mouseUp);
             });
 
-            function mousemove(event) {
+            function mouseMove(event) {
                 x = window.innerWidth - event.screenX - startX;
                 y = event.screenY - startY;
                 if (y < 0) {
@@ -136,9 +133,9 @@ angular.module('ReFigureContent', [])
                 });
             }
 
-            function mouseup() {
-                $document.off('mousemove', mousemove);
-                $document.off('mouseup', mouseup);
+            function mouseUp() {
+                $document.off('mousemove', mouseMove);
+                $document.off('mouseup', mouseUp);
             }
         };
     }])
@@ -148,7 +145,9 @@ angular.module('ReFigureContent', [])
             restrict: 'A', // only activate on element attribute
             require: '?ngModel', // get a hold of NgModelController
             link: function (scope, element, attrs, ngModel) {
-                if (!ngModel) return; // do nothing if no ng-model
+                if (!ngModel) {
+                    return;
+                }
 
                 // Specify how UI should be updated
                 ngModel.$render = function () {

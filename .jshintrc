@@ -74,6 +74,8 @@
         "browser",
         "by",
         "angular",
-        "chrome"
+        "chrome",
+        "_gConst",
+        "_gApiURL"
     ]
 }

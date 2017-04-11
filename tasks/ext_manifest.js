@@ -8,8 +8,8 @@ const args = require('yargs').argv;
 module.exports = function () {
     let phs = [];
 
-    if(args.env === 'local'){
-        extOpt.replace.REMOTE_API_URL = 'http://localhost:8181/api/'
+    if (args.env === 'local') {
+        extOpt.replace.REMOTE_API_URL = 'http://localhost:8181/api/';
     }
 
     Object.keys(extOpt.replace).forEach(function (ph) {

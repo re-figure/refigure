@@ -10,12 +10,12 @@
             _scope.hidden = false;
             if (collection && _scope.collection.ID !== collection.ID) {
                 //TODO why copy? there should be just a reference
-                _scope.collection = collection; //angular.copy(collection);
-                console.info('Starting collection:', angular.copy(_scope.collection));
+                _scope.collection = collection;
+                console.info('Starting refigure:', angular.copy(_scope.collection));
                 _scope.opts.current = -1;
             }
             data && _scope.addFigure(data);
-            _scope.minimized = false
+            _scope.minimized = false;
         });
     };
 

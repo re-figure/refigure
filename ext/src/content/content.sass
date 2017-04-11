@@ -49,6 +49,12 @@ body
             border: 0
             overflow: hidden
 
+    .rf-info-message
+        border: 2px solid $brand-info
+        color: $brand-info
+        font-style: italic
+        font-size: 16px
+
     .panel-heading
         position: relative
         padding-right: $rf-dialog-control-width * 3 + 1px
@@ -59,22 +65,24 @@ body
             text-overflow: ellipsis
 
         .rf-controls
+            font-size: 0
             position: absolute
             top: 10px
             bottom: 10px
             right: 0
             border-left: 1px solid #fff
             width: $rf-dialog-control-width * 3 + 1px
-            line-height: 20px
             text-align: justify
             span
+                line-height: 20px
+                font-size: 14px
                 text-align: center
                 width: $rf-dialog-control-width
                 display: inline-block
                 cursor: pointer
 
-                &.rf-controls-move
-                    cursor: move
+            .glyphicon-move
+                cursor: move
 
     .btn-link
         &:hover, &:focus

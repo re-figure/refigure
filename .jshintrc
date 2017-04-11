@@ -73,6 +73,7 @@
         "element",
         "browser",
         "by",
-        "angular"
+        "angular",
+        "chrome"
     ]
 }

@@ -53,7 +53,7 @@
                     vm.searchParams.sortDirection = 'DESC';
                     vm.searchParams.sortField = 'FiguresCount';
                 },
-                name: 'by number of figures - largest at top'
+                name: 'by number of images - largest at top'
             },
             figCountAsc: {
                 action: function () {
@@ -61,7 +61,7 @@
                     vm.searchParams.sortDirection = 'ASC';
                     vm.searchParams.sortField = 'FiguresCount';
                 },
-                name: 'by number of figures - smallest at top'
+                name: 'by number of images - smallest at top'
             },
             nameAsc: {
                 action: function () {

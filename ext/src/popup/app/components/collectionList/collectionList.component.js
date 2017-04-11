@@ -19,6 +19,7 @@
         vm.userInfo = AuthService.userInfo;
         vm.showFull = showFull;
         vm.handleESC = handleESC;
+        vm.addRefigure = addRefigure;
         vm.search = '';
 
         ////////////////////////////
@@ -56,7 +57,7 @@
                     Metapublication: resp.data.data.Metapublication
                 }, function () {
                     chrome.tabs.sendMessage(STORAGE.currentTab, {
-                        type: _gConst.MSG_TYPE_ADD_START,
+                        type: _gConst.MSG_TYPE_IMAGE_ADD_START,
                         Metapublication: resp.data.data.Metapublication
                     });
                     window.close();
@@ -76,6 +77,13 @@
                 vm.search = '';
                 event.preventDefault();
             }
+        }
+
+        function addRefigure() {
+            chrome.tabs.sendMessage(STORAGE.currentTab, {
+                type: _gConst.MSG_TYPE_REFIGURE_ADD_START
+            });
+            window.close();
         }
     }
 

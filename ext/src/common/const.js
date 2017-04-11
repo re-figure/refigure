@@ -32,7 +32,7 @@ var _gApiURL;
         i;
     for (i = 0; i < permissions.length; i++) {
         if (permissions[i].match(/^http/)) {
-            _gApiURL = permissions[i].replace(/\*$/, "");
+            _gApiURL = permissions[i].replace(/\*$/, '');
             break;
         }
     }

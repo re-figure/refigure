@@ -1,16 +1,17 @@
 <div class="rf-dialog" ng-hide="hidden" ng-class="minimized ? 'rf-minimized' : ''">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <div class="rf-controls"><span class="rf-controls-move" draggable="true" title="Move"
-                >&#10021;</span><span title="Minimize" ng-click="minimized=!minimized" ng-bind="minimized ? '&#9744;' : '&#9601;'"
-                ></span><span title="Close" ng-click="close()"
-                >&#10006;</span></div>
+            <div class="rf-controls">
+                <span class="rf-controls-move" draggable="true" title="Move"><span class="glyphicon glyphicon-move"></span></span>
+                <span title="Minimize" ng-click="minimized=!minimized" ng-bind="minimized ? '&#9744;' : '&#9601;'"></span>
+                <span title="Close" ng-click="close()">&#10006;</span>
+            </div>
             <div class="rf-heading-title" title="{{collection.Title}}">
                 Add image to refigure "<span ng-bind="collection.Title"></span>"
             </div>
         </div>
         <div class="panel-body">
-            <div class="alert bg-primary text-center">Click on image in article to add to Refigure</div>
+            <div class="alert rf-info-message text-center">Click on image in article to add to Refigure</div>
             <div ng-repeat="fig in collection.Figures">
                 <div class="row">
                     <div class="col-xs-4">
@@ -23,8 +24,6 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <button type="button" class="btn btn-link btn-xs" ng-click="toggle($index)">
-                                    <!--
-                                    <span ng-bind="opts.current === $index ? '&#10134;' : '&#10133;'"></span> -->
                                     <span class="glyphicon"
                                           ng-class="opts.current === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
                                     <span ng-bind="opts.current === $index ? 'hide' : 'show'"></span> details

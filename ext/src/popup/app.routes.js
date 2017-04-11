@@ -25,7 +25,7 @@
             .when('/collections/new', {
                 config: {
                     name: 'collectionNew',
-                    title: 'Create collection'
+                    title: 'Create refigure'
                 },
                 template: '<collection-edit-form/>',
                 resolveRedirectTo: IsAuthCtrl
@@ -33,7 +33,7 @@
             .when('/collections/edit/:id', {
                 config: {
                     name: 'collectionEdit',
-                    title: 'Edit collection'
+                    title: 'Edit refigure'
                 },
                 template: '<collection-edit-form/>',
                 resolveRedirectTo: IsAuthCtrl
@@ -41,7 +41,7 @@
             .when('/figure/edit/:id', {
                 config: {
                     name: 'figureEdit',
-                    title: 'Edit figure'
+                    title: 'Edit image'
                 },
                 template: '<figure-edit/>',
                 resolveRedirectTo: IsAuthCtrl
@@ -49,7 +49,7 @@
             .when('/foundfigures', {
                 config: {
                     name: 'figureEdit',
-                    title: 'Found figures'
+                    title: 'Found images'
                 },
                 template: '<found-figures/>'
             })

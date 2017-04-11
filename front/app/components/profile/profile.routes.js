@@ -15,8 +15,8 @@
             template: '<my-collections></my-collections>',
             data: {
                 private: true,
-                label: 'My collections',
-                description: 'Collection management'
+                label: 'My refigures',
+                description: 'Refigures management'
             }
         }
     }, {

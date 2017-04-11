@@ -1,7 +1,7 @@
 <div class="collection">
     <div class="material-input collection-search">
         <input id="collections-search" type="text" ng-model="vm.search" ng-keydown="vm.handleESC($event)">
-        <label for="collections-search">Search my collections</label>
+        <label for="collections-search">Search my Refigures</label>
         <button ng-click="vm.search = ''" type="button" class="close collection-search-reset">&times;</button>
     </div>
 
@@ -28,12 +28,12 @@
                     <p ng-bind="collection.Metapublication.Description"></p>
                     <div class="collection-fig-count">
                         <span ng-bind="collection.Metapublication.FiguresCount"></span>
-                        <span plural="collection.Metapublication.FiguresCount"> figure</span> in collection
+                        <span plural="collection.Metapublication.FiguresCount"> image(s)</span> in Refigure
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="#!/collections/new" class="btn btn-primary collection-add">Create new collection</a>
+    <a href="#!/collections/new" class="btn btn-primary collection-add">Create new Refigure</a>
 </div>

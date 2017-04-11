@@ -1,7 +1,7 @@
 <form class="collection" name="ccForm" ng-submit="vm.editCollection(vm.formData)">
     <div class="material-input" ng-class="ccForm.title.$invalid && ccForm.title.$dirty ? 'has-error' : ''">
         <input id="collection-create-title" name="title" type="text" ng-model="vm.formData.Title" required/>
-        <label for="collection-create-title">Collection title</label>
+        <label for="collection-create-title">Title</label>
     </div>
     <div class="material-input">
         <div contenteditable="true" id="collection-create-descr" ng-model="vm.formData.Description"></div>

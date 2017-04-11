@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
         case _gConst.MSG_TYPE_ADD_START:
             if (!request.Metapublication && !refigure.Metapublication) {
-                alert('Please select collection to add to');
+                alert('Please select Refigure to add to');
             } else {
                 figureAddStart(request.Metapublication);
             }
@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
         case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
             if (!refigure.Metapublication) {
-                alert('Please select collection to add to');
+                alert('Please select Refigure to add to');
             } else {
                 addToSelected(request.src);
             }

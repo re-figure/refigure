@@ -171,7 +171,7 @@ function createContextMenus() {
      */
     var addToExistingItemOptions = {
             id: "add-to-existing",
-            title: "Add figure to collection",
+            title: "Add image to Refigure",
             contexts: ["image"]
         };
     chrome.contextMenus.create(addToExistingItemOptions, onCreated);
@@ -188,7 +188,7 @@ function removeContextMenus() {
 function contextMenuClickListener(info, tab) {
     switch (info.menuItemId) {
         case "add-to-existing":
-            console.log("Add an image to the current collection");
+            console.log("Add an image to the current Refigure");
             chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION, src: info.srcUrl});
             break;
     }

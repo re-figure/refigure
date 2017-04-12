@@ -10,7 +10,9 @@
             restrict: 'A', // only activate on element attribute
             require: '?ngModel', // get a hold of NgModelController
             link: function (scope, element, attrs, ngModel) {
-                if (!ngModel) return; // do nothing if no ng-model
+                if (!ngModel) {
+                    return; // do nothing if no ng-model
+                }
 
                 // Specify how UI should be updated
                 ngModel.$render = function () {
@@ -41,7 +43,7 @@
                     });
                 }
 
-                element.on('paste', function(e) {
+                element.on('paste', function (e) {
                     e.preventDefault();
                     var text = e.clipboardData.getData('text/plain');
                     document.execCommand('insertHTML', false, text);

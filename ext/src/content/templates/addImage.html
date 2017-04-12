@@ -15,7 +15,7 @@
             <div ng-repeat="fig in collection.Figures">
                 <div class="row">
                     <div class="col-xs-4">
-                        <a href="#" ng-click="opts.current = opts.current === $index ? -1 : $index">
+                        <a href="#" ng-click="expandImage(fig.URL)">
                             <img class="thumbnail" ng-src="{{fig.URL}}">
                         </a>
                     </div>

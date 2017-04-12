@@ -114,3 +114,43 @@ body
 
             &.rf-fig-list-item-current
                 border-color: #5cb85c
+
+.rf-image-popup
+    position: fixed
+    z-index: 1100000
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: rgba(255, 255, 255, .5)
+    text-align: center
+    opacity: 0
+    transition: opacity .5s
+    &:before
+        content: ''
+        width: 0
+        height: 100%
+        display: inline-block
+        vertical-align: middle
+    &:after
+        cursor: pointer
+        content: '✖'
+        position: absolute
+        top: 50px
+        right: 50px
+        color: #fff
+        font-size: 30px
+        line-height: 40px
+        width: 40px
+        border-radius: 50%
+        background-color: $brand-primary
+
+    &.rf-fade-in
+        opacity: 1
+
+    img
+        max-width: 100%
+        max-height: 100%
+        width: auto
+        height: auto
+        border: 1px solid #DDD

@@ -42,6 +42,18 @@ angular.module('ReFigureContent', [])
             }
         };
 
+        $scope.expandImage = function (src) {
+            var popup = angular.element('<div class="rf-image-popup"><img src="' + src + '"></div>');
+            popup.on('click', function (e) {
+                popup.removeClass('rf-fade-in');
+                setTimeout(function () {
+                    popup.remove();
+                }, 500);
+            });
+            angular.element(document.body).append(popup);
+            popup.addClass('rf-fade-in');
+        };
+
         $scope.saveFigure = function (data) {
             return $http
                 .put(_gApiURL + 'figure', data)

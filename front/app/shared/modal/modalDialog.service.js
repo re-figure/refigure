@@ -28,7 +28,7 @@
 
         function info(message) {
             var dialog = $mdDialog.alert({
-                title: 'ReFigure',
+                title: 'Refigure',
                 textContent: message,
                 ok: 'Close'
             });
@@ -37,7 +37,7 @@
 
         function success(message) {
             var dialog = $mdDialog.alert({
-                title: 'ReFigure',
+                title: 'Refigure',
                 textContent: message,
                 ok: 'Close'
             });
@@ -46,7 +46,7 @@
 
         function error(message) {
             var dialog = $mdDialog.alert({
-                title: 'ReFigure',
+                title: 'Refigure',
                 textContent: message,
                 ok: 'Close'
             });
@@ -55,7 +55,7 @@
 
         function confirm(message) {
             var dialog = $mdDialog.confirm({
-                title: 'ReFigure',
+                title: 'Refigure',
                 textContent: message
             })
                 .ok('OK')

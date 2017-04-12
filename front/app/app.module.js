@@ -35,7 +35,7 @@
     ];
 
     function appRun($rootScope) {
-        $rootScope.projectName = 'ReFigure';
+        $rootScope.projectName = 'Refigure';
         $rootScope.mobileBrowser = utils.mobileBrowser();
     }
 

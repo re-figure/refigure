@@ -1,4 +1,4 @@
-<md-content class="md-padding" md-whiteframe="1" layout="row" layout-align="start end">
+<md-content class="md-padding" md-whiteframe="1" layout="row" layout-align="start stretch">
     <md-button
             class="md-primary md-fab md-mini"
             ng-click="vm.searchParams.from = 0"
@@ -51,4 +51,12 @@
             </md-menu-item>
         </md-menu-content>
     </md-menu>
+
+    <span flex></span>
+
+    <div class="found-total" layout="column" layout-align="space-between stretch">
+        <span class="found-total-label">found</span>
+        <b ng-bind="vm.total"></b>
+        <span class="found-total-label">Refigures</span>
+    </div>
 </md-content>

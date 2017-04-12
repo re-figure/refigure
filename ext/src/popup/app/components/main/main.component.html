@@ -1,8 +1,17 @@
 <div class="text-center">
-    <a class="btn btn-link btn-lg btn-block" ng-show="vm.store.foundFigures.length > 0" href="#!/foundfigures">
-        <span>Show <b ng-bind="vm.store.foundFigures.length"></b> <span plural="vm.store.foundFigures.length">ReFigure</span> on this page</span>
-    </a>
-    <div ng-hide="vm.store.foundFigures.length > 0">No ReFigures found on this page</div>
+    <div class="rf-details btn-group" ng-show="vm.store.foundFigures.length">
+        <span class="btn rf-details-found">
+            Found <b ng-bind="vm.store.foundFigures.length"></b> <span plural="vm.store.foundFigures.length">image</span>
+            in <b ng-bind="vm.store.inMetapublications.length"></b> <span plural="vm.store.inMetapublications.length">Refigure</span>
+        </span>
+        <a ng-href='http://refigure.noblecoz.com/search-results/?term="{{vm.store.inMetapublications.join("\" \"")}}"'
+           target="_blank"
+           class="btn rf-details-link">
+            details
+            <span class="glyphicon glyphicon-share-alt"></span>
+        </a>
+    </div>
+    <div ng-hide="vm.store.foundFigures.length > 0">No Refigures found on this page</div>
     <div ng-hide="vm.store.userInfo.ID" >Please click <a href="#!/auth">here</a> to sign in</div>
 </div>
 <collection-list ng-if="vm.store.userInfo.ID"></collection-list>

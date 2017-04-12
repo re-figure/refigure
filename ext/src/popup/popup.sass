@@ -3,65 +3,77 @@
 @import "../vendor/bootstrap/stylesheets/bootstrap"
 
 body
-    padding-top: 65px
-    width: 400px
-    padding-bottom: 15px
-    &.rf-route-main
-        padding-bottom: 50px
+  padding-top: 65px
+  width: 400px
+  padding-bottom: 15px
+  &.rf-route-main
+    padding-bottom: 50px
 
 .figure-add
-    color: rgb(220, 220, 220)
-    font-size: 20px
-    border-radius: 4px
-    border: 2px dashed rgb(220, 220, 220)
+  color: rgb(220, 220, 220)
+  font-size: 20px
+  border-radius: 4px
+  border: 2px dashed rgb(220, 220, 220)
 
 img
-    max-width: 100%
-    max-height: 100%
+  max-width: 100%
+  max-height: 100%
 
 .no-padding
-    padding: 0
+  padding: 0
 
 .clickable
-    cursor: pointer
+  cursor: pointer
 
 .thumbnail
-    margin-bottom: 0
+  margin-bottom: 0
 
 .thumbnail-sm
-    height: 50px
-    &.has-image:hover
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
+  height: 50px
+  &.has-image:hover
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12)
 
 .navbar
-    z-index: 10000
-    line-height: 50px
+  z-index: 10000
+  line-height: 50px
+  color: #fff
+  a
     color: #fff
-    a
-        color: #fff
-        text-decoration: none
+    text-decoration: none
 
 textarea
-    resize: vertical
+  resize: vertical
 
 .nav-title
-  //width: 100%
   padding-left: 10px
   padding-right: 10px
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
+  img
+    height: 32px
 
 .nav-default-collection
-    position: relative
-    i
-        position: absolute
-        left: 10px
-        top: 5px
-        font-size: 10px
-        line-height: 10px
-        color: #999
+  position: relative
+  i
+    position: absolute
+    left: 10px
+    top: 5px
+    font-size: 10px
+    line-height: 10px
+    color: #999
 
-@import "app/components/foundFigures/foundFigures.component"
+.rf-details
+  &-found
+    cursor: default
+  &-link
+    color: #fff
+    background-color: #222
+    border-color: #090909
+    &:hover
+      color: #fff
+      background-color: #000
+      text-decoration: none
+
 @import "app/components/messages/messages.component"
 @import "app/components/collectionList/collectionList.component"

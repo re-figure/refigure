@@ -30,6 +30,7 @@
                 type: _gConst.MSG_TYPE_GET_FOUND_FIGURES,
                 tabId: _store.currentTab
             }, function (resp) {
+                _store.inMetapublications = resp && resp.inMetapublications ? resp.inMetapublications : [];
                 _store.foundFigures = resp && resp.foundFigures ? resp.foundFigures : [];
                 resolve();
             });
@@ -37,7 +38,7 @@
     }));
 
     Promise.all(promises).then(function () {
-        angular.bootstrap(document, ['ReFigure'], {strictDi: true})
+        angular.bootstrap(document, ['ReFigure'], {strictDi: true});
     });
 
     angular.module('ReFigure', ['ngRoute', 'ngSanitize'])
@@ -46,6 +47,7 @@
             rfFigures: null,
             foundFigures: null,
             Metapublication: null,
+            inMetapublications: [],
             userInfo: {}
         })
         .config(ConfigController)
@@ -60,7 +62,6 @@
         $httpProvider.interceptors.push(['$q', 'MessageService', function ($q, MessageService) {
             return {
                 'request': function (config) {
-                    console.log('request');
                     MessageService.loader = true;
                     return config;
                 },
@@ -71,15 +72,19 @@
                 },
 
                 'responseError': function (rejection) {
+                    var message = 'Something went wrong. Please try again later';
+                    if (rejection.data) {
+                        message = rejection.data.message;
+                    }
                     console.info(rejection);
                     MessageService.showMessage({
-                        text: rejection.data && rejection.data.message || 'Something went wrong. Please try again later',
+                        text: message,
                         type: 'warning'
                     });
                     MessageService.loader = false;
                     return $q.reject(rejection);
                 }
-            }
+            };
         }]);
     }
 
@@ -87,7 +92,7 @@
 
     function RunController($rootScope, STORAGE) {
         $rootScope.$on('$routeChangeSuccess', function ($event, $curr) {
-            document.body.className = 'rf-route-' + $curr.$$route.config.name
+            document.body.className = 'rf-route-' + $curr.$$route.config.name;
         });
         chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
@@ -97,6 +102,7 @@
                 } else if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
                     $rootScope.$apply(function () {
                         STORAGE.foundFigures = request.figures;
+                        STORAGE.inMetapublications = request.inMetapublications;
                     });
                 }
                 return true;

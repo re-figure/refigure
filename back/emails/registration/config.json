@@ -1,6 +1,6 @@
 {
-  "subject" : "reFigure registration confirmation",
+  "subject" : "Refigure registration confirmation",
   "landingPage" : "http://refigure.noblecoz.com/signup/%token%",
   "from" : "refigure@noblecoz.com",
-  "text" : "You have registered for the reFigure service, Please contact support@refigure.com to confirm registration."
+  "text" : "You have registered for the Refigure service, Please contact support@refigure.com to confirm registration."
 }

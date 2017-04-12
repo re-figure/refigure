@@ -9,7 +9,7 @@
     "immed": true,
     "indent": 4,
     "latedef": "nofunc",
-    "newcap": true,
+    "newcap": false,
     "noarg": true,
     "noempty": true,
     "nonbsp": true,
@@ -52,6 +52,7 @@
     "browser": true,
     "node": true,
     "jasmine": true,
+    "devel": true,
     "globals": {
         "angular": false,
         "$": false
@@ -73,6 +74,11 @@
         "element",
         "browser",
         "by",
-        "angular"
+        "angular",
+        "chrome",
+        "_gConst",
+        "_gApiURL",
+        "Sizzle",
+        "Promise"
     ]
 }

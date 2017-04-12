@@ -2,13 +2,15 @@ var CONTENT_BLOCK_SELECTOR = 'body';
 
 var refigure = {
     Metapublication: null,
-    figures: [],
-    foundFigures: []
+    figures: []
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
-        case _gConst.MSG_TYPE_ADD_START:
+        case _gConst.MSG_TYPE_REFIGURE_ADD_START:
+            window.refigurePopup.show();
+            break;
+        case _gConst.MSG_TYPE_IMAGE_ADD_START:
             if (!request.Metapublication && !refigure.Metapublication) {
                 alert('Please select Refigure to add to');
             } else {
@@ -19,7 +21,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             setTimeout(searchFigures(), 1);
             break;
         case _gConst.MSG_TYPE_POPUP_OPENED:
-            window.figurePopup.hide();
+            window.imagePopup.hide();
+            window.refigurePopup.hide();
             figureAddStop();
             break;
         case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
@@ -28,6 +31,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             } else {
                 addToSelected(request.src);
             }
+            break;
     }
 });
 
@@ -44,7 +48,7 @@ function figureAddStart(Metapublication) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
     });
-    window.figurePopup.show(false, refigure.Metapublication);
+    window.imagePopup.show(false, refigure.Metapublication);
 }
 
 function figureAddStop() {
@@ -92,12 +96,12 @@ function parsingCompleted(figures) {
     });
 }
 
-function searchCompleted(figures) {
-    console.info('Found on the current page the following figures: ', figures);
-    refigure.foundFigures = figures;
+function searchCompleted(data) {
+    console.info('Found on the current page the following figures: ', data.figures);
     chrome.runtime.sendMessage({
         type: _gConst.MSG_TYPE_CHECK_COMPLETED,
-        figures: figures
+        figures: data.figures,
+        inMetapublications: data.metapublications
     });
 }
 
@@ -109,12 +113,12 @@ function searchFigures() {
             if (figures.length > 0) {
                 sendCheckFiguresRequest(figures);
             } else {
-                searchCompleted([]);
+                searchCompleted({});
             }
         },
         function (error) {
             console.error(error);
-            searchCompleted([]);
+            searchCompleted({});
         }
     );
 }
@@ -124,7 +128,7 @@ function sendCheckFiguresRequest(figures) {
         return {
             URL: el.URL,
             DOIFigure: el.DOIFigure
-        }
+        };
     });
 
     sendRequest({
@@ -135,11 +139,11 @@ function sendCheckFiguresRequest(figures) {
         }
     }).then(
         function (data) {
-            searchCompleted(data.figures);
+            searchCompleted(data);
         },
         function (error) {
             console.error(error);
-            searchCompleted([]);
+            searchCompleted({});
         }
     );
 }
@@ -191,7 +195,7 @@ function addToSelected(src) {
             };
         }
     }
-    window.figurePopup.show(img);
+    window.imagePopup.show(img);
 }
 
 function sendRequest(params) {
@@ -226,7 +230,7 @@ function sendRequest(params) {
             }
         };
         xhr.open(requestParams.type, _gApiURL + requestParams.url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
         Object.keys(requestParams.headers).forEach(function (key) {
             xhr.setRequestHeader(key, requestParams.headers[key]);
@@ -235,4 +239,5 @@ function sendRequest(params) {
     });
 }
 
-window.figurePopup = {};
+window.imagePopup = {};
+window.refigurePopup = {};

@@ -3,13 +3,15 @@
   "name": "ReFigure",
   "version": "0.0.1",
   "description": "ReFigure extension",
-  "icons": { "32": "/img/icon.png" },
+  "icons": {
+    "100" : "/img/refigure_logo_small.png"
+  },
   "background": {
     "persistent": true,
     "page": "/background/background.html"
   },
   "browser_action": {
-    "default_icon": "/img/icon.png",
+    "default_icon": "/img/refigure_logo_small.png",
     "default_popup": "/popup/popup.html",
     "default_title": "ReFigure"
   },

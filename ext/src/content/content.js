@@ -2,8 +2,7 @@ var CONTENT_BLOCK_SELECTOR = 'body';
 
 var refigure = {
     Metapublication: null,
-    figures: [],
-    foundFigures: []
+    figures: []
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -13,7 +12,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
         case _gConst.MSG_TYPE_IMAGE_ADD_START:
             if (!request.Metapublication && !refigure.Metapublication) {
-                window.alert('Please select Refigure to add to');
+                alert('Please select Refigure to add to');
             } else {
                 figureAddStart(request.Metapublication);
             }
@@ -28,7 +27,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             break;
         case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
             if (!refigure.Metapublication) {
-                window.alert('Please select Refigure to add to');
+                alert('Please select Refigure to add to');
             } else {
                 addToSelected(request.src);
             }
@@ -97,12 +96,12 @@ function parsingCompleted(figures) {
     });
 }
 
-function searchCompleted(figures) {
-    console.info('Found on the current page the following figures: ', figures);
-    refigure.foundFigures = figures;
+function searchCompleted(data) {
+    console.info('Found on the current page the following figures: ', data.figures);
     chrome.runtime.sendMessage({
         type: _gConst.MSG_TYPE_CHECK_COMPLETED,
-        figures: figures
+        figures: data.figures,
+        inMetapublications: data.metapublications
     });
 }
 
@@ -114,12 +113,12 @@ function searchFigures() {
             if (figures.length > 0) {
                 sendCheckFiguresRequest(figures);
             } else {
-                searchCompleted([]);
+                searchCompleted({});
             }
         },
         function (error) {
             console.error(error);
-            searchCompleted([]);
+            searchCompleted({});
         }
     );
 }
@@ -129,7 +128,7 @@ function sendCheckFiguresRequest(figures) {
         return {
             URL: el.URL,
             DOIFigure: el.DOIFigure
-        }
+        };
     });
 
     sendRequest({
@@ -140,11 +139,11 @@ function sendCheckFiguresRequest(figures) {
         }
     }).then(
         function (data) {
-            searchCompleted(data.figures);
+            searchCompleted(data);
         },
         function (error) {
             console.error(error);
-            searchCompleted([]);
+            searchCompleted({});
         }
     );
 }

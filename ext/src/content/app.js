@@ -4,7 +4,7 @@ angular.module('ReFigureContent', [])
         //noinspection JSUnresolvedVariable
         chrome.storage.local.get('userInfo', function (data) {
             if (!data.userInfo) {
-                window.alert(_gConst.ERROR_NOT_LOGGED);
+                alert(_gConst.ERROR_NOT_LOGGED);
             } else {
                 USER_INFO = data.userInfo;
                 $httpProvider.defaults.headers.common['Authentication'] = data.userInfo.Token;
@@ -32,7 +32,7 @@ angular.module('ReFigureContent', [])
         };
 
         $scope.remove = function (index) {
-            if (window.confirm('Remove this figure?')) {
+            if (confirm('Remove this figure?')) {
                 $http
                     .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)
                     .then(function () {

@@ -1,8 +1,11 @@
-
 var tabsData = {};
 
 chrome.storage.local.get('userInfo', function (data) {
-    data.userInfo  ? createContextMenus() : removeContextMenus();
+    if (data.userInfo) {
+        createContextMenus();
+    } else {
+        removeContextMenus();
+    }
 });
 
 function updateBrowserAction(tab) {
@@ -20,7 +23,10 @@ function updateBrowserAction(tab) {
                     chrome.browserAction.setBadgeText({tabId: tab.id, text: '0'});
                 } else {
                     // found figures on the page
-                    chrome.browserAction.setBadgeText({tabId: tab.id, text: String(t.foundFigures.length)});
+                    chrome.browserAction.setBadgeText({
+                        tabId: tab.id,
+                        text: t.foundFigures.length + '/' + t.inMetapublications.length
+                    });
                 }
             }
         }
@@ -53,8 +59,7 @@ function startSearchFiguresIfNeed(tab) {
 }
 
 chrome.runtime.onMessage.addListener(
-
-    function(request, sender, sendResponse) {
+    function (request, sender, sendResponse) {
         if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
             onParseFiguresComplete(request, sender.tab);
         }
@@ -69,12 +74,12 @@ chrome.runtime.onMessage.addListener(
         }
         if (request.type === _gConst.MSG_TYPE_GET_FOUND_FIGURES) {
             sendResponse({
-                foundFigures: tabsData[request.tabId].foundFigures
+                foundFigures: tabsData[request.tabId].foundFigures,
+                inMetapublications: tabsData[request.tabId].inMetapublications
             });
         }
         return true;
     }
-
 );
 
 function onParseFiguresComplete(result, tab) {
@@ -89,13 +94,14 @@ function onSearchFiguresComplete(result, tab) {
     if (t) {
         t.status = _gConst.STATUS_COMPLETE;
         t.foundFigures = result.figures;
+        t.inMetapublications = result.inMetapublications;
         chrome.browserAction.enable(tab.id);
         update(tab.id);
     }
 }
 
 function update(tabId) {
-    chrome.tabs.get(tabId, function(tab) {
+    chrome.tabs.get(tabId, function (tab) {
         startSearchFiguresIfNeed(tab);
         updateBrowserAction(tab);
     });
@@ -110,13 +116,13 @@ function createNewTabData(tabId) {
     };
 }
 
-chrome.tabs.onCreated.addListener(function(tab) {
+chrome.tabs.onCreated.addListener(function (tab) {
     console.log('created tab', tab.id);
     createNewTabData(tab.id);
     update(tab.id);
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, change, tab) {
+chrome.tabs.onUpdated.addListener(function (tabId, change, tab) {
     console.log('updated tab', tabId, tab.id);
     if (change.status === 'complete') {
         if (change.url === undefined) {
@@ -135,7 +141,7 @@ chrome.tabs.onActivated.addListener(function (activeInfo) {
     update(activeInfo.tabId);
 });
 
-chrome.tabs.onReplaced.addListener(function(addedTabId, removedTabId) {
+chrome.tabs.onReplaced.addListener(function (addedTabId, removedTabId) {
     console.log('replaced tab', addedTabId, removedTabId);
     var t = tabsData[removedTabId];
     if (t) {
@@ -145,7 +151,7 @@ chrome.tabs.onReplaced.addListener(function(addedTabId, removedTabId) {
 });
 
 // Ensure the current selected tab is set up.
-chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
     update(tabs[0].id);
 });
 
@@ -157,12 +163,12 @@ function onCreated() {
     if (chrome.runtime.lastError) {
         onError(chrome.runtime.lastError);
     } else {
-        console.log("Item created successfully");
+        console.log('Item created successfully');
     }
 }
 
 function onError(error) {
-    console.error("Error: ", error);
+    console.error('Error: ', error);
 }
 
 function createContextMenus() {
@@ -170,10 +176,10 @@ function createContextMenus() {
      Create all the context menu items.
      */
     var addToExistingItemOptions = {
-            id: "add-to-existing",
-            title: "Add image to Refigure",
-            contexts: ["image"]
-        };
+        id: 'add-to-existing',
+        title: 'Add image to Refigure',
+        contexts: ['image']
+    };
     chrome.contextMenus.create(addToExistingItemOptions, onCreated);
     chrome.contextMenus.onClicked.addListener(contextMenuClickListener);
 }
@@ -187,8 +193,8 @@ function removeContextMenus() {
 
 function contextMenuClickListener(info, tab) {
     switch (info.menuItemId) {
-        case "add-to-existing":
-            console.log("Add an image to the current Refigure");
+        case 'add-to-existing':
+            console.log('Add an image to the current Refigure');
             chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION, src: info.srcUrl});
             break;
     }

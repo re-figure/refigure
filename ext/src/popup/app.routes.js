@@ -22,22 +22,6 @@
                 },
                 template: '<login-form/>'
             })
-            .when('/collections/new', {
-                config: {
-                    name: 'collectionNew',
-                    title: 'Create refigure'
-                },
-                template: '<collection-edit-form/>',
-                resolveRedirectTo: IsAuthCtrl
-            })
-            .when('/collections/edit/:id', {
-                config: {
-                    name: 'collectionEdit',
-                    title: 'Edit refigure'
-                },
-                template: '<collection-edit-form/>',
-                resolveRedirectTo: IsAuthCtrl
-            })
             .when('/figure/edit/:id', {
                 config: {
                     name: 'figureEdit',
@@ -45,13 +29,6 @@
                 },
                 template: '<figure-edit/>',
                 resolveRedirectTo: IsAuthCtrl
-            })
-            .when('/foundfigures', {
-                config: {
-                    name: 'figureEdit',
-                    title: 'Found images'
-                },
-                template: '<found-figures/>'
             })
             .otherwise('/auth');
 

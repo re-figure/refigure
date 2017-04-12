@@ -78,6 +78,7 @@
         "chrome",
         "_gConst",
         "_gApiURL",
-        "Sizzle"
+        "Sizzle",
+        "Promise"
     ]
 }

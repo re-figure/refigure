@@ -73,6 +73,11 @@ angular.module('ReFigureContent', [])
         $scope.saveCollection = saveCollection;
         $scope.formData = {};
 
+        $scope.minimized = false;
+
+        $scope.close = function () {
+            $scope.hidden = true;
+        };
         ////////////////////////////
 
         function saveCollection(params) {
@@ -165,6 +170,13 @@ angular.module('ReFigureContent', [])
                         html = '';
                     }
                     ngModel.$setViewValue(html);
+                }
+
+                var label = element.next();
+                if (label[0].tagName === 'LABEL') {
+                    label.on('click', function () {
+                        element[0].focus();
+                    });
                 }
 
                 element.on('paste', function(e) {

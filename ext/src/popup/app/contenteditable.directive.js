@@ -33,6 +33,19 @@
                     }
                     ngModel.$setViewValue(html);
                 }
+
+                var label = element.next();
+                if (label[0].tagName === 'LABEL') {
+                    label.on('click', function () {
+                        element[0].focus();
+                    });
+                }
+
+                element.on('paste', function(e) {
+                    e.preventDefault();
+                    var text = e.clipboardData.getData('text/plain');
+                    document.execCommand('insertHTML', false, text);
+                });
             }
         };
     }

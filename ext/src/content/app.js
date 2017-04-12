@@ -43,7 +43,9 @@ angular.module('ReFigureContent', [])
         };
 
         $scope.expandImage = function (src) {
-            var popup = angular.element('<div class="rf-image-popup"><img src="' + src + '"></div>');
+            var popup = angular.element(
+                '<div class="rf-image-popup"><div class="rf-image-wrp"><img src="' + src + '"></div></div>'
+            );
             popup.on('click', function (e) {
                 popup.removeClass('rf-fade-in');
                 setTimeout(function () {

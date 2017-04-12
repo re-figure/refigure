@@ -8,7 +8,6 @@
         }
         // TODO check if the figure exists in the current collection
         // if so, then use UPDATE then not CREATE
-        console.log(_scope);
         _scope.$apply(function () {
             _scope.hidden = false;
             console.log(_scope.collection);

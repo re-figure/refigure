@@ -37,6 +37,7 @@ angular.module('ReFigureContent', [])
                     .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)
                     .then(function () {
                         $scope.collection.Figures.splice(index, 1);
+                        window.searchFigures();
                     });
             }
         };
@@ -60,6 +61,7 @@ angular.module('ReFigureContent', [])
                 $scope.saveFigure(data).then(function (fig) {
                     $scope.collection.Figures.push(fig);
                     $scope.opts.current = $scope.collection.Figures.length - 1;
+                    window.searchFigures();
                 });
             }
         };
@@ -67,12 +69,6 @@ angular.module('ReFigureContent', [])
 
     //add collection functionality
     .run(['$rootScope', '$http', 'USER_INFO', function ($scope, $http, USER_INFO) {
-
-        $scope.minimized = false;
-
-        $scope.close = function () {
-            $scope.hidden = true;
-        };
 
         $scope.saveCollection = saveCollection;
         $scope.formData = {};

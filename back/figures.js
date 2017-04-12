@@ -109,9 +109,11 @@ function checkFigures(req, res) {
     }
 
     let foundFigures = [];
+    let foundMetapubications = {};
     let result = {
         data: {
-            figures: []
+            figures: [],
+            metapublications: []
         }
     };
 
@@ -130,6 +132,7 @@ function checkFigures(req, res) {
                 result.data.figures.push(figure);
             }
         });
+        result.data.metapublications = Object.keys(foundMetapubications);
         res
             .status(httpStatus.OK)
             .send(result);
@@ -225,6 +228,7 @@ function checkFigures(req, res) {
         // but for sure we will dedup and count unique collections where the figure occurs
         foundFigures.forEach((figure) => {
             counters[figure.MetapublicationID] = true;
+            foundMetapubications[figure.MetapublicationID] = true;
         });
         foundFigures[0].FoundInCollectionsCounter = Object.keys(counters).length;
         return foundFigures[0];

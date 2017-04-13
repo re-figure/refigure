@@ -42,12 +42,12 @@ function onClickImage(event) {
     return false;
 }
 
-function onEnterImage(event) {
-    document.getElementById('rf-info-message-add').style.borderWidth = '4px';
+function onEnterImage() {
+    document.getElementById('rf-info-message-add').classList.add('rf-info-message-bordered');
 }
 
-function onLeaveImage(event) {
-    document.getElementById('rf-info-message-add').style.borderWidth = '2px';
+function onLeaveImage() {
+    document.getElementById('rf-info-message-add').classList.remove('rf-info-message-bordered');
 }
 
 function figureAddStart(Metapublication) {

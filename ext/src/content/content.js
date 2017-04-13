@@ -42,11 +42,21 @@ function onClickImage(event) {
     return false;
 }
 
+function onEnterImage(event) {
+    document.getElementById('rf-info-message-add').style.borderWidth = '4px';
+}
+
+function onLeaveImage(event) {
+    document.getElementById('rf-info-message-add').style.borderWidth = '2px';
+}
+
 function figureAddStart(Metapublication) {
     refigure.Metapublication = Metapublication || refigure.Metapublication;
     Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
+        el.addEventListener('mouseenter', onEnterImage);
+        el.addEventListener('mouseleave', onLeaveImage);
     });
     window.imagePopup.show(false, refigure.Metapublication);
 }
@@ -55,6 +65,8 @@ function figureAddStop() {
     Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.remove('rf-addable-image');
         el.removeEventListener('click', onClickImage);
+        el.removeEventListener('mouseenter', onEnterImage);
+        el.removeEventListener('mouseleave', onLeaveImage);
     });
 }
 

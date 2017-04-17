@@ -20,11 +20,12 @@
 
     Controller.$inject = [
         '$scope',
+        'collectionEditService',
         'collections',
         'modalDialog'
     ];
 
-    function Controller($scope, collections, modalDialog) {
+    function Controller($scope, collectionEditService, collections, modalDialog) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -38,6 +39,7 @@
         };
 
         vm.remove = remove;
+        vm.showDetails = collectionEditService.open;
 
         activate();
 

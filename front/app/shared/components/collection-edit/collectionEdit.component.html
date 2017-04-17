@@ -1,0 +1,32 @@
+<md-sidenav
+        class="md-sidenav-right md-whiteframe-4dp"
+        md-component-id="collectionDetails"
+        md-disable-scroll-target=".r-page-content">
+    <md-toolbar class="md-theme-light">
+        <div class="md-toolbar-tools">
+            <span md-truncate ng-bind="vm.svc.collection.Title"></span>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.svc.close()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding layout="column">
+
+        <ng-form name="editCollectionForm">
+            <md-input-container>
+                <input placeholder="Title" ng-model="vm.svc.collection.Title" md-sidenav-focus required>
+            </md-input-container>
+
+            <md-input-container>
+                <textarea placeholder="Description" ng-model="vm.svc.collection.Description"></textarea>
+            </md-input-container>
+
+            <md-input-container>
+                <textarea placeholder="Keywords" ng-model="vm.svc.collection.Keywords"></textarea>
+            </md-input-container>
+        </ng-form>
+
+        <pre>{{vm.svc.collection|json}}</pre>
+    </md-content>
+</md-sidenav>

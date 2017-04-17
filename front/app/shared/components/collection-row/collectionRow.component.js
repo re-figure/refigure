@@ -11,7 +11,7 @@
     'use strict';
 
     angular
-        .module('refigureApp')
+        .module('refigureShared')
         .component('collectionRow', {
             templateUrl: 'view/collectionRow.component.html',
             controllerAs: 'vm',

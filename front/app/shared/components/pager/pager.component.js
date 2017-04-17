@@ -11,7 +11,7 @@
     'use strict';
 
     angular
-        .module('refigureApp')
+        .module('refigureShared')
         .component('pager', {
             templateUrl: 'view/pager.component.html',
             controller: PagerCtrl,

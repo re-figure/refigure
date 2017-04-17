@@ -22,7 +22,8 @@
             mostVisited: mostVisited,
             search: search,
             myCollections: myCollections,
-            remove: remove
+            remove: remove,
+            getCollection: getCollection
         };
 
         return exports;
@@ -48,6 +49,24 @@
                 .then(function (res) {
                     var items = utils.get(res, 'data.data');
                     return itemsUIData(items);
+                });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collections#getCollection
+         * @methodOf refigure.collections.services:collections
+         * @param {String} ID Metapublication ID
+         * @returns {Promise} promise
+         * @description
+         * Gets collection
+         */
+        function getCollection(ID) {
+            return $http
+                .get(_apiUrl + '/metapublication/' + ID)
+                .then(function (res) {
+                    var items = utils.get(res, 'data.data');
+                    return itemUIData(items);
                 });
         }
 

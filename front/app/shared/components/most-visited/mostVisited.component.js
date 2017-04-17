@@ -11,7 +11,7 @@
     'use strict';
 
     angular
-        .module('refigureApp')
+        .module('refigureShared')
         .component('mostVisited', {
             templateUrl: 'view/mostVisited.component.html',
             controllerAs: 'vm',

@@ -23,7 +23,8 @@
             search: search,
             myCollections: myCollections,
             remove: remove,
-            getCollection: getCollection
+            getCollection: getCollection,
+            saveCollection: saveCollection
         };
 
         return exports;
@@ -64,6 +65,24 @@
         function getCollection(ID) {
             return $http
                 .get(_apiUrl + '/metapublication/' + ID)
+                .then(function (res) {
+                    var items = utils.get(res, 'data.data');
+                    return itemUIData(items);
+                });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collections#saveCollection
+         * @methodOf refigure.collections.services:collections
+         * @param {Object} collection Refigure
+         * @returns {Promise} promise
+         * @description
+         * Saves collection
+         */
+        function saveCollection(collection) {
+            return $http
+                .put(_apiUrl + '/metapublication/', collection)
                 .then(function (res) {
                     var items = utils.get(res, 'data.data');
                     return itemUIData(items);

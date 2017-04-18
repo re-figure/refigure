@@ -1,4 +1,5 @@
 <md-sidenav
+        md-is-open="vm.sidebarOpened"
         class="md-sidenav-right md-whiteframe-4dp"
         md-component-id="collectionDetails"
         md-disable-scroll-target=".r-page-content">
@@ -11,11 +12,14 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-content layout-padding layout="column">
+    <md-content layout-padding ng-if="vm.svc.collection.ID">
 
-        <ng-form name="editCollectionForm">
+        <form name="editCollectionForm" layout="column" layout-align="start stretch">
             <md-input-container>
-                <input placeholder="Title" ng-model="vm.svc.collection.Title" md-sidenav-focus required>
+                <input placeholder="Title" ng-model="vm.svc.collection.Title" name="title" md-sidenav-focus required>
+                <div ng-messages="editCollectionForm.title.$error" role="alert" multiple>
+                    <div ng-message="required" class="my-message">Title is required</div>
+                </div>
             </md-input-container>
 
             <md-input-container>
@@ -25,8 +29,50 @@
             <md-input-container>
                 <textarea placeholder="Keywords" ng-model="vm.svc.collection.Keywords"></textarea>
             </md-input-container>
-        </ng-form>
+            <md-button
+                    class="md-primary md-raised"
+                    ng-click="vm.saveCollection()"
+                    ng-disabled="editCollectionForm.$invalid || vm.loading || editCollectionForm.$pristine"
+                    layout="column">
+                <span ng-hide="vm.loading">save</span>
+                <md-progress-circular ng-show="vm.loading" class="md-hue-2" md-diameter="24px"></md-progress-circular>
+            </md-button>
+        </form>
 
-        <pre>{{vm.svc.collection|json}}</pre>
+        <md-card ng-repeat="image in vm.svc.collection.Figures">
+            <md-card-title>
+                <md-card-title-media>
+                    <div class="md-media-md card-media">
+                        <img ng-src="{{image.URL}}">
+                    </div>
+                </md-card-title-media>
+                <md-card-title-text ng-bind="image.Caption" md-truncate></md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+                <form name="vm.forms.f{{$index}}" layout="column" layout-align="start stretch">
+                    <md-input-container>
+                        <textarea ng-blur="vm.saveImage($index)" placeholder="Caption" ng-model="image.Caption"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <textarea ng-blur="vm.saveImage($index)" placeholder="Legend" ng-model="image.Legend"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <textarea ng-blur="vm.saveImage($index)" placeholder="Authors" ng-model="image.Authors"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <input ng-blur="vm.saveImage($index)" placeholder="Article DOI" ng-model="image.DOI">
+                    </md-input-container>
+                    <md-input-container>
+                        <input ng-blur="vm.saveImage($index)" placeholder="Image DOI" ng-model="image.DOIFigure">
+                    </md-input-container>
+                </form>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-disabled="image._loading" ng-click="vm.removeImage($index)" class="md-raised md-warn" layout="column">
+                    <span ng-hide="image._loading">remove</span>
+                    <md-progress-circular ng-show="image._loading" md-diameter="24px"></md-progress-circular>
+                </md-button>
+            </md-card-actions>
+        </md-card>
     </md-content>
 </md-sidenav>

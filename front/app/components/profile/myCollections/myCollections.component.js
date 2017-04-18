@@ -22,10 +22,11 @@
         '$scope',
         'collectionEditService',
         'collections',
-        'modalDialog'
+        'modalDialog',
+        'rfToast'
     ];
 
-    function Controller($scope, collectionEditService, collections, modalDialog) {
+    function Controller($scope, collectionEditService, collections, modalDialog, rfToast) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -78,12 +79,13 @@
 
         function remove(index) {
             modalDialog
-                .confirm('Delete this collection?')
+                .confirm('Delete this refigure?')
                 .then(function () {
                     collections
                         .remove(vm.response.results[index].ID)
                         .then(function () {
                             vm.response.results.splice(index, 1);
+                            rfToast.show('Refigure deleted');
                         });
                 });
         }

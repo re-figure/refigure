@@ -18,14 +18,54 @@
             controllerAs: 'vm'
         });
 
-    EditController.$inject = ['collectionEditService'];
+    EditController.$inject = ['$scope', 'collectionEditService', 'modalDialog'];
 
-    function EditController(collectionEditService) {
+    function EditController($scope, collectionEditService, modalDialog) {
         var vm = this;
 
+        vm.loading = false;
+        vm.forms = {};
+
+        vm.saveCollection = saveCollection;
+        vm.removeImage = removeImage;
+        vm.saveImage = saveImage;
         vm.svc = collectionEditService;
 
+        activate();
+
         /////////////////////////////////
+
+        function activate() {
+            $scope.$watch('vm.sidebarOpened', function (val) {
+                if (!val) {
+                    collectionEditService.reset();
+                }
+            });
+        }
+
+        function saveCollection() {
+            vm.loading = true;
+            collectionEditService
+                .saveCollection()
+                .finally(function () {
+                    vm.loading = false;
+                });
+        }
+
+        function removeImage(index) {
+            modalDialog
+                .confirm('Delete this image?')
+                .then(function () {
+                    collectionEditService
+                        .removeImage(index);
+                });
+        }
+
+        function saveImage(index) {
+            if (vm.svc.collection.ID && vm.forms['f' + index].$dirty) {
+                collectionEditService.saveImage(index);
+            }
+        }
 
     }
 

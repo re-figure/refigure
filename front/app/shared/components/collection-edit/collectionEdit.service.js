@@ -38,7 +38,7 @@
          */
         function saveCollection() {
             return collections
-                .saveCollection(exports.collection)
+                .save(exports.collection)
                 .then(function (refigure) {
                     angular.extend(_editing, refigure);
                     exports.close();
@@ -57,7 +57,7 @@
         function open(collection) {
             _editing = collection;
             return collections
-                .getCollection(collection.ID)
+                .get(collection.ID)
                 .then(function (resp) {
                     exports.collection = resp;
                     $mdSidenav('collectionDetails').open();

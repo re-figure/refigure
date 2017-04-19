@@ -38,7 +38,7 @@
             Most visited refigures
         </div>
         <md-content layout-padding layout-gt-sm="row" layout="column">
-            <md-card md-theme="default" flex-gt-sm="33" ng-repeat="item in vm.mostVisited">
+            <md-card ui-sref="collections.item({id: item.ID})" md-theme="default" flex-gt-sm="33" ng-repeat="item in vm.mostVisited">
                 <md-card-title>
                     <md-card-title-media>
                         <div class="md-media-sm card-media">

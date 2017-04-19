@@ -23,8 +23,8 @@
             search: search,
             myCollections: myCollections,
             remove: remove,
-            getCollection: getCollection,
-            saveCollection: saveCollection
+            get: get,
+            save: save
         };
 
         return exports;
@@ -55,14 +55,14 @@
 
         /**
          * @ngdocs method
-         * @name refigure.collections.services:collections#getCollection
+         * @name refigure.collections.services:collections#get
          * @methodOf refigure.collections.services:collections
          * @param {String} ID Metapublication ID
          * @returns {Promise} promise
          * @description
          * Gets collection
          */
-        function getCollection(ID) {
+        function get(ID) {
             return $http
                 .get(_apiUrl + '/metapublication/' + ID)
                 .then(function (res) {
@@ -73,14 +73,14 @@
 
         /**
          * @ngdocs method
-         * @name refigure.collections.services:collections#saveCollection
+         * @name refigure.collections.services:collections#save
          * @methodOf refigure.collections.services:collections
          * @param {Object} collection Refigure
          * @returns {Promise} promise
          * @description
          * Saves collection
          */
-        function saveCollection(collection) {
+        function save(collection) {
             return $http
                 .put(_apiUrl + '/metapublication/', collection)
                 .then(function (res) {

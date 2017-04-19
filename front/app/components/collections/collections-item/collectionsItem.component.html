@@ -1,0 +1,43 @@
+<div class="wrp" layout="row" layout-wrap layout-align="start center">
+    <md-content>
+        <div class="rf-item-description">
+            <div class="md-headline" ng-bind="vm.refigure.Title"></div>
+            <div class="md-subhead" ng-bind="vm.refigure.Description"></div>
+            <div class="rf-item-user">
+                <span  ng-bind="vm.refigure.User.FirstName"></span>
+                <span ng-bind="vm.refigure.User.LastName"></span>
+            </div>
+        </div>
+    </md-content>
+    <md-content
+            class="clickable"
+            md-whiteframe="{{image.ID === vm.details.ID ? 4 : -1}}"
+            layout="column"
+            layout-align="center center"
+            ng-click="vm.imageDetails($event, $index)"
+            ng-repeat-start="image in vm.refigure.Figures">
+        <img ng-src="{{image.URL}}">
+    </md-content>
+    <md-card ng-repeat-end ng-if="image.lastInRow" flex="100" class="hide-show-slide-down">
+        <md-card-content layout="row">
+            <div flex="33" layout="column" layout-align="center center">
+                <img ng-src="{{vm.details.URL}}">
+            </div>
+            <div>
+                <div class="md-headline" ng-bind="vm.details.Caption"></div>
+                <div class="md-subhead" ng-bind="vm.details.Legend"></div>
+                <p ng-show="vm.details.Authors">
+                    <b>Authors:</b> <span ng-bind="vm.details.Authors"></span>
+                </p>
+                <p ng-show="vm.details.DOI">
+                    <b>Article DOI:</b> <span ng-bind="vm.details.DOI"></span>
+                </p>
+                <p ng-show="vm.details.DOIFigure">
+                    <b>Image DOI:</b> <span ng-bind="vm.details.DOIFigure"></span>
+                </p>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>
+
+<!--<pre>{{vm.refigure|json}}</pre>-->

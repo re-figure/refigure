@@ -51,6 +51,7 @@
          * It activates controller
          */
         function activate() {
+            vm.stateData = $state.current.data;
             vm.menuItems.forEach(function (_item) {
                 var info = $state.get(_item.state) || {};
                 angular.extend(_item, info.data);
@@ -70,7 +71,7 @@
         function buildToggler(componentId) {
             return function() {
                 $mdSidenav(componentId).toggle();
-            }
+            };
         }
     }
 })(window.angular);

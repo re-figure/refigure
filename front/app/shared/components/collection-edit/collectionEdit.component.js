@@ -24,11 +24,13 @@
         var vm = this;
 
         vm.loading = false;
+        vm.opened = -1;
         vm.forms = {};
 
         vm.saveCollection = saveCollection;
         vm.removeImage = removeImage;
         vm.saveImage = saveImage;
+        vm.toggleDetails = toggleDetails;
         vm.svc = collectionEditService;
 
         activate();
@@ -39,6 +41,7 @@
             $scope.$watch('vm.sidebarOpened', function (val) {
                 if (!val) {
                     collectionEditService.reset();
+                    vm.opened = -1;
                 }
             });
         }
@@ -65,6 +68,10 @@
             if (vm.svc.collection.ID && vm.forms['f' + index].$dirty) {
                 collectionEditService.saveImage(index);
             }
+        }
+
+        function toggleDetails(index) {
+            vm.opened = vm.opened === index ? -1 : index;
         }
 
     }

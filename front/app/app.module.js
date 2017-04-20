@@ -1,4 +1,4 @@
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -31,12 +31,16 @@
     }
 
     appRun.$inject = [
-        '$rootScope'
+        '$rootScope',
+        'auth'
     ];
 
-    function appRun($rootScope) {
+    function appRun($rootScope, auth) {
         $rootScope.projectName = 'Refigure';
         $rootScope.mobileBrowser = utils.mobileBrowser();
+        if (auth.isAuthenticated()) {
+            auth.usrInfo();
+        }
     }
 
     themeConfig.$inject = [

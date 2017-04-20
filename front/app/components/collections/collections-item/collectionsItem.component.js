@@ -1,11 +1,11 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:mostVisited
+ * @name refigureApp.directive:collectionsItem
  * @restrict E
  * @description
- * Search Results
+ * Single collection page
  * @example
- * <most-visited></most-visited>
+ * <collections-item></collections-item>
  */
 (function (angular) {
     'use strict';
@@ -21,17 +21,21 @@
     ItemController.$inject = [
         '$state',
         '$stateParams',
-        'collections'
+        'collections',
+        'auth',
+        'authUserInfo'
     ];
 
-    function ItemController($state, $stateParams, collections) {
+    function ItemController($state, $stateParams, collections, auth, authUserInfo) {
         var vm = this;
         var currentLastInRow = -1;
 
         vm.$onInit = activate;
-        vm.refigure = {};
+        vm.refigure = null;
         vm.imageDetails = imageDetails;
-        vm.details = {};
+        vm.toggleFlag = toggleFlag;
+        vm.details = null;
+        vm.isAdmin = isAdmin;
 
         ///////////////////////
 
@@ -42,6 +46,8 @@
                 .then(function (resp) {
                     $state.current.data.headerTitle = '"' + resp.Title + '"';
                     vm.refigure = resp;
+                    auth.setUsrNames(vm.refigure.User);
+                    vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
                 });
         }
 
@@ -51,11 +57,11 @@
             if (el.tagName === 'IMG') {
                 el = el.parentNode;
             }
-            if (vm.details.ID === vm.refigure.Figures[index].ID) {
+            if (vm.details && vm.details.ID === vm.refigure.Figures[index].ID) {
                 //close current
                 currentLastInRow = -1;
                 vm.refigure.Figures[index].lastInRow = false;
-                vm.details = {};
+                vm.details = null;
             } else {
                 if (currentLastInRow !== -1) {
                     //close previously opened
@@ -67,7 +73,7 @@
                     nextElement = getNextImage(el);
                     if (
                         currentLastInRow === vm.refigure.Figures.length - 1 || //is last element
-                        el.getBoundingClientRect().right >  nextElement.getBoundingClientRect().right //last in row
+                        el.getBoundingClientRect().right > nextElement.getBoundingClientRect().right //last in row
                     ) {
                         vm.refigure.Figures[currentLastInRow].lastInRow = true;
                         break;
@@ -78,13 +84,24 @@
                 vm.details = vm.refigure.Figures[index];
             }
 
-            function getNextImage (el) {
+            function getNextImage(el) {
                 var ret = el.nextElementSibling;
                 if (ret && ret.tagName === 'MD-CARD') {
                     ret = ret.nextElementSibling;
                 }
                 return ret || el;
             }
+        }
+
+        function toggleFlag() {
+            collections.toggleFlag(vm.refigure.ID)
+                .then(function () {
+                    vm.refigure.Flagged = !vm.refigure.Flagged * 1;
+                });
+        }
+
+        function isAdmin() {
+            return authUserInfo.Type === 2;
         }
 
     }

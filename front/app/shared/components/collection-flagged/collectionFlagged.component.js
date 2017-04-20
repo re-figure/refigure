@@ -21,10 +21,10 @@
 
     function Controller($attrs) {
         $attrs.$observe('flagged', function (value) {
-            if (value === 'true') {
-                $attrs.$addClass('ng-hide');
-            } else {
+            if (value === '1') {
                 $attrs.$removeClass('ng-hide');
+            } else {
+                $attrs.$addClass('ng-hide');
             }
         });
     }

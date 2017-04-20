@@ -1,43 +1,74 @@
-<div class="wrp" layout="row" layout-wrap layout-align="start center">
-    <md-content>
-        <div class="rf-item-description">
-            <div class="md-headline" ng-bind="vm.refigure.Title"></div>
-            <div class="md-subhead" ng-bind="vm.refigure.Description"></div>
-            <div class="rf-item-user">
-                <span  ng-bind="vm.refigure.User.FirstName"></span>
-                <span ng-bind="vm.refigure.User.LastName"></span>
-            </div>
-        </div>
-    </md-content>
-    <md-content
-            class="clickable"
-            md-whiteframe="{{image.ID === vm.details.ID ? 4 : -1}}"
-            layout="column"
-            layout-align="center center"
-            ng-click="vm.imageDetails($event, $index)"
-            ng-repeat-start="image in vm.refigure.Figures">
-        <img ng-src="{{image.URL}}">
-    </md-content>
-    <md-card ng-repeat-end ng-if="image.lastInRow" flex="100" class="hide-show-slide-down">
-        <md-card-content layout="row">
-            <div flex="33" layout="column" layout-align="center center">
-                <img ng-src="{{vm.details.URL}}">
+<div layout="row" flex layout-align="start start">
+    <div class="" layout="row" layout-wrap layout-align="start center" flex>
+        <md-content
+                class="rf-item-image"
+                md-whiteframe="{{image.ID === vm.details.ID ? 4 : -1}}"
+                layout="column"
+                layout-align="center center"
+                ng-click="vm.imageDetails($event, $index)"
+                ng-repeat-start="image in vm.refigure.Figures">
+            <img ng-src="{{image.URL}}">
+        </md-content>
+        <md-card ng-repeat-end ng-if="image.lastInRow && vm.details" flex="100" class="hide-show-slide-down">
+            <md-card-content layout="row">
+                <div flex="33" layout="column" layout-align="center center" layout-padding>
+                    <img ng-src="{{vm.details.URL}}">
+                </div>
+                <div>
+                    <p ng-bind="vm.details.Caption"></p>
+                    <div class="md-body-2" ng-bind="vm.details.Legend"></div>
+                    <p ng-show="vm.details.Authors">
+                        <b class="md-caption">Authors: </b><span class="md-caption" ng-bind="vm.details.Authors"></span>
+                    </p>
+                    <p ng-show="vm.details.DOI">
+                        <b class="md-caption">Article DOI: </b><span class="md-caption" ng-bind="vm.details.DOI"></span>
+                    </p>
+                    <div ng-show="vm.details.DOIFigure">
+                        <b class="md-caption">Image DOI: </b><span class="md-caption" ng-bind="vm.details.DOIFigure"></span>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+
+    <md-sidenav
+            ng-show="vm.refigure"
+            class="md-sidenav-right"
+            md-is-locked-open="true"
+            md-whiteframe="4">
+        <md-content layout-padding>
+            <div ui-sref="collections.user({id: vm.refigure.User.ID})" md-truncate>
+                <b class="md-caption">Creator: </b><a href="" ng-bind="vm.refigure.User.FullName"></a>
             </div>
             <div>
-                <div class="md-headline" ng-bind="vm.details.Caption"></div>
-                <div class="md-subhead" ng-bind="vm.details.Legend"></div>
-                <p ng-show="vm.details.Authors">
-                    <b>Authors:</b> <span ng-bind="vm.details.Authors"></span>
-                </p>
-                <p ng-show="vm.details.DOI">
-                    <b>Article DOI:</b> <span ng-bind="vm.details.DOI"></span>
-                </p>
-                <p ng-show="vm.details.DOIFigure">
-                    <b>Image DOI:</b> <span ng-bind="vm.details.DOIFigure"></span>
-                </p>
+                <b class="md-caption">Created at: </b><span ng-bind="vm.refigure.DateCreated|date:'d.MM.yyyy'"></span>
             </div>
-        </md-card-content>
-    </md-card>
-</div>
 
-<!--<pre>{{vm.refigure|json}}</pre>-->
+            <div ng-bind="vm.refigure.Description"></div>
+            <div layout="row" layout-align="start center">
+                <b class="md-caption">Keywords:&nbsp;</b>
+                <md-chips>
+                    <md-chip ng-repeat="chip in vm.refigure.KeywordsChips" ng-bind="chip"></md-chip>
+                </md-chips>
+            </div>
+            <most-visited count="vm.refigure.Visit.Count"></most-visited>
+            <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
+            <div ng-if="vm.isAdmin()" layout="row" layout-align="end center">
+                <md-button
+                        class="md-raised"
+                        ng-class="vm.refigure.Flagged? 'md-accent' : 'md-warn'"
+                        ng-click="vm.toggleFlag()">
+                    <b>Admin:&nbsp;</b>
+                    <span ng-hide="vm.refigure.Flagged">
+                        mark invalid&nbsp;
+                        <md-icon>report_problem</md-icon>
+                    </span>
+                    <span ng-show="vm.refigure.Flagged">
+                        unmark invalid&nbsp;
+                        <md-icon>thumb_up</md-icon>
+                    </span>
+                </md-button>
+            </div>
+        </md-content>
+    </md-sidenav>
+</div>

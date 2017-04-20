@@ -15,6 +15,13 @@
             template: '<collections-item></collections-item>',
             data: {}
         }
+    }, {
+        state: 'collections.user',
+        config: {
+            url: '/collections/user/:id',
+            template: '<collections-user></collections-user>',
+            data: {}
+        }
     }];
 
     appRun.$inject = [

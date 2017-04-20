@@ -24,7 +24,8 @@
             myCollections: myCollections,
             remove: remove,
             get: get,
-            save: save
+            save: save,
+            toggleFlag: toggleFlag
         };
 
         return exports;
@@ -142,6 +143,22 @@
                     items.results = itemsUIData(items.results);
                     console.log(items);
                     return items;
+                });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collection#toggleFlag
+         * @methodOf refigure.collections.services:collections
+         * @param {String} ID Metapublication ID
+         * @returns {Object} promise
+         * @description
+         * Switches Flagged state
+         */
+        function toggleFlag(ID) {
+            return $http
+                .put(_apiUrl + '/metapublication-flag', {
+                    ID: ID
                 });
         }
 

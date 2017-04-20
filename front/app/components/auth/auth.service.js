@@ -110,7 +110,10 @@
             // return only 'root' domain
             // assumption here: we use domains like example.com
             // not like example.co.uk
-            return '.' + host.split('.').slice(-2).join('.');
+            //fixme: chrome.cookie.set (from extension/popup) can only set cookie to url, not domain name
+            //fixme: so we cant set cookie to [.noblecoz.com]. Only Valid urls [refigure.noblecoz.com]
+            //return '.' + host.split('.').slice(-2).join('.');
+            return host;
         }
     }
 

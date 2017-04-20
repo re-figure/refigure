@@ -49,6 +49,7 @@
     "REMOTE_API_URL*",
     "tabs",
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "cookies"
   ]
 }

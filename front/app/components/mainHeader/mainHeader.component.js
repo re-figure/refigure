@@ -21,10 +21,11 @@
     Controller.$inject = [
         '$rootScope',
         '$state',
-        '$mdSidenav'
+        '$mdSidenav',
+        'authUserInfo'
     ];
 
-    function Controller($rootScope, $state, $mdSidenav) {
+    function Controller($rootScope, $state, $mdSidenav, authUserInfo) {
         var vm = this;
         vm.projectName = $rootScope.projectName;
         vm.showSearch = true;
@@ -36,6 +37,8 @@
         }, {
             state: 'home.news'
         }];
+
+        vm.userInfo = authUserInfo;
 
         vm.toggle = buildToggler('main-sidenav');
 

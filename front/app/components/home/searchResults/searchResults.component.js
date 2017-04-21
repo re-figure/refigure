@@ -18,9 +18,9 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$scope', 'collections', '$stateParams'];
+    Controller.$inject = ['$scope', '$state', 'collections', '$stateParams'];
 
-    function Controller($scope, collections, $stateParams) {
+    function Controller($scope, $state, collections, $stateParams) {
         var vm = this;
 
         vm.results = [];
@@ -39,7 +39,7 @@
 
         vm.submit = submit;
 
-        activate();
+        vm.$onInit = activate();
 
         /////////////////////
 
@@ -51,6 +51,7 @@
          * Activates controller
          */
         function activate() {
+            $state.get('collections.item').data.headerTitle = 'Search results';
             $scope.$watchCollection('vm.searchParams', load);
         }
 

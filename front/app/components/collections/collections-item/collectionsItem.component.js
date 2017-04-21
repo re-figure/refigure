@@ -44,11 +44,11 @@
         ///////////////////////
 
         function activate() {
-            //vm.elementsInRow = Math.floor(window.innerWidth / blockWidth);
+            $state.get('collections.item').data.headerTitle = '';
             collections
                 .get($stateParams.id)
                 .then(function (resp) {
-                    $state.current.data.headerTitle = '"' + resp.Title + '"';
+                    $state.get('collections.item').data.headerTitle = '"' + resp.Title + '"';
                     vm.refigure = resp;
                     auth.setUsrNames(vm.refigure.User);
                     if (vm.refigure.Keywords) {

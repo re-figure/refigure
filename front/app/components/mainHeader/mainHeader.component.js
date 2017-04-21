@@ -54,7 +54,10 @@
          * It activates controller
          */
         function activate() {
-            vm.stateData = $state.current.data;
+            vm.state = $state.current;
+            $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+                vm.state = toState;
+            });
             vm.menuItems.forEach(function (_item) {
                 var info = $state.get(_item.state) || {};
                 angular.extend(_item, info.data);

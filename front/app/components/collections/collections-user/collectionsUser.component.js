@@ -47,13 +47,14 @@
         }
 
         function load() {
+            $state.get('collections.user').data.headerTitle = '';
             collections.search(vm.searchParams).then(function (res) {
                 vm.results = res.results;
                 vm.total = res.found;
                 if (vm.results.length) {
                     vm.user = vm.results[0].User;
                     auth.setUsrNames(vm.user);
-                    $state.current.data.headerTitle = ' by ' + vm.user.FullName + '';
+                    $state.get('collections.user').data.headerTitle = ' by ' + vm.user.FullName;
                 }
             });
         }

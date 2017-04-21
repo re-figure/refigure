@@ -447,17 +447,24 @@
      */
     function setUsrNames(obj) {
         if (angular.isDefined(obj.FirstName) || angular.isDefined(obj.LastName)) {
-            var names = [];
+            var names = [], initials = [];
             obj.Initials = '';
             if (obj.FirstName) {
+                obj.FirstName = firstToUpper(obj.FirstName);
                 names.push(obj.FirstName);
-                obj.Initials += obj.FirstName.charAt(0);
+                initials.push(obj.FirstName.charAt(0) + '.');
             }
             if (obj.LastName) {
+                obj.LastName = firstToUpper(obj.LastName);
                 names.push(obj.LastName);
-                obj.Initials += obj.LastName.charAt(0);
+                initials.push(obj.LastName.charAt(0) + '.');
+                obj.Initials += obj.LastName.charAt(0) + '.';
             }
+            obj.Initials = initials.join(' ');
             obj.FullName = names.join(' ');
+        }
+        function firstToUpper(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
         }
     }
 

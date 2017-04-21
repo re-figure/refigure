@@ -45,29 +45,34 @@
             </div>
 
             <div ng-bind="vm.refigure.Description"></div>
-            <div layout="row" layout-align="start center">
+            <div ng-show="vm.refigure.Keywords" layout="row" layout-align="start center">
                 <b class="md-caption">Keywords&nbsp;</b>
                 <md-chips>
-                    <md-chip ng-repeat="chip in vm.refigure.KeywordsChips" ng-bind="chip"></md-chip>
+                    <md-chip ng-repeat="chip in vm.refigure.KeywordsChips track by $index" ng-bind="chip"></md-chip>
                 </md-chips>
             </div>
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
-            <div ng-if="vm.isAdmin()" layout="row" layout-align="end center">
-                <md-button
-                        class="md-raised"
-                        ng-class="vm.refigure.Flagged? 'md-accent' : 'md-warn'"
-                        ng-click="vm.toggleFlag()">
-                    <b>Admin:&nbsp;</b>
-                    <span ng-hide="vm.refigure.Flagged">
-                        mark invalid&nbsp;
-                        <md-icon>report_problem</md-icon>
-                    </span>
-                    <span ng-show="vm.refigure.Flagged">
-                        unmark invalid&nbsp;
-                        <md-icon>thumb_up</md-icon>
-                    </span>
-                </md-button>
+            <div ng-if="vm.isAdmin()">
+                <b class="md-caption">Admin:</b>
+                <div layout="row" layout-align="space-between center">
+                    <md-button class="md-button-small md-raised md-primary" ui-sref="profile.collections({refigure: vm.refigure.ID})">
+                        edit <md-icon>edit</md-icon>
+                    </md-button>
+                    <md-button
+                            class="md-raised md-button-small"
+                            ng-class="vm.refigure.Flagged? 'md-accent' : 'md-warn'"
+                            ng-click="vm.toggleFlag()">
+                        <span ng-hide="vm.refigure.Flagged">
+                            Report copyright infringement&nbsp;
+                            <md-icon>report_problem</md-icon>
+                        </span>
+                        <span ng-show="vm.refigure.Flagged">
+                            Unmark as copyright infringement&nbsp;
+                            <md-icon>thumb_up</md-icon>
+                        </span>
+                    </md-button>
+                </div>
             </div>
         </md-content>
     </md-sidenav>

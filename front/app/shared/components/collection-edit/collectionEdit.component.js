@@ -49,7 +49,6 @@
             $scope.$watch('vm.sidebarOpened', function (val) {
                 if (val !== undefined && !val) {
                     $state.go($state.current.name, {refigure: null});
-                    $scope.$emit('refigureUpdated', vm.refigure);
                     vm.refigure = null;
                 }
             });
@@ -82,6 +81,7 @@
                 .save(vm.refigure)
                 .then(function (refigure) {
                     rfToast.show('Refigure saved', refigure);
+                    $scope.$emit('refigureUpdated', refigure);
                 })
                 .finally(function () {
                     vm.loading = false;
@@ -111,6 +111,10 @@
                         .then(function () {
                             vm.refigure.Figures.splice(index, 1);
                             vm.refigure.FiguresCount--;
+                            $scope.$emit('refigureUpdated', {
+                                ID: vm.refigure.ID,
+                                FiguresCount: vm.refigure.FiguresCount
+                            });
                             rfToast.show('Image removed');
                         }, function () {
                             vm.refigure.Figures[index]._loading = false;

@@ -1,5 +1,6 @@
 <div layout="row" flex layout-align="start start">
     <div layout="row" layout-wrap layout-align="start center" flex>
+        <h3 ng-hide="vm.refigure.Figures.length" layout="row" layout-align="center center" flex>No images in refigure</h3>
         <md-content
                 class="rf-item-image"
                 md-whiteframe="{{image.ID === vm.details.ID ? 4 : -1}}"
@@ -30,7 +31,6 @@
             </md-card-content>
         </md-card>
     </div>
-    <div ng-hide="vm.details.Figures.length" layout="row" layout-align="center center">No</div>
 
     <md-sidenav
             ng-show="vm.refigure"
@@ -64,7 +64,7 @@
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
             <div ng-if="vm.isAdmin()">
-                <b class="md-caption">Admin:</b>
+                <b class="md-caption">Administrate:</b>
                 <div layout="row" layout-align="space-between center">
                     <md-button class="md-button-small md-raised md-primary" ui-sref="profile.collections({refigure: vm.refigure.ID})">
                         edit <md-icon>edit</md-icon>

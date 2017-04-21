@@ -1,5 +1,5 @@
 <div layout="row" flex layout-align="start start">
-    <div class="" layout="row" layout-wrap layout-align="start center" flex>
+    <div layout="row" layout-wrap layout-align="start center" flex>
         <md-content
                 class="rf-item-image"
                 md-whiteframe="{{image.ID === vm.details.ID ? 4 : -1}}"
@@ -38,15 +38,15 @@
             md-whiteframe="4">
         <md-content layout-padding>
             <div ui-sref="collections.user({id: vm.refigure.User.ID})" md-truncate>
-                <b class="md-caption">Creator: </b><a href="" ng-bind="vm.refigure.User.FullName"></a>
+                <b class="md-caption">Creator </b><a href="" ng-bind="vm.refigure.User.FullName"></a>
             </div>
             <div>
-                <b class="md-caption">Created at: </b><span ng-bind="vm.refigure.DateCreated|date:'d.MM.yyyy'"></span>
+                <b class="md-caption">Created at </b><span ng-bind="vm.refigure.DateCreated|date:'d.MM.yyyy'"></span>
             </div>
 
             <div ng-bind="vm.refigure.Description"></div>
             <div layout="row" layout-align="start center">
-                <b class="md-caption">Keywords:&nbsp;</b>
+                <b class="md-caption">Keywords&nbsp;</b>
                 <md-chips>
                     <md-chip ng-repeat="chip in vm.refigure.KeywordsChips" ng-bind="chip"></md-chip>
                 </md-chips>

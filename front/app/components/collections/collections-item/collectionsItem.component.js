@@ -47,7 +47,9 @@
                     $state.current.data.headerTitle = '"' + resp.Title + '"';
                     vm.refigure = resp;
                     auth.setUsrNames(vm.refigure.User);
-                    vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+                    if (vm.refigure.Keywords) {
+                        vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+                    }
                 });
         }
 

@@ -19,19 +19,43 @@
         });
 
     ItemController.$inject = [
-        '$stateParams',
-        'collections'
+        '$scope',
+        '$state',
+        'collections',
+        'auth'
     ];
 
-    function ItemController($stateParams, collections) {
+    function ItemController($scope, $state, collections, auth) {
         var vm = this;
+        vm.total = 0;
+        vm.result = [];
+        vm.user = null;
+        vm.searchParams = {
+            query: '"' + $state.params.id + '"',
+            from: 0,
+            size: 5,
+            sortDirection: '',
+            sortField: ''
+        };
 
         vm.$onInit = activate;
 
         ///////////////////////////////////////////
 
         function activate() {
-            console.log($stateParams);
+            $scope.$watchCollection('vm.searchParams', load);
+        }
+
+        function load() {
+            collections.search(vm.searchParams).then(function (res) {
+                vm.results = res.results;
+                vm.total = res.found;
+                if (vm.results.length) {
+                    vm.user = vm.results[0].User;
+                    auth.setUsrNames(vm.user);
+                    $state.current.data.headerTitle = ' by ' + vm.user.FullName + '';
+                }
+            });
         }
     }
 })(window.angular);

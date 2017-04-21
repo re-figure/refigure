@@ -39,6 +39,7 @@
             sortField: 'Metapublication.Title'
         };
         vm.remove = remove;
+        vm.submit = submit;
 
         activate();
 
@@ -94,6 +95,10 @@
                             rfToast.show('Refigure deleted');
                         });
                 });
+        }
+
+        function submit(term) {
+            vm.searchParams.query = term;
         }
     }
 })(window.angular);

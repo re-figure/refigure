@@ -1,3 +1,16 @@
+<md-card>
+    <form layout="row" class="md-padding" name="vm.editForm" ng-submit="vm.submit(term)">
+        <md-input-container flex>
+            <input name="term" autofocus ng-model="term" placeholder="Search"/>
+        </md-input-container>
+        <md-button class="md-icon-button"
+                   md-colors="{background: 'accent-100'}" aria-label="Search"
+                   type="submit"
+        >
+            <md-icon md-font-set="material-icons">search</md-icon>
+        </md-button>
+    </form>
+</md-card>
 <pager total="vm.response.found" search-params="vm.searchParams" default-sort="nameAsc"></pager>
 <div class="r-collection" ng-repeat="item in vm.response.results">
     <collection-row ui-sref="profile.collections({refigure: item.ID})" item="item"></collection-row>

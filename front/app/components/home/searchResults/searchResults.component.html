@@ -1,18 +1,19 @@
-<form name="vm.form" ng-submit="vm.submit(term)">
-    <div class="r-search-input" layout="row">
-        <md-input-container flex>
-            <input name="term" autofocus ng-model="term" placeholder="Search"/>
-        </md-input-container>
-        <md-button class="md-icon-button"
-                   ng-disabled="!vm.form.term.$viewValue"
-                   md-colors="{background: 'accent-100'}" aria-label="Search"
-                   type="submit"
-        >
-            <md-icon md-font-set="material-icons">search</md-icon>
-        </md-button>
-    </div>
-</form>
-
+<md-card>
+    <form class="md-padding" name="vm.form" ng-submit="vm.submit(term)">
+        <div class="r-search-input" layout="row">
+            <md-input-container flex>
+                <input name="term" autofocus ng-model="term" placeholder="Search"/>
+            </md-input-container>
+            <md-button class="md-icon-button"
+                       ng-disabled="!vm.form.term.$viewValue"
+                       md-colors="{background: 'accent-100'}" aria-label="Search"
+                       type="submit"
+            >
+                <md-icon md-font-set="material-icons">search</md-icon>
+            </md-button>
+        </div>
+    </form>
+</md-card>
 <pager total="vm.total" search-params="vm.searchParams"></pager>
 
 <collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.results"></collection-row>

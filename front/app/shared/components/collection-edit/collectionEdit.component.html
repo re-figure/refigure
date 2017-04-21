@@ -44,7 +44,7 @@
             <md-card-title>
                 <md-card-title-media>
                     <div class="md-media-md card-media">
-                        <img ng-src="{{image.URL}}">
+                        <img ng-click="vm.showFullscreen($event, image.URL)" ng-src="{{image.URL}}">
                     </div>
                 </md-card-title-media>
                 <md-card-title-text layout="column" layout-align="space-between start">

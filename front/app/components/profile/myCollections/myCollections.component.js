@@ -26,7 +26,7 @@
         'rfToast'
     ];
     //collectionEditService
-    function Controller($scope, collections, modalDialog, rfToast) {
+    function Controller($scope, collections, modal, rfToast) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -85,7 +85,7 @@
         }
 
         function remove(index) {
-            modalDialog
+            modal
                 .confirm('Delete this refigure?')
                 .then(function () {
                     collections

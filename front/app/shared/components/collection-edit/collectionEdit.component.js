@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directives:collectionEdit
+ * @name refigureShared.directives:collectionEdit
  * @restrict E
  * @description
  * Search Results
@@ -27,7 +27,7 @@
         'rfImages'
     ];
 
-    function EditController($scope, $state, collections, modalDialog, rfToast, rfImages) {
+    function EditController($scope, $state, collections, modal, rfToast, rfImages) {
         var vm = this;
 
         vm.loading = false;
@@ -38,6 +38,7 @@
         vm.removeImage = removeImage;
         vm.saveImage = saveImage;
         vm.toggleDetails = toggleDetails;
+        vm.showFullscreen = showFullscreen;
         vm.refigure = null;
 
         activate();
@@ -70,8 +71,8 @@
 
         /**
          * @ngdoc method
-         * @name refigureShared.services:collectionEditService#saveRefigure
-         * @methodOf refigureShared.services:collectionEditService
+         * @name refigureShared.directives:collectionEdit#saveRefigure
+         * @methodOf refigureShared.directives:collectionEdit
          * @description
          * Saves collection
          */
@@ -96,13 +97,13 @@
 
         /**
          * @ngdoc method
-         * @name refigureShared.services:collectionEditService#removeImage
-         * @methodOf refigureShared.services:collectionEditService
+         * @name refigureShared.directives:collectionEdit#removeImage
+         * @methodOf refigureShared.directives:collectionEdit
          * @description
          * Removes image
          */
         function removeImage(index) {
-            modalDialog
+            modal
                 .confirm('Delete this image?')
                 .then(function () {
                     vm.refigure.Figures[index]._loading = true;
@@ -124,8 +125,8 @@
 
         /**
          * @ngdoc method
-         * @name refigureShared.services:collectionEditService#saveImage
-         * @methodOf refigureShared.services:collectionEditService
+         * @name refigureShared.directives:collectionEdit#saveImage
+         * @methodOf refigureShared.directives:collectionEdit
          * @param {Number} index index of Image to save
          * @description
          * Edits image
@@ -139,6 +140,24 @@
                         vm.refigure.Figures[index]._loading = false;
                     });
             }
+        }
+
+        /**
+         * @ngdoc method
+         * @name refigureShared.directives:collectionEdit#saveImage
+         * @methodOf refigureShared.directives:collectionEdit
+         * @param {Event} e angular event object
+         * @param {String} src link to image
+         * @description
+         * Show full size image
+         */
+        function showFullscreen(e, src) {
+            modal.show({
+                template: '<img src="' + src + '">',
+                targetEvent: e,
+                clickOutsideToClose:true,
+                fullscreen: true
+            });
         }
     }
 

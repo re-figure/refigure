@@ -12,7 +12,7 @@
         <md-card ng-repeat-end ng-if="image.lastInRow && vm.details" flex="100" class="hide-show-slide-down">
             <md-card-content layout="row">
                 <div flex="33" layout="column" layout-align="center center" layout-padding>
-                    <img ng-src="{{vm.details.URL}}">
+                    <img ng-click="vm.showFullscreen($event, vm.details.URL)" ng-src="{{vm.details.URL}}">
                 </div>
                 <div>
                     <p ng-bind="vm.details.Caption"></p>

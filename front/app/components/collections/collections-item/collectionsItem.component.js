@@ -23,19 +23,23 @@
         '$stateParams',
         'collections',
         'auth',
-        'authUserInfo'
+        'authUserInfo',
+        'modalDialog'
     ];
 
-    function ItemController($state, $stateParams, collections, auth, authUserInfo) {
+    function ItemController($state, $stateParams, collections, auth, authUserInfo, modal) {
         var vm = this;
         var currentLastInRow = -1;
 
-        vm.$onInit = activate;
         vm.refigure = null;
+        vm.details = null;
+
         vm.imageDetails = imageDetails;
         vm.toggleFlag = toggleFlag;
-        vm.details = null;
         vm.isAdmin = isAdmin;
+        vm.showFullscreen = showFullscreen;
+
+        vm.$onInit = activate;
 
         ///////////////////////
 
@@ -104,6 +108,15 @@
 
         function isAdmin() {
             return authUserInfo.Type === 2;
+        }
+
+        function showFullscreen(e, src) {
+            modal.show({
+                template: '<img src="' + src + '">',
+                targetEvent: e,
+                clickOutsideToClose:true,
+                fullscreen: true
+            });
         }
 
     }

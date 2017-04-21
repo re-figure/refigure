@@ -20,13 +20,13 @@
 
     Controller.$inject = [
         '$scope',
-        'collectionEditService',
+        'collections',
         'collections',
         'modalDialog',
         'rfToast'
     ];
-
-    function Controller($scope, collectionEditService, collections, modalDialog, rfToast) {
+    //collectionEditService
+    function Controller($scope, collections, modalDialog, rfToast) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -38,9 +38,7 @@
             sortDirection: 'ASC',
             sortField: 'Metapublication.Title'
         };
-
         vm.remove = remove;
-        vm.showDetails = collectionEditService.open;
 
         activate();
 
@@ -55,6 +53,14 @@
          */
         function activate() {
             $scope.$watchCollection('vm.searchParams', load);
+            $scope.$on('refigureUpdated', function (e, updated) {
+                e.stopPropagation();
+                vm.response.results.forEach(function (refigure) {
+                    if (refigure.ID === updated.ID) {
+                        angular.extend(refigure, updated);
+                    }
+                });
+            });
         }
 
         /**

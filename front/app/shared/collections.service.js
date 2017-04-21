@@ -198,6 +198,10 @@
                 uiData.description += '...';
             }
 
+            if (!item.FiguresCount) {
+                item.FiguresCount = item.Figures.length;
+            }
+
             uiData.img = {};
             // $ui.img.src
             if (!utils.empty(item.Figures)) {

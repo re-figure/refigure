@@ -5,34 +5,34 @@
         md-disable-scroll-target=".r-page-content">
     <md-toolbar class="md-theme-light">
         <div class="md-toolbar-tools">
-            <span md-truncate ng-bind="vm.svc.collection.Title"></span>
+            <span md-truncate ng-bind="vm.refigure.Title"></span>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="vm.svc.close()">
+            <md-button class="md-icon-button" ng-click="vm.sidebarOpened=false">
                 <md-icon>close</md-icon>
             </md-button>
         </div>
     </md-toolbar>
-    <md-content layout-padding ng-if="vm.svc.collection.ID">
-        <md-card ng-form="editCollectionForm" layout="column" layout-align="start stretch">
+    <md-content layout-padding ng-if="vm.refigure.ID">
+        <md-card ng-form="editRefigureForm" layout="column" layout-align="start stretch">
             <md-input-container>
-                <input placeholder="Title" ng-model="vm.svc.collection.Title" name="title" md-sidenav-focus required>
-                <div ng-messages="editCollectionForm.title.$error" role="alert" multiple>
+                <input placeholder="Title" ng-model="vm.refigure.Title" name="title" md-sidenav-focus required>
+                <div ng-messages="editRefigureForm.title.$error" role="alert" multiple>
                     <div ng-message="required" class="my-message">Title is required</div>
                 </div>
             </md-input-container>
 
             <md-input-container>
-                <textarea placeholder="Description" ng-model="vm.svc.collection.Description"></textarea>
+                <textarea placeholder="Description" ng-model="vm.refigure.Description"></textarea>
             </md-input-container>
 
             <md-input-container>
-                <textarea placeholder="Keywords" ng-model="vm.svc.collection.Keywords"></textarea>
+                <textarea placeholder="Keywords" ng-model="vm.refigure.Keywords"></textarea>
             </md-input-container>
             <div layout="column" layout-align="center end">
                 <md-button
                         class="md-primary md-raised"
-                        ng-click="vm.saveCollection()"
-                        ng-disabled="editCollectionForm.$invalid || vm.loading || editCollectionForm.$pristine"
+                        ng-click="vm.saveRefigure()"
+                        ng-disabled="editRefigureForm.$invalid || vm.loading || editRefigureForm.$pristine"
                         layout="column">
                     <span ng-hide="vm.loading">save</span>
                     <md-progress-circular ng-show="vm.loading" class="md-hue-2" md-diameter="24px"></md-progress-circular>
@@ -40,7 +40,7 @@
             </div>
         </md-card>
 
-        <md-card ng-repeat="image in vm.svc.collection.Figures">
+        <md-card ng-repeat="image in vm.refigure.Figures">
             <md-card-title>
                 <md-card-title-media>
                     <div class="md-media-md card-media">

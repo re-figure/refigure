@@ -21,10 +21,11 @@
     Controller.$inject = [
         '$rootScope',
         '$state',
-        '$mdSidenav'
+        '$mdSidenav',
+        'authUserInfo'
     ];
 
-    function Controller($rootScope, $state, $mdSidenav) {
+    function Controller($rootScope, $state, $mdSidenav, authUserInfo) {
         var vm = this;
         vm.projectName = $rootScope.projectName;
         vm.showSearch = true;
@@ -36,6 +37,8 @@
         }, {
             state: 'home.news'
         }];
+
+        vm.userInfo = authUserInfo;
 
         vm.toggle = buildToggler('main-sidenav');
 
@@ -51,6 +54,10 @@
          * It activates controller
          */
         function activate() {
+            vm.state = $state.current;
+            $rootScope.$on('$stateChangeSuccess', function (e, toState) {
+                vm.state = toState;
+            });
             vm.menuItems.forEach(function (_item) {
                 var info = $state.get(_item.state) || {};
                 angular.extend(_item, info.data);
@@ -70,7 +77,7 @@
         function buildToggler(componentId) {
             return function() {
                 $mdSidenav(componentId).toggle();
-            }
+            };
         }
     }
 })(window.angular);

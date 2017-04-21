@@ -1,0 +1,28 @@
+$flagged-height: 25px
+collection-flagged
+    background-color: $warn-color
+    color: #fff
+    position: absolute
+    top: 0
+    right: 0
+    height: $flagged-height
+    padding: 0 5px 0 5px!important
+    width: 55px
+    text-align: center
+    line-height: 25px
+    &:after
+        content: ''
+        position: absolute
+        left: -$flagged-height
+        top: 0
+        width: 0
+        height: 0
+        border-style: solid
+        border-width: 0 $flagged-height $flagged-height 0
+        border-color: transparent $warn-color transparent transparent
+
+    md-icon.material-icons
+        color: #fff
+
+most-visited + collection-flagged
+    right: 65px

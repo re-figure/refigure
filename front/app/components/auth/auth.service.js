@@ -110,7 +110,10 @@
             // return only 'root' domain
             // assumption here: we use domains like example.com
             // not like example.co.uk
-            return '.' + host.split('.').slice(-2).join('.');
+            //fixme: chrome.cookie.set (from extension/popup) can only set cookie to url, not domain name
+            //fixme: so we cant set cookie to [.noblecoz.com]. Only Valid urls [refigure.noblecoz.com]
+            //return '.' + host.split('.').slice(-2).join('.');
+            return host;
         }
     }
 
@@ -136,6 +139,7 @@
             login: login,
             usrInfo: usrInfo,
             fillUsrInfo: fillUsrInfo,
+            setUsrNames: setUsrNames,
             logout: logout,
             remindPassword: remindPassword,
             checkResetToken: checkResetToken,
@@ -422,20 +426,45 @@
                 if (angular.isDefined(info.Type)) {
                     authUserInfo.Type = info.Type;
                 }
-                if (angular.isDefined(info.FirstName) || angular.isDefined(info.LastName)) {
-                    var names = [];
-                    authUserInfo.Initials = '';
-                    if (info.FirstName) {
-                        names.push(info.FirstName);
-                        authUserInfo.Initials += info.FirstName.charAt(0);
-                    }
-                    if (info.LastName) {
-                        names.push(info.LastName);
-                        authUserInfo.Initials += info.LastName.charAt(0);
-                    }
-                    authUserInfo.FullName = names.join(' ');
-                }
+                authUserInfo.FirstName = info.FirstName;
+                authUserInfo.LastName = info.LastName;
+                exports.setUsrNames(authUserInfo);
             }
+        }
+    }
+
+    /**
+     * @ngdoc method
+     * @name refigureAuth.services:auth#setUsrNames
+     * @methodOf refigureAuth.services:auth
+     * @param {Object} obj userInfo object
+     * @param {String} obj.FirstName user first name
+     * @param {String} obj.LastName user last name
+     * @param {String} obj.FullName joined full name
+     * @param {String} obj.Initials user initials
+     * @description
+     * Sets Initials and Full name from current First and Last names
+     */
+    function setUsrNames(obj) {
+        if (angular.isDefined(obj.FirstName) || angular.isDefined(obj.LastName)) {
+            var names = [], initials = [];
+            obj.Initials = '';
+            if (obj.FirstName) {
+                obj.FirstName = firstToUpper(obj.FirstName);
+                names.push(obj.FirstName);
+                initials.push(obj.FirstName.charAt(0) + '.');
+            }
+            if (obj.LastName) {
+                obj.LastName = firstToUpper(obj.LastName);
+                names.push(obj.LastName);
+                initials.push(obj.LastName.charAt(0) + '.');
+                obj.Initials += obj.LastName.charAt(0) + '.';
+            }
+            obj.Initials = initials.join(' ');
+            obj.FullName = names.join(' ');
+        }
+        function firstToUpper(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
         }
     }
 

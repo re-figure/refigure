@@ -1,0 +1,26 @@
+<div layout="row" flex layout-align="start start">
+    <div flex>
+        <pager total="vm.total" search-params="vm.searchParams"></pager>
+        <collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.results"></collection-row>
+    </div>
+    <md-sidenav
+            class="md-sidenav-right"
+            md-is-locked-open="true"
+            md-whiteframe="4">
+        <md-content layout-padding>
+            <div md-truncate>
+                <b class="md-caption">User&nbsp;&nbsp;</b><span ng-bind="vm.user.FullName"></span>
+            </div>
+            <div>
+                <b class="md-caption">Joined&nbsp;&nbsp;</b><span ng-bind="vm.user.DateCreated|date:'d.MM.yyyy'"></span>
+            </div>
+            <div>
+                <b class="md-caption">Total refigures&nbsp;&nbsp;</b><span ng-bind="vm.total"></span>
+            </div>
+            <div ng-show="vm.user.Organization">
+                <b class="md-caption">Organization&nbsp;</b><span ng-bind="vm.user.Organization"></span>&nbsp;
+                <b class="md-caption">in</b> <span ng-bind="vm.user.Department"></span> dept.
+            </div>
+        </md-content>
+    </md-sidenav>
+</div>

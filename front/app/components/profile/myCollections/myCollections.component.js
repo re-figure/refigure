@@ -21,10 +21,12 @@
     Controller.$inject = [
         '$scope',
         'collections',
-        'modalDialog'
+        'collections',
+        'modalDialog',
+        'rfToast'
     ];
-
-    function Controller($scope, collections, modalDialog) {
+    //collectionEditService
+    function Controller($scope, collections, modal, rfToast) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -36,8 +38,8 @@
             sortDirection: 'ASC',
             sortField: 'Metapublication.Title'
         };
-
         vm.remove = remove;
+        vm.submit = submit;
 
         activate();
 
@@ -52,6 +54,14 @@
          */
         function activate() {
             $scope.$watchCollection('vm.searchParams', load);
+            $scope.$on('refigureUpdated', function (e, updated) {
+                e.stopPropagation();
+                vm.response.results.forEach(function (refigure) {
+                    if (refigure.ID === updated.ID) {
+                        angular.extend(refigure, updated);
+                    }
+                });
+            });
         }
 
         /**
@@ -75,15 +85,20 @@
         }
 
         function remove(index) {
-            modalDialog
-                .confirm('Delete this collection?')
+            modal
+                .confirm('Delete this refigure?')
                 .then(function () {
                     collections
                         .remove(vm.response.results[index].ID)
                         .then(function () {
                             vm.response.results.splice(index, 1);
+                            rfToast.show('Refigure deleted');
                         });
                 });
+        }
+
+        function submit(term) {
+            vm.searchParams.query = term;
         }
     }
 })(window.angular);

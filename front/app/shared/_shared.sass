@@ -4,3 +4,19 @@ md-card
     position: relative
     md-card-title-text
         padding: 0 1rem
+
+.hide-show-slide-down
+    max-height: 1000px
+    &.ng-hide
+        max-height: 0
+
+    &.ng-hide-add,
+    &.ng-hide-remove
+        transition: max-height linear 0.3s
+
+[ui-sref],
+[ng-click]
+    cursor: pointer
+
+.md-button-small
+    min-width: 1%

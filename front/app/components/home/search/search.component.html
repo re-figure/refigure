@@ -38,28 +38,24 @@
             Most visited refigures
         </div>
         <md-content layout-padding layout-gt-sm="row" layout="column">
-            <div flex-gt-sm="33"
-                 ng-repeat="item in vm.mostVisited"
-            >
-                <md-card md-theme="default">
-                    <md-card-title>
-                        <md-card-title-media>
-                            <div class="md-media-sm card-media">
-                                <img ng-src="{{ item.$ui.img.src }}" class="md-card-image" alt="Collection image"/>
-                            </div>
-                        </md-card-title-media>
-                        <md-card-title-text layout="column" layout-align="space-between start">
-                            <b ng-bind="item.$ui.title"></b>
-                            <span ng-bind="item.$ui.description"></span>
-                            <span class="md-subhead">
-                                <span ng-bind="item.FiguresCount"></span>
-                                image<span ng-bind="item.FiguresCount === 1 ? '' : 's'"></span> in refigure
-                            </span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <most-visited count="item.Visit.Count"></most-visited>
-                </md-card>
-            </div>
+            <md-card ui-sref="collections.item({id: item.ID})" md-theme="default" flex-gt-sm="33" ng-repeat="item in vm.mostVisited">
+                <md-card-title>
+                    <md-card-title-media>
+                        <div class="md-media-sm card-media">
+                            <img ng-src="{{ item.$ui.img.src }}" class="md-card-image" alt="Collection image"/>
+                        </div>
+                    </md-card-title-media>
+                    <md-card-title-text layout="column" layout-align="space-between start">
+                        <b ng-bind="item.$ui.title"></b>
+                        <span ng-bind="item.$ui.description"></span>
+                        <span class="md-subhead">
+                            <span ng-bind="item.FiguresCount"></span>
+                            image<span ng-bind="item.FiguresCount === 1 ? '' : 's'"></span> in refigure
+                        </span>
+                    </md-card-title-text>
+                </md-card-title>
+                <most-visited count="item.Visit.Count"></most-visited>
+            </md-card>
         </md-content>
     </div>
     <div hide show-gt-xs flex="5"></div>

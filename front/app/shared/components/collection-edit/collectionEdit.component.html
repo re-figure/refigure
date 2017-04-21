@@ -1,0 +1,86 @@
+<md-sidenav
+        md-is-open="vm.sidebarOpened"
+        class="md-sidenav-right md-whiteframe-4dp"
+        md-component-id="collectionDetails"
+        md-disable-scroll-target=".r-page-content">
+    <md-toolbar class="md-theme-light">
+        <div class="md-toolbar-tools">
+            <span md-truncate ng-bind="vm.refigure.Title"></span>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.sidebarOpened=false">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding ng-if="vm.refigure.ID">
+        <md-card ng-form="editRefigureForm" layout="column" layout-align="start stretch">
+            <md-input-container>
+                <input placeholder="Title" ng-model="vm.refigure.Title" name="title" md-sidenav-focus required>
+                <div ng-messages="editRefigureForm.title.$error" role="alert" multiple>
+                    <div ng-message="required" class="my-message">Title is required</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container>
+                <textarea placeholder="Description" ng-model="vm.refigure.Description"></textarea>
+            </md-input-container>
+
+            <md-input-container>
+                <textarea placeholder="Keywords" ng-model="vm.refigure.Keywords"></textarea>
+            </md-input-container>
+            <div layout="column" layout-align="center end">
+                <md-button
+                        class="md-primary md-raised"
+                        ng-click="vm.saveRefigure()"
+                        ng-disabled="editRefigureForm.$invalid || vm.loading || editRefigureForm.$pristine"
+                        layout="column">
+                    <span ng-hide="vm.loading">save</span>
+                    <md-progress-circular ng-show="vm.loading" class="md-hue-2" md-diameter="24px"></md-progress-circular>
+                </md-button>
+            </div>
+        </md-card>
+
+        <md-card ng-repeat="image in vm.refigure.Figures">
+            <md-card-title>
+                <md-card-title-media>
+                    <div class="md-media-md card-media">
+                        <img ng-click="vm.showFullscreen($event, image.URL)" ng-src="{{image.URL}}">
+                    </div>
+                </md-card-title-media>
+                <md-card-title-text layout="column" layout-align="space-between start">
+                    <div class="md-subhead" ng-bind="image.Caption" md-truncate></div>
+                    <md-button ng-click="vm.toggleDetails($index)">
+                        <span ng-hide="vm.opened === $index"><md-icon>add</md-icon> show details</span>
+                        <span ng-show="vm.opened === $index"><md-icon>remove</md-icon> hide details</span>
+                    </md-button>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content class="hide-show-slide-down" ng-show="vm.opened === $index">
+                <form name="vm.forms.f{{$index}}" layout="column" layout-align="start stretch">
+                    <md-input-container>
+                        <label>Caption</label>
+                        <textarea ng-blur="vm.saveImage($index)" ng-model="image.Caption"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <textarea ng-blur="vm.saveImage($index)" placeholder="Legend" ng-model="image.Legend"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <textarea ng-blur="vm.saveImage($index)" placeholder="Authors" ng-model="image.Authors"></textarea>
+                    </md-input-container>
+                    <md-input-container>
+                        <input ng-blur="vm.saveImage($index)" placeholder="Article DOI" ng-model="image.DOI">
+                    </md-input-container>
+                    <md-input-container>
+                        <input ng-blur="vm.saveImage($index)" placeholder="Image DOI" ng-model="image.DOIFigure">
+                    </md-input-container>
+                </form>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-disabled="image._loading" ng-click="vm.removeImage($index)" class="md-raised md-warn" layout="column">
+                    <span ng-hide="image._loading">remove</span>
+                    <md-progress-circular ng-show="image._loading" md-diameter="24px"></md-progress-circular>
+                </md-button>
+            </md-card-actions>
+        </md-card>
+    </md-content>
+</md-sidenav>

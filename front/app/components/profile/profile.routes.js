@@ -11,8 +11,9 @@
     var states = [{
         state: 'profile.collections',
         config: {
-            url: '/collections',
+            url: '/collections?refigure',
             template: '<my-collections></my-collections>',
+            reloadOnSearch: false,
             data: {
                 private: true,
                 label: 'My refigures',

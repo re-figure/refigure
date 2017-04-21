@@ -22,7 +22,10 @@
             mostVisited: mostVisited,
             search: search,
             myCollections: myCollections,
-            remove: remove
+            remove: remove,
+            get: get,
+            save: save,
+            toggleFlag: toggleFlag
         };
 
         return exports;
@@ -48,6 +51,42 @@
                 .then(function (res) {
                     var items = utils.get(res, 'data.data');
                     return itemsUIData(items);
+                });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collections#get
+         * @methodOf refigure.collections.services:collections
+         * @param {String} ID Metapublication ID
+         * @returns {Promise} promise
+         * @description
+         * Gets collection
+         */
+        function get(ID) {
+            return $http
+                .get(_apiUrl + '/metapublication/' + ID)
+                .then(function (res) {
+                    var items = utils.get(res, 'data.data');
+                    return itemUIData(items);
+                });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collections#save
+         * @methodOf refigure.collections.services:collections
+         * @param {Object} collection Refigure
+         * @returns {Promise} promise
+         * @description
+         * Saves collection
+         */
+        function save(collection) {
+            return $http
+                .put(_apiUrl + '/metapublication/', collection)
+                .then(function (res) {
+                    var items = utils.get(res, 'data.data');
+                    return itemUIData(items);
                 });
         }
 
@@ -109,6 +148,22 @@
 
         /**
          * @ngdocs method
+         * @name refigure.collections.services:collection#toggleFlag
+         * @methodOf refigure.collections.services:collections
+         * @param {String} ID Metapublication ID
+         * @returns {Object} promise
+         * @description
+         * Switches Flagged state
+         */
+        function toggleFlag(ID) {
+            return $http
+                .put(_apiUrl + '/metapublication-flag', {
+                    ID: ID
+                });
+        }
+
+        /**
+         * @ngdocs method
          * @name refigure.collections.services:collection#itemsUIData
          * @methodOf refigure.collections.services:collections
          * @param {Array=} items Search query options
@@ -141,6 +196,10 @@
             uiData.description = (item.Description || '').substring(0, _itemDescriptionLength);
             if (item.Description && uiData.description !== item.Description) {
                 uiData.description += '...';
+            }
+
+            if (!item.FiguresCount) {
+                item.FiguresCount = item.Figures.length;
             }
 
             uiData.img = {};

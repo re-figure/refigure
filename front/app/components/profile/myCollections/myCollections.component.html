@@ -1,8 +1,31 @@
+<md-card>
+    <form layout="row" class="md-padding" name="vm.editForm" ng-submit="vm.submit(term)">
+        <md-input-container flex>
+            <input name="term" autofocus ng-model="term" placeholder="Search"/>
+        </md-input-container>
+        <md-button class="md-icon-button"
+                   md-colors="{background: 'accent-100'}" aria-label="Search"
+                   type="submit"
+        >
+            <md-icon md-font-set="material-icons">search</md-icon>
+        </md-button>
+    </form>
+</md-card>
 <pager total="vm.response.found" search-params="vm.searchParams" default-sort="nameAsc"></pager>
 <div class="r-collection" ng-repeat="item in vm.response.results">
-    <collection-row item="item" ></collection-row>
-    <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">
-        <md-icon flex>delete</md-icon>
-        <md-tooltip>delete refigure</md-tooltip>
+    <collection-row ui-sref="profile.collections({refigure: item.ID})" item="item"></collection-row>
+
+    <div class="r-collection-controls" layout="column" layout-align="space-between stretch">
+        <md-button
+                aria-label="Edit refigure"
+                ui-sref="profile.collections({refigure: item.ID})"
+                class="r-collection-edit md-primary md-icon-button md-button-small">
+            <md-icon>mode_edit</md-icon>
+        </md-button>
+        <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">
+            <md-icon flex>delete</md-icon>
+            <md-tooltip>delete refigure</md-tooltip>
+        </div>
     </div>
 </div>
+<collection-edit></collection-edit>

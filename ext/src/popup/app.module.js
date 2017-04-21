@@ -1,6 +1,3 @@
-//fixme: debug page chrome-extension://eomljbidagegcimpgnpmmejnjbcfpdgo/popup/popup.html
-//fixme: link to page where figure exists in database http://journals.plos.org/plosntds/article?id=10.1371/journal.pntd.0003013
-
 (function (angular) {
     'use strict';
 
@@ -42,6 +39,29 @@
     });
 
     angular.module('ReFigure', ['ngRoute', 'ngSanitize'])
+        .constant('CookieToken', {
+            COOKIE_DOMAIN: 'https://refigure.noblecoz.com',
+            COOKIE_NAME: 'Authentication',
+            set: function (token) {
+                chrome.cookies.set({
+                    url: this.COOKIE_DOMAIN,
+                    name: this.COOKIE_NAME,
+                    value: token
+                }, function (cookie) {
+                    console.log(JSON.stringify(cookie));
+                    console.log(chrome.extension.lastError);
+                    console.log(chrome.runtime.lastError);
+                });
+            },
+            remove: function () {
+                chrome.cookies.set({
+                    name: this.COOKIE_NAME,
+                    url: this.COOKIE_DOMAIN
+                }, function (cookie) {
+                    console.log('cookie removed', cookie);
+                });
+            }
+        })
         .constant('STORAGE', {
             currentTab: null,
             rfFigures: null,
@@ -53,10 +73,13 @@
         .config(ConfigController)
         .run(RunController);
 
-    ConfigController.$inject = ['$httpProvider', '$compileProvider', 'STORAGE'];
+    ConfigController.$inject = ['$httpProvider', '$compileProvider', 'STORAGE', 'CookieToken'];
 
-    function ConfigController($httpProvider, $compileProvider, STORAGE) {
+    function ConfigController($httpProvider, $compileProvider, STORAGE, CookieToken) {
         angular.extend(STORAGE, _store);
+        if (STORAGE.userInfo.ID) {
+            CookieToken.set(STORAGE.userInfo.Token);
+        }
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
         $compileProvider.debugInfoEnabled(false);
         $httpProvider.interceptors.push(['$q', 'MessageService', function ($q, MessageService) {

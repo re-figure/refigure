@@ -1,5 +1,6 @@
 <md-content class="md-padding" md-whiteframe="1" layout="row" layout-align="start stretch">
     <md-button
+            aria-label="To first page"
             class="md-primary md-fab md-mini"
             ng-click="vm.searchParams.from = 0"
             ng-disabled="vm.searchParams.from === 0"
@@ -7,6 +8,7 @@
         <md-icon>first_page</md-icon>
     </md-button>
     <md-button
+            aria-label="To prev page"
             class="md-fab md-mini"
             ng-click="vm.searchParams.from = vm.searchParams.from - vm.searchParams.size"
             ng-disabled="vm.searchParams.from === 0"
@@ -15,6 +17,7 @@
     </md-button>
 
     <md-button
+            aria-label="To page label"
             ng-repeat="i in vm.paging.pageArr track by $index"
             class="md-mini"
             ng-bind="$index + 1"
@@ -23,6 +26,7 @@
     ></md-button>
 
     <md-button
+            aria-label="To next page"
             class="md-fab md-mini"
             ng-click="vm.searchParams.from = vm.searchParams.from + vm.searchParams.size"
             ng-disabled="vm.searchParams.from === (vm.paging.pages - 1) * vm.searchParams.size"
@@ -30,6 +34,7 @@
         <md-icon>chevron_right</md-icon>
     </md-button>
     <md-button
+            aria-label="To last page"
             class="md-primary md-fab md-mini"
             ng-click="vm.searchParams.from = (vm.paging.pages - 1) * vm.searchParams.size"
             ng-disabled="vm.searchParams.from === (vm.paging.pages - 1) * vm.searchParams.size"
@@ -38,12 +43,13 @@
     </md-button>
 
     <md-menu md-offset="0 36">
-        <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()">
+        <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()" aria-label="Sort variants">
             Sort <span ng-bind="vm.sortBy[vm.sortKey].name"></span> <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
         </md-button>
         <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
             <md-menu-item ng-repeat="(key, opts) in vm.sortBy">
                 <md-button
+                        aria-label="{{opts.name}}"
                         ng-disabled="vm.sortKey === key"
                         ng-click="vm.changeSort(key)"
                         ng-bind="opts.name">

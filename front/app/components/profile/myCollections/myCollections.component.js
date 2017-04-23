@@ -20,6 +20,7 @@
 
     Controller.$inject = [
         '$scope',
+        '$state',
         'collections',
         'collections',
         'modalDialog',
@@ -27,18 +28,12 @@
         'authUserInfo'
     ];
     //collectionEditService
-    function Controller($scope, collections, modal, rfToast, authUserInfo) {
+    function Controller($scope, $state, collections, modal, rfToast, authUserInfo) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
         vm.response = {};
-        vm.searchParams = {
-            query: '',
-            from: 0,
-            size: 5,
-            sortDirection: 'ASC',
-            sortField: 'Metapublication.Title'
-        };
+        vm.searchParams = null;
         vm.remove = remove;
         vm.submit = submit;
         vm.isAdmin = isAdmin;
@@ -55,7 +50,11 @@
          * Activates controller
          */
         function activate() {
-            $scope.$watchCollection('vm.searchParams', load);
+            $scope.$watchCollection('vm.searchParams', function (params, prevParams) {
+                if (params && (!prevParams || params.refigure === prevParams.refigure)) {
+                    load(params);
+                }
+            });
             $scope.$on('refigureUpdated', function (e, updated) {
                 e.stopPropagation();
                 vm.response.results.forEach(function (refigure) {
@@ -70,14 +69,15 @@
          * @ngdoc method
          * @name refigureProfile.directive:myCollections#load
          * @methodOf refigureProfile.directive:myCollections
+         * @param {Object} params state params
          * @description
          * Loads component data
          */
-        function load() {
+        function load(params) {
             vm.error = null;
             vm.loading = true;
             collections
-                .myCollections(vm.searchParams)
+                .myCollections(params)
                 .then(function (data) {
                     vm.response = data;
                 })
@@ -100,7 +100,10 @@
         }
 
         function submit(term) {
-            vm.searchParams.query = term;
+            $state.go($state.current.name, {
+                query: term,
+                from: 0
+            });
         }
 
         function isAdmin() {

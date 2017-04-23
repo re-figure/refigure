@@ -26,7 +26,6 @@
     function Controller($state, collections) {
         var vm = this;
         vm.form = null;
-        vm.searchTerm = '';
         vm.mostVisited = [];
 
         vm.submit = submit;
@@ -76,7 +75,7 @@
          */
         function submit() {
             $state.go('home.search-results', {
-                term: vm.searchTerm
+                query: vm.term
             });
         }
     }

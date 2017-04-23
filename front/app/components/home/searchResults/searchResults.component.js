@@ -24,21 +24,11 @@
         var vm = this;
 
         vm.results = [];
-
-        $scope.term = $stateParams.term;
-
+        vm.term = $stateParams.query;
         vm.total = 0;
-
-        vm.searchParams = {
-            query: $stateParams.term,
-            from: 0,
-            size: 5,
-            sortDirection: '',
-            sortField: ''
-        };
+        vm.searchParams = null;
 
         vm.submit = submit;
-
         vm.$onInit = activate();
 
         /////////////////////
@@ -52,25 +42,40 @@
          */
         function activate() {
             $state.get('collections.item').data.headerTitle = 'Search results';
-            $scope.$watchCollection('vm.searchParams', load);
+            $scope.$watchCollection('vm.searchParams', function (params) {
+                if (params) {
+                    load(params);
+                }
+            });
         }
 
         /**
          * @ngdoc method
          * @name refigureApp.directive:searchResults#load
          * @methodOf refigureApp.directive:searchResults
+         * @param {Object} params state params
          * @description
          * Loads component data
          */
-        function load() {
-            collections.search(vm.searchParams).then(function (res) {
+        function load(params) {
+            collections.search(params).then(function (res) {
                 vm.results = res.results;
                 vm.total = res.found;
             });
         }
 
-        function submit(term) {
-            vm.searchParams.query = term;
+        /**
+         * @ngdoc method
+         * @name refigureApp.directive:searchResults#submit
+         * @methodOf refigureApp.directive:searchResults
+         * @description
+         * Runs search
+         */
+        function submit() {
+            $state.go('home.search-results', {
+                from: 0,
+                query: vm.term
+            });
         }
     }
 })(window.angular);

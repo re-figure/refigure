@@ -23,10 +23,11 @@
         'collections',
         'collections',
         'modalDialog',
-        'rfToast'
+        'rfToast',
+        'authUserInfo'
     ];
     //collectionEditService
-    function Controller($scope, collections, modal, rfToast) {
+    function Controller($scope, collections, modal, rfToast, authUserInfo) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -40,6 +41,7 @@
         };
         vm.remove = remove;
         vm.submit = submit;
+        vm.isAdmin = isAdmin;
 
         activate();
 
@@ -99,6 +101,10 @@
 
         function submit(term) {
             vm.searchParams.query = term;
+        }
+
+        function isAdmin() {
+            return authUserInfo.Type === 2;
         }
     }
 })(window.angular);

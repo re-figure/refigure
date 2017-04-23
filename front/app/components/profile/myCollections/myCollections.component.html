@@ -27,5 +27,9 @@
             <md-tooltip>delete refigure</md-tooltip>
         </div>
     </div>
+    <div ui-sref="collections.user({id: item.User.ID})" class="r-collection-owner" ng-show="vm.isAdmin">
+        <b class="md-caption">owner</b>
+        <a href="" ng-bind="item.User.FirstName + ' ' + item.User.LastName"></a>
+    </div>
 </div>
 <collection-edit></collection-edit>

@@ -42,12 +42,12 @@
 
         <md-card ng-repeat="image in vm.refigure.Figures">
             <md-card-title>
-                <md-card-title-media>
+                <md-card-title-media flex="20">
                     <div class="md-media-md card-media">
                         <img ng-click="vm.showFullscreen($event, image.URL)" ng-src="{{image.URL}}">
                     </div>
                 </md-card-title-media>
-                <md-card-title-text layout="column" layout-align="space-between start">
+                <md-card-title-text flex="80" layout="column" layout-align="space-between start">
                     <div class="md-subhead" ng-bind="image.Caption" md-truncate></div>
                     <md-button ng-click="vm.toggleDetails($index)">
                         <span ng-hide="vm.opened === $index"><md-icon>add</md-icon> show details</span>
@@ -56,7 +56,7 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-content class="hide-show-slide-down" ng-show="vm.opened === $index">
-                <form name="vm.forms.f{{$index}}" layout="column" layout-align="start stretch">
+                <form name="vm.forms.f{{$index}}" layout="column" layout-fill>
                     <md-input-container>
                         <label>Caption</label>
                         <textarea ng-blur="vm.saveImage($index)" ng-model="image.Caption"></textarea>

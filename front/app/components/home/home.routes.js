@@ -21,7 +21,7 @@
     }, {
         state: 'home.search-results',
         config: {
-            url: '/search-results?term',
+            url: '/search-results?{from:int}&query&{size:int}&sortDirection&sortField',
             template: '<search-results></search-results>',
             data: {
                 menuTitle: 'Results'

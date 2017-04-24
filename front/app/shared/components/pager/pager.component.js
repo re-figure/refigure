@@ -20,7 +20,8 @@
                 total: '<',
                 searchParams: '=',
                 defaultSort: '@',
-                sort: '@'
+                sort: '@',
+                totalLabel: '@'
             }
         });
 
@@ -104,6 +105,7 @@
         //////////////////////////////////////////
 
         function activate() {
+            vm.totalLabel = vm.totalLabel || 'Refigures';
             vm.sortKey = vm.defaultSort || 'relevance';
             angular.extend(defaults, vm.sortBy[vm.sortKey].stateParams);
             vm.searchParams = $state.params;

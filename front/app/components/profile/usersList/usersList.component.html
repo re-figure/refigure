@@ -6,7 +6,7 @@
     </form>
 </md-card>
 
-<pager total="vm.found" search-params="vm.searchParams" sort="false"></pager>
+<pager total="vm.found" search-params="vm.searchParams" sort="false" total-label="Users"></pager>
 
 <md-card class="r-user" ng-repeat="item in vm.users|filter: vm.term">
     <md-card-title>

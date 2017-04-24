@@ -19,7 +19,8 @@
             bindings: {
                 total: '<',
                 searchParams: '=',
-                defaultSort: '@'
+                defaultSort: '@',
+                sort: '@'
             }
         });
 
@@ -123,6 +124,10 @@
             });
             $scope.$on('$mdMenuOpen', toggleMenu);
             $scope.$on('$mdMenuClose', toggleMenu);
+
+            if (vm.sort && vm.sort === 'false') {
+                vm.sortBy = null;
+            }
         }
 
         function toggleMenu() {

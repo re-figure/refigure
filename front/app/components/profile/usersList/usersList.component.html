@@ -1,3 +1,40 @@
-<pager total="vm.found" search-params="vm.searchParams"></pager>
+<md-card>
+    <form layout="row" class="md-padding" name="vm.editForm">
+        <md-input-container flex>
+            <input name="term" autofocus ng-model="vm.term" placeholder="Search"/>
+        </md-input-container>
+    </form>
+</md-card>
 
-<pre>{{vm.users|json}}</pre>
+<pager total="vm.found" search-params="vm.searchParams" sort="false"></pager>
+
+<md-card class="r-user" ng-repeat="item in vm.users|filter: vm.term">
+    <md-card-title>
+        <md-card-title-text layout="column" layout-align="space-between start">
+            <span class="md-headline" ng-bind="item.FullName"></span>
+
+            <div>
+                <b class="md-caption">Email&nbsp;&nbsp;</b><span ng-bind="item.Email"></span>
+            </div>
+
+            <div ng-show="item.Phone">
+                <b class="md-caption">Phone&nbsp;&nbsp;</b><span ng-bind="item.Phone"></span>
+            </div>
+
+            <div ng-show="item.Organization">
+                <b class="md-caption">Organization&nbsp;</b><span ng-bind="item.Organization"></span>&nbsp;
+                <b class="md-caption">in</b> <span ng-bind="item.Department"></span> dept.
+            </div>
+
+            <div>
+                <b class="md-caption">Joined us at </b><span ng-bind="item.DateCreated|date:'d.MM.yyyy'"></span>
+            </div>
+        </md-card-title-text>
+    </md-card-title>
+    <div class="r-user-controls" layout="column" layout-align="end stretch">
+        <div ng-click="vm.remove($index)" class="r-user-remove" layout="row" layout-align="space-around center">
+            <md-icon flex>delete</md-icon>
+            <md-tooltip>delete user</md-tooltip>
+        </div>
+    </div>
+</md-card>

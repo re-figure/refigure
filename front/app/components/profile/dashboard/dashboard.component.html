@@ -1,34 +1,35 @@
 <md-content ng-show="vm.stats" layout="row">
     <md-card ui-sref="profile.collections" flex class="dboard-refigures" layout="column" layout-align="space-between center">
-        <span class="md-caption">&nbsp;</span>
+        <span>total number of refigures</span>
         <b ng-bind="vm.stats.countMetapublications"></b>
-        <span class="md-caption">refigures</span>
+        <span>&nbsp;</span>
         <md-icon flex="" class="material-icons flex">remove_red_eye</md-icon>
     </md-card>
 
     <md-card ui-sref="home.search-results({Flagged:1})" flex class="dboard-refigures-f" layout="column" layout-align="space-between center">
-        <span class="md-caption">flagged</span>
+        <span>total number of flagged refigures</span>
         <b ng-bind="vm.stats.countMetapublicationsFlagged"></b>
-        <span class="md-caption" ng-bind="vm.stats.countMetapublicationsFlagged===1 ? 'refigure' : 'refigures'"></span>
+        <span>&nbsp;</span>
         <md-icon flex="" class="material-icons flex">remove_red_eye</md-icon>
     </md-card>
 
     <md-card ui-sref="profile.users" flex class="dboard-users" layout="column" layout-align="space-between center">
-        <span class="md-caption">&nbsp;</span>
+        <span>total number of users</span>
         <b ng-bind="vm.stats.countUsers"></b>
-        <span class="md-caption">users</span>
+        <span>&nbsp;</span>
+        <md-icon flex="" class="material-icons flex">remove_red_eye</md-icon>
     </md-card>
 
     <md-card flex class="dboard-images" layout="column" layout-align="space-between center">
-        <span class="md-caption">total</span>
+        <span>total number of images</span>
         <b ng-bind="vm.stats.countFigures"></b>
-        <span class="md-caption">images</span>
+        <span>&nbsp;</span>
     </md-card>
 
     <md-card flex class="dboard-visits" layout="column" layout-align="space-between center">
-        <span class="md-caption">&nbsp;</span>
+        <span>&nbsp;</span>
         <b ng-bind="vm.stats.countVisits"></b>
-        <span class="md-caption">visits</span>
+        <span>visits</span>
     </md-card>
 </md-content>
 <h2 ng-hide="vm.stats" layout="row" layout-align="center center">Gathering statistics...</h2>

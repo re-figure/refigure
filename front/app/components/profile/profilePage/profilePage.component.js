@@ -31,11 +31,11 @@
         vm.projectName = $rootScope.projectName;
         vm.state = $state;
         vm.menuItems = [{
-            state: 'home.search'
-        }, {
             state: 'profile.collections'
         }, {
             state: 'profile.account'
+        }, {
+            state: 'home.search'
         }];
 
         vm.toggleSideBar = toggleSideBar;
@@ -66,8 +66,8 @@
                     if (collectionsState) {
                         collectionsState.label = 'Refigures';
                     }
-                    addStateToMenu('profile.dashboard');
                     addStateToMenu('profile.users');
+                    addStateToMenu('profile.dashboard');
                 }
             });
             $scope.$on('$viewContentLoaded', function () {
@@ -106,7 +106,7 @@
         function addStateToMenu(state) {
             var stateData = $state.get(state).data;
             stateData.state = state;
-            vm.menuItems.push(stateData);
+            vm.menuItems.unshift(stateData);
         }
     }
 })(window.angular);

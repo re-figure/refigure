@@ -42,7 +42,7 @@
         <md-icon>last_page</md-icon>
     </md-button>
 
-    <md-menu md-offset="0 36">
+    <md-menu md-offset="0 36" ng-show="vm.sortBy">
         <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()" aria-label="Sort variants">
             Sort <span ng-bind="vm.sortBy[vm.sortKey].name"></span> <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
         </md-button>

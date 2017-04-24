@@ -13,13 +13,15 @@
 
     RfUsers.$inject = [
         '$http',
-        'profileApiUri'
+        'profileApiUri',
+        'auth'
     ];
 
-    function RfUsers($http, profileApiUri) {
+    function RfUsers($http, profileApiUri, auth) {
         //noinspection UnnecessaryLocalVariableJS
         var exports = {
-            search: search
+            search: search,
+            remove: remove
         };
 
         return exports;
@@ -28,8 +30,8 @@
 
         /**
          * @ngdocs method
-         * @name refigure.collections.services:collection#search
-         * @methodOf refigure.collections.services:collections
+         * @name refigureProfile.services:rfUsers#search
+         * @methodOf refigureProfile.services:rfUserss
          * @param {Object=} opts Search query options
          * @returns {Object} promise
          * @description
@@ -41,8 +43,26 @@
                     params: opts
                 })
                 .then(function (res) {
-                    return utils.get(res, 'data.data');
+                    var data = utils.get(res, 'data.data');
+                    data.results = data.results.map(function (usr) {
+                        auth.setUsrNames(usr.User);
+                        return usr.User;
+                    });
+                    return data;
                 });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigureProfile.services:rfUsers#remove
+         * @methodOf refigureProfile.services:rfUserss
+         * @param {String} id id of element to delete
+         * @returns {Object} promise
+         * @description
+         * Removes user
+         */
+        function remove(id) {
+            return $http.delete(profileApiUri + '/user/' + id);
         }
 
     }

@@ -25,7 +25,8 @@
             remove: remove,
             get: get,
             save: save,
-            toggleFlag: toggleFlag
+            toggleFlag: toggleFlag,
+            statistics: statistics
         };
 
         return exports;
@@ -159,6 +160,22 @@
             return $http
                 .put(_apiUrl + '/metapublication-flag', {
                     ID: ID
+                });
+        }
+
+        /**
+         * @ngdocs method
+         * @name refigure.collections.services:collection#statistics
+         * @methodOf refigure.collections.services:collections
+         * @returns {Object} promise
+         * @description
+         * Refigure statistics for dashboard
+         */
+        function statistics() {
+            return $http
+                .get(_apiUrl + '/statistics')
+                .then(function (resp) {
+                    return utils.get(resp, 'data.data');
                 });
         }
 

@@ -56,7 +56,7 @@
         }
 
         function imageDetails(e, index) {
-            var el = e.originalTarget,
+            var el = e.target,
                 nextElement;
             if (el.tagName === 'IMG') {
                 el = el.parentNode;

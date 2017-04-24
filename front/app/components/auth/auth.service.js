@@ -133,6 +133,8 @@
     ];
 
     function auth($http, $state, $q, authApiUri, authToken, authUserInfo) {
+        var _userPromise;
+
         var exports = {
             register: register,
             validateRegistration: validateRegistration,
@@ -238,13 +240,16 @@
          * Loads user info from session
          */
         function usrInfo() {
-            return $http
-                .get(authApiUri + '/userinfo/')
-                .then(function (res) {
-                    var data = utils.get(res, 'data.data');
-                    fillUsrInfo(data);
-                    return data;
-                });
+            if (!_userPromise) {
+                _userPromise = $http
+                    .get(authApiUri + '/userinfo/')
+                    .then(function (res) {
+                        var data = utils.get(res, 'data.data');
+                        fillUsrInfo(data);
+                        return data;
+                    });
+            }
+            return _userPromise;
         }
 
         /**
@@ -428,7 +433,7 @@
                 }
                 authUserInfo.FirstName = info.FirstName;
                 authUserInfo.LastName = info.LastName;
-                exports.setUsrNames(authUserInfo);
+                setUsrNames(authUserInfo);
             }
         }
     }

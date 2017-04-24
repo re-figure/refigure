@@ -252,18 +252,18 @@ function get(id, cb) {
     `, nestTables: true}, [id], (err, results) => {
         if (err) {
             console.log(err);
-            return {
+            return cb({
                 http: httpStatus.INTERNAL_SERVER_ERROR,
                 error: constants.ERROR_SQL,
                 message: constants.ERROR_MSG_SQL
-            };
+            });
         }
         if (results.length === 0) {
-            return {
+            return cb({
                 http: httpStatus.INTERNAL_NOT_FOUND,
                 error: constants.ERROR_SQLNOTFOUND,
                 message: 'No Figure found'
-            };
+            });
         }
         let fig = results[0].Figure;
         fig.User = metapublications.arrangeUserRecord(results[0].UserFigure);

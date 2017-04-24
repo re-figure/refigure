@@ -34,8 +34,13 @@ router.post('/api/registration-complete', users.registrationComplete);
 router.post('/api/password-change-request', users.passwordChangeRequest);
 router.get('/api/password-change/:token', users.passwordChange);
 router.post('/api/password-change', users.passwordChange);
-router.post('/api/profile-update', users.updateUser);
+router.post('/api/profile-update', users.updateProfile);
 router.get('/api/userinfo', users.userInfo);
+// user management
+router.get('/api/users', users.searchUsers);
+router.get('/api/user/:ID', users.getUser);
+router.delete('/api/user/:ID', users.deleteUser);
+router.put('/api/user', users.updateUser);
 
 // public API
 router.post('/api/check-figures', figures.checkFigures);

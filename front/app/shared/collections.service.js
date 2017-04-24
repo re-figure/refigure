@@ -14,9 +14,9 @@
         .module('refigure.collections', [])
         .factory('collections', serviceFunc);
 
-    serviceFunc.$inject = ['$http'];
+    serviceFunc.$inject = ['$http', 'auth'];
 
-    function serviceFunc($http) {
+    function serviceFunc($http, auth) {
         //noinspection UnnecessaryLocalVariableJS
         var exports = {
             mostVisited: mostVisited,
@@ -197,6 +197,8 @@
             if (item.Description && uiData.description !== item.Description) {
                 uiData.description += '...';
             }
+
+            auth.setUsrNames(item.User);
 
             if (!item.FiguresCount) {
                 item.FiguresCount = item.Figures.length;

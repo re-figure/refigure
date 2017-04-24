@@ -13,7 +13,7 @@
         <md-card ng-repeat-end ng-if="image.lastInRow && vm.details" flex="100" class="hide-show-slide-down">
             <md-card-content layout="row">
                 <div flex="33" layout="column" layout-align="center center" layout-padding>
-                    <img ng-click="vm.showFullscreen($event, vm.details.URL)" ng-src="{{vm.details.URL}}">
+                    <img ng-click="vm.showFullScreen($event, vm.details.URL)" ng-src="{{vm.details.URL}}">
                 </div>
                 <div>
                     <p ng-bind="vm.details.Caption"></p>
@@ -39,7 +39,7 @@
             md-whiteframe="4">
         <md-content layout-padding>
             <div class="r-item-title md-title" md-truncate ng-bind="vm.refigure.Title"></div>
-            <div ui-sref="collections.user({id: vm.refigure.User.ID})" md-truncate>
+            <div ui-sref="collections.user({query: vm.refigure.User.ID})" md-truncate>
                 <b class="md-caption">Creator </b><a href="" ng-bind="vm.refigure.User.FullName"></a>
             </div>
             <div>

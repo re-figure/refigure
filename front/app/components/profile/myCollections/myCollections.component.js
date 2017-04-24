@@ -32,7 +32,8 @@
         var vm = this;
         vm.error = null;
         vm.loading = false;
-        vm.response = {};
+        vm.refigures = [];
+        vm.total = 0;
         vm.searchParams = null;
         vm.remove = remove;
         vm.submit = submit;
@@ -57,7 +58,7 @@
             });
             $scope.$on('refigureUpdated', function (e, updated) {
                 e.stopPropagation();
-                vm.response.results.forEach(function (refigure) {
+                vm.refigures.forEach(function (refigure) {
                     if (refigure.ID === updated.ID) {
                         angular.extend(refigure, updated);
                     }
@@ -79,7 +80,8 @@
             collections
                 .myCollections(params)
                 .then(function (data) {
-                    vm.response = data;
+                    vm.found = data.found;
+                    vm.refigures = data.results;
                 })
                 .finally(function () {
                     vm.loading = false;
@@ -91,9 +93,10 @@
                 .confirm('Delete this refigure?')
                 .then(function () {
                     collections
-                        .remove(vm.response.results[index].ID)
+                        .remove(vm.refigures[index].ID)
                         .then(function () {
-                            vm.response.results.splice(index, 1);
+                            vm.refigures.splice(index, 1);
+                            vm.found--;
                             rfToast.show('Refigure deleted');
                         });
                 });

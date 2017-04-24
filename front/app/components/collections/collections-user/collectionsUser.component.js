@@ -21,42 +21,40 @@
     ItemController.$inject = [
         '$scope',
         '$state',
-        'collections',
-        'auth'
+        'collections'
     ];
 
-    function ItemController($scope, $state, collections, auth) {
+    function ItemController($scope, $state, collections) {
         var vm = this;
-        vm.total = 0;
-        vm.result = [];
+        vm.found = 0;
+        vm.refigures = [];
         vm.user = null;
-        vm.searchParams = {
-            query: '"' + $state.params.id + '"',
-            from: 0,
-            size: 5,
-            sortDirection: '',
-            sortField: ''
-        };
+        vm.searchParams = {};
 
         vm.$onInit = activate;
 
         ///////////////////////////////////////////
 
         function activate() {
-            $scope.$watchCollection('vm.searchParams', load);
-        }
-
-        function load() {
-            $state.get('collections.user').data.headerTitle = '';
-            collections.search(vm.searchParams).then(function (res) {
-                vm.results = res.results;
-                vm.total = res.found;
-                if (vm.results.length) {
-                    vm.user = vm.results[0].User;
-                    auth.setUsrNames(vm.user);
-                    $state.get('collections.user').data.headerTitle = ' by ' + vm.user.FullName;
+            $scope.$watchCollection('vm.searchParams', function (params) {
+                if (params) {
+                    load(params);
                 }
             });
+        }
+
+        function load(params) {
+            $state.get('collections.user').data.headerTitle = '';
+            collections
+                .search(params)
+                .then(function (res) {
+                    vm.refigures = res.results;
+                    vm.found = res.found;
+                    if (vm.refigures.length) {
+                        vm.user = vm.refigures[0].User;
+                        $state.get('collections.user').data.headerTitle = ' by ' + vm.user.FullName;
+                    }
+                });
         }
     }
 })(window.angular);

@@ -448,7 +448,6 @@
     function setUsrNames(obj) {
         if (angular.isDefined(obj.FirstName) || angular.isDefined(obj.LastName)) {
             var names = [], initials = [];
-            obj.Initials = '';
             if (obj.FirstName) {
                 obj.FirstName = firstToUpper(obj.FirstName);
                 names.push(obj.FirstName);
@@ -458,7 +457,6 @@
                 obj.LastName = firstToUpper(obj.LastName);
                 names.push(obj.LastName);
                 initials.push(obj.LastName.charAt(0) + '.');
-                obj.Initials += obj.LastName.charAt(0) + '.';
             }
             obj.Initials = initials.join(' ');
             obj.FullName = names.join(' ');

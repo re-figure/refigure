@@ -23,9 +23,9 @@
     function Controller($scope, $state, collections, $stateParams) {
         var vm = this;
 
-        vm.results = [];
+        vm.refigures = [];
         vm.term = $stateParams.query;
-        vm.total = 0;
+        vm.found = 0;
         vm.searchParams = null;
 
         vm.submit = submit;
@@ -58,9 +58,9 @@
          * Loads component data
          */
         function load(params) {
-            collections.search(params).then(function (res) {
-                vm.results = res.results;
-                vm.total = res.found;
+            collections.search(params).then(function (data) {
+                vm.refigures = data.results;
+                vm.found = data.found;
             });
         }
 

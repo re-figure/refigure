@@ -1,7 +1,7 @@
 <div layout="row" flex layout-align="start start">
     <div flex>
-        <pager total="vm.total" search-params="vm.searchParams"></pager>
-        <collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.results"></collection-row>
+        <pager total="vm.found" search-params="vm.searchParams"></pager>
+        <collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.refigures"></collection-row>
     </div>
     <md-sidenav
             class="md-sidenav-right"
@@ -15,7 +15,7 @@
                 <b class="md-caption">Joined&nbsp;&nbsp;</b><span ng-bind="vm.user.DateCreated|date:'d.MM.yyyy'"></span>
             </div>
             <div>
-                <b class="md-caption">Total refigures&nbsp;&nbsp;</b><span ng-bind="vm.total"></span>
+                <b class="md-caption">Total refigures&nbsp;&nbsp;</b><span ng-bind="vm.found"></span>
             </div>
             <div ng-show="vm.user.Organization">
                 <b class="md-caption">Organization&nbsp;</b><span ng-bind="vm.user.Organization"></span>&nbsp;

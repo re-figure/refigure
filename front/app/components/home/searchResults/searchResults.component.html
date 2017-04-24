@@ -14,6 +14,6 @@
         </div>
     </form>
 </md-card>
-<pager total="vm.total" search-params="vm.searchParams"></pager>
+<pager total="vm.found" search-params="vm.searchParams"></pager>
 
-<collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.results"></collection-row>
+<collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.refigures"></collection-row>

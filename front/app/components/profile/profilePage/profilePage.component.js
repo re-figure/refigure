@@ -41,7 +41,7 @@
         vm.toggleSideBar = toggleSideBar;
         vm.signOut = signOut;
 
-        activate();
+        vm.$onInit = activate;
 
         /////////////////////
 
@@ -56,6 +56,20 @@
             vm.menuItems.forEach(function (_item) {
                 var info = $state.get(_item.state) || {};
                 angular.extend(_item, info.data);
+            });
+            auth.usrInfo().then(function (user) {
+                if (user.Type === 2) {
+                    $state.get('profile.collections').data.label = 'Refigures';
+                    var collectionsState = vm.menuItems.find(function (el) {
+                        return el.state === 'profile.collections';
+                    });
+                    if (collectionsState) {
+                        collectionsState.label = 'Refigures';
+                    }
+                    var dashboard = $state.get('profile.dashboard').data;
+                    dashboard.state = 'profile.dashboard';
+                    vm.menuItems.push(dashboard);
+                }
             });
             $scope.$on('$viewContentLoaded', function () {
                 toggleSideBar('close');

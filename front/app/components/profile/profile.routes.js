@@ -31,6 +31,17 @@
                 description: 'Account setting'
             }
         }
+    }, {
+        state: 'profile.dashboard',
+        config: {
+            url: '/dashboard',
+            template: '<dashboard></dashboard>',
+            data: {
+                private: true,
+                label: 'Dashboard',
+                description: 'Refigures summarized information'
+            }
+        }
     }];
 
     appRun.$inject = [

@@ -77,6 +77,9 @@ function isAdminRequest(req) {
         if (req.path.match(/users/i)) {
             return true;
         }
+        if (req.path.match(/statistics/i)) {
+            return true;
+        }
     }
     return false;
 }

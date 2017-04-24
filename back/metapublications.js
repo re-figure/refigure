@@ -20,6 +20,7 @@ exports.searchMetapublications = searchMetapublications;
 exports.addOrUpdateMetapublication = addOrUpdateMetapublication;
 exports.deleteMetapublication = deleteMetapublication;
 exports.flagMetapublication = flagMetapublication;
+exports.getStatistics = getStatistics;
 
 /**
  * Clean User record before output
@@ -353,8 +354,14 @@ function searchMetapublications(req, res) {
                  )
         `;
         params.push(query.query);
+        if (rfUtils.boolValue(req.query.Flagged)) {
+            q += ` AND Metapublication.Flagged = 1`;
+        }
     } else {
         params.push('');
+        if (rfUtils.boolValue(req.query.Flagged)) {
+            q += ` WHERE Metapublication.Flagged = 1`;
+        }
     }
     if (query.sortField) {
         let valid = false;
@@ -590,4 +597,48 @@ function flagMetapublication(req, res) {
             });
         });
     });
+}
+
+/**
+ * Get statistics
+ * @param {Object} req HTTP request
+ * @param {Object} res HTTP response
+ */
+function getStatistics(req, res) {
+    let _counters = {};
+
+    getCounter('SELECT COUNT(*) FROM `Metapublication`').then((x) => {
+        _counters.countMetapublications = x;
+        return getCounter('SELECT COUNT(*) FROM `Metapublication` WHERE `Flagged` = 1');
+    }).then((x) => {
+        _counters.countMetapublicationsFlagged = x;
+        return getCounter('SELECT COUNT(*) FROM `User`');
+    }).then((x) => {
+        _counters.countUsers = x;
+        return getCounter('SELECT COUNT(*) FROM `Figure`');
+    }).then((x) => {
+        _counters.countFigures = x;
+        return getCounter('SELECT SUM(`Count`) FROM `Visit`');
+    }).then((x) => {
+        _counters.countVisits = x;
+        res.send({
+            data: _counters
+        })
+    }).catch((e) => {
+        console.log(e);
+        return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to get statistics');
+    });
+
+    function getCounter(q) {
+        return new Promise((resolve, reject) => {
+            db.pool.query(q, (err, res) => {
+                if (err) {
+                    return reject(err);
+                }
+                let _rec = res[0];
+                let _k = Object.keys(_rec)[0];
+                resolve(_rec[_k]);
+            });
+        });
+    }
 }

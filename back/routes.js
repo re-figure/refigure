@@ -56,3 +56,5 @@ router.delete('/api/metapublication/:ID', metapublications.deleteMetapublication
 router.post('/api/figure', figures.addOrUpdateFigure);
 router.put('/api/figure', figures.addOrUpdateFigure);
 router.delete('/api/figure/:ID', figures.deleteFigure);
+
+router.get('/api/statistics', metapublications.getStatistics);

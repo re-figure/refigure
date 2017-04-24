@@ -111,13 +111,13 @@
 
         function activate() {
             vm.sortKey = vm.defaultSort || 'relevance';
+            angular.extend(defaults, vm.sortBy[vm.sortKey].stateParams);
             vm.searchParams = $state.params;
             angular.forEach(vm.searchParams, function (val, key) {
                 if (val === undefined && angular.isDefined(defaults[key])) {
                     vm.searchParams[key] = defaults[key];
                 }
             });
-            angular.extend({}, vm.sortBy[vm.sortKey].stateParams, vm.searchParams);
             updateState(vm.searchParams);
 
             $scope.$watch('vm.total', function () {

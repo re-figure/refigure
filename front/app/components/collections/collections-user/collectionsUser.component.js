@@ -29,7 +29,7 @@
         vm.found = 0;
         vm.refigures = [];
         vm.user = null;
-        vm.searchParams = {};
+        vm.searchParams = null;
 
         vm.$onInit = activate;
 
@@ -37,6 +37,7 @@
 
         function activate() {
             $scope.$watchCollection('vm.searchParams', function (params) {
+                console.log('params', params);
                 if (params) {
                     load(params);
                 }

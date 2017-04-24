@@ -26,7 +26,7 @@
         'rfToast',
         'authUserInfo'
     ];
-    //collectionEditService
+
     function Controller($scope, $state, collections, modal, rfToast, authUserInfo) {
         var vm = this;
         vm.error = null;

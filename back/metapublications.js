@@ -79,11 +79,11 @@ function get(id, cb) {
             });
         }
         if (results.length === 0) {
-            return {
+            return cb({
                 http: httpStatus.NOT_FOUND,
                 error: constants.ERROR_SQLNOTFOUND,
                 message: 'No Metapublication found'
-            }
+            });
         }
         let rec = {
             Metapublication: results[0].Metapublication
@@ -99,11 +99,11 @@ function get(id, cb) {
         `, nestTables:true}, [rec.Metapublication.ID], (err, results) => {
             if (err) {
                 console.log(err);
-                return {
+                return cb({
                     http: httpStatus.INTERNAL_SERVER_ERROR,
                     error: constants.ERROR_SQL,
                     message: constants.ERROR_MSG_SQL
-                }
+                });
             }
             rec.Metapublication.Figures = [];
             for (let r of results) {

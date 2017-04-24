@@ -13,6 +13,7 @@ const rfUtils = require('./rf-utils');
 const cookies = require('js.shared').cookies;
 const captcha = require('./captcha');
 const mail = require('./email');
+const metapublications = require('./metapublications');
 
 exports.loginUserWithPassword = loginUserWithPassword;
 exports.userInfo = userInfo;
@@ -20,7 +21,12 @@ exports.register = register;
 exports.registrationComplete = registrationComplete;
 exports.passwordChangeRequest = passwordChangeRequest;
 exports.passwordChange = passwordChange;
+exports.updateProfile = updateProfile;
+
+exports.searchUsers = searchUsers;
+exports.getUser = getUser;
 exports.updateUser = updateUser;
+exports.deleteUser = deleteUser;
 
 /**
  * Get the current user info
@@ -558,7 +564,7 @@ function cbUpdateUser(user, cb) {
     db.pool.query(q, params, cb);
 }
 
-function updateUser(req, res) {
+function updateProfile(req, res) {
     let user = {
         ID: req.User.ID
     };
@@ -589,6 +595,149 @@ function updateUser(req, res) {
             }
             let updatedUser = results[0];
             establishSession(res, updatedUser);
+        });
+    });
+}
+
+function get(id, cb) {
+    db.cbFind(db.model.TABLE_USER, {[db.model.ID]: id}, (err, results) => {
+        if (err) {
+            console.log(err);
+            return cb({
+                http: httpStatus.INTERNAL_SERVER_ERROR,
+                error: constants.ERROR_SQL,
+                message: constants.ERROR_MSG_SQL
+            });
+        }
+        if (results.length === 0) {
+            return cb({
+                http: httpStatus.INTERNAL_NOT_FOUND,
+                error: constants.ERROR_SQLNOTFOUND,
+                message: 'No User found'
+            });
+        }
+
+        let _u = metapublications.arrangeUserRecord(results[0]);
+        cb({data: {User: _u}});
+    });
+}
+
+/**
+ * Get user info by its ID
+ * @param req
+ * @param res
+ */
+function getUser(req, res) {
+    let _id = req.params.ID || req.query.ID || req.body.ID;
+    get(_id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        res.send(r);
+    });
+}
+
+function deleteUser(req, res) {
+    let _id = req.params.ID || req.query.ID || req.body.ID;
+    get(_id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+        db.pool.query('DELETE FROM User WHERE ID = ?', [_id], (err) => {
+            if (err) {
+                console.log('Failed to delete User', err);
+            }
+            res.send(r);
+        });
+    });
+}
+
+function updateUser(req, res) {
+    let _id = req.body.ID;
+    get(_id, (r) => {
+        if (r.error) {
+            return rfUtils.error(res, r.http, r.error, r.message);
+        }
+
+        let _user = {
+            ID: _id
+        };
+
+        ['Login', 'Email', 'FirstName', 'LastName', 'Organization', 'Phone', 'Department', 'Type'].filter((field) => {
+            if (req.body[field]) {
+                _user[field] = req.body[field];
+            }
+            return true;
+        });
+
+        cbUpdateUser(_user, (err) => {
+            if (err) {
+                console.error('updateUser: failed to update user', err);
+                rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
+                return;
+            }
+            get(_id, (r) => {
+                if (r.error) {
+                    return rfUtils.error(res, r.http, r.error, r.message);
+                }
+                res.send(r);
+            });
+        });
+    });
+}
+
+function searchUsers(req, res) {
+    let r = rfUtils.parseQuery(undefined, req.query);
+    if (r.error) {
+        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, constants.ERROR_MSG_BADPARAMETERS);
+    }
+    let query = r.data;
+
+    let params = [];
+    let q = `
+        SELECT SQL_CALC_FOUND_ROWS *
+          FROM User
+    `;
+    // TODO add search filter here
+    if (query.sortField) {
+        let valid = false;
+        for (let f of ['Email', 'FirstName', 'LastName', 'Phone', 'Organization', 'Department', 'DateCreated', 'DateModified', 'Type']) {
+            valid = true;
+            break;
+        }
+        if (!valid) {
+            return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'Wrong sort provided');
+        }
+        q += ' ORDER BY ?? ' + query.sortDirection;
+        params.push(query.sortField);
+    } else {
+        q += ' ORDER BY User.Email ASC';
+    }
+    q += ' LIMIT ' + query.from + ', ' + query.size;
+    q += '; SELECT FOUND_ROWS() AS count;';
+    db.pool.query({sql: q, nestTables: true}, params, (err, results) => {
+        if (err) {
+            console.log(err);
+            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
+        }
+        let recs = [];
+        let found = 0;
+        if (results[0].length > 0) {
+            found = results[1][0][''].count;
+            for (let r of results[0]) {
+                let x = {
+                    User: metapublications.arrangeUserRecord(r.User)
+                };
+                recs.push(x);
+            }
+        }
+
+        res.send({
+            data: {
+                query: query,
+                found: found,
+                results: recs
+            }
         });
     });
 }

@@ -41,7 +41,9 @@
          * Activates controller
          */
         function activate() {
-            $state.get('collections.item').data.headerTitle = 'Search results';
+            if ($state.params.Flagged) {
+                $state.get('home.search-results').data.headerTitle = 'Search results: flagged';
+            }
             $scope.$watchCollection('vm.searchParams', function (params) {
                 if (params) {
                     load(params);

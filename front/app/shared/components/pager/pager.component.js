@@ -32,12 +32,11 @@
             from: 0,
             size: 5,
             sortDirection: 'ASC',
-            sortField: 'Metapublication.Title'
+            sortField: 'Metapublication.Title',
+            Flagged: 0
         };
 
-        vm.updateState = updateState;
-        vm.changeSort = changeSort;
-
+        vm.isMenuOpened = false;
         vm.sortBy = {
             relevance: {
                 stateParams: {
@@ -97,14 +96,8 @@
             }
         };
 
-        vm.isMenuOpened = false;
-
-        vm.sortFieldVariant = {
-            'Visit.Count': 'visits',
-            'FiguresCount': 'figures count',
-            'Metapublication.Title': 'name'
-        };
-
+        vm.updateState = updateState;
+        vm.changeSort = changeSort;
         vm.$onInit = activate;
 
         //////////////////////////////////////////

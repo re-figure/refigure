@@ -19,12 +19,12 @@
         });
 
     Controller.$inject = [
-        '$scope',
         'collections'
     ];
-    //collectionEditService
-    function Controller($scope, collections) {
+
+    function Controller(collections) {
         var vm = this;
+        vm.stats = null;
 
         vm.$onInit = activate;
 
@@ -32,13 +32,16 @@
 
         /**
          * @ngdoc method
-         * @name refigureProfile.directive:myCollections#activate
-         * @methodOf refigureProfile.directive:myCollections
+         * @name refigureProfile.directive:dashboard#activate
+         * @methodOf refigureProfile.directive:dashboard
          * @description
          * Activates controller
          */
         function activate() {
-
+            collections.statistics()
+                .then(function (resp) {
+                    vm.stats = resp;
+                });
         }
 
     }

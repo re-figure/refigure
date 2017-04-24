@@ -20,6 +20,7 @@
         config: {
             url: '/collections/user?{from:int}&query&{size:int}&sortDirection&sortField',
             template: '<collections-user></collections-user>',
+            reloadOnSearch: false,
             data: {}
         }
     }];

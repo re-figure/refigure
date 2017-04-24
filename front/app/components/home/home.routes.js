@@ -22,6 +22,7 @@
         state: 'home.search-results',
         config: {
             url: '/search-results?{from:int}&query&{size:int}&sortDirection&sortField',
+            reloadOnSearch: false,
             template: '<search-results></search-results>',
             data: {
                 menuTitle: 'Results'

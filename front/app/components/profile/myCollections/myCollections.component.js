@@ -22,7 +22,6 @@
         '$scope',
         '$state',
         'collections',
-        'collections',
         'modalDialog',
         'rfToast',
         'authUserInfo'

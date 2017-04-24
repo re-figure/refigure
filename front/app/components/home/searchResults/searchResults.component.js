@@ -23,22 +23,12 @@
     function Controller($scope, $state, collections, $stateParams) {
         var vm = this;
 
-        vm.results = [];
-
-        $scope.term = $stateParams.term;
-
-        vm.total = 0;
-
-        vm.searchParams = {
-            query: $stateParams.term,
-            from: 0,
-            size: 5,
-            sortDirection: '',
-            sortField: ''
-        };
+        vm.refigures = [];
+        vm.term = $stateParams.query;
+        vm.found = 0;
+        vm.searchParams = null;
 
         vm.submit = submit;
-
         vm.$onInit = activate();
 
         /////////////////////
@@ -51,26 +41,43 @@
          * Activates controller
          */
         function activate() {
-            $state.get('collections.item').data.headerTitle = 'Search results';
-            $scope.$watchCollection('vm.searchParams', load);
+            if ($state.params.Flagged) {
+                $state.get('home.search-results').data.headerTitle = 'Search results: flagged';
+            }
+            $scope.$watchCollection('vm.searchParams', function (params) {
+                if (params) {
+                    load(params);
+                }
+            });
         }
 
         /**
          * @ngdoc method
          * @name refigureApp.directive:searchResults#load
          * @methodOf refigureApp.directive:searchResults
+         * @param {Object} params state params
          * @description
          * Loads component data
          */
-        function load() {
-            collections.search(vm.searchParams).then(function (res) {
-                vm.results = res.results;
-                vm.total = res.found;
+        function load(params) {
+            collections.search(params).then(function (data) {
+                vm.refigures = data.results;
+                vm.found = data.found;
             });
         }
 
-        function submit(term) {
-            vm.searchParams.query = term;
+        /**
+         * @ngdoc method
+         * @name refigureApp.directive:searchResults#submit
+         * @methodOf refigureApp.directive:searchResults
+         * @description
+         * Runs search
+         */
+        function submit() {
+            $state.go('home.search-results', {
+                from: 0,
+                query: vm.term
+            });
         }
     }
 })(window.angular);

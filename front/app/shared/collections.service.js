@@ -14,9 +14,9 @@
         .module('refigure.collections', [])
         .factory('collections', serviceFunc);
 
-    serviceFunc.$inject = ['$http'];
+    serviceFunc.$inject = ['$http', 'auth'];
 
-    function serviceFunc($http) {
+    function serviceFunc($http, auth) {
         //noinspection UnnecessaryLocalVariableJS
         var exports = {
             mostVisited: mostVisited,
@@ -25,7 +25,8 @@
             remove: remove,
             get: get,
             save: save,
-            toggleFlag: toggleFlag
+            toggleFlag: toggleFlag,
+            statistics: statistics
         };
 
         return exports;
@@ -164,6 +165,22 @@
 
         /**
          * @ngdocs method
+         * @name refigure.collections.services:collection#statistics
+         * @methodOf refigure.collections.services:collections
+         * @returns {Object} promise
+         * @description
+         * Refigure statistics for dashboard
+         */
+        function statistics() {
+            return $http
+                .get(_apiUrl + '/statistics')
+                .then(function (resp) {
+                    return utils.get(resp, 'data.data');
+                });
+        }
+
+        /**
+         * @ngdocs method
          * @name refigure.collections.services:collection#itemsUIData
          * @methodOf refigure.collections.services:collections
          * @param {Array=} items Search query options
@@ -197,6 +214,8 @@
             if (item.Description && uiData.description !== item.Description) {
                 uiData.description += '...';
             }
+
+            auth.setUsrNames(item.User);
 
             if (!item.FiguresCount) {
                 item.FiguresCount = item.Figures.length;

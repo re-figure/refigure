@@ -13,7 +13,7 @@
         <md-card ng-repeat-end ng-if="image.lastInRow && vm.details" flex="100" class="hide-show-slide-down">
             <md-card-content layout="row">
                 <div flex="33" layout="column" layout-align="center center" layout-padding>
-                    <img ng-click="vm.showFullscreen($event, vm.details.URL)" ng-src="{{vm.details.URL}}">
+                    <img ng-click="vm.showFullScreen($event, vm.details.URL)" ng-src="{{vm.details.URL}}">
                 </div>
                 <div>
                     <p ng-bind="vm.details.Caption"></p>
@@ -38,7 +38,8 @@
             md-is-locked-open="true"
             md-whiteframe="4">
         <md-content layout-padding>
-            <div ui-sref="collections.user({id: vm.refigure.User.ID})" md-truncate>
+            <div class="r-item-title md-title" md-truncate ng-bind="vm.refigure.Title"></div>
+            <div ui-sref="collections.user({query: vm.refigure.User.ID})" md-truncate>
                 <b class="md-caption">Creator </b><a href="" ng-bind="vm.refigure.User.FullName"></a>
             </div>
             <div>
@@ -65,8 +66,8 @@
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
             <div ng-if="vm.isAdmin()">
                 <b class="md-caption">Administrate:</b>
-                <div layout="row" layout-align="space-between center">
-                    <md-button class="md-button-small md-raised md-primary" ui-sref="profile.collections({refigure: vm.refigure.ID})">
+                <div layout="row" layout-fill>
+                    <md-button flex class="md-button-small md-raised md-primary" ui-sref="profile.collections({refigure: vm.refigure.ID})">
                         edit <md-icon>edit</md-icon>
                     </md-button>
                     <md-button

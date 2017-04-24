@@ -21,9 +21,11 @@
     }, {
         state: 'home.search-results',
         config: {
-            url: '/search-results?term',
+            url: '/search-results?{from:int}&query&{size:int}&sortDirection&sortField&{Flagged:int}',
+            reloadOnSearch: false,
             template: '<search-results></search-results>',
             data: {
+                headerTitle: 'Search results',
                 menuTitle: 'Results'
             }
         }

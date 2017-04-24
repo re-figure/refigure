@@ -22,12 +22,11 @@
         '$state',
         '$stateParams',
         'collections',
-        'auth',
         'authUserInfo',
         'modalDialog'
     ];
 
-    function ItemController($state, $stateParams, collections, auth, authUserInfo, modal) {
+    function ItemController($state, $stateParams, collections, authUserInfo, modal) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -37,7 +36,7 @@
         vm.imageDetails = imageDetails;
         vm.toggleFlag = toggleFlag;
         vm.isAdmin = isAdmin;
-        vm.showFullscreen = showFullscreen;
+        vm.showFullScreen = showFullScreen;
 
         vm.$onInit = activate;
 
@@ -50,7 +49,6 @@
                 .then(function (resp) {
                     $state.get('collections.item').data.headerTitle = '"' + resp.Title + '"';
                     vm.refigure = resp;
-                    auth.setUsrNames(vm.refigure.User);
                     if (vm.refigure.Keywords) {
                         vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
                     }
@@ -58,7 +56,7 @@
         }
 
         function imageDetails(e, index) {
-            var el = e.originalTarget,
+            var el = e.target,
                 nextElement;
             if (el.tagName === 'IMG') {
                 el = el.parentNode;
@@ -110,7 +108,7 @@
             return authUserInfo.Type === 2;
         }
 
-        function showFullscreen(e, src) {
+        function showFullScreen(e, src) {
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,

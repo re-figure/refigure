@@ -2,7 +2,7 @@
     <md-button
             aria-label="To first page"
             class="md-primary md-fab md-mini"
-            ng-click="vm.searchParams.from = 0"
+            ng-click="vm.updateState({from: 0})"
             ng-disabled="vm.searchParams.from === 0"
     >
         <md-icon>first_page</md-icon>
@@ -10,7 +10,7 @@
     <md-button
             aria-label="To prev page"
             class="md-fab md-mini"
-            ng-click="vm.searchParams.from = vm.searchParams.from - vm.searchParams.size"
+            ng-click="vm.updateState({from: vm.searchParams.from - vm.searchParams.size})"
             ng-disabled="vm.searchParams.from === 0"
     >
         <md-icon>chevron_left</md-icon>
@@ -21,14 +21,14 @@
             ng-repeat="i in vm.paging.pageArr track by $index"
             class="md-mini"
             ng-bind="$index + 1"
-            ng-click="vm.searchParams.from = $index * vm.searchParams.size"
+            ng-click="vm.updateState({from: $index * vm.searchParams.size})"
             ng-class="vm.searchParams.from === $index * vm.searchParams.size ? 'md-icon-button' : 'md-fab'"
     ></md-button>
 
     <md-button
             aria-label="To next page"
             class="md-fab md-mini"
-            ng-click="vm.searchParams.from = vm.searchParams.from + vm.searchParams.size"
+            ng-click="vm.updateState({from: vm.searchParams.from + vm.searchParams.size})"
             ng-disabled="vm.searchParams.from === (vm.paging.pages - 1) * vm.searchParams.size"
     >
         <md-icon>chevron_right</md-icon>
@@ -36,13 +36,13 @@
     <md-button
             aria-label="To last page"
             class="md-primary md-fab md-mini"
-            ng-click="vm.searchParams.from = (vm.paging.pages - 1) * vm.searchParams.size"
+            ng-click="vm.updateState({from: (vm.paging.pages - 1) * vm.searchParams.size})"
             ng-disabled="vm.searchParams.from === (vm.paging.pages - 1) * vm.searchParams.size"
     >
         <md-icon>last_page</md-icon>
     </md-button>
 
-    <md-menu md-offset="0 36">
+    <md-menu md-offset="0 36" ng-show="vm.sortBy">
         <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()" aria-label="Sort variants">
             Sort <span ng-bind="vm.sortBy[vm.sortKey].name"></span> <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
         </md-button>

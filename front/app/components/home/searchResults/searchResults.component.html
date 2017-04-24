@@ -1,8 +1,8 @@
 <md-card>
-    <form class="md-padding" name="vm.form" ng-submit="vm.submit(term)">
+    <form class="md-padding" name="vm.form" ng-submit="vm.submit()">
         <div class="r-search-input" layout="row">
             <md-input-container flex>
-                <input name="term" autofocus ng-model="term" placeholder="Search"/>
+                <input name="term" autofocus ng-model="vm.term" placeholder="Search"/>
             </md-input-container>
             <md-button class="md-icon-button"
                        ng-disabled="!vm.form.term.$viewValue"
@@ -14,6 +14,6 @@
         </div>
     </form>
 </md-card>
-<pager total="vm.total" search-params="vm.searchParams"></pager>
+<pager total="vm.found" search-params="vm.searchParams"></pager>
 
-<collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.results"></collection-row>
+<collection-row ui-sref="collections.item({id: item.ID})" item="item" ng-repeat="item in vm.refigures"></collection-row>

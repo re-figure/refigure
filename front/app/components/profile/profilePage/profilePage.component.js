@@ -66,9 +66,8 @@
                     if (collectionsState) {
                         collectionsState.label = 'Refigures';
                     }
-                    var dashboard = $state.get('profile.dashboard').data;
-                    dashboard.state = 'profile.dashboard';
-                    vm.menuItems.push(dashboard);
+                    addStateToMenu('profile.dashboard');
+                    addStateToMenu('profile.users');
                 }
             });
             $scope.$on('$viewContentLoaded', function () {
@@ -102,6 +101,12 @@
                 .then(function () {
                     $state.go('auth.signin');
                 });
+        }
+
+        function addStateToMenu(state) {
+            var stateData = $state.get(state).data;
+            stateData.state = state;
+            vm.menuItems.push(stateData);
         }
     }
 })(window.angular);

@@ -49,7 +49,7 @@
         function activate() {
             load();
         }
-        
+
         /**
          * @ngdoc method
          * @name refigureProfile.directive:accountSettings#load

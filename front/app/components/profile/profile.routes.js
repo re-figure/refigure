@@ -42,6 +42,18 @@
                 description: 'Refigures summarized information'
             }
         }
+    }, {
+        state: 'profile.users',
+        config: {
+            url: '/users-list?{from:int}&query&{size:int}&sortDirection&sortField',
+            template: '<users-list></users-list>',
+            reloadOnSearch: false,
+            data: {
+                private: true,
+                label: 'Users',
+                description: 'Manage users'
+            }
+        }
     }];
 
     appRun.$inject = [

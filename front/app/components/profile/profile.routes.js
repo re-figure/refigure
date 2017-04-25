@@ -11,7 +11,7 @@
     var states = [{
         state: 'profile.collections',
         config: {
-            url: '/collections?refigure&{from:int}&query&{size:int}&sortDirection&sortField',
+            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField',
             template: '<my-collections></my-collections>',
             reloadOnSearch: false,
             data: {
@@ -45,7 +45,7 @@
     }, {
         state: 'profile.users',
         config: {
-            url: '/users-list?{from:int}&query&{size:int}&sortDirection&sortField',
+            url: '/users-list?user&{from:int}&{size:int}',
             template: '<users-list></users-list>',
             reloadOnSearch: false,
             data: {

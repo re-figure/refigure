@@ -11,7 +11,8 @@
     var states = [{
         state: 'collections.item',
         config: {
-            url: '/collections/item/:id',
+            url: '/collections/item/:id?edit',
+            reloadOnSearch: false,
             template: '<collections-item></collections-item>',
             data: {}
         }

@@ -13,10 +13,10 @@
         </div>
     </md-toolbar>
     <md-content layout-padding ng-if="vm.refigure.ID">
-        <md-card ng-form="editRefigureForm" layout="column" layout-align="start stretch">
+        <md-card ng-form="vm.form" layout="column" layout-align="start stretch">
             <md-input-container>
                 <input placeholder="Title" ng-model="vm.refigure.Title" name="title" md-sidenav-focus required>
-                <div ng-messages="editRefigureForm.title.$error" role="alert" multiple>
+                <div ng-messages="vm.form.title.$error" role="alert" multiple>
                     <div ng-message="required" class="my-message">Title is required</div>
                 </div>
             </md-input-container>
@@ -32,7 +32,7 @@
                 <md-button
                         class="md-primary md-raised"
                         ng-click="vm.saveRefigure()"
-                        ng-disabled="editRefigureForm.$invalid || vm.loading || editRefigureForm.$pristine"
+                        ng-disabled="vm.form.$invalid || vm.loading || vm.form.$pristine"
                         layout="column">
                     <span ng-hide="vm.loading">save</span>
                     <md-progress-circular ng-show="vm.loading" class="md-hue-2" md-diameter="24px"></md-progress-circular>
@@ -44,7 +44,7 @@
             <md-card-title>
                 <md-card-title-media flex="20">
                     <div class="md-media-md card-media">
-                        <img ng-click="vm.showFullscreen($event, image.URL)" ng-src="{{image.URL}}">
+                        <img ng-src="{{image.URL}}">
                     </div>
                 </md-card-title-media>
                 <md-card-title-text flex="80" layout="column" layout-align="space-between start">

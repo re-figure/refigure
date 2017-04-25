@@ -34,8 +34,6 @@
             state: 'profile.collections'
         }, {
             state: 'profile.account'
-        }, {
-            state: 'home.search'
         }];
 
         vm.toggleSideBar = toggleSideBar;

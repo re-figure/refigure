@@ -19,19 +19,57 @@
         });
 
     ItemController.$inject = [
+        '$scope',
         '$state',
         '$stateParams',
         'collections',
-        'authUserInfo',
-        'modalDialog'
+        'modalDialog',
+        'auth'
     ];
 
-    function ItemController($state, $stateParams, collections, authUserInfo, modal) {
+    function ItemController($scope, $state, $stateParams, collections, modal, auth) {
         var vm = this;
         var currentLastInRow = -1;
 
-        vm.refigure = null;
+        var imgSrcParsers = [
+            {
+                name: 'plos',
+                matcher: function (str) {
+                    return str.match(/plos\.org/);
+                },
+                replacer: function (str) {
+                    return str.replace('size=inline', 'size=large');
+                }
+            }, {
+                name: 'elifescinces',
+                matcher: function (str) {
+                    return str.match(/elifesciences\.org/);
+                },
+                replacer: function (str) {
+                    return str.replace('-480w.', '.').replace('-300w.', '.');
+                }
+            }, {
+                name: 'pmc',
+                matcher: function (str) {
+                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
+                },
+                replacer: function (str) {
+                    return str.replace('.gif', '.jpg');
+                }
+            }/*, {
+                name: 'figshare',
+                matcher: function (str) {
+                    return str.match(/figshare\.com/);
+                },
+                replacer: function (str) {
+                    return str;
+                }
+            }*/
+        ];
+
+        vm.refigure = {};
         vm.details = null;
+        vm.user = {};
 
         vm.imageDetails = imageDetails;
         vm.toggleFlag = toggleFlag;
@@ -43,15 +81,19 @@
         ///////////////////////
 
         function activate() {
+            auth.usrInfo().then(function (user) {
+                vm.user = user;
+            });
+            $scope.$on('refigureUpdated', function (e, updated) {
+                e.stopPropagation();
+                setRefigure(updated);
+            });
+
             $state.get('collections.item').data.headerTitle = '';
             collections
                 .get($stateParams.id)
                 .then(function (resp) {
-                    $state.get('collections.item').data.headerTitle = '"' + resp.Title + '"';
-                    vm.refigure = resp;
-                    if (vm.refigure.Keywords) {
-                        vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
-                    }
+                    setRefigure(resp);
                 });
         }
 
@@ -105,16 +147,32 @@
         }
 
         function isAdmin() {
-            return authUserInfo.Type === 2;
+            return vm.user.Type === 2;
         }
 
         function showFullScreen(e, src) {
+            for (var i = 0; i < imgSrcParsers.length; i++) {
+                if (imgSrcParsers[i].matcher(src)) {
+                    src = imgSrcParsers[i].replacer(src);
+                    console.info('SRC matched ', imgSrcParsers[i].name, ', set to: ', src);
+                    break;
+                }
+            }
+
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,
-                clickOutsideToClose:true,
+                clickOutsideToClose: true,
                 fullscreen: true
             });
+        }
+
+        function setRefigure(refigure) {
+            angular.merge(vm.refigure, refigure);
+            $state.get('collections.item').data.headerTitle = '"' + vm.refigure.Title + '"';
+            if (vm.refigure.Keywords) {
+                vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+            }
         }
 
     }

@@ -111,10 +111,8 @@
                         .remove(vm.refigure.Figures[index].ID)
                         .then(function () {
                             vm.refigure.Figures.splice(index, 1);
-                            vm.refigure.FiguresCount--;
                             $scope.$emit('refigureUpdated', {
-                                ID: vm.refigure.ID,
-                                FiguresCount: vm.refigure.FiguresCount
+                                Figures: vm.refigure.Figures
                             });
                             rfToast.show('Image removed');
                         }, function () {
@@ -137,7 +135,12 @@
                 rfImages
                     .save(vm.refigure.Figures[index])
                     .finally(function () {
-                        vm.refigure.Figures[index]._loading = false;
+                        if (vm.refigure) {
+                            vm.refigure.Figures[index]._loading = false;
+                            $scope.$emit('refigureUpdated', {
+                                Figures: vm.refigure.Figures
+                            });
+                        }
                     });
             }
         }

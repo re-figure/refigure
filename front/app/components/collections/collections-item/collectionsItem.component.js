@@ -31,7 +31,7 @@
         var vm = this;
         var currentLastInRow = -1;
 
-        vm.refigure = null;
+        vm.refigure = {};
         vm.details = null;
         vm.user = {};
 
@@ -124,8 +124,8 @@
         }
 
         function setRefigure(refigure) {
-            $state.get('collections.item').data.headerTitle = '"' + refigure.Title + '"';
-            vm.refigure = refigure;
+            angular.merge(vm.refigure, refigure);
+            $state.get('collections.item').data.headerTitle = '"' + vm.refigure.Title + '"';
             if (vm.refigure.Keywords) {
                 vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
             }

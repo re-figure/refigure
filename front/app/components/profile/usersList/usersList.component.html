@@ -84,13 +84,14 @@
                 <md-switch
                         ng-model="vm.fakeTrueValue"
                         ng-if="vm.user.Type !== 0"
+                        disabled
                         md-invert
                         aria-label="Is registered">
                     Registration completed
                 </md-switch>
                 <md-switch
                         md-invert
-                        ng-hide="vm.user.Type === 0"
+                        ng-disabled="vm.user.Type === 0"
                         ng-model="vm.user.Type"
                         aria-label="Is admin"
                         ng-true-value="2"

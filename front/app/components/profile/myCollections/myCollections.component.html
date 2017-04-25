@@ -15,17 +15,9 @@
 <div class="r-collection" ng-repeat="item in vm.refigures">
     <collection-row ui-sref="collections.item({id: item.ID})" item="item"></collection-row>
 
-    <div class="r-collection-controls" layout="column" layout-align="space-between stretch">
-        <md-button
-                aria-label="Edit refigure"
-                ui-sref="profile.collections({refigure: item.ID})"
-                class="r-collection-edit md-primary md-icon-button md-button-small">
-            <md-icon>mode_edit</md-icon>
-        </md-button>
-        <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">
-            <md-icon flex>delete</md-icon>
-            <md-tooltip>delete refigure</md-tooltip>
-        </div>
+    <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">
+        <md-icon flex>delete</md-icon>
+        <md-tooltip>delete refigure</md-tooltip>
     </div>
     <div ui-sref="collections.user({query: item.User.ID})" class="r-collection-owner" ng-show="vm.isAdmin">
         <b class="md-caption">owner</b>

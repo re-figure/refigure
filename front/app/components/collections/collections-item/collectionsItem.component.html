@@ -64,14 +64,15 @@
             </div>
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
-            <div layout="row" layout-fill ng-show="vm.user.ID === vm.refigure.UserID || vm.isAdmin()">
+            <div layout="row" layout-align="space-between center" ng-show="vm.user.ID === vm.refigure.UserID || vm.isAdmin()">
                 <md-button
                         flex
                         class="md-button-small md-raised md-primary"
                         ui-sref="collections.item({edit: vm.refigure.ID})">
-                    edit <md-icon>edit</md-icon>
+                    edit&nbsp;<md-icon>edit</md-icon>
                 </md-button>
                 <md-button
+
                         ng-show="vm.isAdmin()"
                         class="md-raised md-button-small"
                         ng-class="vm.refigure.Flagged? 'md-accent' : 'md-warn'"

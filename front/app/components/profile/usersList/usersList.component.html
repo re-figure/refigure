@@ -49,7 +49,7 @@
         </md-button>
         <md-button  ng-show="item.Type===0" class="md-icon-button md-warn">
             <md-icon>error_outline</md-icon>
-            <md-tooltip md-direction="top">User have not finished registration</md-tooltip>
+            <md-tooltip md-direction="top">User has not completed registration yet</md-tooltip>
         </md-button>
     </div>
 </md-card>
@@ -79,24 +79,23 @@
                         aria-label="Is registered"
                         ng-true-value="1"
                         ng-false-value="0">
-                    Registration not completed
+                    Registration completed
                 </md-switch>
                 <md-switch
                         ng-model="vm.fakeTrueValue"
                         ng-if="vm.user.Type !== 0"
-                        disabled
                         md-invert
                         aria-label="Is registered">
-                    Registration is finished
+                    Registration completed
                 </md-switch>
                 <md-switch
                         md-invert
-                        ng-disabled="vm.user.Type === 0"
+                        ng-hide="vm.user.Type === 0"
                         ng-model="vm.user.Type"
                         aria-label="Is admin"
                         ng-true-value="2"
                         ng-false-value="1">
-                    Is administrator
+                    Administrator
                 </md-switch>
             </div>
             <md-input-container>

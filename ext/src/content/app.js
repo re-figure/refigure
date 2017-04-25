@@ -90,6 +90,7 @@ angular.module('ReFigureContent', [])
         $scope.minimized = false;
 
         $scope.close = function () {
+            window.figureAddStop();
             $scope.hidden = true;
         };
         ////////////////////////////

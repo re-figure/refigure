@@ -74,7 +74,7 @@ function shouldAuthenticate(req) {
  */
 function isAdminRequest(req) {
     if (req.path.match(/\/api\//)) {
-        if (req.path.match(/user/i)) {
+        if (req.path.match(/user/i) && !req.path.match(/userinfo/)) {
             return true;
         }
         if (req.path.match(/statistics/i)) {

@@ -31,6 +31,42 @@
         var vm = this;
         var currentLastInRow = -1;
 
+        var imgSrcParsers = [
+            {
+                name: 'plos',
+                matcher: function (str) {
+                    return str.match(/plos\.org/);
+                },
+                replacer: function (str) {
+                    return str.replace('size=inline', 'size=large');
+                }
+            }, {
+                name: 'elifescinces',
+                matcher: function (str) {
+                    return str.match(/elifesciences\.org/);
+                },
+                replacer: function (str) {
+                    return str.replace('-480w.', '.').replace('-300w.', '.');
+                }
+            }, {
+                name: 'pmc',
+                matcher: function (str) {
+                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
+                },
+                replacer: function (str) {
+                    return str.replace('.gif', '.jpg');
+                }
+            }/*, {
+                name: 'figshare',
+                matcher: function (str) {
+                    return str.match(/figshare\.com/);
+                },
+                replacer: function (str) {
+                    return str;
+                }
+            }*/
+        ];
+
         vm.refigure = {};
         vm.details = null;
         vm.user = {};
@@ -115,10 +151,18 @@
         }
 
         function showFullScreen(e, src) {
+            for (var i = 0; i < imgSrcParsers.length; i++) {
+                if (imgSrcParsers[i].matcher(src)) {
+                    src = imgSrcParsers[i].replacer(src);
+                    console.info('SRC matched ', imgSrcParsers[i].name, ', set to: ', src);
+                    break;
+                }
+            }
+
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,
-                clickOutsideToClose:true,
+                clickOutsideToClose: true,
                 fullscreen: true
             });
         }

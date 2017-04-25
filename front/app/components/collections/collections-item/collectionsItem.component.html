@@ -12,8 +12,9 @@
         </md-content>
         <md-card ng-repeat-end ng-if="image.lastInRow && vm.details" flex="100" class="hide-show-slide-down">
             <md-card-content layout="row">
-                <div flex="33" layout="column" layout-align="center center" layout-padding>
-                    <img ng-click="vm.showFullScreen($event, vm.details.URL)" ng-src="{{vm.details.URL}}">
+                <div ng-click="vm.showFullScreen($event, vm.details.URL)" class="rf-item-fullscreen" flex="33" layout="column" layout-align="center center" layout-padding>
+                    <img ng-src="{{vm.details.URL}}">
+                    <md-icon>search</md-icon>
                 </div>
                 <div>
                     <p>

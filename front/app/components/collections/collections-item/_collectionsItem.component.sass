@@ -40,3 +40,17 @@ collections-item
 
     .r-item-title
         max-width: 300px
+
+    .rf-item-fullscreen
+        position: relative
+        img
+            max-height: 300px
+        md-icon
+            position: absolute
+            top: 0
+            left: 0
+            opacity: .4
+            transition: opacity .3s
+
+        &:hover md-icon
+            opacity: 1

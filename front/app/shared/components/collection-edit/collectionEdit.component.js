@@ -49,7 +49,8 @@
             $scope.$watch('vm.sidebarOpened', function (val) {
                 if (val !== undefined && !val) {
                     $state.go($state.current.name, {edit: null});
-                    vm.refigure = null;
+                    //vm.refigure = null;
+                    vm.opened = -1;
                 }
             });
 
@@ -130,19 +131,17 @@
          * Edits image
          */
         function saveImage(index) {
-            if (vm.refigure.ID && vm.forms['f' + index].$dirty) {
-                vm.refigure.Figures[index]._loading = true;
-                rfImages
-                    .save(vm.refigure.Figures[index])
-                    .finally(function () {
-                        if (vm.refigure) {
-                            vm.refigure.Figures[index]._loading = false;
-                            $scope.$emit('refigureUpdated', {
-                                Figures: vm.refigure.Figures
-                            });
-                        }
-                    });
-            }
+            vm.refigure.Figures[index]._loading = true;
+            rfImages
+                .save(vm.refigure.Figures[index])
+                .finally(function () {
+                    if (vm.refigure) {
+                        vm.refigure.Figures[index]._loading = false;
+                        $scope.$emit('refigureUpdated', {
+                            Figures: vm.refigure.Figures
+                        });
+                    }
+                });
         }
     }
 

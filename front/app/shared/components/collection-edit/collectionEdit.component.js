@@ -38,7 +38,6 @@
         vm.removeImage = removeImage;
         vm.saveImage = saveImage;
         vm.toggleDetails = toggleDetails;
-        vm.showFullscreen = showFullscreen;
         vm.refigure = null;
 
         activate();
@@ -49,14 +48,14 @@
             //sidebar close/open
             $scope.$watch('vm.sidebarOpened', function (val) {
                 if (val !== undefined && !val) {
-                    $state.go($state.current.name, {refigure: null});
+                    $state.go($state.current.name, {edit: null});
                     vm.refigure = null;
                 }
             });
 
             //pseudo state change
             $scope.$watch(function () {
-                return $state.params.refigure;
+                return $state.params.edit;
             }, function (refigureID) {
                 if (refigureID) {
                     collections
@@ -82,6 +81,7 @@
                 .save(vm.refigure)
                 .then(function (refigure) {
                     rfToast.show('Refigure saved');
+                    vm.form.$setPristine();
                     $scope.$emit('refigureUpdated', refigure);
                 })
                 .finally(function () {
@@ -140,24 +140,6 @@
                         vm.refigure.Figures[index]._loading = false;
                     });
             }
-        }
-
-        /**
-         * @ngdoc method
-         * @name refigureShared.directives:collectionEdit#saveImage
-         * @methodOf refigureShared.directives:collectionEdit
-         * @param {Event} e angular event object
-         * @param {String} src link to image
-         * @description
-         * Show full size image
-         */
-        function showFullscreen(e, src) {
-            modal.show({
-                template: '<img src="' + src + '">',
-                targetEvent: e,
-                clickOutsideToClose:true,
-                fullscreen: true
-            });
         }
     }
 

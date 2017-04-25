@@ -50,18 +50,10 @@
          * Activates controller
          */
         function activate() {
-            $scope.$watchCollection('vm.searchParams', function (params, prevParams) {
-                if (params && (!prevParams || params.refigure === prevParams.refigure)) {
+            $scope.$watchCollection('vm.searchParams', function (params) {
+                if (params) {
                     load(params);
                 }
-            });
-            $scope.$on('refigureUpdated', function (e, updated) {
-                e.stopPropagation();
-                vm.refigures.forEach(function (refigure) {
-                    if (refigure.ID === updated.ID) {
-                        angular.extend(refigure, updated);
-                    }
-                });
             });
         }
 

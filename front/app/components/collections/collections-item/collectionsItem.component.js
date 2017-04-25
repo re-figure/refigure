@@ -19,19 +19,21 @@
         });
 
     ItemController.$inject = [
+        '$scope',
         '$state',
         '$stateParams',
         'collections',
-        'authUserInfo',
-        'modalDialog'
+        'modalDialog',
+        'auth'
     ];
 
-    function ItemController($state, $stateParams, collections, authUserInfo, modal) {
+    function ItemController($scope, $state, $stateParams, collections, modal, auth) {
         var vm = this;
         var currentLastInRow = -1;
 
         vm.refigure = null;
         vm.details = null;
+        vm.user = {};
 
         vm.imageDetails = imageDetails;
         vm.toggleFlag = toggleFlag;
@@ -43,15 +45,19 @@
         ///////////////////////
 
         function activate() {
+            auth.usrInfo().then(function (user) {
+                vm.user = user;
+            });
+            $scope.$on('refigureUpdated', function (e, updated) {
+                e.stopPropagation();
+                setRefigure(updated);
+            });
+
             $state.get('collections.item').data.headerTitle = '';
             collections
                 .get($stateParams.id)
                 .then(function (resp) {
-                    $state.get('collections.item').data.headerTitle = '"' + resp.Title + '"';
-                    vm.refigure = resp;
-                    if (vm.refigure.Keywords) {
-                        vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
-                    }
+                    setRefigure(resp);
                 });
         }
 
@@ -105,7 +111,7 @@
         }
 
         function isAdmin() {
-            return authUserInfo.Type === 2;
+            return vm.user.Type === 2;
         }
 
         function showFullScreen(e, src) {
@@ -115,6 +121,14 @@
                 clickOutsideToClose:true,
                 fullscreen: true
             });
+        }
+
+        function setRefigure(refigure) {
+            $state.get('collections.item').data.headerTitle = '"' + refigure.Title + '"';
+            vm.refigure = refigure;
+            if (vm.refigure.Keywords) {
+                vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+            }
         }
 
     }

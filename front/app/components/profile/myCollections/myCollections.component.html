@@ -13,7 +13,7 @@
 </md-card>
 <pager total="vm.found" search-params="vm.searchParams" default-sort="nameAsc"></pager>
 <div class="r-collection" ng-repeat="item in vm.refigures">
-    <collection-row ui-sref="profile.collections({refigure: item.ID})" item="item"></collection-row>
+    <collection-row ui-sref="collections.item({id: item.ID})" item="item"></collection-row>
 
     <div class="r-collection-controls" layout="column" layout-align="space-between stretch">
         <md-button
@@ -32,4 +32,3 @@
         <a href="" ng-bind="item.User.FullName"></a>
     </div>
 </div>
-<collection-edit></collection-edit>

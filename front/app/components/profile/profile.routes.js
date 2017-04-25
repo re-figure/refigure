@@ -74,7 +74,10 @@
                     // abstract: true,
                     url: '/profile',
                     //redirectTo: 'profile.collections',
-                    template: '<profile-page class="r-page r-profile-page" layout="row"></profile-page>'
+                    template: '<profile-page class="r-page r-profile-page" layout="row"></profile-page>',
+                    data: {
+                        private: true
+                    }
                 }
             }]
                 .concat(states);

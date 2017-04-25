@@ -55,26 +55,24 @@
                 var info = $state.get(_item.state) || {};
                 angular.extend(_item, info.data);
             });
-            if (auth.isAuthenticated()) {
-                auth.usrInfo().then(function (user) {
-                    if (user.Type === 2) {
-                        $state.get('profile.collections').data.label = 'Refigures';
-                        var collectionsState = vm.menuItems.find(function (el) {
-                            return el.state === 'profile.collections';
-                        });
-                        if (collectionsState) {
-                            collectionsState.label = 'Refigures';
-                        }
-                        addStateToMenu('profile.users');
-                        addStateToMenu('profile.dashboard');
+            auth.usrInfo().then(function (user) {
+                if (user.Type === 2) {
+                    $state.get('profile.collections').data.label = 'Refigures';
+                    var collectionsState = vm.menuItems.find(function (el) {
+                        return el.state === 'profile.collections';
+                    });
+                    if (collectionsState) {
+                        collectionsState.label = 'Refigures';
                     }
-                    if ($state.current.name === 'profile') {
-                        $state.go(user.Type === 2 ? '.dashboard' : '.collections', {
-                            location: 'replace'
-                        });
-                    }
-                });
-            }
+                    addStateToMenu('profile.users');
+                    addStateToMenu('profile.dashboard');
+                }
+                if ($state.current.name === 'profile') {
+                    $state.go(user.Type === 2 ? '.dashboard' : '.collections', null, {
+                        location: 'reload'
+                    });
+                }
+            });
             $scope.$on('$viewContentLoaded', function () {
                 toggleSideBar('close');
             });

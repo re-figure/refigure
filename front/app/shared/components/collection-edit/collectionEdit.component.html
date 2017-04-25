@@ -40,47 +40,5 @@
             </div>
         </md-card>
 
-        <md-card ng-repeat="image in vm.refigure.Figures">
-            <md-card-title>
-                <md-card-title-media flex="20">
-                    <div class="md-media-md card-media">
-                        <img ng-click="vm.showFullscreen($event, image.URL)" ng-src="{{image.URL}}">
-                    </div>
-                </md-card-title-media>
-                <md-card-title-text flex="80" layout="column" layout-align="space-between start">
-                    <div class="md-subhead" ng-bind="image.Caption" md-truncate></div>
-                    <md-button ng-click="vm.toggleDetails($index)">
-                        <span ng-hide="vm.opened === $index"><md-icon>add</md-icon> show details</span>
-                        <span ng-show="vm.opened === $index"><md-icon>remove</md-icon> hide details</span>
-                    </md-button>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-content class="hide-show-slide-down" ng-show="vm.opened === $index">
-                <form name="vm.forms.f{{$index}}" layout="column" layout-fill>
-                    <md-input-container>
-                        <label>Caption</label>
-                        <textarea ng-blur="vm.saveImage($index)" ng-model="image.Caption"></textarea>
-                    </md-input-container>
-                    <md-input-container>
-                        <textarea ng-blur="vm.saveImage($index)" placeholder="Legend" ng-model="image.Legend"></textarea>
-                    </md-input-container>
-                    <md-input-container>
-                        <textarea ng-blur="vm.saveImage($index)" placeholder="Authors" ng-model="image.Authors"></textarea>
-                    </md-input-container>
-                    <md-input-container>
-                        <input ng-blur="vm.saveImage($index)" placeholder="Article DOI" ng-model="image.DOI">
-                    </md-input-container>
-                    <md-input-container>
-                        <input ng-blur="vm.saveImage($index)" placeholder="Image DOI" ng-model="image.DOIFigure">
-                    </md-input-container>
-                </form>
-            </md-card-content>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-disabled="image._loading" ng-click="vm.removeImage($index)" class="md-raised md-warn" layout="column">
-                    <span ng-hide="image._loading">remove</span>
-                    <md-progress-circular ng-show="image._loading" md-diameter="24px"></md-progress-circular>
-                </md-button>
-            </md-card-actions>
-        </md-card>
     </md-content>
 </md-sidenav>

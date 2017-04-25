@@ -81,7 +81,7 @@
             collections
                 .save(vm.refigure)
                 .then(function (refigure) {
-                    rfToast.show('Refigure saved', refigure);
+                    rfToast.show('Refigure saved');
                     $scope.$emit('refigureUpdated', refigure);
                 })
                 .finally(function () {

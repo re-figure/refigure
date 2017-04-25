@@ -1,6 +1,18 @@
 $remove-height: 25px
 users-list
+    md-sidenav.md-sidenav-right
+        top: 64px
+        width: 30%
+        min-width: 600px
+        max-width: inherit
+        position: fixed
+    md-backdrop
+        top: 64px
+        position: fixed
+
     .r-user
+        padding: 16px
+        position: relative
         &-controls
             position: absolute
             text-align: center
@@ -9,6 +21,17 @@ users-list
             height: 96px
             right: 0
             width: 65px
+
+        &-labels
+            position: absolute
+            top: 0
+            right: 0
+            font-size: 20px
+
+            .md-button.md-icon-button
+                margin: 0
+            .r-user-super md-icon
+                color: $success-color
 
         &-remove
             position: relative

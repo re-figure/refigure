@@ -67,6 +67,9 @@
                     addStateToMenu('profile.users');
                     addStateToMenu('profile.dashboard');
                 }
+                if ($state.current.name === 'profile') {
+                    $state.go(user.Type === 2 ? '.dashboard' : '.collections');
+                }
             });
             $scope.$on('$viewContentLoaded', function () {
                 toggleSideBar('close');

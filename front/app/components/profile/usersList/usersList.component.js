@@ -83,9 +83,10 @@
                 });
         }
 
-        function remove(index) {
+        function remove(e, index) {
+            e.stopPropagation();
             modal
-                .confirm('Delete this user?')
+                .confirm('Are you sure you would like to delete this user permanently?')
                 .then(function () {
                     rfUsers
                         .remove(vm.users[index].ID)

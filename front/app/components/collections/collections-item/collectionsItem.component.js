@@ -56,15 +56,7 @@
                 replacer: function (str) {
                     return str.replace('.gif', '.jpg');
                 }
-            }/*, {
-                name: 'figshare',
-                matcher: function (str) {
-                    return str.match(/figshare\.com/);
-                },
-                replacer: function (str) {
-                    return str;
-                }
-            }*/
+            }
         ];
 
         vm.refigure = {};
@@ -81,9 +73,11 @@
         ///////////////////////
 
         function activate() {
-            auth.usrInfo().then(function (user) {
-                vm.user = user;
-            });
+            if (auth.isAuthenticated()) {
+                auth.usrInfo().then(function (user) {
+                    vm.user = user;
+                });
+            }
             $scope.$on('refigureUpdated', function (e, updated) {
                 e.stopPropagation();
                 setRefigure(updated);

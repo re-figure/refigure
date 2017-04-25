@@ -163,7 +163,8 @@
                 template: '<img src="' + src + '">',
                 targetEvent: e,
                 clickOutsideToClose: true,
-                fullscreen: true
+                parent: '.r-page-content',
+                escapeToClose: true
             });
         }
 

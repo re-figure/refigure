@@ -81,7 +81,7 @@
 
         function remove(index) {
             modal
-                .confirm('Delete this refigure?')
+                .confirm('Are you sure you would like to delete this refigure?')
                 .then(function () {
                     collections
                         .remove(vm.refigures[index].ID)

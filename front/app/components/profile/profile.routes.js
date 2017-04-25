@@ -73,7 +73,7 @@
                 config: {
                     // abstract: true,
                     url: '/profile',
-                    redirectTo: 'profile.collections',
+                    //redirectTo: 'profile.collections',
                     template: '<profile-page class="r-page r-profile-page" layout="row"></profile-page>'
                 }
             }]

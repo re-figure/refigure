@@ -124,6 +124,27 @@ body
             &.rf-fig-list-item-current
                 border-color: #5cb85c
 
+    .rf-dialog-confirm
+        position: fixed
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        background-color: rgba(0,0,0,.3)
+        color: #000
+
+        &-window
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            width: 400px
+            background-color: #fff
+            padding: 15px 20px
+        &-title
+            font-size: 20px
+            line-height: 30px
+
 .rf-image-popup
     position: fixed
     z-index: 1100000

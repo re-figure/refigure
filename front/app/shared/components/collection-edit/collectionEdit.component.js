@@ -30,7 +30,7 @@
     function EditController($scope, $state, collections, modal, rfToast, rfImages) {
         var vm = this;
 
-        vm.loading = false;
+        vm.opened = -1;
         vm.opened = -1;
         vm.forms = {};
 
@@ -49,7 +49,6 @@
             $scope.$watch('vm.sidebarOpened', function (val) {
                 if (val !== undefined && !val) {
                     $state.go($state.current.name, {edit: null});
-                    //vm.refigure = null;
                     vm.opened = -1;
                 }
             });
@@ -77,17 +76,14 @@
          * Saves collection
          */
         function saveRefigure() {
-            vm.loading = true;
-            collections
-                .save(vm.refigure)
-                .then(function (refigure) {
-                    rfToast.show('Refigure saved');
-                    vm.form.$setPristine();
-                    $scope.$emit('refigureUpdated', refigure);
-                })
-                .finally(function () {
-                    vm.loading = false;
-                });
+            if (vm.form.$valid && vm.form.$dirty) {
+                collections
+                    .save(vm.refigure)
+                    .then(function (refigure) {
+                        vm.form.$setPristine();
+                        $scope.$emit('refigureUpdated', refigure);
+                    });
+            }
         }
 
         function toggleDetails(index) {
@@ -105,7 +101,7 @@
          */
         function removeImage(index) {
             modal
-                .confirm('Delete this image?')
+                .confirm('Are you sure you would like to delete this image?')
                 .then(function () {
                     vm.refigure.Figures[index]._loading = true;
                     rfImages

@@ -44,12 +44,4 @@
         );
     });
 
-    /*gulp.task('ext_default', function (cb) {
-        runSequence(
-            'extension',
-            'ext_watch',
-            cb
-        );
-    });*/
-
 }());

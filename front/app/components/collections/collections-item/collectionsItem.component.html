@@ -73,6 +73,13 @@
             </div>
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
+
+            <div layout="row" layout-align="start center">
+                <a class="md-button" ng-href="https://www.facebook.com/share.php?u={{vm.url}}" title="Share on facebook">
+                    <md-icon>face</md-icon>
+                </a>
+            </div>
+
             <div ng-show="vm.refigure.ID" class="rf-item-controls" layout="row" layout-align="space-between center">
                 <md-button
                         ng-show="vm.isAdmin() || vm.user.ID === vm.refigure.UserID"

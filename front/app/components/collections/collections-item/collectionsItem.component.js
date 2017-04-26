@@ -60,6 +60,8 @@
             }
         ];
 
+        vm.url = window.location.href;
+
         vm.refigure = {};
         vm.details = null;
         vm.user = {};

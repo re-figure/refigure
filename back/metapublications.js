@@ -581,6 +581,8 @@ function flagMetapublication(req, res) {
         let flagged = true;
         if (typeof req.body.Flagged !== 'undefined') {
             flagged = rfUtils.boolValue(req.body.Flagged);
+        } else {
+            flagged = r.data.Metapublication.Flagged ? false : true;
         }
 
         let q = 'UPDATE Metapublication SET Flagged = ? WHERE ID = ?';

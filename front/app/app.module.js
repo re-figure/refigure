@@ -14,6 +14,9 @@
             'refigureProfile',
             'refigureShared'
         ])
+        .constant('MESSAGES', {
+            MSG_TYPE_REFIGURE_IMAGES_COLLECTED: 100
+        })
         .config(appConfig)
         .config(themeConfig)
         .run(appRun);

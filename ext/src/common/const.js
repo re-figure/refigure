@@ -17,6 +17,8 @@ var _gConst = {
     MSG_TYPE_ADD_FIGURE_TO_COLLECTION: 80,
     MSG_TYPE_GET_FOUND_FIGURES: 90,
 
+    MSG_TYPE_REFIGURE_IMAGES_COLLECTED: 100,
+
     POPUP_ERROR_FIG_NOT_PARSED: 'Image was not parsed',
     POPUP_ERROR_FIG_DUPLICATE: 'Image is already selected',
 
@@ -25,7 +27,6 @@ var _gConst = {
 
 };
 
-// var _gApiURL = 'http://localhost:8181/api/';
 var _gApiURL;
 
 (function () {
@@ -39,6 +40,5 @@ var _gApiURL;
     }
 
 }());
-
 
 _gApiURL = _gApiURL || 'https://localhost:8181/api/';

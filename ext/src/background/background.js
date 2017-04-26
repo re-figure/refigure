@@ -44,17 +44,15 @@ function startSearchFiguresIfNeed(tab) {
     if (isTabToProceed(tab)) {
         var t = tabsData[tab.id];
         if (t) {
-            if (!tab.url.match(/refigure\./)) {
-                if (t.url && t.url !== tab.url) {
-                    // the tab URL has changed, so start search figures
-                    t.status = _gConst.STATUS_INPROCESS;
-                    t.url = tab.url;
-                    chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
-                } else if (!t.url) {
-                    t.status = _gConst.STATUS_INPROCESS;
-                    t.url = tab.url;
-                    chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
-                }
+            if (t.url && t.url !== tab.url) {
+                // the tab URL has changed, so start search figures
+                t.status = _gConst.STATUS_INPROCESS;
+                t.url = tab.url;
+                chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+            } else if (!t.url) {
+                t.status = _gConst.STATUS_INPROCESS;
+                t.url = tab.url;
+                chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
             }
         }
     }

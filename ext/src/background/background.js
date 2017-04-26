@@ -78,6 +78,9 @@ chrome.runtime.onMessage.addListener(
                 inMetapublications: tabsData[request.tabId].inMetapublications
             });
         }
+        if (request.type === _gConst.MSG_TYPE_BADGE_NA) {
+            chrome.browserAction.setBadgeText({tabId: sender.tab.id, text: 'n/a'});
+        }
         return true;
     }
 );

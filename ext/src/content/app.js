@@ -53,7 +53,7 @@ angular.module('ReFigureContent', [])
 
         $scope.remove = function (index) {
             $scope.dialog
-                .confirm('Are you sure you would like to delete this image?')
+                .confirm('Are you sure you would like to delete this image from refigure?')
                 .then(function () {
                     $http
                         .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)

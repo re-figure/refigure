@@ -1,6 +1,12 @@
 CONTENT_BLOCK_SELECTOR = 'collections-item';
 
 function parseFigures() {
+    if (!Sizzle(CONTENT_BLOCK_SELECTOR).length) {
+        chrome.runtime.sendMessage({
+            type: _gConst.MSG_TYPE_BADGE_NA
+        });
+    }
+
     return new Promise(function (resolve, reject) {
         window.addEventListener('message', function (event) {
             var images = [];

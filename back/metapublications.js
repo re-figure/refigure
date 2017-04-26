@@ -21,6 +21,7 @@ exports.addOrUpdateMetapublication = addOrUpdateMetapublication;
 exports.deleteMetapublication = deleteMetapublication;
 exports.flagMetapublication = flagMetapublication;
 exports.getStatistics = getStatistics;
+exports.handleParsers = handleParsers;
 
 /**
  * Clean User record before output
@@ -45,7 +46,7 @@ function arrangeUserRecord(user) {
 function arrangeVisitRecord(rec, id) {
     let r = {
         Count: 0,
-        MetapublicationID : id
+        MetapublicationID: id
     };
     if (rec) {
         Object.keys(rec).forEach((key) => {
@@ -646,5 +647,47 @@ function getStatistics(req, res) {
                 resolve(_rec[_k]);
             });
         });
+    }
+}
+
+function handleParsers(req, res, next) {
+    if (
+        req.headers['user-agent'] &&
+        (req.headers['user-agent'].match(/facebook/i) || req.headers['user-agent'].match(/facebot/i)) &&
+        req.url.match(/collections\/item/)
+    ) {
+        let id = req.url.split('/').pop();
+        get(id, (r) => {
+            if (r.error) {
+                return rfUtils.error(res, r.http, r.error, r.message);
+            }
+            let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+            let body = [
+                '<html>',
+                    '<head lang="en">',
+                        '<meta charset="UTF-8">',
+                        '<meta name="og:url" content="' + fullUrl + '"/>',
+                        '<meta name="og:type" content="website"/>'
+            ];
+            if (r.data) {
+                body.push(
+                        '<title>' + r.data.Metapublication.Title + '</title>',
+                        '<meta name="og:title" content="' + r.data.Metapublication.Title + '" />',
+                        '<meta name="og:description" content="' + r.data.Metapublication.Description + '" />'
+                );
+                if (r.data.Metapublication.Figures[0]) {
+                    body.push(
+                        '<meta name="og:image" content="' + r.data.Metapublication.Figures[0].URL + '" />'
+                    );
+                }
+            }
+            body.push(
+                    '</head>',
+                '</html>'
+            );
+            res.status(200).send(body.join(''));
+        });
+    } else {
+        next();
     }
 }

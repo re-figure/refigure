@@ -14,7 +14,6 @@ const routes = require('./routes');
 const auth = require('./auth');
 const errors = require('./errors');
 
-
 // various middleware parsers
 app.use(bodyParser.urlencoded({
     extended: false

@@ -74,9 +74,21 @@
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
 
-            <div layout="row" layout-align="start center">
-                <a class="md-button" ng-href="https://www.facebook.com/share.php?u={{vm.url}}" title="Share on facebook">
-                    <md-icon>face</md-icon>
+            <div class="r-share" layout="row" layout-align="start center">
+                <b class="md-caption">Share </b>
+                <a class="r-facebook"
+                   ng-href="https://www.facebook.com/share.php?u={{vm.url}}"
+                   onclick="window.open(this.href, 'facebook-share-dialog', 'width=626,height=436');return false;">
+                    facebook
+                </a>
+                <a class="r-g-plus"
+                   ng-href="https://plus.google.com/share?url={URL}"
+                   onclick="window.open(
+                       this.href,
+                        '',
+                         'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'
+                         );return false;">
+                    google+
                 </a>
             </div>
 

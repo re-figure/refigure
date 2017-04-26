@@ -653,8 +653,8 @@ function getStatistics(req, res) {
 function handleParsers(req, res, next) {
     if (
         req.headers['user-agent'] &&
-        (req.headers['user-agent'].match(/facebook/i) || req.headers['user-agent'].match(/facebot/i)) &&
-        req.url.match(/collections\/item/)
+        req.url.match(/collections\/item/) &&
+        checkScrapperHeaders(req.headers['user-agent'])
     ) {
         let id = req.url.replace(/\//g, ' ').trim().split(' ').pop();
         get(id, (r) => {
@@ -677,7 +677,9 @@ function handleParsers(req, res, next) {
                 );
                 if (r.data.Metapublication.Figures[0]) {
                     body.push(
-                        '<meta name="og:image" content="' + r.data.Metapublication.Figures[0].URL + '" />'
+                        '<meta name="og:image" content="' + r.data.Metapublication.Figures[0].URL + '" />',
+                        '<meta name="og:image:width" content="600"/>',
+                        '<meta name="og:image:height" content="315"/>'
                     );
                 }
             }
@@ -690,4 +692,10 @@ function handleParsers(req, res, next) {
     } else {
         next();
     }
+}
+
+function checkScrapperHeaders(userAgent) {
+    return userAgent.match(/facebook/i) ||
+        userAgent.match(/facebot/i) ||
+        userAgent.match(/google/i);
 }

@@ -656,7 +656,7 @@ function handleParsers(req, res, next) {
         (req.headers['user-agent'].match(/facebook/i) || req.headers['user-agent'].match(/facebot/i)) &&
         req.url.match(/collections\/item/)
     ) {
-        let id = req.url.split('/').pop();
+        let id = req.url.replace(/\//g, ' ').trim().split(' ').pop();
         get(id, (r) => {
             if (r.error) {
                 return rfUtils.error(res, r.http, r.error, r.message);

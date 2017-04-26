@@ -575,9 +575,6 @@ function flagMetapublication(req, res) {
         if (r.error) {
             return rfUtils.error(res, r.http, r.error, r.message);
         }
-        if (!auth.checkObjectAccess(req, r.data.Metapublication.UserID)) {
-            return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
-        }
         let flagged = true;
         if (typeof req.body.Flagged !== 'undefined') {
             flagged = rfUtils.boolValue(req.body.Flagged);
@@ -585,6 +582,13 @@ function flagMetapublication(req, res) {
             flagged = r.data.Metapublication.Flagged ? false : true;
         }
 
+        if (!flagged) {
+            if (req.User.Type !== constants.USER_TYPE_ADMIN) {
+                // everyone can report copyright issue,
+                // only admin can reset
+                return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+            }
+        }
         let q = 'UPDATE Metapublication SET Flagged = ? WHERE ID = ?';
         db.pool.query(q, [flagged, id], (err) => {
             if (err) {

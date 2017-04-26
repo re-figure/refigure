@@ -9,17 +9,21 @@
             md-whiteframe="4">
         <md-content layout-padding>
             <div md-truncate>
-                <b class="md-caption">User&nbsp;&nbsp;</b><span ng-bind="vm.user.FullName"></span>
+                <b class="md-caption">User </b><span ng-bind="vm.user.FullName"></span>
             </div>
             <div>
-                <b class="md-caption">Joined&nbsp;&nbsp;</b><span ng-bind="vm.user.DateCreated|date:'d.MM.yyyy'"></span>
+                <b class="md-caption">Joined us at </b><span ng-bind="vm.user.DateCreated|date:'d.MM.yyyy'"></span>
             </div>
             <div>
-                <b class="md-caption">Total refigures&nbsp;&nbsp;</b><span ng-bind="vm.found"></span>
+                <b class="md-caption">Total refigures </b><span ng-bind="vm.found"></span>
             </div>
             <div ng-show="vm.user.Organization">
-                <b class="md-caption">Organization&nbsp;</b><span ng-bind="vm.user.Organization"></span>&nbsp;
-                <b class="md-caption">in</b> <span ng-bind="vm.user.Department"></span> dept.
+                <b class="md-caption">Organization </b><span ng-bind="vm.user.Organization"></span>
+                <span ng-show="vm.user.Department">
+                    <b class="md-caption"> in </b>
+                    <span ng-bind="vm.user.Department"></span>
+                    <b class="md-caption"> dept.</b>
+                </span>
             </div>
         </md-content>
     </md-sidenav>

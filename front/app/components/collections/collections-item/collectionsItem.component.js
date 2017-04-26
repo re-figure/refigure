@@ -22,12 +22,13 @@
         '$scope',
         '$state',
         '$stateParams',
+        'MESSAGES',
         'collections',
         'modalDialog',
         'auth'
     ];
 
-    function ItemController($scope, $state, $stateParams, collections, modal, auth) {
+    function ItemController($scope, $state, $stateParams, MESSAGES, collections, modal, auth) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -87,6 +88,10 @@
             collections
                 .get($stateParams.id)
                 .then(function (resp) {
+                    window.postMessage({
+                        type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
+                        images: resp.Figures
+                    }, '*');
                     setRefigure(resp);
                 });
         }

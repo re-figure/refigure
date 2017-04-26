@@ -131,10 +131,15 @@
          * Edits image
          */
         function saveImage(index) {
+            //if (vm.refigure.ID && vm.forms['f' + index].$dirty) {
             vm.refigure.Figures[index]._loading = true;
+            var image = angular.copy(vm.refigure.Figures[index]);
+            delete image.User;
+            delete image._loading;
             rfImages
-                .save(vm.refigure.Figures[index])
-                .finally(function () {
+                .save(image)
+                .finally(function (resp) {
+                    console.log(resp);
                     if (vm.refigure) {
                         vm.refigure.Figures[index]._loading = false;
                         $scope.$emit('refigureUpdated', {
@@ -142,6 +147,7 @@
                         });
                     }
                 });
+            //}
         }
     }
 

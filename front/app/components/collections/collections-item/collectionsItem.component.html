@@ -73,7 +73,7 @@
             </div>
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
-            <div class="rf-item-controls" layout="row" layout-align="space-between center">
+            <div ng-show="vm.refigure.ID" class="rf-item-controls" layout="row" layout-align="space-between center">
                 <md-button
                         ng-show="vm.isAdmin() || vm.user.ID === vm.refigure.UserID"
                         class="md-button-small md-raised md-primary"

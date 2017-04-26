@@ -14,6 +14,9 @@ const staticOptions = {};
 
 module.exports = router;
 
+//routes for social parsers
+router.use(metapublications.handleParsers);
+
 // static pages router
 router.use(express.static(homePage, staticOptions));
 

@@ -72,4 +72,17 @@
             <button ng-click="close()" type="button" class="btn btn-block btn-default">Close</button>
         </div>
     </div>
+    <div class="rf-dialog-confirm" ng-show="dialog.showConfirm">
+        <div class="rf-dialog-confirm-window">
+            <p class="rf-dialog-confirm-title">{{dialog.text}}</p>
+            <div class="row">
+                <div class="col-xs-6">
+                    <button ng-click="dialog.cancel()" class="btn btn-block btn-default">Cancel</button>
+                </div>
+                <div class="col-xs-6">
+                    <button ng-click="dialog.ok()" class="btn btn-block btn-info">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -101,7 +101,7 @@
          */
         function removeImage(index) {
             modal
-                .confirm('Delete this image?')
+                .confirm('Are you sure you would like to delete this image?')
                 .then(function () {
                     vm.refigure.Figures[index]._loading = true;
                     rfImages

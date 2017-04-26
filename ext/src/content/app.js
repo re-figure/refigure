@@ -13,11 +13,31 @@ angular.module('ReFigureContent', [])
     }])
 
     //add image functionality
-    .run(['$rootScope', '$http', function ($scope, $http) {
+    .run(['$rootScope', '$http', '$q', function ($scope, $http, $q) {
 
         $scope.collection = {};
         $scope.opts = {
             current: -1
+        };
+
+        $scope.dialog = {
+            dfd: null,
+            confirm: function (text) {
+                $scope.dialog.text = text;
+                $scope.dialog.showConfirm = true;
+                $scope.dialog.dfd = $q.defer();
+                return $scope.dialog.dfd.promise;
+            },
+            showConfirm: false,
+            text: '',
+            ok: function () {
+                $scope.dialog.showConfirm = false;
+                $scope.dialog.dfd.resolve();
+            },
+            cancel: function () {
+                $scope.dialog.showConfirm = false;
+                $scope.dialog.dfd.reject();
+            }
         };
 
         $scope.minimized = false;
@@ -32,14 +52,16 @@ angular.module('ReFigureContent', [])
         };
 
         $scope.remove = function (index) {
-            if (confirm('Remove this figure?')) {
-                $http
-                    .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)
-                    .then(function () {
-                        $scope.collection.Figures.splice(index, 1);
-                        window.searchFigures();
-                    });
-            }
+            $scope.dialog
+                .confirm('Are you sure you would like to delete this image?')
+                .then(function () {
+                    $http
+                        .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)
+                        .then(function () {
+                            $scope.collection.Figures.splice(index, 1);
+                            window.searchFigures();
+                        });
+                });
         };
 
         $scope.expandImage = function (src) {

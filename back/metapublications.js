@@ -651,32 +651,33 @@ function getStatistics(req, res) {
 }
 
 function handleParsers(req, res, next) {
-    if (req.headers['user-agent'] && req.headers['user-agent'].match(/Twitterbot/) && req.url.match(/collections\/item/)) {
+    if (
+        req.headers['user-agent'] &&
+        (req.headers['user-agent'].match(/facebook/i) || req.headers['user-agent'].match(/facebot/i)) &&
+        req.url.match(/collections\/item/)
+    ) {
         let id = req.url.split('/').pop();
         get(id, (r) => {
             if (r.error) {
                 return rfUtils.error(res, r.http, r.error, r.message);
             }
+            let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
             let body = [
-                '<!DOCTYPE html>',
-                '<html lang="en" xml:lang="en">',
+                '<html>',
                     '<head lang="en">',
                         '<meta charset="UTF-8">',
-                        '<meta name="twitter:card" content="summary" />',
-                        '<meta name="twitter:site" content="@AndersDeath" />',
+                        '<meta name="og:url" content="' + fullUrl + '"/>',
+                        '<meta name="og:type" content="website"/>'
             ];
             if (r.data) {
                 body.push(
-                        '<meta name="twitter:title" content="' + r.data.Metapublication.Title + '" />',
+                        '<title>' + r.data.Metapublication.Title + '</title>',
                         '<meta name="og:title" content="' + r.data.Metapublication.Title + '" />',
-                        '<meta name="twitter:description" content="' + r.data.Metapublication.Description + '" />',
                         '<meta name="og:description" content="' + r.data.Metapublication.Description + '" />'
                 );
                 if (r.data.Metapublication.Figures[0]) {
                     body.push(
-                        '<meta name="twitter:image" content="' + r.data.Metapublication.Figures[0].URL + '" />',
-                        '<meta name="og:image" content="' + r.data.Metapublication.Figures[0].URL + '" />',
-                        '<meta name="twitter:image:alt" content="' + r.data.Metapublication.Figures[0].Caption + '"/>'
+                        '<meta name="og:image" content="' + r.data.Metapublication.Figures[0].URL + '" />'
                     );
                 }
             }

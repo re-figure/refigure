@@ -68,7 +68,7 @@ module.exports = {
     ],
     htmDir: buildDir + '/view',
     viewFileMin: 'partials.min.js',
-    indexSource: clientDir + '/index.html',
+    indexSource: clientDir + '/*.html',
     indexHtml: buildDir + '/index.html',
     extension: {
         replace: {

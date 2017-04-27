@@ -1,81 +1,97 @@
 collections-item
     [ui-sref] a
         color: #000
-    md-sidenav.rf-item-details
-        width: 450px
-        max-width: none
-        .md-chips
-            md-chip
-                padding: 0 8px
-                height: 20px
-                line-height: 20px
-                margin: 8px 4px 0 0
-                font-size: 12px
-                color: #fff
-                border-radius: 10px
-                background-color: $success-color
 
-    .rf-item-controls
-        padding: 0
+    .rf-item
+        &-title
+            max-width: 300px
 
-    md-content.rf-item-image
-        margin: 0 15px 15px 0
-        background: #fff
-        max-height: 200px
-        overflow: visible
+        &-details
+            width: 450px
+            max-width: none
+            .md-chips
+                md-chip
+                    padding: 0 8px
+                    height: 20px
+                    line-height: 20px
+                    margin: 8px 4px 0 0
+                    font-size: 12px
+                    color: #fff
+                    border-radius: 10px
+                    background-color: $success-color
 
-        img
+        &-controls
+            padding: 0
+
+        &-image
+            margin: 0 15px 15px 0
+            background: #fff
             max-height: 200px
+            overflow: hidden
+            cursor: pointer
+            transition: box-shadow .3s
 
-    .rf-item-info
-        position: relative
-        top: -20px
-        margin: 0 15px 15px 0
-        background: #fff
-        padding: 10px
-        width: 400px
+            img
+                max-height: 200px
 
-    .rf-item-image
-        cursor: pointer
-        transition: box-shadow .3s
-        &:hover
-            box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)
+            &-caption
+                position: absolute
+                bottom: -30px
+                right: 0
+                left: 0
+                color: #fff
+                background-color: $primary-color
+                line-height: 30px
+                height: 30px
+                padding: 0 10px
+                transition: bottom .3s
+                font-size: 12px
 
-    .r-item-title
-        max-width: 300px
+            &:hover
+                box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)
+                .rf-item-image-caption
+                    bottom: 0
 
-    .rf-item-fullscreen
-        position: relative
-        img
-            max-height: 300px
-        md-icon
-            position: absolute
-            top: 0
-            left: 0
-            opacity: .4
-            transition: opacity .3s
+        &-info
+            position: relative
+            top: -20px
+            margin: 0 15px 15px 0
+            background: #fff
+            padding: 10px
+            width: 400px
 
-        &:hover md-icon
-            opacity: 1
+        &-fullscreen
+            position: relative
+            img
+                max-height: 300px
+            md-icon
+                position: absolute
+                top: 0
+                left: 0
+                opacity: .4
+                transition: opacity .3s
 
-    .r-share a
-        margin-left: 20px
-        text-align: center
-        text-decoration: none
-        display: block
-        height: 24px
-        width: 80px
-        color: #fff
-        font-size: 14px
-        line-height: 24px
-        font-weight: 500
-        border-radius: 4px
+            &:hover md-icon
+                opacity: 1
 
-        &.r-facebook
-            font-family: 'helvetica neue',helvetica,arial,'lucida grande',sans-serif
-            background-color: #4080ff
+        &-share a
+            margin-left: 20px
+            text-align: center
+            text-decoration: none
+            display: block
+            height: 24px
+            width: 80px
+            color: #fff
+            font-size: 14px
+            line-height: 24px
+            font-weight: 500
+            border-radius: 4px
 
-        &.r-g-plus
-            font-family: arial,sans-serif
-            background-color: #d14836
+            &.r-facebook
+                font-family: 'helvetica neue',helvetica,arial,'lucida grande',sans-serif
+                background-color: #4080ff
+
+            &.r-g-plus
+                font-family: arial,sans-serif
+                background-color: #d14836
 

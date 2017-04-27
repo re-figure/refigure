@@ -1,5 +1,5 @@
 <div layout="row" flex layout-align="start start">
-    <div layout="row" layout-wrap layout-align="start center" flex>
+    <div layout="row" layout-wrap layout-align="start end" flex>
         <h2 ng-hide="vm.refigure.ID" layout="row" flex layout-align="center center">Loading refigure...</h2>
         <md-content
                 class="rf-item-image"
@@ -9,6 +9,10 @@
                 ng-click="vm.imageDetails($event, $index)"
                 ng-repeat-start="image in vm.refigure.Figures">
             <img ng-src="{{image.URL}}">
+            <div class="rf-item-image-caption" ng-show="image.Caption">
+                <div ng-bind="image.Caption" md-truncate></div>
+                <md-tooltip ng-bind="image.Caption"></md-tooltip>
+            </div>
         </md-content>
         <md-card ng-repeat-end ng-if="image.lastInRow && vm.details" flex="100" class="hide-show-slide-down">
             <md-card-content layout="row">
@@ -17,20 +21,20 @@
                     <md-icon>search</md-icon>
                 </div>
                 <div>
-                    <p>
-                        <b class="md-caption">Caption: </b><span class="md-caption" ng-bind="vm.details.Caption"></span>
+                    <p class="md-caption">
+                        <b>Caption: </b><span ng-bind="vm.details.Caption"></span>
                     </p>
-                    <p>
-                        <b class="md-caption">Features: </b><span class="md-caption" ng-bind="vm.details.Features"></span>
+                    <p class="md-caption">
+                        <b>Features: </b><span ng-bind="vm.details.Features"></span>
                     </p>
-                    <p>
-                        <b class="md-caption">Authors: </b><span class="md-caption" ng-bind="vm.details.Authors"></span>
+                    <p class="md-caption">
+                        <b>Authors: </b><span ng-bind="vm.details.Authors"></span>
                     </p>
-                    <p>
-                        <b class="md-caption">Article DOI: </b><span class="md-caption" ng-bind="vm.details.DOI"></span>
+                    <p class="md-caption">
+                        <b>Article DOI: </b><span ng-bind="vm.details.DOI"></span>
                     </p>
-                    <p>
-                        <b class="md-caption">Image DOI: </b><span class="md-caption" ng-bind="vm.details.DOIFigure"></span>
+                    <p class="md-caption">
+                        <b>Image DOI: </b><span ng-bind="vm.details.DOIFigure"></span>
                     </p>
                     <div ng-show="vm.details.Legend">
                         <md-divider></md-divider>
@@ -74,7 +78,7 @@
             <most-visited count="vm.refigure.Visit.Count"></most-visited>
             <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
 
-            <div class="r-share" layout="row" layout-align="start center">
+            <div class="rf-item-share" layout="row" layout-align="start center">
                 <b class="md-caption">Share </b>
                 <a class="r-facebook"
                    ng-href="https://www.facebook.com/share.php?u={{vm.url}}"

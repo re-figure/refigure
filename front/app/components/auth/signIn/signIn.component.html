@@ -38,7 +38,12 @@
                 Sign in
             </md-button>
             <div layout="row">
-                <div flex="50" class="g-signin2" data-onsuccess="onSignIn"></div>
+                <button
+                        type="button"
+                        flex="50"
+                        ng-click="vm.withGoogle()"
+                        >withGoogle</button>
+
                 <md-button flex="50" type="button" class="md-raised">
                     sign in with facebook
                 </md-button>

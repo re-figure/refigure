@@ -151,7 +151,8 @@
             saveAndSign: saveAndSign,
             saveCurrentUrl: saveCurrentUrl,
             loadCurrentUrl: loadCurrentUrl,
-            isAuthenticated: authToken.isAuthenticated
+            isAuthenticated: authToken.isAuthenticated,
+            oAuthGoogle: oAuthGoogle
         };
 
         var savedUrl = {
@@ -160,6 +161,14 @@
         };
 
         return exports;
+
+        function oAuthGoogle(token) {
+            return $http
+                .get(authApiUri + '/oauth/google/' + token)
+                .then(function (res) {
+                    return utils.get(res, 'data');
+                });
+        }
 
         /**
          * @ngdoc method

@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('./auth');
+const oauth = require('./oauth');
 const users = require('./users');
 const captcha = require('./captcha');
 const figures = require('./figures');
@@ -28,6 +29,9 @@ router.get('/api/service-validate', (req, res) => {
 // captcha
 router.get('/api/captcha', captcha.generate);
 router.get('/api/captcha-validate/:captcha', captcha.validate);
+
+//OAUTH
+router.get('/api/oauth/google/:token', oauth.google);
 
 // authentication and users
 router.post('/api/login', auth.login);

@@ -19,10 +19,12 @@
         });
 
     Controller.$inject = [
-        'auth'
+        '$scope',
+        'auth',
+        'GoogleSignin'
     ];
 
-    function Controller(auth) {
+    function Controller($scope, auth, GoogleSignin) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -33,8 +35,8 @@
         };
 
         vm.submit = submit;
-
-        activate();
+        vm.withGoogle = withGoogle;
+        vm.$onInit = activate;
 
         /////////////////////
 
@@ -46,6 +48,15 @@
          * Activates controller
          */
         function activate() {
+            $scope.$on('ng-google-signin:isSignedIn', function (event, isSignedIn) {
+                if (isSignedIn) {
+                    auth
+                        .oAuthGoogle(GoogleSignin.getUser().getAuthResponse().id_token)
+                        .then(function (resp) {
+                            console.log('resp', resp);
+                        });
+                }
+            });
         }
 
         /**
@@ -70,21 +81,52 @@
                     vm.loading = false;
                 });
         }
+
+        function withGoogle() {
+            GoogleSignin.signIn().then(function (user) {
+                console.log(user);
+            }, function (err) {
+                console.log(err);
+            });
+        }
+
+        /*function updateSigninStatus(isSignedIn) {
+            if (isSignedIn) {
+                var token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+                console.log('token', token);
+
+                vm.authorizeButton = false;
+                vm.signoutButton = true;
+            } else {
+                vm.authorizeButton = true;
+                vm.signoutButton = false;
+            }
+            $scope.$apply();
+        }
+
+        function handleAuthClick() {
+            gapi.auth2.getAuthInstance().signIn();
+        }
+
+        function handleSignoutClick() {
+            gapi.auth2.getAuthInstance().signOut();
+        }
+
+        window.handleClientLoad = function () {
+            // Load the API client and auth2 library
+            gapi.load('client:auth2', function() {
+                gapi.client.init({
+                    apiKey: 'AIzaSyCnDKJt_n3eS3QtqLqcTkMu2vaCaguPCqU',
+                    //discoveryDocs: discoveryDocs,
+                    clientId: '604123564572-uuu98pul48vj6t2uqgu2epi8723egmli.apps.googleusercontent.com',
+                    scope: 'profile email'
+                }).then(function () {
+                    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+                    // Handle the initial sign-in state.
+                    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+                });
+            });
+        };*/
     }
+
 }(window.angular));
-
-window.OnSignIn = function onSignIn(googleUser) {
-    // Useful data for your client-side scripts:
-    console.log('googleUser', googleUser);
-    /*var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-
-    // The ID token you need to pass to your backend:
-    var idToken = googleUser.getAuthResponse().idToken;
-    console.log('ID Token: ' + idToken);*/
-};

@@ -13,8 +13,7 @@
     "angular-ui-router": "0.3.2",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
     "routerHelper": "https://github.com/andrewpavlov/routerHelper.git",
-    "ui.ap": "https://github.com/andrewpavlov/ui.ap.git",
-    "angular-google-plus": "^0.1.3"
+    "ui.ap": "https://github.com/andrewpavlov/ui.ap.git"
   },
   "overrides": {
     "angular-material": {

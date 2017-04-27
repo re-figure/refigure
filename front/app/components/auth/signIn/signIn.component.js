@@ -12,14 +12,6 @@
 
     angular
         .module('refigureAuth')
-        .run(function () {
-            var po = document.createElement('script');
-            po.type = 'text/javascript';
-            po.async = true;
-            po.src = 'https://apis.google.com/js/platform.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(po, s);
-        })
         .component('signIn', {
             templateUrl: 'view/signIn.component.html',
             controller: Controller,
@@ -27,11 +19,10 @@
         });
 
     Controller.$inject = [
-        'auth',
-        'GooglePlus'
+        'auth'
     ];
 
-    function Controller(auth, GooglePlus) {
+    function Controller(auth) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -42,7 +33,6 @@
         };
 
         vm.submit = submit;
-        vm.withGoogle = withGoogle;
 
         activate();
 
@@ -79,18 +69,6 @@
                 .finally(function () {
                     vm.loading = false;
                 });
-        }
-
-        function withGoogle() {
-            GooglePlus.login().then(function (authResult) {
-                console.log('authResult', authResult);
-
-                GooglePlus.getUser().then(function (user) {
-                    console.log('user', user);
-                });
-            }, function (err) {
-                console.log(err);
-            });
         }
     }
 }(window.angular));

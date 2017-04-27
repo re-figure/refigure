@@ -5,13 +5,6 @@ var refigure = {
     figures: []
 };
 
-if (location.href.match(/refigure\./)) {
-    var btn = document.querySelector('.r-download-extension');
-    if (btn) {
-        btn.style.visibility = 'hidden';
-    }
-}
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.type) {
         case _gConst.MSG_TYPE_REFIGURE_ADD_START:

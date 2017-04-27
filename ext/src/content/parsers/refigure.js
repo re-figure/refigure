@@ -1,13 +1,17 @@
 CONTENT_BLOCK_SELECTOR = 'collections-item';
 
 function parseFigures() {
+    var btn = Sizzle('.r-download-extension');
+    if (btn.length) {
+        btn[0].style.visibility = 'hidden';
+    }
     if (!Sizzle(CONTENT_BLOCK_SELECTOR).length) {
         chrome.runtime.sendMessage({
             type: _gConst.MSG_TYPE_BADGE_NA
         });
     }
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
         window.addEventListener('message', function (event) {
             var images = [];
             if (event.data && event.data.images) {

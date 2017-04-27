@@ -4,7 +4,7 @@
             Found <b ng-bind="vm.store.foundFigures.length"></b> <span plural="vm.store.foundFigures.length">image</span>
             in <b ng-bind="vm.store.inMetapublications.length"></b> <span plural="vm.store.inMetapublications.length">Refigure</span>
         </span>
-        <a ng-href='http://refigure.noblecoz.com/search-results/?term="{{vm.store.inMetapublications.join("\" \"")}}"'
+        <a ng-href='http://refigure.noblecoz.com/search-results/?query="{{vm.store.inMetapublications.join("\" \"")}}"'
            target="_blank"
            class="btn rf-details-link">
             details

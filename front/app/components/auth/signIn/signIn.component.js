@@ -75,7 +75,8 @@
 
 window.OnSignIn = function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
-    var profile = googleUser.getBasicProfile();
+    console.log('googleUser', googleUser);
+    /*var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Don't send this directly to your server!
     console.log('Full Name: ' + profile.getName());
     console.log('Given Name: ' + profile.getGivenName());
@@ -85,5 +86,5 @@ window.OnSignIn = function onSignIn(googleUser) {
 
     // The ID token you need to pass to your backend:
     var idToken = googleUser.getAuthResponse().idToken;
-    console.log('ID Token: ' + idToken);
+    console.log('ID Token: ' + idToken);*/
 };

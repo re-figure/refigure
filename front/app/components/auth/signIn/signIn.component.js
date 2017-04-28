@@ -19,12 +19,11 @@
         });
 
     Controller.$inject = [
-        '$scope',
         'auth',
         'GoogleSignin'
     ];
 
-    function Controller($scope, auth, GoogleSignin) {
+    function Controller(auth, GoogleSignin) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -35,7 +34,8 @@
         };
 
         vm.submit = submit;
-        vm.withGoogle = withGoogle;
+        vm.signWithGoogle = signWithGoogle;
+        vm.signWithFacebook = signWithFacebook;
         vm.$onInit = activate;
 
         /////////////////////
@@ -48,15 +48,6 @@
          * Activates controller
          */
         function activate() {
-            $scope.$on('ng-google-signin:isSignedIn', function (event, isSignedIn) {
-                if (isSignedIn) {
-                    auth
-                        .oAuthGoogle(GoogleSignin.getUser().getAuthResponse().id_token)
-                        .then(function (resp) {
-                            console.log('resp', resp);
-                        });
-                }
-            });
         }
 
         /**
@@ -82,51 +73,13 @@
                 });
         }
 
-        function withGoogle() {
-            GoogleSignin.signIn().then(function (user) {
-                console.log(user);
-            }, function (err) {
-                console.log(err);
-            });
+        function signWithGoogle() {
+            GoogleSignin.signIn();
         }
 
-        /*function updateSigninStatus(isSignedIn) {
-            if (isSignedIn) {
-                var token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
-                console.log('token', token);
-
-                vm.authorizeButton = false;
-                vm.signoutButton = true;
-            } else {
-                vm.authorizeButton = true;
-                vm.signoutButton = false;
-            }
-            $scope.$apply();
+        function signWithFacebook() {
+            alert('Not implemented yet');
         }
-
-        function handleAuthClick() {
-            gapi.auth2.getAuthInstance().signIn();
-        }
-
-        function handleSignoutClick() {
-            gapi.auth2.getAuthInstance().signOut();
-        }
-
-        window.handleClientLoad = function () {
-            // Load the API client and auth2 library
-            gapi.load('client:auth2', function() {
-                gapi.client.init({
-                    apiKey: 'AIzaSyCnDKJt_n3eS3QtqLqcTkMu2vaCaguPCqU',
-                    //discoveryDocs: discoveryDocs,
-                    clientId: '604123564572-uuu98pul48vj6t2uqgu2epi8723egmli.apps.googleusercontent.com',
-                    scope: 'profile email'
-                }).then(function () {
-                    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-                    // Handle the initial sign-in state.
-                    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-                });
-            });
-        };*/
     }
 
 }(window.angular));

@@ -1,13 +1,8 @@
-<div class="r-main-content"
-     layout="column"
->
+<div class="r-main-content" layout="column">
     <div class="r-heading">
         <h1 md-colors="{color: 'accent-600'}" class="r-title md-display-2">Sign in</h1>
     </div>
-    <form name="vm.form"
-          novalidate
-          ng-submit="!vm.loading && vm.form.$valid && vm.submit()"
-    >
+    <form name="vm.form" novalidate ng-submit="!vm.loading && vm.form.$valid && vm.submit()">
         <div layout="row" layout-margin>
             <md-input-container flex>
                 <input name="Email" type="email"
@@ -25,27 +20,21 @@
                        ng-required="true"
                        placeholder="Password"
                        ng-model="vm.data.Password"/>
-                <md-button ui-sref="auth.pwdreset" style="margin-left: 0">
+                <md-button ui-sref="auth.pwdreset" class="margin-less">
                     Forgot your password?
                 </md-button>
             </md-input-container>
         </div>
         <div layout="column" layout-margin>
-            <md-button type="submit"
-                       class="md-raised md-primary"
-                       ng-disabled="vm.loading || !vm.form.$valid"
-            >
+            <md-button type="submit" class="md-raised md-primary" ng-disabled="vm.loading || !vm.form.$valid">
                 Sign in
             </md-button>
             <div layout="row">
-                <button
-                        type="button"
-                        flex="50"
-                        ng-click="vm.withGoogle()"
-                        >withGoogle</button>
-
-                <md-button flex="50" type="button" class="md-raised">
-                    sign in with facebook
+                <md-button type="button" class="md-raised margin-less" flex="50" ng-click="vm.signWithGoogle()">
+                    with google+
+                </md-button>
+                <md-button type="button" class="md-raised margin-less" flex="50" ng-click="vm.signWithFacebook()">
+                    with facebook
                 </md-button>
             </div>
             <md-button ui-sref="auth.signup">Sign up</md-button>

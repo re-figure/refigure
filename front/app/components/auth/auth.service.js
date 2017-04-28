@@ -166,7 +166,10 @@
             return $http
                 .get(authApiUri + '/oauth/google/' + token)
                 .then(function (res) {
-                    return utils.get(res, 'data');
+                    var user = utils.get(res, 'data.data');
+                    authToken.setToken(user.Token);
+                    fillUsrInfo(user);
+                    loadCurrentUrl();
                 });
         }
 
@@ -229,9 +232,7 @@
          */
         function login(credentials) {
             return $http
-                .post(authApiUri + '/login/', credentials, {
-                    // noIntercept: true
-                })
+                .post(authApiUri + '/login/', credentials, {}) // noIntercept: true
                 .then(function (res) {
                     var data = utils.get(res.data, 'data');
                     authToken.setToken(data.Token);

@@ -1,6 +1,7 @@
 'use strict';
 
 let argv = require('yargs').argv;
+let p = require('./package.json');
 
 let stage = argv.stage || 'dev';
 let region = argv.region || 'us-east-1';
@@ -21,7 +22,7 @@ module.exports = {
         lrPort: 35729
     },
 
-    replace: [],
+    replace: {},
 
     buildDir: buildDir,
     clientDir: clientDir,
@@ -118,5 +119,6 @@ module.exports = {
             css: extSrcDir + '/popup/**/*.sass',
             index: extSrcDir + '/popup/popup.html'
         }
-    }
+    },
+    oauth: p.locals.oauth
 };

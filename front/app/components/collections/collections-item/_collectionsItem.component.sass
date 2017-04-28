@@ -1,3 +1,4 @@
+$caption-height: 20px
 collections-item
     [ui-sref] a
         color: #000
@@ -24,10 +25,10 @@ collections-item
             padding: 0
 
         &-image
-            margin: 0 15px 15px 0
+            overflow: visible
+            margin: 0 15px ($caption-height + 15px) 0
             background: #fff
             max-height: 200px
-            overflow: hidden
             cursor: pointer
             transition: box-shadow .3s
 
@@ -36,21 +37,19 @@ collections-item
 
             &-caption
                 position: absolute
-                bottom: -30px
+                bottom: -$caption-height
                 right: 0
                 left: 0
                 color: #fff
                 background-color: $primary-color
-                line-height: 30px
-                height: 30px
-                padding: 0 10px
+                line-height: $caption-height
+                height: $caption-height
+                padding: 0 5px
                 transition: bottom .3s
-                font-size: 12px
+                font-size: 10px
 
             &:hover
                 box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)
-                .rf-item-image-caption
-                    bottom: 0
 
         &-info
             position: relative

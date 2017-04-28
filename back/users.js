@@ -24,6 +24,7 @@ exports.passwordChange = passwordChange;
 exports.updateProfile = updateProfile;
 exports.loginWithSocialID = loginWithSocialID;
 exports.addSocialUser = addSocialUser;
+exports.establishSession = establishSession;
 
 exports.searchUsers = searchUsers;
 exports.getUser = getUser;
@@ -790,9 +791,7 @@ function loginWithSocialID(socialID, cb) {
         if (!results || !results.length) {
             cb(false);
         } else {
-            let newUser = results[0];
-            delete results[0].Password;
-            cb(newUser);
+            cb(results[0]);
         }
     });
 }
@@ -830,9 +829,7 @@ function addSocialUser(user, cb) {
                     message: constants.ERROR_MSG_SQL
                 });
             }
-            let newUser = results[0];
-            delete results[0].Password;
-            cb(newUser);
+            cb(results[0]);
         });
     });
 }

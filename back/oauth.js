@@ -42,10 +42,10 @@ function oAuthGoogle(req, res) {
                     if (r.error) {
                         return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, r.error, r.message);
                     }
-                    res.send(r);
+                    users.establishSession(res, r);
                 });
             } else {
-                res.send(r);
+                users.establishSession(res, r);
             }
         });
     });

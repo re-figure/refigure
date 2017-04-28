@@ -17,10 +17,12 @@ function oAuthGoogle(req, res) {
     let gClient = new gAuth.OAuth2(CLIENT_ID, '', '');
 
     if (!req.params.token) {
-        res.status(httpStatus.BAD_REQUEST).json({
-            error: constants.ERROR_BADPARAMETERS,
-            message: constants.ERROR_MSG_BADPARAMETERS
-        });
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            constants.ERROR_MSG_BADPARAMETERS
+        );
     }
     gClient.verifyIdToken(req.params.token, CLIENT_ID, (e, login) => {
         let payload = login.getPayload();

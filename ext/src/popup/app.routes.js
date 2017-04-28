@@ -22,6 +22,13 @@
                 },
                 template: '<login-form/>'
             })
+            .when('/foundFigures', {
+                config: {
+                    name: 'foundFigures',
+                    title: 'Found figures'
+                },
+                template: '<found-figures/>'
+            })
             .when('/figure/edit/:id', {
                 config: {
                     name: 'figureEdit',

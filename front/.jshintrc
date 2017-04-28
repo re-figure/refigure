@@ -1,6 +1,8 @@
 {
     "extends": "../.jshintrc",
     "predef": [
-        "utils"
+        "utils",
+        "gapi",
+        "FB"
     ]
 }

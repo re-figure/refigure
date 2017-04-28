@@ -13,22 +13,27 @@ function updateBrowserAction(tab) {
         var t = tabsData[tab.id];
         //TODO change icon accordingly status and number of found figures
         if (t) {
+            var text = '';
             if (t.status === _gConst.STATUS_NEW) {
-                chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
+                text = '';
             } else if (t.status === _gConst.STATUS_INPROCESS) {
-                chrome.browserAction.setBadgeText({tabId: tab.id, text: 'L'});
+                setTimeout(function () {
+                    if (t.badgeText === 'L') {
+                        chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
+                    }
+                }, 3000);
+                text = 'L';
             } else {
                 if (t.foundFigures.length === 0) {
                     // no figures found on the page or an error occurred
-                    chrome.browserAction.setBadgeText({tabId: tab.id, text: '0'});
+                    text = '0';
                 } else {
                     // found figures on the page
-                    chrome.browserAction.setBadgeText({
-                        tabId: tab.id,
-                        text: t.foundFigures.length + '/' + t.inMetapublications.length
-                    });
+                    text = t.foundFigures.length + '/' + t.inMetapublications.length;
                 }
             }
+            t.badgeText = text;
+            chrome.browserAction.setBadgeText({tabId: tab.id, text: text});
         }
     } else {
         // an empty or service tab

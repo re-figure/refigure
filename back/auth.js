@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto-js');
 
 const config = require('js.shared').config;
-const utils = require('js.shared').utils;
+const utils = require('js.shared').utils; // jshint ignore:line
 
 const constants = require('./const');
 const db = require('./db');
@@ -22,7 +22,7 @@ exports.createTokenWithPassword = createTokenWithPassword;
 exports.addAuthHeader = addAuthHeader;
 exports.passwordCheckWeakness = passwordCheckWeakness;
 
-var pathsNoAuth = [
+let pathsNoAuth = [
     '/api/service-validate',
     '/api/check-figures',
     '/api/login',
@@ -38,7 +38,7 @@ var pathsNoAuth = [
     '/api/oauth/google',
 ];
 
-var pathsNoAuthGET = [
+let pathsNoAuthGET = [
     '/api/figure',
     '/api/metapublication'
 ];
@@ -87,10 +87,10 @@ function isAdminRequest(req) {
 
 /**
  * Extract current user ID from the security token provided in the request
- * @param req
+ * @param {Object} req
  * @returns user's ID/null
  */
-function getUserId(req) {
+function getUserId(req) { // jshint ignore:line
     if (!config.get('jwt.useToken')) {
         return req.query.ID || req.body.ID;
     }
@@ -142,8 +142,8 @@ function createTokenWithPassword(user) {
 /**
  * Check if the request is issued by authenticated user, i.e. the request contains a valid JWT token
  * and user with the given ID is presented in the database
- * @param req
- * @param callback
+ * @param {Object} req
+ * @param {Function} callback
  */
 function authenticate(req, callback) {
     let userId = getUserId(req);
@@ -214,7 +214,12 @@ function authFilter(req, res, next) {
                 let user = r.data;
                 if (isAdminRequest(req)) {
                     if (user.Type !== constants.USER_TYPE_ADMIN) {
-                        rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+                        rfUtils.error(
+                            res,
+                            httpStatus.FORBIDDEN,
+                            constants.ERROR_FORBIDDEN,
+                            constants.ERROR_MSG_FORBIDDEN
+                        );
                         return;
                     }
                 }
@@ -241,13 +246,12 @@ function authFilter(req, res, next) {
 
 /**
  * Perform login using provided login/email and password
- * @param req
- * @param res
+ * @param {Object} req
+ * @param {Object} res
  */
 function login(req, res) {
     let user = req.body;
-    if (user && user.Password && (user.Email || user.Login )) {
-        let emailOrLogin = user.Email || user.Login;
+    if (user && user.Password && (user.Email || user.Login)) {
         users.loginUserWithPassword(user.Email, user.Password, (r) => {
             if (r.error) {
                 rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_USERNOTFOUND);
@@ -280,7 +284,7 @@ function passwordCheckWeakness(p) {
     if (config.getT('system.weak-password', 'b')) {
         return {
             error: 0
-        }
+        };
     }
     if (rfUtils.checkStringNotEmpty(p)) {
         if (p.length < 8) {
@@ -335,8 +339,8 @@ function passwordValidate(req, res) {
 /**
  * Check that the current user (taken from the request) has access
  * to the object owned by the `owner` (user's ID)
- * @param req   the current request
- * @param owner user's ID who owns the object
+ * @param {Object} req   the current request
+ * @param {String} owner user's ID who owns the object
  * @returns {boolean} true if user has access to the given object
  */
 function checkObjectAccess(req, owner) {
@@ -350,10 +354,5 @@ function checkObjectAccess(req, owner) {
         // allow access to the object's owner
         return true;
     }
-    if (req.User.Type === constants.USER_TYPE_ADMIN) {
-        // allow access to admins to any object
-        return true;
-    }
-
-    return false;
+    return req.User.Type === constants.USER_TYPE_ADMIN;
 }

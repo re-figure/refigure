@@ -22,6 +22,9 @@ exports.registrationComplete = registrationComplete;
 exports.passwordChangeRequest = passwordChangeRequest;
 exports.passwordChange = passwordChange;
 exports.updateProfile = updateProfile;
+exports.loginWithSocialID = loginWithSocialID;
+exports.addSocialUser = addSocialUser;
+exports.establishSession = establishSession;
 
 exports.searchUsers = searchUsers;
 exports.getUser = getUser;
@@ -192,19 +195,30 @@ function checkPassword(password) {
 function cbAddUser(user, cb) {
     user.ID = uuid.v1();
     let type = constants.USER_TYPE_NOTCONFIRMED;
-    if (typeof user.Type !== 'undefined'
-        && typeof user.Type === 'number') {
+    if (typeof user.Type !== 'undefined' && typeof user.Type === 'number') {
         type = user.Type;
     }
     let registrationType = constants.USER_REGISTRATION_TYPE_PASSWORD;
-    if (typeof user.RegistrationType !== 'undefined'
-        && typeof user.RegistrationType === 'number') {
+    if (typeof user.RegistrationType !== 'undefined' && typeof user.RegistrationType === 'number') {
         registrationType = user.RegistrationType;
     }
 
     db.pool.query(
-        `INSERT INTO User (ID, Email, Login, Password, RegistrationType, Type, FirstName, LastName, Phone, Organization, Department)
-           VALUES (?, ?, ?, encPwd(?), ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO User (
+            ID,
+            Email,
+            Login,
+            Password,
+            RegistrationType,
+            Type,
+            FirstName,
+            LastName,
+            Phone,
+            Organization,
+            Department,
+            SocialID
+        )
+           VALUES (?, ?, ?, encPwd(?), ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
             user.ID,
             user.Email.toLowerCase(),
@@ -216,7 +230,8 @@ function cbAddUser(user, cb) {
             user.LastName || null,
             user.Phone || null,
             user.Organization || null,
-            user.Department || null
+            user.Department || null,
+            user.SocialID || null
         ],
         cb
     );
@@ -247,7 +262,12 @@ function register(req, res) {
         if (err) {
             console.error(err.code, err.message);
             if (err.code === 'ER_DUP_ENTRY') {
-                rfUtils.error(res, httpStatus.CONFLICT, constants.ERROR_USERALREADYEXISTS, constants.ERROR_MSG_USERALREADYEXISTS);
+                rfUtils.error(
+                    res,
+                    httpStatus.CONFLICT,
+                    constants.ERROR_USERALREADYEXISTS,
+                    constants.ERROR_MSG_USERALREADYEXISTS
+                );
             } else {
                 rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
             }
@@ -301,17 +321,16 @@ function registrationComplete(req, res) {
         (err, result) => {
             if (err) {
                 console.error('Failed to complete registration', err);
-                cb({
-                    error: constants.ERROR_SQL,
-                    message: constants.ERROR_MSG_SQL
-                });
+                rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
                 return;
             }
             if (result.changedRows === 0) {
-                cb({
-                    error: constants.ERROR_USERNOTFOUND,
-                    message: 'No registration found or registration has been already completed'
-                });
+                rfUtils.error(
+                    res,
+                    httpStatus.BAD_REQUEST,
+                    constants.ERROR_USERNOTFOUND,
+                    'No registration found or registration has been already completed'
+                );
                 return;
             }
 
@@ -350,7 +369,7 @@ function passwordChangeRequest(req, res) {
         rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS);
         return;
     }
-    db.cbFind(db.model.TABLE_USER, {[db.model.ID]: userId}, (err, results) => {
+    db.cbFind(db.model.TABLE_USER, {[db.model.ID]: req.User.ID}, (err, results) => {
         if (err) {
             console.error('passwordChangeRequest: cannot find user', err);
             rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
@@ -482,7 +501,7 @@ function updatePassword(req, res) {
  * @description
  * Updates user
  */
-function cbUpdateUser(user, cb) {
+function cbUpdateUser(user, cb) { // jshint ignore:line
     let params = [];
     let q = 'UPDATE `User` SET';
 
@@ -590,7 +609,12 @@ function updateProfile(req, res) {
             }
             if (results.length === 0) {
                 console.log('updateUser: no user found');
-                rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_USERNOTFOUND, constants.ERROR_MSG_USERNOTFOUND);
+                rfUtils.error(
+                    res,
+                    httpStatus.NOT_FOUND,
+                    constants.ERROR_USERNOTFOUND,
+                    constants.ERROR_MSG_USERNOTFOUND
+                );
                 return;
             }
             let updatedUser = results[0];
@@ -624,8 +648,8 @@ function get(id, cb) {
 
 /**
  * Get user info by its ID
- * @param req
- * @param res
+ * @param {Object} req
+ * @param {Object} res
  */
 function getUser(req, res) {
     let _id = req.params.ID || req.query.ID || req.body.ID;
@@ -689,7 +713,12 @@ function updateUser(req, res) {
 function searchUsers(req, res) {
     let r = rfUtils.parseQuery(undefined, req.query);
     if (r.error) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, constants.ERROR_MSG_BADPARAMETERS);
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            constants.ERROR_MSG_BADPARAMETERS
+        );
     }
     let query = r.data;
 
@@ -701,7 +730,11 @@ function searchUsers(req, res) {
     // TODO add search filter here
     if (query.sortField) {
         let valid = false;
-        for (let f of ['Email', 'FirstName', 'LastName', 'Phone', 'Organization', 'Department', 'DateCreated', 'DateModified', 'Type']) {
+        let sortVariant = [
+            'Email', 'FirstName', 'LastName', 'Phone',
+            'Organization', 'Department', 'DateCreated', 'DateModified', 'Type'
+        ];
+        for (let f of sortVariant) {
             valid = true;
             break;
         }
@@ -738,6 +771,65 @@ function searchUsers(req, res) {
                 found: found,
                 results: recs
             }
+        });
+    });
+}
+
+/**
+ * @param {String} socialID
+ * @param {Function} cb
+ */
+function loginWithSocialID(socialID, cb) {
+    db.cbFind(db.model.TABLE_USER, {'SocialID': socialID}, (err, results) => {
+        if (err) {
+            console.log(err);
+            cb({
+                error: constants.ERROR_SQL,
+                message: constants.ERROR_MSG_SQL
+            });
+        }
+        if (!results || !results.length) {
+            cb(false);
+        } else {
+            cb(results[0]);
+        }
+    });
+}
+
+function addSocialUser(user, cb) {
+    checkRegistrationInfo(user);
+
+    cbAddUser(user, (err) => {
+        if (err) {
+            console.error(err.code, err.message);
+            let cbErr = {
+                error: constants.ERROR_SQL,
+                message: constants.ERROR_MSG_SQL
+            };
+            if (err.code === 'ER_DUP_ENTRY') {
+                cbErr = {
+                    error: constants.ERROR_USERALREADYEXISTS,
+                    message: constants.ERROR_MSG_USERALREADYEXISTS
+                };
+            }
+            return cb(cbErr);
+        }
+        db.cbFind(db.model.TABLE_USER, {[db.model.ID]: user.ID}, (err, results) => {
+            if (err) {
+                console.error(err.code, err.message);
+                return cb({
+                    error: constants.ERROR_SQL,
+                    message: constants.ERROR_MSG_SQL
+                });
+            }
+            if (results.length === 0) {
+                console.log('Registered user is not found');
+                return cb({
+                    error: constants.ERROR_SQL,
+                    message: constants.ERROR_MSG_SQL
+                });
+            }
+            cb(results[0]);
         });
     });
 }

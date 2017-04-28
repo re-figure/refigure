@@ -58,6 +58,11 @@
       "useToken": true,
       "key": "A83fg-2737mvgTG8-38027",
       "pwdChangeExpiresIn": "10h"
+    },
+    "oauth": {
+      "google": {
+        "clientId": "604123564572-uuu98pul48vj6t2uqgu2epi8723egmli.apps.googleusercontent.com"
+      }
     }
   }
 }

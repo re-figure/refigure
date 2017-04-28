@@ -53,12 +53,7 @@
     "node": true,
     "jasmine": true,
     "devel": true,
-    "globals": {
-        "angular": false,
-        "$": false
-    },
     "predef": [
-        "utils",
         "jasmine",
         "describe",
         "xdescribe",

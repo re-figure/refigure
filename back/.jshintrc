@@ -1,4 +1,4 @@
 {
-  "esnext": true,
-  "extends": "../.jshintrc"
+    "esnext": true,
+    "extends": "../.jshintrc"
 }

@@ -33,7 +33,8 @@
     gulp.task('default', [
         'build',
         'server',
-        'watch'
+        'watch',
+        'ext_watch'
     ]);
 
     gulp.task('extension', function (cb) {

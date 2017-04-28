@@ -25,6 +25,7 @@ var _gConst = {
     USER_TYPE_TEMPORARY: 10,   // a temporary user
 
     USER_REGISTRATION_TYPE_PASSWORD: 0,
+    USER_REGISTRATION_TYPE_GOOGLE: 1,
 
     // authentication header name
     AUTHENTICATION_HEADER: 'Authentication',

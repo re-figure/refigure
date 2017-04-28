@@ -38,7 +38,7 @@
             scope: 'profile'
         });
 
-        //$facebookProvider.setAppId('<your-facebook-app-id>');
+        //$facebookProvider.setAppId(OAuthCfg.facebook.clientId);
     }
 
     Run.$inject = ['$rootScope', 'GoogleSignin', 'auth'];

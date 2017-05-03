@@ -22,7 +22,7 @@
       "css": ["/content/content.css"]
     },
     {
-      "matches": ["*://elifesciences.org/*"],
+      "matches": ["*://*.elifesciences.org/*"],
       "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/elifesciences.js"],
       "css": ["/content/content.css"]
     },
@@ -32,7 +32,7 @@
       "css": ["/content/content.css"]
     },
     {
-      "matches": ["*://figshare.com/articles/*"],
+      "matches": ["*://*.figshare.com/articles/*"],
       "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshare.js"],
       "css": ["/content/content.css"]
     },

@@ -47,10 +47,13 @@
                     url: this.COOKIE_DOMAIN,
                     name: this.COOKIE_NAME,
                     value: token
-                }, function (cookie) {
-                    console.log(JSON.stringify(cookie));
-                    console.log(chrome.extension.lastError);
-                    console.log(chrome.runtime.lastError);
+                }, function () {
+                    if (chrome.extension.lastError) {
+                        console.error(chrome.extension.lastError);
+                    }
+                    if (chrome.runtime.lastError) {
+                        console.error(chrome.runtime.lastError);
+                    }
                 });
             },
             remove: function () {

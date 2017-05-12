@@ -21,14 +21,13 @@
     ItemController.$inject = [
         '$scope',
         '$state',
-        '$stateParams',
         'MESSAGES',
         'collections',
         'modalDialog',
         'auth'
     ];
 
-    function ItemController($scope, $state, $stateParams, MESSAGES, collections, modal, auth) {
+    function ItemController($scope, $state, MESSAGES, collections, modal, auth) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -76,6 +75,12 @@
         ///////////////////////
 
         function activate() {
+            $scope.$watch(function () {
+                return $state.params.view;
+            }, function (view) {
+                vm.view = view || 'grid';
+            });
+
             if (auth.isAuthenticated()) {
                 auth.usrInfo().then(function (user) {
                     vm.user = user;
@@ -88,7 +93,7 @@
 
             $state.get('collections.item').data.headerTitle = '';
             collections
-                .get($stateParams.id)
+                .get($state.params.id)
                 .then(function (resp) {
                     window.postMessage({
                         type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
@@ -164,8 +169,10 @@
                 template: '<img src="' + src + '">',
                 targetEvent: e,
                 onShowing: function (s, el) {
+                    el.append();
                     el[0].classList.add('md-dialog-autoheight');
                 },
+                disableParentScroll: false,
                 clickOutsideToClose: true,
                 parent: '.r-page-content'
             });

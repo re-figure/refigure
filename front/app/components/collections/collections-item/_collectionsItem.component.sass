@@ -1,28 +1,10 @@
 $caption-height: 20px
 collections-item
-    [ui-sref] a
-        color: #000
-
     .rf-item
-        &-title
-            max-width: 300px
+        padding: 0 8px 8px
 
-        &-details
-            width: 450px
-            max-width: none
-            .md-chips
-                md-chip
-                    padding: 0 8px
-                    height: 20px
-                    line-height: 20px
-                    margin: 8px 4px 0 0
-                    font-size: 12px
-                    color: #fff
-                    border-radius: 10px
-                    background-color: $success-color
-
-        &-controls
-            padding: 0
+        &-view
+            margin-top: 8px
 
         &-image
             overflow: visible
@@ -51,14 +33,6 @@ collections-item
             &:hover
                 box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12)
 
-        &-info
-            position: relative
-            top: -20px
-            margin: 0 15px 15px 0
-            background: #fff
-            padding: 10px
-            width: 400px
-
         &-fullscreen
             position: relative
             img
@@ -73,24 +47,50 @@ collections-item
             &:hover md-icon
                 opacity: 1
 
-        &-share a
-            margin-left: 20px
-            text-align: center
-            text-decoration: none
-            display: block
-            height: 24px
-            width: 80px
-            color: #fff
-            font-size: 14px
-            line-height: 24px
-            font-weight: 500
-            border-radius: 4px
 
-            &.r-facebook
-                font-family: 'helvetica neue',helvetica,arial,'lucida grande',sans-serif
-                background-color: #4080ff
 
-            &.r-g-plus
-                font-family: arial,sans-serif
-                background-color: #d14836
 
+
+        &-details
+            width: 450px
+            max-width: none
+
+            [ui-sref] a
+                color: #000
+
+            &-title
+                max-width: 300px
+
+            .md-chips
+                md-chip
+                    padding: 0 8px
+                    height: 20px
+                    line-height: 20px
+                    margin: 8px 4px 0 0
+                    font-size: 12px
+                    color: #fff
+                    border-radius: 10px
+                    background-color: $success-color
+            &-controls
+                padding: 0
+
+            &-share a
+                margin-left: 20px
+                text-align: center
+                text-decoration: none
+                display: block
+                height: 24px
+                width: 80px
+                color: #fff
+                font-size: 14px
+                line-height: 24px
+                font-weight: 500
+                border-radius: 4px
+
+                &.r-facebook
+                    font-family: 'helvetica neue',helvetica,arial,'lucida grande',sans-serif
+                    background-color: #4080ff
+
+                &.r-g-plus
+                    font-family: arial,sans-serif
+                    background-color: #d14836

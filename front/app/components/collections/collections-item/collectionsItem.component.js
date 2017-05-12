@@ -163,9 +163,11 @@
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,
+                onShowing: function (s, el) {
+                    el[0].classList.add('md-dialog-autoheight');
+                },
                 clickOutsideToClose: true,
-                parent: '.r-page-content',
-                escapeToClose: true
+                parent: '.r-page-content'
             });
         }
 

@@ -16,12 +16,15 @@
     ];
 
     function modalDialog($mdDialog) {
+        //noinspection UnnecessaryLocalVariableJS
         var exports = {
             info: info,
             success: success,
             error: error,
             confirm: confirm,
-            show: show
+            show: show,
+            cancel: cancel,
+            ok: ok
         };
 
         return exports;
@@ -65,6 +68,14 @@
 
         function show(opts) {
             return $mdDialog.show(opts);
+        }
+
+        function ok() {
+            $mdDialog.hide();
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
         }
     }
 })(window.angular);

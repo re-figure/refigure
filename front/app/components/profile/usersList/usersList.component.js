@@ -94,7 +94,7 @@
                             vm.users.splice(index, 1);
                             vm.found--;
                             rfToast.show('User removed');
-                        });
+                        }, angular.noop);
                 });
         }
 

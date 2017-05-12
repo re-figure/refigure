@@ -40,11 +40,6 @@
       "matches": ["*://refigure.noblecoz.com/*"],
       "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/refigure.js"],
       "css": ["/content/content.css"]
-    },
-    {
-      "matches": ["*://*/*"],
-      "js": ["/content/content.js", "/content/templates.min.js"],
-      "css": ["/content/content.css"]
     }
   ],
   "web_accessible_resources": [

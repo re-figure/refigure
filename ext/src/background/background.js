@@ -13,27 +13,26 @@ function updateBrowserAction(tab) {
         var t = tabsData[tab.id];
         //TODO change icon accordingly status and number of found figures
         if (t) {
-            var text = '';
+            t.badgeText = '';
             if (t.status === _gConst.STATUS_NEW) {
-                text = '';
+                t.badgeText = '';
             } else if (t.status === _gConst.STATUS_INPROCESS) {
                 setTimeout(function () {
-                    if (t.badgeText === 'L') {
+                    if (t.badgeText === '') {
+                        chrome.browserAction.enable(tab.id);
                         chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
                     }
                 }, 3000);
-                text = 'L';
             } else {
                 if (t.foundFigures.length === 0) {
                     // no figures found on the page or an error occurred
-                    text = '0';
+                    t.badgeText = '0';
                 } else {
                     // found figures on the page
-                    text = t.foundFigures.length + '/' + t.inMetapublications.length;
+                    t.badgeText = t.foundFigures.length + '/' + t.inMetapublications.length;
                 }
             }
-            t.badgeText = text;
-            chrome.browserAction.setBadgeText({tabId: tab.id, text: text});
+            chrome.browserAction.setBadgeText({tabId: tab.id, text: t.badgeText});
         }
     } else {
         // an empty or service tab
@@ -69,6 +68,7 @@ chrome.runtime.onMessage.addListener(
             onParseFiguresComplete(request, sender.tab);
         }
         if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
+            chrome.browserAction.enable(sender.tab.id);
             onSearchFiguresComplete(request, sender.tab);
         }
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_IN) {
@@ -103,7 +103,6 @@ function onSearchFiguresComplete(result, tab) {
         t.status = _gConst.STATUS_COMPLETE;
         t.foundFigures = result.figures;
         t.inMetapublications = result.inMetapublications;
-        chrome.browserAction.enable(tab.id);
         update(tab.id);
     }
 }
@@ -137,7 +136,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, change, tab) {
             // reload the current page
             createNewTabData(tabId);
         }
-        chrome.browserAction.enable(tabId);
         update(tabId);
     } else {
         chrome.browserAction.disable(tabId);

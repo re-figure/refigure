@@ -22,7 +22,7 @@
             "css": ["/content/content.css"]
         },
         {
-            "matches": ["*://*.elifesciences.org/*"],
+            "matches": ["*://*.elifesciences.org/*", "*://elifesciences.org/*"],
             "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/elifesciences.js"],
             "css": ["/content/content.css"]
         },

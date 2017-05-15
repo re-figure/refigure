@@ -5,60 +5,35 @@ var refigure = {
 
 var parser = {};
 
-if (checkParseAll()) {
-    chrome.runtime.onMessage.addListener(function (request) {
-        switch (request.type) {
-            case _gConst.MSG_TYPE_REFIGURE_ADD_START:
-                window.refigurePopup.show();
-                break;
-            case _gConst.MSG_TYPE_IMAGE_ADD_START:
-                if (!request.Metapublication && !refigure.Metapublication) {
-                    alert('Please select Refigure to add to');
-                } else {
-                    figureAddStart(request.Metapublication);
-                }
-                break;
-            case _gConst.MSG_TYPE_START_SEARCH:
-                setTimeout(searchFigures(), 1);
-                break;
-            case _gConst.MSG_TYPE_POPUP_OPENED:
-                window.imagePopup.hide();
-                window.refigurePopup.hide();
-                figureAddStop();
-                break;
-            case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
-                if (!refigure.Metapublication) {
-                    alert('Please select Refigure to add to');
-                } else {
-                    addToSelected(request.src);
-                }
-                break;
-        }
-    });
-}
-
-function checkParseAll() {
-    if (_gConst.SETTINGS.parseAll) {
-        return true;
-    }
-    var contentScripts = chrome.runtime.getManifest()['content_scripts'],
-        match = false,
-        reg;
-    contentScripts.pop();
-    contentScripts.forEach(function (el) {
-        el.matches.forEach(function (regStr) {
-            reg = new RegExp(escapeRegExp(regStr));
-            if (window.location.href.match(reg)) {
-                match  = true;
+chrome.runtime.onMessage.addListener(function (request) {
+    switch (request.type) {
+        case _gConst.MSG_TYPE_REFIGURE_ADD_START:
+            window.refigurePopup.show();
+            break;
+        case _gConst.MSG_TYPE_IMAGE_ADD_START:
+            if (!request.Metapublication && !refigure.Metapublication) {
+                alert('Please select Refigure to add to');
+            } else {
+                figureAddStart(request.Metapublication);
             }
-        });
-    });
-    return match;
-
-    function escapeRegExp(str) {
-        return str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&').replace('*', '.*');
+            break;
+        case _gConst.MSG_TYPE_START_SEARCH:
+            setTimeout(searchFigures(), 1);
+            break;
+        case _gConst.MSG_TYPE_POPUP_OPENED:
+            window.imagePopup.hide();
+            window.refigurePopup.hide();
+            figureAddStop();
+            break;
+        case _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION:
+            if (!refigure.Metapublication) {
+                alert('Please select Refigure to add to');
+            } else {
+                addToSelected(request.src);
+            }
+            break;
     }
-}
+});
 
 function onClickImage(event) {
     event.stopPropagation();

@@ -50,13 +50,17 @@ function startSearchFiguresIfNeed(tab) {
         if (t) {
             if (t.url && t.url !== tab.url) {
                 // the tab URL has changed, so start search figures
-                t.status = _gConst.STATUS_INPROCESS;
                 t.url = tab.url;
-                chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+                if (getParseStatus(t.url)) {
+                    t.status = _gConst.STATUS_INPROCESS;
+                    chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+                }
             } else if (!t.url) {
-                t.status = _gConst.STATUS_INPROCESS;
                 t.url = tab.url;
-                chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+                if (getParseStatus(t.url)) {
+                    t.status = _gConst.STATUS_INPROCESS;
+                    chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_START_SEARCH});
+                }
             }
         }
     }
@@ -116,7 +120,7 @@ function update(tabId) {
 
 function createNewTabData(tabId) {
     tabsData[tabId] = {
-        status: 0,
+        status: _gConst.STATUS_NEW,
         url: '',
         figures: [],
         foundFigures: []
@@ -203,5 +207,28 @@ function contextMenuClickListener(info, tab) {
             console.log('Add an image to the current Refigure');
             chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION, src: info.srcUrl});
             break;
+    }
+}
+
+function getParseStatus(url) {
+    if (_gConst.SETTINGS.parseAll) {
+        return true;
+    }
+    var contentScripts = chrome.runtime.getManifest()['content_scripts'],
+        match = false,
+        reg;
+    contentScripts.pop();
+    contentScripts.forEach(function (el) {
+        el.matches.forEach(function (regStr) {
+            reg = new RegExp(escapeRegExp(regStr));
+            if (url.match(reg)) {
+                match  = true;
+            }
+        });
+    });
+    return match;
+
+    function escapeRegExp(str) {
+        return str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&').replace('*', '.*');
     }
 }

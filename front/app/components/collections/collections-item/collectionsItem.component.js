@@ -160,7 +160,7 @@
             for (var i = 0; i < imgSrcParsers.length; i++) {
                 if (imgSrcParsers[i].matcher(src)) {
                     src = imgSrcParsers[i].replacer(src);
-                    console.info('SRC matched ', imgSrcParsers[i].name, ', set to: ', src);
+                    console.info('SRC matched: ', imgSrcParsers[i].name, ', set to: ', src);
                     break;
                 }
             }
@@ -169,7 +169,6 @@
                 template: '<img src="' + src + '">',
                 targetEvent: e,
                 onShowing: function (s, el) {
-                    el.append();
                     el[0].classList.add('md-dialog-autoheight');
                 },
                 disableParentScroll: false,

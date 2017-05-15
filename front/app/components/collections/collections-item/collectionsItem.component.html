@@ -1,43 +1,51 @@
 <div layout="row" flex layout-align="start start">
-    <div flex layout="{{vm.view==='grid'?'column':'row'}}" layout-wrap>
+    <div flex layout="row" layout-wrap layout-align="start stretch">
         <h2 ng-hide="vm.refigure.ID" layout="row" flex layout-align="center center">Loading refigure...</h2>
-        <div flex="{{vm.view==='masonry'?50:''}}" class="rf-item" ng-repeat="image in vm.refigure.Figures">
-            <md-card layout-fill>
-                <md-card-content layout="row">
-                    <div ng-click="vm.showFullScreen($event, image.URL)" class="rf-item-fullscreen" flex="33" layout="column" layout-align="center center" layout-padding>
-                        <img ng-src="{{image.URL}}">
-                        <md-icon>search</md-icon>
+        <md-content
+                class="rf-item"
+                flex="{{vm.view==='masonry'?50:100}}"
+                ng-repeat="image in vm.refigure.Figures"
+                layout="column" layout-align="start stretch">
+            <div md-whiteframe="2" layout="row" layout-align="start stretch" layout-fill>
+                <div
+                        ng-click="vm.showFullScreen($event, image.URL)"
+                        class="rf-item-fullscreen"
+                        flex="33"
+                        layout="column"
+                        layout-padding
+                        layout-align="center center">
+                    <img ng-src="{{image.URL}}">
+                    <md-icon>search</md-icon>
+                </div>
+                <div>
+                    <p class="md-caption">
+                        <b>Caption: </b><span ng-bind="image.Caption"></span>
+                    </p>
+                    <p class="md-caption">
+                        <b>Features: </b><span ng-bind="image.Features"></span>
+                    </p>
+                    <p class="md-caption">
+                        <b>Authors: </b><span ng-bind="image.Authors"></span>
+                    </p>
+                    <p class="md-caption">
+                        <b>Article DOI: </b><span ng-bind="image.DOI"></span>
+                    </p>
+                    <p class="md-caption">
+                        <b>Image DOI: </b><span ng-bind="image.DOIFigure"></span>
+                    </p>
+                    <div ng-show="image.Legend">
+                        <md-divider></md-divider>
+                        <div class="md-body-2" ng-bind="image.Legend"></div>
                     </div>
-                    <div>
-                        <p class="md-caption">
-                            <b>Caption: </b><span ng-bind="image.Caption"></span>
-                        </p>
-                        <p class="md-caption">
-                            <b>Features: </b><span ng-bind="image.Features"></span>
-                        </p>
-                        <p class="md-caption">
-                            <b>Authors: </b><span ng-bind="image.Authors"></span>
-                        </p>
-                        <p class="md-caption">
-                            <b>Article DOI: </b><span ng-bind="image.DOI"></span>
-                        </p>
-                        <p class="md-caption">
-                            <b>Image DOI: </b><span ng-bind="image.DOIFigure"></span>
-                        </p>
-                        <div ng-show="image.Legend">
-                            <md-divider></md-divider>
-                            <div class="md-body-2" ng-bind="image.Legend"></div>
-                        </div>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </div>
+                </div>
+            </div>
+        </md-content>
     </div>
     <div layout="column" ng-show="vm.refigure.ID">
         <md-sidenav
                 class="rf-item-details md-sidenav-right"
                 md-is-locked-open="true"
-                md-whiteframe="4">
+                md-whiteframe="2">
             <md-content layout-padding>
                 <div class="rf-item-details-title md-title" md-truncate ng-bind="vm.refigure.Title"></div>
                 <div ui-sref="collections.user({query: vm.refigure.User.ID})" md-truncate>
@@ -75,11 +83,8 @@
                     </a>
                     <a class="r-g-plus"
                        ng-href="https://plus.google.com/share?url={{vm.url}}"
-                       onclick="window.open(
-                           this.href,
-                            '',
-                             'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'
-                             );return false;">
+                       onclick="window.open(this.href, '',
+                            'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
                         google+
                     </a>
                 </div>
@@ -110,7 +115,7 @@
             </md-content>
         </md-sidenav>
         <div class="rf-item-view" layout="row" layout-align="start center">
-            <md-content md-whiteframe="1">
+            <md-content md-whiteframe="2">
                 <md-button
                         ui-sref="collections.item({view:'masonry'})"
                         class="md-button-small"
@@ -130,6 +135,5 @@
             </md-content>
         </div>
     </div>
-
 </div>
 <collection-edit></collection-edit>

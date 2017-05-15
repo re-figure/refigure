@@ -89,7 +89,7 @@
                             vm.refigures.splice(index, 1);
                             vm.found--;
                             rfToast.show('Refigure deleted');
-                        });
+                        }, angular.noop);
                 });
         }
 

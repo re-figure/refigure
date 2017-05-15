@@ -49,6 +49,16 @@
                 description: 'The latest news'
             }
         }
+    }, {
+        state: 'home.terms',
+        config: {
+            url: '/terms',
+            template: '<terms></terms>',
+            data: {
+                label: 'Terms',
+                description: 'Terms of service'
+            }
+        }
     }];
 
     appRun.$inject = [

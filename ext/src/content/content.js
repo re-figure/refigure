@@ -1,11 +1,11 @@
-var CONTENT_BLOCK_SELECTOR = 'body';
-
 var refigure = {
     Metapublication: null,
     figures: []
 };
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+var parser = {};
+
+chrome.runtime.onMessage.addListener(function (request) {
     switch (request.type) {
         case _gConst.MSG_TYPE_REFIGURE_ADD_START:
             window.refigurePopup.show();
@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 function onClickImage(event) {
     event.stopPropagation();
     event.preventDefault();
-    addToSelected(event.target.src);
+    addToSelected(parser.srcTransformer(event.target.src));
     return false;
 }
 
@@ -52,7 +52,7 @@ function onLeaveImage() {
 
 function figureAddStart(Metapublication) {
     refigure.Metapublication = Metapublication || refigure.Metapublication;
-    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
+    Sizzle(parser.CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
         el.addEventListener('mouseenter', onEnterImage);
@@ -62,7 +62,7 @@ function figureAddStart(Metapublication) {
 }
 
 function figureAddStop() {
-    Sizzle(CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
+    Sizzle(parser.CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.remove('rf-addable-image');
         el.removeEventListener('click', onClickImage);
         el.removeEventListener('mouseenter', onEnterImage);
@@ -79,7 +79,8 @@ function dedupFigures(figures) {
                 found = true;
                 break;
             }
-            if (figures[i].DOIFigure && deduped[j].DOIFigure && figures[i].DOIFigure.toLowerCase() === deduped[j].DOIFigure.toLowerCase()) {
+            if (figures[i].DOIFigure && deduped[j].DOIFigure && figures[i].DOIFigure.toLowerCase() ===
+                deduped[j].DOIFigure.toLowerCase()) {
                 found = true;
                 break;
             }
@@ -89,14 +90,6 @@ function dedupFigures(figures) {
         }
     }
     return deduped;
-}
-
-function parseFigures() {
-    var figures = [];
-    for (var i = 0; i < document.images.length; i++) {
-        figures.push({URL: document.images[i].src});
-    }
-    return Promise.resolve(figures);
 }
 
 function parsingCompleted(figures) {
@@ -118,7 +111,7 @@ function searchCompleted(data) {
 }
 
 function searchFigures() {
-    parseFigures().then(
+    parser.parseFigures().then(
         function (result) {
             var figures = dedupFigures(result);
             parsingCompleted(figures);
@@ -164,30 +157,6 @@ function logError() {
     var args = Array.prototype.slice.call(arguments);
     args.unshift('ReFigure:');
     console.error.apply(null, args);
-}
-
-/**
- * Strips all tags except images,
- * Transforms relative image src to absolute
- * @param {HTMLElement} node content of tag to parse
- * @return {string} transformed html text
- */
-function prepareContent(node) {
-    var tmpEl = document.createElement('div');
-    //replace image tags to save them after "innerHTML"
-    var tmpContent = node.innerHTML.replace(/<img/g, '||img||');
-    //convert relative image srcs to absolute
-    tmpContent = tmpContent.replace(/src="(?!http)(.*?)"/g, function (match, src) {
-        tmpEl.innerHTML = '<a href="' + src + '">x</a>';
-        return 'src="' + tmpEl.firstChild.href + '"';
-    });
-    //TODO: convert href and save "a" tags
-    //TODO: replace a.ref-tip with span[title="..."] (parse fragment links)
-    //strip all tags
-    tmpEl.innerHTML = tmpContent;
-    tmpContent = tmpEl.innerText;
-    //replace images back
-    return tmpContent.replace(/\|\|img\|\|/g, '<img');
 }
 
 function addToSelected(src) {
@@ -250,6 +219,62 @@ function sendRequest(params) {
         xhr.send(JSON.stringify(requestParams.data));
     });
 }
+
+parser = {
+    CONTENT_BLOCK_SELECTOR: 'body',
+    parseFigures: function () {
+        var figures = [];
+        for (var i = 0; i < document.images.length; i++) {
+            figures.push({URL: document.images[i].src});
+        }
+        return Promise.resolve(figures);
+    },
+    /**
+     * Strips all tags except images,
+     * Transforms relative image src to absolute
+     * @param {HTMLElement} node content of tag to parse
+     * @return {string} transformed html text
+     */
+    prepareContent: function (node) {
+        var tmpEl = document.createElement('div');
+        //replace image tags to save them after "innerHTML"
+        var tmpContent = node.innerHTML.replace(/<img/g, '||img||');
+        //convert relative image srcs to absolute
+        tmpContent = tmpContent.replace(/src="(?!http)(.*?)"/g, function (match, src) {
+            tmpEl.innerHTML = '<a href="' + src + '">x</a>';
+            return 'src="' + tmpEl.firstChild.href + '"';
+        });
+        //TODO: convert href and save "a" tags
+        //TODO: replace a.ref-tip with span[title="..."] (parse fragment links)
+        //strip all tags
+        tmpEl.innerHTML = tmpContent;
+        tmpContent = tmpEl.innerText;
+        //replace images back
+        return tmpContent.replace(/\|\|img\|\|/g, '<img');
+    },
+    getAuthors: function () {
+        var authorMeta = Sizzle('meta[name="citation_author"]');
+        if (!authorMeta.length) {
+            authorMeta = Sizzle('meta[name="DC.contributor"]');
+        }
+        return authorMeta.map(function (el) {
+            return el.content.replace(/,/, '');
+        }).join('; ');
+    },
+    getPageDOI: function () {
+        var metaDOI = Sizzle('meta[name="citation_doi"]'),
+            ret = '';
+        if (metaDOI.length !== 1) {
+            window.logError('citation_doi meta length is ', metaDOI.length);
+        } else {
+            ret = metaDOI[0].content;
+        }
+        return ret;
+    },
+    srcTransformer: function (src) {
+        return src;
+    }
+};
 
 window.imagePopup = {};
 window.refigurePopup = {};

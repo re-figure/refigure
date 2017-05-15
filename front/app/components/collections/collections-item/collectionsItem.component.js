@@ -21,14 +21,13 @@
     ItemController.$inject = [
         '$scope',
         '$state',
-        '$stateParams',
         'MESSAGES',
         'collections',
         'modalDialog',
         'auth'
     ];
 
-    function ItemController($scope, $state, $stateParams, MESSAGES, collections, modal, auth) {
+    function ItemController($scope, $state, MESSAGES, collections, modal, auth) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -60,6 +59,17 @@
             }
         ];
 
+        vm.layout = {
+            grid: {
+                thumbFlex: 33,
+                itemFlex: 100
+            },
+            masonry: {
+                thumbFlex: 100,
+                itemFlex: 50
+            }
+        };
+
         vm.url = window.location.href;
 
         vm.refigure = {};
@@ -70,12 +80,19 @@
         vm.toggleFlag = toggleFlag;
         vm.isAdmin = isAdmin;
         vm.showFullScreen = showFullScreen;
+        vm.showProperties = showProperties;
 
         vm.$onInit = activate;
 
         ///////////////////////
 
         function activate() {
+            $scope.$watch(function () {
+                return $state.params.view;
+            }, function (view) {
+                vm.view = view || 'grid';
+            });
+
             if (auth.isAuthenticated()) {
                 auth.usrInfo().then(function (user) {
                     vm.user = user;
@@ -88,7 +105,7 @@
 
             $state.get('collections.item').data.headerTitle = '';
             collections
-                .get($stateParams.id)
+                .get($state.params.id)
                 .then(function (resp) {
                     window.postMessage({
                         type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
@@ -155,7 +172,7 @@
             for (var i = 0; i < imgSrcParsers.length; i++) {
                 if (imgSrcParsers[i].matcher(src)) {
                     src = imgSrcParsers[i].replacer(src);
-                    console.info('SRC matched ', imgSrcParsers[i].name, ', set to: ', src);
+                    console.info('SRC matched: ', imgSrcParsers[i].name, ', set to: ', src);
                     break;
                 }
             }
@@ -163,14 +180,33 @@
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,
+                onShowing: function (s, el) {
+                    el[0].classList.add('md-dialog-autoheight');
+                },
+                disableParentScroll: false,
                 clickOutsideToClose: true,
-                parent: '.r-page-content',
-                escapeToClose: true
+                parent: '.r-page-content'
+            });
+        }
+
+        function showProperties(e, image) {
+            modal.show({
+                controller: angular.noop,
+                bindToController: true,
+                controllerAs: 'vm',
+                locals: {
+                    image: image
+                },
+                templateUrl: 'view/imageProperties.modal.html',
+                targetEvent: e,
+                clickOutsideToClose: true,
+                parent: '.r-page-content'
             });
         }
 
         function setRefigure(refigure) {
             angular.merge(vm.refigure, refigure);
+            vm.refigure.Figures = refigure.Figures;
             $state.get('collections.item').data.headerTitle = '"' + vm.refigure.Title + '"';
             if (vm.refigure.Keywords) {
                 vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);

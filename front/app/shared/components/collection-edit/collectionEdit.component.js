@@ -40,7 +40,7 @@
         vm.toggleDetails = toggleDetails;
         vm.refigure = null;
 
-        activate();
+        vm.$onInit = activate;
 
         /////////////////////////////////
 
@@ -134,8 +134,7 @@
             delete image._loading;
             rfImages
                 .save(image)
-                .finally(function (resp) {
-                    console.log(resp);
+                .finally(function () {
                     if (vm.refigure) {
                         vm.refigure.Figures[index]._loading = false;
                         $scope.$emit('refigureUpdated', {

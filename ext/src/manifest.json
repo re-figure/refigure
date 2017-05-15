@@ -1,60 +1,60 @@
 {
-  "manifest_version": 2,
-  "name": "Refigure",
-  "version": "0.0.1",
-  "description": "Refigure extension",
-  "icons": {
-    "100" : "/img/refigure_logo_small.png"
-  },
-  "background": {
-    "persistent": true,
-    "page": "/background/background.html"
-  },
-  "browser_action": {
-    "default_icon": "/img/refigure_logo_small.png",
-    "default_popup": "/popup/popup.html",
-    "default_title": "Refigure"
-  },
-  "content_scripts": [
-    {
-      "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
-      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/plos.js"],
-      "css": ["/content/content.css"]
+    "manifest_version": 2,
+    "name": "Refigure",
+    "version": "0.0.1",
+    "description": "Refigure extension",
+    "icons": {
+        "100": "/img/refigure_logo_small.png"
     },
-    {
-      "matches": ["*://*.elifesciences.org/*"],
-      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/elifesciences.js"],
-      "css": ["/content/content.css"]
+    "background": {
+        "persistent": true,
+        "page": "/background/background.html"
     },
-    {
-      "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
-      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/pmc.js"],
-      "css": ["/content/content.css"]
+    "browser_action": {
+        "default_icon": "/img/refigure_logo_small.png",
+        "default_popup": "/popup/popup.html",
+        "default_title": "Refigure"
     },
-    {
-      "matches": ["*://*.figshare.com/articles/*"],
-      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshare.js"],
-      "css": ["/content/content.css"]
-    },
-    {
-      "matches": ["*://refigure.noblecoz.com/*"],
-      "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/refigure.js"],
-      "css": ["/content/content.css"]
-    },
-    {
-      "matches": ["*://*/*"],
-      "js": ["/content/content.js", "/content/templates.min.js"],
-      "css": ["/content/content.css"]
-    }
-  ],
-  "web_accessible_resources": [
-    "fonts/*"
-  ],
-  "permissions": [
-    "REMOTE_API_URL*",
-    "tabs",
-    "storage",
-    "contextMenus",
-    "cookies"
-  ]
+    "content_scripts": [
+        {
+            "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
+            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/plos.js"],
+            "css": ["/content/content.css"]
+        },
+        {
+            "matches": ["*://*.elifesciences.org/*", "*://elifesciences.org/*"],
+            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/elifesciences.js"],
+            "css": ["/content/content.css"]
+        },
+        {
+            "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
+            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/pmc.js"],
+            "css": ["/content/content.css"]
+        },
+        {
+            "matches": ["*://*.figshare.com/articles/*"],
+            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshare.js"],
+            "css": ["/content/content.css"]
+        },
+        {
+            "matches": ["*://refigure.noblecoz.com/*"],
+            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/refigure.js"],
+            "css": ["/content/content.css"]
+        },
+        {
+            "matches": ["*://*/*"],
+            "js": ["/content/content.js", "/content/templates.min.js"],
+            "css": ["/content/content.css"]
+        }
+    ],
+    "web_accessible_resources": [
+        "fonts/*"
+    ],
+    "permissions": [
+        "REMOTE_API_URL*",
+        "tabs",
+        "storage",
+        "contextMenus",
+        "cookies"
+    ]
 }

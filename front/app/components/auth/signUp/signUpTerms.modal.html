@@ -1,0 +1,20 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Terms of service</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <terms hide-title="yes"></terms>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="vm.cancel()">Cancel</md-button>
+        <md-button ng-click="vm.ok()" class="md-primary">Ok</md-button>
+    </md-dialog-actions>
+</md-dialog>

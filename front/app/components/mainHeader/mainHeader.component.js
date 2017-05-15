@@ -36,6 +36,8 @@
             state: 'home.about'
         }, {
             state: 'home.news'
+        }, {
+            state: 'home.terms'
         }];
 
         vm.userInfo = authUserInfo;

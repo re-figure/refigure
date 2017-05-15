@@ -1,12 +1,12 @@
 <div class="text-center">
     <div class="rf-details btn-group" ng-show="vm.store.foundFigures.length">
-        <a href="#!/foundFigures" class="btn btn-link">
+        <a href="#!/foundFigures" class="btn rf-details-link">
             Found <b ng-bind="vm.store.foundFigures.length"></b> <span plural="vm.store.foundFigures.length">image</span>
             in <b ng-bind="vm.store.inMetapublications.length"></b> <span plural="vm.store.inMetapublications.length">Refigure</span>
         </a>
         <a ng-href='http://refigure.noblecoz.com/search-results/?query="{{vm.store.inMetapublications.join("\" \"")}}"'
            target="_blank"
-           class="btn rf-details-link">
+           class="btn btn-link">
             details
             <span class="glyphicon glyphicon-share-alt"></span>
         </a>

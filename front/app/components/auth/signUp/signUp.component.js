@@ -23,10 +23,11 @@
         '$stateParams',
         '$timeout',
         'authApiUri',
-        'auth'
+        'auth',
+        'modalDialog'
     ];
 
-    function Controller($state, $stateParams, $timeout, authApiUri, auth) {
+    function Controller($state, $stateParams, $timeout, authApiUri, auth, modal) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -48,6 +49,7 @@
         vm.reloadCaptcha = reloadCaptcha;
         vm.register = register;
         vm.start = start;
+        vm.showTerms = showTerms;
 
         activate();
 
@@ -140,6 +142,31 @@
          */
         function start() {
             $state.go('profile');
+        }
+
+        function showTerms(e) {
+            if (!vm.data.agreed) {
+                e.stopImmediatePropagation();
+                modal
+                    .show({
+                        templateUrl: 'view/signUpTerms.modal.html',
+                        targetEvent: e,
+                        controller: angular.noop,
+                        bindToController: true,
+                        locals: {
+                            ok: modal.ok,
+                            cancel: modal.cancel
+                        },
+                        controllerAs: 'vm',
+                        clickOutsideToClose: true
+                    })
+                    .then(
+                        function () {
+                            vm.data.agreed = true;
+                        },
+                        angular.noop
+                    );
+            }
         }
     }
 }(window.angular));

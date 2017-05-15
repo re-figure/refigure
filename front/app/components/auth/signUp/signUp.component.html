@@ -71,8 +71,9 @@
                         name="agreed"
                         ng-required="true"
                         aria-label="Terms of service"
+                        ng-click="vm.showTerms($event)"
                         ng-model="vm.data.agreed">
-                    I agree to <a ui-sref="terms-of-use">Terms of service</a>
+                    I agree to terms of service
                 </md-checkbox>
             </div>
         </div>

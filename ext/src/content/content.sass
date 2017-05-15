@@ -25,11 +25,15 @@ body
 
 @import "../common/variables"
 .rf-dialog
+    *, input, div[contenteditable], textarea, select
+        font-family: Helvetica, sans-serif!important
+        font-size: 14px
+        line-height: 21px
+
+.rf-dialog
     @import "../vendor/bootstrap/stylesheets/bootstrap"
     @import "../common/material-input"
     box-shadow: 0 2px 2px rgba(0, 0, 0, .5)
-    font-size: 14px
-    line-height: 21px
     position: fixed
     top: 0
     max-height: 100%
@@ -39,6 +43,10 @@ body
     background-color: #fff
     z-index: 1000000
     width: 400px
+
+    .btn-link
+        &:active:focus, &:active, &:focus
+            outline: none
 
     .row
         width: auto
@@ -89,8 +97,8 @@ body
                 display: inline-block
                 cursor: pointer
 
-            .glyphicon-move
-                cursor: move
+                &.rf-controls-move
+                    cursor: move
 
     .btn-link
         color: $main-color

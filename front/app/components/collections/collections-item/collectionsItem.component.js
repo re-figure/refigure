@@ -179,6 +179,7 @@
 
         function setRefigure(refigure) {
             angular.merge(vm.refigure, refigure);
+            vm.refigure.Figures = refigure.Figures;
             $state.get('collections.item').data.headerTitle = '"' + vm.refigure.Title + '"';
             if (vm.refigure.Keywords) {
                 vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);

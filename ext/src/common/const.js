@@ -24,8 +24,11 @@ var _gConst = {
     POPUP_ERROR_FIG_DUPLICATE: 'Image is already selected',
 
     ERROR_NOT_LOGGED: 'Please log in first.',
-    FIGURE_ADDED: 'Figures were successfully added'
+    FIGURE_ADDED: 'Figures were successfully added',
 
+    SETTINGS: {
+        parseAll: false
+    }
 };
 
 var _gApiURL;

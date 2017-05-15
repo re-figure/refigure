@@ -1,0 +1,25 @@
+<md-dialog class="rf-item-fullproperties" aria-label="Properties dialog">
+    <md-dialog-content>
+        <div layout-padding>
+            <p class="md-caption">
+                <b>Caption: </b><span ng-bind="vm.image.Caption"></span>
+            </p>
+            <p class="md-caption">
+                <b>Features: </b><span ng-bind="vm.image.Features"></span>
+            </p>
+            <p class="md-caption">
+                <b>Authors: </b><span ng-bind="vm.image.Authors"></span>
+            </p>
+            <p class="md-caption">
+                <b>Article DOI: </b><span ng-bind="vm.image.DOI"></span>
+            </p>
+            <p class="md-caption">
+                <b>Image DOI: </b><span ng-bind="vm.image.DOIFigure"></span>
+            </p>
+            <div ng-show="image.Legend">
+                <md-divider></md-divider>
+                <div class="md-body-2" ng-bind="vm.image.Legend"></div>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

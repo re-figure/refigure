@@ -1,23 +1,34 @@
-<div layout="row" flex layout-align="start start">
+<div layout="row" flex layout-align="start start" ng-class="'rf-layout-' + vm.view">
     <div flex layout="row" layout-wrap layout-align="start stretch">
         <h2 ng-hide="vm.refigure.ID" layout="row" flex layout-align="center center">Loading refigure...</h2>
         <md-content
                 class="rf-item"
-                flex="{{vm.view==='masonry'?50:100}}"
+                flex="{{vm.layout[vm.view].itemFlex}}"
                 ng-repeat="image in vm.refigure.Figures"
                 layout="column" layout-align="start stretch">
             <div md-whiteframe="2" layout="row" layout-align="start stretch" layout-fill>
                 <div
                         ng-click="vm.showFullScreen($event, image.URL)"
                         class="rf-item-fullscreen"
-                        flex="33"
+                        flex="{{vm.layout[vm.view].thumbFlex}}"
                         layout="column"
                         layout-padding
                         layout-align="center center">
                     <img ng-src="{{image.URL}}">
                     <md-icon>search</md-icon>
                 </div>
-                <div>
+                <div class="rf-item-caption">
+                    <div ng-show="image.Caption">
+                        <b>Caption: </b><span ng-bind="image.Caption"></span>
+                    </div>
+                    <div ng-show="image.Features">
+                        <b>Features: </b><span ng-bind="image.Features"></span>
+                    </div>
+                </div>
+                <md-button ng-click="vm.showProperties($event, image)" class="md-icon-button rf-item-show-properties">
+                    <md-icon>more_vert</md-icon>
+                </md-button>
+                <div class="rf-item-properties" layout-padding>
                     <p class="md-caption">
                         <b>Caption: </b><span ng-bind="image.Caption"></span>
                     </p>

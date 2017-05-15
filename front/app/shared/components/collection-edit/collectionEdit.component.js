@@ -40,7 +40,7 @@
         vm.toggleDetails = toggleDetails;
         vm.refigure = null;
 
-        activate();
+        vm.$onInit = activate;
 
         /////////////////////////////////
 

@@ -59,6 +59,17 @@
             }
         ];
 
+        vm.layout = {
+            grid: {
+                thumbFlex: 33,
+                itemFlex: 100
+            },
+            masonry: {
+                thumbFlex: 100,
+                itemFlex: 50
+            }
+        };
+
         vm.url = window.location.href;
 
         vm.refigure = {};
@@ -69,6 +80,7 @@
         vm.toggleFlag = toggleFlag;
         vm.isAdmin = isAdmin;
         vm.showFullScreen = showFullScreen;
+        vm.showProperties = showProperties;
 
         vm.$onInit = activate;
 
@@ -172,6 +184,21 @@
                     el[0].classList.add('md-dialog-autoheight');
                 },
                 disableParentScroll: false,
+                clickOutsideToClose: true,
+                parent: '.r-page-content'
+            });
+        }
+
+        function showProperties(e, image) {
+            modal.show({
+                controller: angular.noop,
+                bindToController: true,
+                controllerAs: 'vm',
+                locals: {
+                    image: image
+                },
+                templateUrl: 'view/imageProperties.modal.html',
+                targetEvent: e,
                 clickOutsideToClose: true,
                 parent: '.r-page-content'
             });

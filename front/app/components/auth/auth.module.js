@@ -24,6 +24,7 @@
             },
             facebook: {
                 clientId: 'FACEBOOK_CLIENT_ID',
+                appId: 'FACEBOOK_APP_ID'
             }
         })
         .config(Config)
@@ -38,23 +39,36 @@
             scope: 'profile'
         });
 
-        //$facebookProvider.setAppId(OAuthCfg.facebook.clientId);
+        $facebookProvider.setAppId(OAuthCfg.facebook.appId);
+        $facebookProvider.setVersion('v2.8');
+        $facebookProvider.setPermissions([
+            'public_profile',
+            'email'
+        ]);
     }
 
     Run.$inject = ['$rootScope', 'GoogleSignin', 'auth'];
 
     function Run($rootScope, GoogleSignin, auth) {
-        // var js = document.createElement('script'),
-        //     fjs = document.getElementsByTagName('script')[0];
-        //
-        // js.id = 'facebook-jssdk';
-        // js.src = '//connect.facebook.net/en_US/sdk.js';
-        // fjs.parentNode.insertBefore(js, fjs);
+        var js = document.createElement('script'),
+            fjs = document.getElementsByTagName('script')[0];
+
+        js.id = 'facebook-jssdk';
+        js.src = '//connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
 
         $rootScope.$on('ng-google-signin:isSignedIn', function (event, isSignedIn) {
             if (isSignedIn && !auth.isAuthenticated()) {
                 auth.oAuthGoogle(GoogleSignin.getUser().getAuthResponse()['id_token']);
             }
+        });
+
+        $rootScope.$on('fb.auth.login', function (event, opts) {
+            console.log('fb.auth.login', arguments);
+        });
+
+        $rootScope.$on('fb.auth.authResponseChange', function (event, opts) {
+            console.log('fb.auth.authResponseChange', arguments);
         });
     }
 

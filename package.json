@@ -65,7 +65,8 @@
         "apiKey" : "AIzaSyCnDKJt_n3eS3QtqLqcTkMu2vaCaguPCqU"
       },
       "facebook": {
-        "clientId": "<empty>"
+        "clientId": "<empty>",
+        "appId": "182066648985036"
       }
     }
   }

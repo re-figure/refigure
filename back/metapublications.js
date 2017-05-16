@@ -234,16 +234,13 @@ function myMetapublications(req, res) {
                       AND
                       UserFigure.ID = Figure.UserID
                    )
-         WHERE 1=1
+         WHERE Metapublication.UserID = ?
     `;
+    params.push(req.User.ID);
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
         params.push(query.query);
     } else {
         params.push('');
-    }
-    if (req.User.Type !== constants.USER_TYPE_ADMIN) {
-        q += ` AND Metapublication.UserID = ?`;
-        params.push(req.User.ID);
     }
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
         q += `

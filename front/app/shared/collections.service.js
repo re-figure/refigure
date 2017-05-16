@@ -108,6 +108,7 @@
                 .then(function (res) {
                     var items = utils.get(res, 'data.data');
                     items.results = itemsUIData(items.results);
+                    console.log(items);
                     return items;
                 });
         }

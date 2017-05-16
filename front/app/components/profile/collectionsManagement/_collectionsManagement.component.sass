@@ -1,10 +1,18 @@
 $remove-height: 25px
-my-collections
+collections-management
     .r-collection
         position: relative
 
         collection-row
             cursor: pointer
+
+        &-owner
+            position: absolute
+            right: 100px
+            bottom: 0
+            line-height: 24px
+            a
+                color: $primary-color
 
         .r-collection-remove
             text-align: center

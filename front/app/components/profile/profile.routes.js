@@ -11,13 +11,25 @@
     var states = [{
         state: 'profile.collections',
         config: {
-            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField',
+            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField&{Flagged:int}',
+            template: '<collections-management></collections-management>',
+            reloadOnSearch: false,
+            data: {
+                private: true,
+                label: 'Refigures',
+                description: 'Refigures management'
+            }
+        }
+    }, {
+        state: 'profile.myCollections',
+        config: {
+            url: '/my-collections?{from:int}&query&{size:int}&sortDirection&sortField',
             template: '<my-collections></my-collections>',
             reloadOnSearch: false,
             data: {
                 private: true,
                 label: 'My refigures',
-                description: 'Refigures management'
+                description: 'My refigures management'
             }
         }
     }, {

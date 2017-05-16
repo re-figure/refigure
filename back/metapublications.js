@@ -236,12 +236,12 @@ function myMetapublications(req, res) {
                    )
          WHERE Metapublication.UserID = ?
     `;
-    params.push(req.User.ID);
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
         params.push(query.query);
     } else {
         params.push('');
     }
+    params.push(req.User.ID);
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
         q += `
             AND Metapublication.ID IN (

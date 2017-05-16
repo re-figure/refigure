@@ -5,8 +5,7 @@
         </md-input-container>
         <md-button class="md-icon-button"
                    md-colors="{background: 'accent-100'}" aria-label="Search"
-                   type="submit"
-        >
+                   type="submit">
             <md-icon md-font-set="material-icons">search</md-icon>
         </md-button>
     </form>
@@ -18,5 +17,9 @@
     <div ng-click="vm.remove($index)" class="r-collection-remove" layout="row" layout-align="space-around center">
         <md-icon flex>delete</md-icon>
         <md-tooltip>delete refigure</md-tooltip>
+    </div>
+    <div ui-sref="collections.user({query: item.User.ID})" class="r-collection-owner">
+        <b class="md-caption">owner</b>
+        <a href="" ng-bind="item.User.FullName"></a>
     </div>
 </div>

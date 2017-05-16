@@ -24,15 +24,16 @@
         '$state',
         '$mdSidenav',
         'auth',
-        'GoogleSignin'
+        'GoogleSignin',
+        '$facebook'
     ];
 
-    function Controller($rootScope, $scope, $state, $mdSidenav, auth, GoogleSignin) {
+    function Controller($rootScope, $scope, $state, $mdSidenav, auth, GoogleSignin, $facebook) {
         var vm = this;
         vm.projectName = $rootScope.projectName;
         vm.state = $state;
         vm.menuItems = [{
-            state: 'profile.collections'
+            state: 'profile.myCollections'
         }, {
             state: 'profile.account'
         }];
@@ -58,18 +59,12 @@
             });
             auth.usrInfo().then(function (user) {
                 if (user.Type === 2) {
-                    $state.get('profile.collections').data.label = 'Refigures';
-                    var collectionsState = vm.menuItems.find(function (el) {
-                        return el.state === 'profile.collections';
-                    });
-                    if (collectionsState) {
-                        collectionsState.label = 'Refigures';
-                    }
                     addStateToMenu('profile.users');
+                    addStateToMenu('profile.collections');
                     addStateToMenu('profile.dashboard');
                 }
                 if ($state.current.name === 'profile') {
-                    $state.go(user.Type === 2 ? '.dashboard' : '.collections', null, {
+                    $state.go(user.Type === 2 ? '.dashboard' : '.myCollections', null, {
                         location: 'reload'
                     });
                 }
@@ -105,6 +100,9 @@
                 .then(function () {
                     if (GoogleSignin.isSignedIn()) {
                         GoogleSignin.signOut();
+                    }
+                    if ($facebook.isConnected) {
+                        $facebook.logout();
                     }
                     $state.go('auth.signin');
                 });

@@ -1,19 +1,19 @@
 /**
  * @ngdoc directive
- * @name refigureProfile.directive:myCollections
+ * @name refigureProfile.directive:collectionsManagement
  * @restrict E
  * @description
- * Current user collections management
+ * Admin collections management
  * @example
- * <my-collections></my-collections>
+ * <collections-management></collections-management>
  */
 (function (angular) {
     'use strict';
 
     angular
         .module('refigureProfile')
-        .component('myCollections', {
-            templateUrl: 'view/myCollections.component.html',
+        .component('collectionsManagement', {
+            templateUrl: 'view/collectionsManagement.component.html',
             controller: Controller,
             controllerAs: 'vm'
         });
@@ -67,7 +67,7 @@
             vm.error = null;
             vm.loading = true;
             collections
-                .myCollections(params)
+                .search(params)
                 .then(function (data) {
                     vm.found = data.found;
                     vm.refigures = data.results;

@@ -11,7 +11,7 @@
     var states = [{
         state: 'profile.collections',
         config: {
-            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField&{Flagged:int}',
+            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField',
             template: '<collections-management></collections-management>',
             reloadOnSearch: false,
             data: {

@@ -34,14 +34,14 @@ let pathsNoAuth = [
     '/api/password-change-request',
     '/api/password-change',
     '/api/most-visited-metapublications',
-    '/api/metapublications',
-    '/api/oauth/google',
-    '/api/oauth/fb'
+    '/api/metapublications'
 ];
 
 let pathsNoAuthGET = [
     '/api/figure',
-    '/api/metapublication'
+    '/api/metapublication',
+    '/api/oauth/google',
+    '/api/oauth/fb'
 ];
 
 /**

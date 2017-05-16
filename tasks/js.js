@@ -12,7 +12,7 @@ module.exports = [[], function () {
 
     config.replace.GOOGLE_CLIENT_ID = config.oauth.google.clientId;
     config.replace.GOOGLE_API_KEY = config.oauth.google.apiKey;
-    config.replace.FACEBOOK_APP_ID = config.oauth.facebook.appId;
+    config.replace.FACEBOOK_CLIENT_ID = config.oauth.facebook.clientId;
 
     Object.keys(config.replace).forEach(function (ph) {
         phs.push([ph, config.replace[ph]]);

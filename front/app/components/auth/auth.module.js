@@ -17,28 +17,19 @@
             'ngFacebook'
         ])
         .constant('authApiUri', '/api')
-        .constant('OAuthCfg', {
-            google: {
-                clientId: 'GOOGLE_CLIENT_ID',
-                apiKey: 'GOOGLE_API_KEY'
-            },
-            facebook: {
-                appId: 'FACEBOOK_APP_ID'
-            }
-        })
         .config(Config)
         .run(Run);
 
-    Config.$inject = ['GoogleSigninProvider', '$facebookProvider', 'OAuthCfg'];
+    Config.$inject = ['GoogleSigninProvider', '$facebookProvider'];
 
-    function Config(GoogleSigninProvider, $facebookProvider, OAuthCfg) {
+    function Config(GoogleSigninProvider, $facebookProvider) {
         GoogleSigninProvider.init({
-            apiKey: OAuthCfg.google.apiKey,
-            clientId: OAuthCfg.google.clientId,
+            apiKey: 'GOOGLE_API_KEY',
+            clientId: 'GOOGLE_CLIENT_ID',
             scope: 'profile'
         });
 
-        $facebookProvider.setAppId(OAuthCfg.facebook.appId);
+        $facebookProvider.setAppId('FACEBOOK_CLIENT_ID');
         $facebookProvider.setVersion('v2.9');
         $facebookProvider.setPermissions([
             'public_profile',

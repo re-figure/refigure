@@ -66,7 +66,7 @@
             },
             "facebook": {
                 "clientId": "182066648985036",
-                "appSecret": "2a86104d3af979f2407c5d5eac16c657"
+                "clientSecret": "2a86104d3af979f2407c5d5eac16c657"
             }
         }
     }

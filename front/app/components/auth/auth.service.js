@@ -180,11 +180,10 @@
             return $http
                 .get(authApiUri + '/oauth/fb/' + token)
                 .then(function (res) {
-                    console.log('res', res);
-                    /*var user = utils.get(res, 'data.data');
+                    var user = utils.get(res, 'data.data');
                     authToken.setToken(user.Token);
                     fillUsrInfo(user);
-                    loadCurrentUrl();*/
+                    loadCurrentUrl();
                 });
         }
 

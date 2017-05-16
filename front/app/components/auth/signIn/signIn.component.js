@@ -79,9 +79,7 @@
         }
 
         function signWithFacebook() {
-            $facebook.login().then(function (resp) {
-                console.log('facebook resp', resp);
-            });
+            $facebook.login();
         }
     }
 

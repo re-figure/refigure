@@ -26,6 +26,7 @@ var _gConst = {
 
     USER_REGISTRATION_TYPE_PASSWORD: 0,
     USER_REGISTRATION_TYPE_GOOGLE: 1,
+    USER_REGISTRATION_TYPE_FACEBOOK: 2,
 
     // authentication header name
     AUTHENTICATION_HEADER: 'Authentication',
@@ -68,6 +69,8 @@ var _gConst = {
 
     ERROR_PASSWORDCHANGENOTPERMITTED: 40103,
     ERROR_MSG_PASSWORDCHANGENOTPERMITTED: 'You are not authorized to change password',
+
+    ERROR_SOCIAL_REJECT: 40104,     //oauth access token validation error
 
     // 404 NOT FOUND
     ERROR_SQLNOTFOUND: 40400,  // SQL not found

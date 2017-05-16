@@ -6,9 +6,16 @@ const config = require('js.shared').config;
 const db = require('./db');
 const users = require('./users');
 const rfUtils = require('./rf-utils');
+const email = require('./email');
 
 const GoogleAuth = require('google-auth-library');
 const graph = require('fbgraph');
+const generator = require('generate-password');
+const generatorOpts = {
+    length: 8,
+    excludeSimilarCharacters: true,
+    numbers: true
+};
 
 exports.google = Google;
 exports.fb = FB;
@@ -50,10 +57,12 @@ function Google(req, res) {
                 return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, r.error, r.message);
             }
             if (r === false) {
+                userInfo.Password = generator.generate(generatorOpts);
                 users.addSocialUser(userInfo, (r) => {
                     if (r.error) {
                         return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, r.error, r.message);
                     }
+                    email.sendSocialSignupEmail(userInfo, 'Google+', (r) => {});
                     users.establishSession(res, r);
                 });
             } else {
@@ -100,10 +109,12 @@ function FB(req, res) {
                 return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, r.error, r.message);
             }
             if (r === false) {
+                userInfo.Password = generator.generate(generatorOpts);
                 users.addSocialUser(userInfo, (r) => {
                     if (r.error) {
                         return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, r.error, r.message);
                     }
+                    email.sendSocialSignupEmail(userInfo, 'Facebook', (r) => {});
                     users.establishSession(res, r);
                 });
             } else {

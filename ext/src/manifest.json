@@ -32,7 +32,7 @@
             "css": ["/content/content.css"]
         },
         {
-            "matches": ["*://*.figshare.com/articles/*"],
+            "matches": ["*://*.figshare.com/articles/*", "*://figshare.com/articles/*"],
             "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshare.js"],
             "css": ["/content/content.css"]
         },

@@ -205,7 +205,10 @@ function contextMenuClickListener(info, tab) {
     switch (info.menuItemId) {
         case 'add-to-existing':
             console.log('Add an image to the current Refigure');
-            chrome.tabs.sendMessage(tab.id, {type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION, src: info.srcUrl});
+            chrome.tabs.sendMessage(tab.id, {
+                type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION,
+                src: info.srcUrl
+            });
             break;
     }
 }
@@ -226,6 +229,9 @@ function getParseStatus(url) {
             }
         });
     });
+    if (!match) {
+        console.log('Refigure: Parser was turned off');
+    }
     return match;
 
     function escapeRegExp(str) {

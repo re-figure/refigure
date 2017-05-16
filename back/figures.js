@@ -13,6 +13,7 @@ const auth = require('./auth');
 const metapublications = require('./metapublications');
 
 exports.checkFigures = checkFigures;
+exports.checkFiguresV2 = checkFiguresV2;
 exports.normaliseURL = normaliseURL;
 exports.normaliseDOIFigure = normaliseDOIFigure;
 exports.normaliseCaption = normaliseCaption;
@@ -73,6 +74,94 @@ function areFiguresTheSame(figure1, figure2, normalize) {
         }
     }
     return false;
+}
+
+function checkFiguresV2(req, res) {
+    if (!(req.body && req.body.figures && Array.isArray(req.body.figures) && req.body.figures.length > 0)) {
+        return rfUtils.error(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            constants.ERROR_BADPARAMETERS,
+            'No list of figures to check provided'
+        );
+    }
+
+    // dedup input figures and normalize its URL/DOI
+    let dedupedFigures = [];
+    for (let figure of req.body.figures) {
+        if (rfUtils.checkStringNotEmpty(figure.DOIFigure)) {
+            figure.DOIFigure = normaliseDOIFigure(figure.DOIFigure);
+        }
+        if (rfUtils.checkStringNotEmpty(figure.URL)) {
+            figure.KeyURL = normaliseURL(figure.URL);
+        }
+        let found = false;
+        for (let exFig of dedupedFigures) {
+            if (areFiguresTheSame(exFig, figure)) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            dedupedFigures.push(figure);
+        }
+    }
+
+    let urls = [];
+    let dois = [];
+
+    dedupedFigures.forEach((fig) => {
+        if (rfUtils.checkStringNotEmpty(fig.DOIFigure)) {
+            dois.push(fig.DOIFigure);
+        }
+        if (rfUtils.checkStringNotEmpty(fig.KeyURL)) {
+            urls.push(fig.KeyURL);
+        }
+    });
+
+    let q, qMarks;
+    let params = [];
+    let whereSubQuery = [];
+
+    if (urls.length) {
+        qMarks = new Array(urls.length);
+        qMarks.fill(`?`);
+        params = params.concat(urls);
+        whereSubQuery.push(`KeyURL IN (` + qMarks.join(`,`) + `)`);
+    }
+
+    if (dois.length) {
+        qMarks = new Array(dois.length);
+        qMarks.fill(`?`);
+        params = params.concat(dois);
+        whereSubQuery.push(`DOIFigure IN (` + qMarks.join(`,`) + `)`);
+    }
+
+    if (whereSubQuery.length) {
+        q = `SELECT DISTINCT * FROM Figure WHERE ` + whereSubQuery.join(` OR `);
+        db.pool.query({sql: q}, params, (err, results) => {
+            console.log('results', results);
+            //DEDUP HERE!!!
+            res
+                .status(httpStatus.OK)
+                .send(results);
+        });
+    } else {
+        return rfUtils.error(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            constants.ERROR_BADPARAMETERS,
+            'No list of figures to check provided'
+        );
+    }
+    /*let foundFigures = [];
+    let foundMetapubications = {};
+    let result = {
+        data: {
+            figures: [],
+            metapublications: []
+        }
+    };*/
 }
 
 /**

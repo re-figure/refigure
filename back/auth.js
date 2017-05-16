@@ -25,6 +25,7 @@ exports.passwordCheckWeakness = passwordCheckWeakness;
 let pathsNoAuth = [
     '/api/service-validate',
     '/api/check-figures',
+    '/api/check-figures-v2',
     '/api/login',
     '/api/password-validate',
     '/api/captcha',

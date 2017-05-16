@@ -58,7 +58,7 @@
 
         $rootScope.$on('ng-google-signin:isSignedIn', function (event, isSignedIn) {
             if (isSignedIn && !auth.isAuthenticated()) {
-                auth.oAuthGoogle(GoogleSignin.getUser().getAuthResponse()['id_token']);
+                auth.oAuth.google(GoogleSignin.getUser().getAuthResponse()['id_token']);
             }
         });
 
@@ -66,8 +66,10 @@
             console.log('fb.auth.login', arguments);
         });
 
-        $rootScope.$on('fb.auth.authResponseChange', function (event, opts) {
-            console.log('fb.auth.authResponseChange', arguments);
+        $rootScope.$on('fb.auth.authResponseChange', function (e, resp) {
+            if (resp.status === 'connected') {
+                auth.oAuth.fb(resp.authResponse.accessToken);
+            }
         });
     }
 

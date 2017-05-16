@@ -9,9 +9,10 @@ const rfUtils = require('./rf-utils');
 
 const GoogleAuth = require('google-auth-library');
 
-exports.google = oAuthGoogle;
+exports.google = Google;
+exports.fb = FB;
 
-function oAuthGoogle(req, res) {
+function Google(req, res) {
     let CLIENT_ID = config.get('oauth.google.clientId');
     let gAuth = new GoogleAuth();
     let gClient = new gAuth.OAuth2(CLIENT_ID, '', '');
@@ -51,4 +52,16 @@ function oAuthGoogle(req, res) {
             }
         });
     });
+}
+
+function FB(req, res) {
+    if (!req.params.token) {
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            constants.ERROR_MSG_BADPARAMETERS
+        );
+    }
+    console.log(req.params.token);
 }

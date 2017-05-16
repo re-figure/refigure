@@ -152,7 +152,10 @@
             saveCurrentUrl: saveCurrentUrl,
             loadCurrentUrl: loadCurrentUrl,
             isAuthenticated: authToken.isAuthenticated,
-            oAuthGoogle: oAuthGoogle
+            oAuth: {
+                google: oAuthGoogle,
+                fb: oAuthFB
+            }
         };
 
         var savedUrl = {
@@ -170,6 +173,18 @@
                     authToken.setToken(user.Token);
                     fillUsrInfo(user);
                     loadCurrentUrl();
+                });
+        }
+
+        function oAuthFB(token) {
+            return $http
+                .get(authApiUri + '/oauth/fb/' + token)
+                .then(function (res) {
+                    console.log('res', res);
+                    /*var user = utils.get(res, 'data.data');
+                    authToken.setToken(user.Token);
+                    fillUsrInfo(user);
+                    loadCurrentUrl();*/
                 });
         }
 

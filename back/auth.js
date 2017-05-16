@@ -36,6 +36,7 @@ let pathsNoAuth = [
     '/api/most-visited-metapublications',
     '/api/metapublications',
     '/api/oauth/google',
+    '/api/oauth/fb'
 ];
 
 let pathsNoAuthGET = [

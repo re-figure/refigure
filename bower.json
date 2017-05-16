@@ -14,7 +14,8 @@
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
     "routerHelper": "https://github.com/andrewpavlov/routerHelper.git",
     "ui.ap": "https://github.com/andrewpavlov/ui.ap.git",
-    "ng-google-signin": "^0.1.0"
+    "ng-google-signin": "^0.1.0",
+    "ng-facebook": "^0.1.6"
   },
   "overrides": {
     "angular-material": {

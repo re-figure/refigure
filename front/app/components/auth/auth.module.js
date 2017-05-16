@@ -13,28 +13,53 @@
             'router.helper',
             'ngCookies',
             'refigureShared',
-            'google-signin'
+            'google-signin',
+            'ngFacebook'
         ])
         .constant('authApiUri', '/api')
         .config(Config)
         .run(Run);
 
-    Config.$inject = ['GoogleSigninProvider'];
+    Config.$inject = ['GoogleSigninProvider', '$facebookProvider'];
 
-    function Config(GoogleSigninProvider) {
+    function Config(GoogleSigninProvider, $facebookProvider) {
         GoogleSigninProvider.init({
-            apiKey: 'AIzaSyCnDKJt_n3eS3QtqLqcTkMu2vaCaguPCqU',
-            clientId: '604123564572-uuu98pul48vj6t2uqgu2epi8723egmli.apps.googleusercontent.com',
+            apiKey: 'GOOGLE_API_KEY',
+            clientId: 'GOOGLE_CLIENT_ID',
             scope: 'profile'
         });
+
+        $facebookProvider.setAppId('FACEBOOK_CLIENT_ID');
+        $facebookProvider.setVersion('v2.9');
+        $facebookProvider.setPermissions([
+            'public_profile',
+            'email'
+        ]);
     }
 
     Run.$inject = ['$rootScope', 'GoogleSignin', 'auth'];
 
     function Run($rootScope, GoogleSignin, auth) {
+        var js = document.createElement('script'),
+            fjs = document.getElementsByTagName('script')[0];
+
+        js.id = 'facebook-jssdk';
+        js.src = '//connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+
         $rootScope.$on('ng-google-signin:isSignedIn', function (event, isSignedIn) {
             if (isSignedIn && !auth.isAuthenticated()) {
-                auth.oAuthGoogle(GoogleSignin.getUser().getAuthResponse()['id_token']);
+                auth.oAuth.google(GoogleSignin.getUser().getAuthResponse()['id_token']);
+            }
+        });
+
+        $rootScope.$on('fb.auth.login', function (event, opts) {
+            console.log('fb.auth.login', arguments);
+        });
+
+        $rootScope.$on('fb.auth.authResponseChange', function (e, resp) {
+            if (resp.status === 'connected') {
+                auth.oAuth.fb(resp.authResponse.accessToken);
             }
         });
     }

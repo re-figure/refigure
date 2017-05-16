@@ -3,6 +3,7 @@
 const email = require('emailjs');
 
 const config = require('js.shared').config;
+const constants = require('./const');
 const utils = require('js.shared').utils;
 
 const auth = require('./auth');
@@ -10,6 +11,7 @@ const rfUtils = require('./rf-utils');
 
 exports.sendRegistrationEmail = sendRegistrationEmail;
 exports.sendChangePasswordEmail = sendChangePasswordEmail;
+exports.sendSocialSignupEmail = sendSocialSignupEmail;
 
 /**
  * Create and send registration confirmation email
@@ -45,7 +47,7 @@ function sendRegistrationEmail(user, cb) {
 
 /**
  * Create and send the reset password email when a link to the change password is provided
- * @param user user whom password reset has ben requested for
+ * @param {Object} user user whom password reset has ben requested for
  * @param {Function} cb Callback function
  */
 function sendChangePasswordEmail(user, cb) {
@@ -62,9 +64,50 @@ function sendChangePasswordEmail(user, cb) {
         let htmlText = r.data.replace(/%NAME%/, name);
         htmlText = htmlText.replace(/%LANDING_PAGE%/, landingPage);
 
-        sendMessage(user.email, emailConfig, htmlText, (err, message) => {
+        sendMessage(user.Email, emailConfig, htmlText, (err, message) => {
             if (err) {
                 console.error('Failed to send change password confirmation message', err);
+            }
+        });
+
+        cb({
+            error: 0,
+            data: user
+        });
+    });
+}
+
+/**
+ * Create and send the email with tmp password
+ * @param {Object} user user registered with social network
+ * @param {String} socialNetworkName social network name user registered from
+ * @param {Function} cb Callback function
+ */
+function sendSocialSignupEmail(user, socialNetworkName, cb) {
+    getEmailTemplate('social_signup', (r) => {
+        if (r.error) {
+            return cb(r);
+        }
+        let emailConfig = r.config;
+
+        let placeholders = {
+            LANDING_PAGE: emailConfig.landingPage,
+            NAME: rfUtils.getUserName(user),
+            SOC_NETWORK: socialNetworkName,
+            PWD: user.Password
+        };
+
+        let htmlText = r.data;
+
+        for (let placeholder in placeholders) {
+            if (placeholders.hasOwnProperty(placeholder)) {
+                htmlText = htmlText.replace('%' + placeholder + '%', placeholders[placeholder]);
+            }
+        }
+
+        sendMessage(user.Email, emailConfig, htmlText, (err, message) => {
+            if (err) {
+                console.error('Failed to send temporary password message', err);
             }
         });
 
@@ -123,8 +166,8 @@ function getEmailTemplate(template, callback) {
  * Construct URL to be used in a registration confirmation email:
  * clicking on this URL brings user to a registration confirmation
  * landing page where users submits confirmation form
- * @param landingPage base URL to the landing page
- * @param user
+ * @param {String} landingPage base URL to the landing page
+ * @param {Object} user
  * @returns {String} Confirmation page URL with security token
  */
 function makeRegistrationConfirmationUrl(landingPage, user) {
@@ -139,10 +182,10 @@ function makeChangePasswordUrl(landingPage, user) {
 
 /**
  * Send an email message
- * @param emailTo   email address to send message to
- * @param emailConfig   email configuration for the given email type
- * @param htmlText email text as HTML
- * @param callback(er, message)
+ * @param {String} emailTo   email address to send message to
+ * @param {Object} emailConfig   email configuration for the given email type
+ * @param {String} htmlText email text as HTML
+ * @param {Function} callback ({error: 0, message: 'message'})
  */
 function sendMessage(emailTo, emailConfig, htmlText, callback) {
     let message = {
@@ -155,7 +198,6 @@ function sendMessage(emailTo, emailConfig, htmlText, callback) {
             alternative: true
         }]
     };
-
     setTimeout(() => {
         getEmailServer()
             .send(message, function (err, message) {

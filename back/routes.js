@@ -32,6 +32,7 @@ router.get('/api/captcha-validate/:captcha', captcha.validate);
 
 //OAUTH
 router.get('/api/oauth/google/:token', oauth.google);
+router.get('/api/oauth/fb/:token', oauth.fb);
 
 // authentication and users
 router.post('/api/login', auth.login);

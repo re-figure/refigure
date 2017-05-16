@@ -5,6 +5,12 @@ var refigure = {
 
 var parser = {};
 
+chrome.storage.local.get('Metapublication', function (data) {
+    if (data.Metapublication) {
+        refigure.Metapublication = data.Metapublication;
+    }
+});
+
 chrome.runtime.onMessage.addListener(function (request) {
     switch (request.type) {
         case _gConst.MSG_TYPE_REFIGURE_ADD_START:
@@ -29,7 +35,7 @@ chrome.runtime.onMessage.addListener(function (request) {
             if (!refigure.Metapublication) {
                 alert('Please select Refigure to add to');
             } else {
-                addToSelected(request.src);
+                addToSelected(parser.srcTransformer(request.src));
             }
             break;
     }
@@ -176,7 +182,7 @@ function addToSelected(src) {
             };
         }
     }
-    window.imagePopup.show(img);
+    window.imagePopup.show(img, refigure.Metapublication);
 }
 
 function sendRequest(params) {

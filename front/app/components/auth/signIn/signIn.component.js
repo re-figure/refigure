@@ -20,10 +20,11 @@
 
     Controller.$inject = [
         'auth',
-        'GoogleSignin'
+        'GoogleSignin',
+        '$facebook'
     ];
 
-    function Controller(auth, GoogleSignin) {
+    function Controller(auth, GoogleSignin, $facebook) {
         var vm = this;
         vm.error = null;
         vm.loading = false;
@@ -62,7 +63,7 @@
             vm.loading = true;
             auth
                 .login(vm.data)
-                .then(function (res) {
+                .then(function () {
                     auth.loadCurrentUrl();
                 })
                 .catch(function (res) {
@@ -78,7 +79,7 @@
         }
 
         function signWithFacebook() {
-            alert('Not implemented yet');
+            $facebook.login();
         }
     }
 

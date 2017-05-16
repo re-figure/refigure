@@ -152,7 +152,10 @@
             saveCurrentUrl: saveCurrentUrl,
             loadCurrentUrl: loadCurrentUrl,
             isAuthenticated: authToken.isAuthenticated,
-            oAuthGoogle: oAuthGoogle
+            oAuth: {
+                google: oAuthGoogle,
+                fb: oAuthFB
+            }
         };
 
         var savedUrl = {
@@ -165,6 +168,17 @@
         function oAuthGoogle(token) {
             return $http
                 .get(authApiUri + '/oauth/google/' + token)
+                .then(function (res) {
+                    var user = utils.get(res, 'data.data');
+                    authToken.setToken(user.Token);
+                    fillUsrInfo(user);
+                    loadCurrentUrl();
+                });
+        }
+
+        function oAuthFB(token) {
+            return $http
+                .get(authApiUri + '/oauth/fb/' + token)
                 .then(function (res) {
                     var user = utils.get(res, 'data.data');
                     authToken.setToken(user.Token);

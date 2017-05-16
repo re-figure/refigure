@@ -23,7 +23,6 @@
                 apiKey: 'GOOGLE_API_KEY'
             },
             facebook: {
-                clientId: 'FACEBOOK_CLIENT_ID',
                 appId: 'FACEBOOK_APP_ID'
             }
         })
@@ -40,7 +39,7 @@
         });
 
         $facebookProvider.setAppId(OAuthCfg.facebook.appId);
-        $facebookProvider.setVersion('v2.8');
+        $facebookProvider.setVersion('v2.9');
         $facebookProvider.setPermissions([
             'public_profile',
             'email'

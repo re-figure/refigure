@@ -24,7 +24,7 @@
         legend = document.querySelector('div.item-wrap div.item-left > div.description.section');
 
         if (doi && doi.content) {
-            figure.DOI = doi.content.replace(/doi:/, '');
+            figure.DOIFigure = doi.content.replace(/doi:/, '');
         }
         if (caption) {
             figure.Caption = caption.innerText;

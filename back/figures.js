@@ -212,7 +212,13 @@ function checkFigures(req, res) {
             let found = false;
             for (let f of result.data.figures) {
                 if (areFiguresTheSame(f, figure)) {
-                    f.FoundInCollectionsCounter = Math.max(f.FoundInCollectionsCounter, figure.FoundInCollectionsCounter);
+                    let hash = {};
+                    let arr = [];
+                    f.FoundInCollections.concat(figure.FoundInCollections).map((e) => {
+                        hash[e] = hash[e] || arr.push(b);
+                    });
+                    f.FoundInCollections = arr;
+                    f.FoundInCollectionsCounter = arr.length;
                     found = true;
                     break;
                 }
@@ -320,6 +326,7 @@ function checkFigures(req, res) {
             foundMetapubications[figure.MetapublicationID] = true;
         });
         foundFigures[0].FoundInCollectionsCounter = Object.keys(counters).length;
+        foundFigures[0].FoundInCollections = Object.keys(counters);
         return foundFigures[0];
     }
 }

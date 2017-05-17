@@ -37,12 +37,17 @@
             "css": ["/content/content.css"]
         },
         {
+            "matches": ["*://figshare.com/collections/*"],
+            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshareCollections.js"],
+            "css": ["/content/content.css"]
+        },
+        {
             "matches": ["*://refigure.noblecoz.com/*"],
             "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/refigure.js"],
             "css": ["/content/content.css"]
         },
         {
-            "matches": ["*://*/*"],
+            "matches": ["<all_urls>"],
             "js": ["/content/content.js", "/content/templates.min.js"],
             "css": ["/content/content.css"]
         }

@@ -2,8 +2,8 @@
             hide-print
             md-colors="{background: 'primary-500'}"
             md-component-id="profile-sidenav"
-            md-is-locked-open="$mdMedia('gt-sm')"
->
+            md-is-locked-open="$mdMedia('gt-sm')">
+
     <md-toolbar>
         <div class="md-toolbar-tools">
             <a ui-sref="home.search"><img alt="Brand" src="img/refigure_logo.png" class="r-nav-logo"/></a>
@@ -39,7 +39,6 @@
 </md-sidenav>
 
 <div layout="column" flex>
-
     <md-toolbar class="r-profile-toolbar">
         <div class="md-toolbar-tools">
             <md-button class="md-icon-button hide-gt-sm md-primary" ng-click="vm.toggleSideBar()" aria-label="Open menu">
@@ -49,7 +48,10 @@
             <h2 class="r-toolbar-breadcrumb r-nav-bar-heading" ng-bind="vm.state.current.data.label"></h2>
 
             <span flex></span>
-
+            <div class="r-profile-signed-in">
+                <small>signed in as</small>
+                <span ng-bind="vm.userInfo.FullName"></span>
+            </div>
             <!--md-button ui-sref="profile" class="md-icon-button md-primary" aria-label="My Refigure">
                 <md-icon md-font-set="material-icons">account_box</md-icon>
             </md-button-->

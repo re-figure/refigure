@@ -1,19 +1,19 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:mostVisited
+ * @name refigureApp.directive:visitsCount
  * @restrict E
  * @description
  * Search Results
  * @example
- * <most-visited></most-visited>
+ * <visits-count></visits-count>
  */
 (function (angular) {
     'use strict';
 
     angular
         .module('refigureShared')
-        .component('mostVisited', {
-            templateUrl: 'view/mostVisited.component.html',
+        .component('visitsCount', {
+            templateUrl: 'view/visitsCount.component.html',
             controllerAs: 'vm',
             bindings:{
                 count: '<'

@@ -1,11 +1,11 @@
-<md-card>
+<md-card ui-sref="collections.item({id: vm.item.ID})">
     <md-card-title>
         <md-card-title-media>
-            <div class="md-media-md card-media">
+            <div class="md-media-lg card-media" layout="column" layout-align="center center">
                 <img ng-src="{{vm.item.$ui.img.src}}">
             </div>
         </md-card-title-media>
-        <md-card-title-text  layout="column" layout-align="space-between start">
+        <md-card-title-text layout="column" layout-align="space-between start">
             <span class="md-headline" ng-bind="vm.item.Title"></span>
             <div ng-bind="vm.item.Description"></div>
             <span class="md-subhead">
@@ -13,7 +13,30 @@
                 image<span ng-bind="vm.item.FiguresCount === 1 ? '' : 's'"></span> in refigure
             </span>
         </md-card-title-text>
+        <md-content layout-padding layout="column" layout-align="space-between start" flex="25">
+            <div class="rf-row-owner">
+                <b class="md-caption">by</b>
+                <a ui-sref="collections.user({query: vm.item.User.ID})" ng-bind="vm.item.User.FullName"></a>
+                <a ui-sref-disabled ng-href="mailto:{{vm.item.User.Email}}">
+                    <md-icon>mail_outline</md-icon>
+                </a>
+            </div>
+            <div ng-show="vm.item.Keywords" layout="row" layout-align="start center">
+                <b class="md-caption">Keywords&nbsp;&nbsp;</b>
+                <md-chips ng-model="vm.item.KeywordsChips" readonly="true"></md-chips>
+            </div>
+        </md-content>
+        <md-content layout-padding layout="column" layout-align="space-around stretch" flex="15">
+            <div layout="row" layout-align="space-between center">
+                <b class="md-caption">Created at&nbsp;&nbsp;</b>
+                <span ng-bind="vm.item.DateCreated|date:'d.MM.yyyy'"></span>
+            </div>
+            <div layout="row" layout-align="space-between center">
+                <b class="md-caption">Last modified&nbsp;&nbsp;</b>
+                <span ng-bind="vm.item.DateModified|date:'d.MM.yyyy'"></span>
+            </div>
+        </md-content>
     </md-card-title>
-    <most-visited count="vm.item.Visit.Count"></most-visited>
+    <visits-count count="vm.item.Visit.Count"></visits-count>
     <collection-flagged flagged="{{vm.item.Flagged}}"></collection-flagged>
 </md-card>

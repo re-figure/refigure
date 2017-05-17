@@ -78,11 +78,9 @@
                 <div ng-bind="vm.refigure.Description"></div>
                 <div ng-show="vm.refigure.Keywords" layout="row" layout-align="start center">
                     <b class="md-caption">Keywords&nbsp;</b>
-                    <md-chips>
-                        <md-chip ng-repeat="chip in vm.refigure.KeywordsChips track by $index" ng-bind="chip"></md-chip>
-                    </md-chips>
+                    <md-chips ng-model="vm.refigure.KeywordsChips" readonly="true"></md-chips>
                 </div>
-                <most-visited count="vm.refigure.Visit.Count"></most-visited>
+                <visits-count count="vm.refigure.Visit.Count"></visits-count>
                 <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
 
                 <div class="rf-item-details-share" layout="row" layout-align="start center">

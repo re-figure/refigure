@@ -1,10 +1,7 @@
-$remove-height: 25px
+$remove-height: 24px
 my-collections
     .r-collection
         position: relative
-
-        collection-row
-            cursor: pointer
 
         .r-collection-remove
             text-align: center
@@ -29,5 +26,11 @@ my-collections
                 border-style: solid
                 border-width: 0 0 $remove-height $remove-height
                 border-color: transparent transparent $warn-color
-            md-icon
+
+            &:hover
+                opacity: 1
+
+            md-icon.material-icons
+                line-height: $remove-height
+                font-size: 22px
                 color: #fff

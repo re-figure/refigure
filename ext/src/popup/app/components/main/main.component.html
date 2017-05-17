@@ -13,5 +13,7 @@
     </p>
     <div ng-hide="vm.store.foundFigures.length > 0">No Refigures found on this page</div>
     <div ng-hide="vm.store.userInfo.ID" >Please click <a href="#!/auth">here</a> to sign in</div>
+    <found-figures></found-figures>
 </div>
+<div class="list-delimiter"></div>
 <collection-list ng-if="vm.store.userInfo.ID"></collection-list>

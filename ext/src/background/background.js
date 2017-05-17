@@ -235,6 +235,6 @@ function getParseStatus(url) {
     return match;
 
     function escapeRegExp(str) {
-        return str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&').replace('*', '.*');
+        return str.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, '\\$&').replace(/\*/g, '.*');
     }
 }

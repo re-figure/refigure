@@ -1,7 +1,7 @@
 $caption-height: 20px
 collections-item
     .rf-item
-        padding: 6px 6px 6px 2px
+        padding: 6px 12px 6px 2px
 
         & > div
             background-color: #fff
@@ -17,9 +17,14 @@ collections-item
                 opacity: 1
 
         &-view
-            margin-top: 8px
-            & > md-content
-                background-color: #fff
+            margin: 0 12px 6px 2px
+            background-color: #fff
+            &-search
+                margin-left: 16px
+                md-input-container
+                    margin: 18px 0 0
+                    .md-error-spacer
+                        display: none
 
         &-fullscreen
             position: relative
@@ -53,7 +58,6 @@ collections-item
                 text-overflow: ellipsis
 
         &-details
-            margin-top: 6px
             width: 450px
             max-width: none
 

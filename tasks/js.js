@@ -15,7 +15,11 @@ module.exports = [[], function () {
     config.replace.FACEBOOK_CLIENT_ID = config.oauth.facebook.clientId;
 
     Object.keys(config.replace).forEach(function (ph) {
-        phs.push([ph, config.replace[ph]]);
+        if (typeof config.replace[ph] === 'boolean') {
+            phs.push(['\'' + ph + '\'', config.replace[ph]]);
+        } else {
+            phs.push([ph, config.replace[ph]]);
+        }
     });
 
     return gulp

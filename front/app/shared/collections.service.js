@@ -222,6 +222,10 @@
                 item.FiguresCount = item.Figures.length;
             }
 
+            if (item.Keywords) {
+                item.KeywordsChips = item.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+            }
+
             uiData.img = {};
             // $ui.img.src
             if (!utils.empty(item.Figures)) {

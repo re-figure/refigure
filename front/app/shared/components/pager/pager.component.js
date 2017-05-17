@@ -1,11 +1,11 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:mostVisited
+ * @name refigureApp.directive:pager
  * @restrict E
  * @description
  * Search Results
  * @example
- * <most-visited></most-visited>
+ * <pager total="20" search-params="stateParams" default-sort="relevance" sort="vm.showSortDropdown"></pager>
  */
 (function (angular) {
     'use strict';

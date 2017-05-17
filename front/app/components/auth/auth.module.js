@@ -53,12 +53,8 @@
             }
         });
 
-        $rootScope.$on('fb.auth.login', function (event, opts) {
-            console.log('fb.auth.login', arguments);
-        });
-
         $rootScope.$on('fb.auth.authResponseChange', function (e, resp) {
-            if (resp.status === 'connected') {
+            if (resp.status === 'connected' && !auth.isAuthenticated()) {
                 auth.oAuth.fb(resp.authResponse.accessToken);
             }
         });

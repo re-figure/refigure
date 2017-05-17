@@ -2,9 +2,37 @@
     <div flex layout="row" layout-wrap layout-align="start stretch">
         <h2 ng-hide="vm.refigure.ID" layout="row" flex layout-align="center center">Loading refigure...</h2>
         <md-content
+                md-whiteframe="1"
+                ng-show="vm.refigure.ID"
+                class="rf-item-view"
+                layout="row"
+                layout-align="start center" flex="100">
+            <div flex class="rf-item-view-search">
+                <md-input-container class="md-block">
+                    <input type="text" placeholder="Search" ng-model="search">
+                </md-input-container>
+            </div>
+            <md-button
+                    ui-sref="collections.item({view:'masonry'})"
+                    class="md-button-small"
+                    ng-disabled="vm.view==='masonry'"
+                    ng-class="vm.view==='grid'?'md-raised':''">
+                <md-icon>view_module</md-icon>
+                <md-tooltip>masonry</md-tooltip>
+            </md-button>
+            <md-button
+                    ui-sref="collections.item({view:'grid'})"
+                    class="md-button-small"
+                    ng-disabled="vm.view==='grid'"
+                    ng-class="vm.view==='masonry'?'md-raised':''">
+                <md-icon>view_stream</md-icon>
+                <md-tooltip>grid</md-tooltip>
+            </md-button>
+        </md-content>
+        <md-content
                 class="rf-item"
                 flex="{{vm.layout[vm.view].itemFlex}}"
-                ng-repeat="image in vm.refigure.Figures"
+                ng-repeat="image in vm.refigure.Figures | filter: search"
                 layout="column" layout-align="start stretch">
             <div md-whiteframe="2" layout="row" layout-align="start stretch" layout-fill>
                 <div
@@ -28,7 +56,7 @@
                 <md-button ng-click="vm.showProperties($event, image)" class="md-icon-button rf-item-show-properties">
                     <md-icon>more_vert</md-icon>
                 </md-button>
-                <div class="rf-item-properties" layout-padding>
+                <div class="rf-item-properties" layout-padding flex>
                     <p class="md-caption">
                         <b>Caption: </b><span ng-bind="image.Caption"></span>
                     </p>
@@ -78,11 +106,9 @@
                 <div ng-bind="vm.refigure.Description"></div>
                 <div ng-show="vm.refigure.Keywords" layout="row" layout-align="start center">
                     <b class="md-caption">Keywords&nbsp;</b>
-                    <md-chips>
-                        <md-chip ng-repeat="chip in vm.refigure.KeywordsChips track by $index" ng-bind="chip"></md-chip>
-                    </md-chips>
+                    <md-chips ng-model="vm.refigure.KeywordsChips" readonly="true"></md-chips>
                 </div>
-                <most-visited count="vm.refigure.Visit.Count"></most-visited>
+                <visits-count count="vm.refigure.Visit.Count"></visits-count>
                 <collection-flagged flagged="{{vm.refigure.Flagged}}"></collection-flagged>
 
                 <div class="rf-item-details-share" layout="row" layout-align="start center">
@@ -125,26 +151,6 @@
                 </div>
             </md-content>
         </md-sidenav>
-        <div class="rf-item-view" layout="row" layout-align="start center">
-            <md-content md-whiteframe="2">
-                <md-button
-                        ui-sref="collections.item({view:'masonry'})"
-                        class="md-button-small"
-                        ng-disabled="vm.view==='masonry'"
-                        ng-class="vm.view==='grid'?'md-raised':''">
-                    <md-icon>view_module</md-icon>
-                    <md-tooltip>masonry</md-tooltip>
-                </md-button>
-                <md-button
-                        ui-sref="collections.item({view:'grid'})"
-                        class="md-button-small"
-                        ng-disabled="vm.view==='grid'"
-                        ng-class="vm.view==='masonry'?'md-raised':''">
-                    <md-icon>view_stream</md-icon>
-                    <md-tooltip>grid</md-tooltip>
-                </md-button>
-            </md-content>
-        </div>
     </div>
 </div>
 <collection-edit></collection-edit>

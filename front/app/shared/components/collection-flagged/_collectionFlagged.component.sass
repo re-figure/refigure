@@ -1,4 +1,4 @@
-$flagged-height: 25px
+$flagged-height: 24px
 collection-flagged
     background-color: $warn-color
     color: #fff
@@ -9,7 +9,6 @@ collection-flagged
     padding: 0 5px 0 5px!important
     width: 55px
     text-align: center
-    line-height: 25px
     &:after
         content: ''
         position: absolute
@@ -22,7 +21,9 @@ collection-flagged
         border-color: transparent $warn-color transparent transparent
 
     md-icon.material-icons
+        line-height: $flagged-height
+        font-size: 20px
         color: #fff
 
-most-visited + collection-flagged
+visits-count + collection-flagged
     right: 65px

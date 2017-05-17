@@ -23,12 +23,13 @@
         '$scope',
         '$state',
         '$mdSidenav',
+        '$facebook',
         'auth',
         'GoogleSignin',
-        '$facebook'
+        'authUserInfo'
     ];
 
-    function Controller($rootScope, $scope, $state, $mdSidenav, auth, GoogleSignin, $facebook) {
+    function Controller($rootScope, $scope, $state, $mdSidenav, $facebook, auth, GoogleSignin, authUserInfo) {
         var vm = this;
         vm.projectName = $rootScope.projectName;
         vm.state = $state;
@@ -37,6 +38,7 @@
         }, {
             state: 'profile.account'
         }];
+        vm.userInfo = authUserInfo;
 
         vm.toggleSideBar = toggleSideBar;
         vm.signOut = signOut;
@@ -101,7 +103,7 @@
                     if (GoogleSignin.isSignedIn()) {
                         GoogleSignin.signOut();
                     }
-                    if ($facebook.isConnected) {
+                    if ($facebook.isConnected()) {
                         $facebook.logout();
                     }
                     $state.go('auth.signin');

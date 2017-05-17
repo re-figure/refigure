@@ -1,6 +1,4 @@
 <div class="found-figures">
-    <h4 ng-hide="vm.figures.length" class="text-center">NO DATA IS AVAILABLE</h4>
-
     <div ng-repeat="fig in vm.figures">
         <div class="row">
             <div class="col-xs-4">
@@ -8,11 +6,12 @@
             </div>
             <div class="col-xs-8">
                 <div class="caption" ng-bind="fig.Caption"></div>
-                <small class="help-block"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> REFIGURES</small>
+                <a  ng-href='http://refigure.noblecoz.com/search-results/?query="{{fig.FoundInCollections.join("\" \"")}}"'
+                   target="_blank" class="found-figures-in-refigures"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> REFIGURES</a>
                 <button class="btn btn-link btn-xs" ng-click="vm.opened = vm.opened === $index ? -1 : $index">
                     <span class="glyphicon"
                           ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>
-                    <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> details
+                    <span ng-bind="vm.opened === $index ? 'hide' : 'show'"></span> image details
                 </button>
             </div>
         </div>

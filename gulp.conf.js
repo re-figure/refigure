@@ -22,7 +22,9 @@ module.exports = {
         lrPort: 35729
     },
 
-    replace: {},
+    replace: {
+        'PARSE_REFIGURE_SITE': p.locals.doParse.refigureSite,
+    },
 
     buildDir: buildDir,
     clientDir: clientDir,
@@ -73,7 +75,8 @@ module.exports = {
     indexHtml: buildDir + '/index.html',
     extension: {
         replace: {
-            'REMOTE_API_URL': 'https://refigure.noblecoz.com/api/'
+            'REMOTE_API_URL': 'https://refigure.noblecoz.com/api/',
+            'PARSE_ALL_SITES': p.locals.doParse.notInManifest
         },
         src: extSrcDir,
         dist: extDir + '/dist',

@@ -5,7 +5,7 @@
  * @description
  * Search Results
  * @example
- * <most-visited></most-visited>
+ * <collection-row item="refigureObject"></collection-row>
  */
 (function (angular) {
     'use strict';

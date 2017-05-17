@@ -107,10 +107,12 @@
             collections
                 .get($state.params.id)
                 .then(function (resp) {
-                    window.postMessage({
-                        type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
-                        images: resp.Figures
-                    }, '*');
+                    if ('PARSE_REFIGURE_SITE') {
+                        window.postMessage({
+                            type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
+                            images: resp.Figures
+                        }, '*');
+                    }
                     setRefigure(resp);
                 });
         }
@@ -208,9 +210,6 @@
             angular.merge(vm.refigure, refigure);
             vm.refigure.Figures = refigure.Figures;
             $state.get('collections.item').data.headerTitle = '"' + vm.refigure.Title + '"';
-            if (vm.refigure.Keywords) {
-                vm.refigure.KeywordsChips = vm.refigure.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
-            }
         }
 
     }

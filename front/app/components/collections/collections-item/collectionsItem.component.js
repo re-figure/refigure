@@ -107,10 +107,12 @@
             collections
                 .get($state.params.id)
                 .then(function (resp) {
-                    window.postMessage({
-                        type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
-                        images: resp.Figures
-                    }, '*');
+                    if ('PARSE_REFIGURE_SITE') {
+                        window.postMessage({
+                            type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
+                            images: resp.Figures
+                        }, '*');
+                    }
                     setRefigure(resp);
                 });
         }

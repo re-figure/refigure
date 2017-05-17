@@ -27,7 +27,7 @@ var _gConst = {
     FIGURE_ADDED: 'Figures were successfully added',
 
     SETTINGS: {
-        parseAll: false
+        parseAll: 'PARSE_ALL_SITES'
     }
 };
 

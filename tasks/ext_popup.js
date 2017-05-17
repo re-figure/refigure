@@ -41,7 +41,11 @@ module.exports = function () {
     let phs = [];
 
     Object.keys(extOpt.replace).forEach(function (ph) {
-        phs.push([ph, extOpt.replace[ph]]);
+        if (typeof extOpt.replace[ph] === 'boolean') {
+            phs.push(['\'' + ph + '\'', extOpt.replace[ph]]);
+        } else {
+            phs.push([ph, extOpt.replace[ph]]);
+        }
     });
 
     let js = gulp

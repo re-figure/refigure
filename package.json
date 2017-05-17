@@ -68,6 +68,10 @@
                 "clientId": "182066648985036",
                 "clientSecret": "2a86104d3af979f2407c5d5eac16c657"
             }
+        },
+        "doParse": {
+            "refigureSite": false,
+            "notInManifest": false
         }
     }
 }

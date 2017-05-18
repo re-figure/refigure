@@ -50,6 +50,7 @@
         function activate() {
             $scope.$watchCollection('vm.searchParams', function (params) {
                 if (params) {
+                    vm.term = params.query;
                     load(params);
                 }
             });
@@ -91,9 +92,9 @@
                 });
         }
 
-        function submit(term) {
+        function submit() {
             $state.go($state.current.name, {
-                query: term,
+                query: vm.term,
                 from: 0
             });
         }

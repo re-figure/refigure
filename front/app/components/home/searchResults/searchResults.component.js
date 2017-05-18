@@ -18,13 +18,12 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$scope', '$state', 'collections', '$stateParams'];
+    Controller.$inject = ['$scope', '$state', 'collections'];
 
-    function Controller($scope, $state, collections, $stateParams) {
+    function Controller($scope, $state, collections) {
         var vm = this;
 
         vm.refigures = [];
-        vm.term = $stateParams.query;
         vm.found = 0;
         vm.searchParams = null;
 
@@ -46,6 +45,7 @@
             }
             $scope.$watchCollection('vm.searchParams', function (params) {
                 if (params) {
+                    vm.term = params.query;
                     load(params);
                 }
             });

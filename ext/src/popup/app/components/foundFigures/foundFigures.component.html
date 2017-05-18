@@ -6,8 +6,11 @@
             </div>
             <div class="col-xs-8">
                 <div class="caption" ng-bind="fig.Caption"></div>
-                <a  ng-href='http://refigure.noblecoz.com/search-results/?query="{{fig.FoundInCollections.join("\" \"")}}"'
-                   target="_blank" class="found-figures-in-refigures"> IN <span ng-bind="fig.FoundInCollectionsCounter"></span> REFIGURES</a>
+                <a ng-href='http://refigure.noblecoz.com/search-results/?query="{{fig.FoundInCollections.join("\" \"")}}"'
+                   target="_blank" class="found-figures-in-refigures btn btn-link btn-xs">
+                    <i class="glyphicon glyphicon-share-alt"></i>
+                    IN <span ng-bind="fig.FoundInCollectionsCounter"></span> REFIGURES
+                </a>
                 <button class="btn btn-link btn-xs" ng-click="vm.opened = vm.opened === $index ? -1 : $index">
                     <span class="glyphicon"
                           ng-class="vm.opened === $index ? 'glyphicon-minus' : 'glyphicon-plus'"></span>

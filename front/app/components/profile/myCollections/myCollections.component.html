@@ -1,7 +1,7 @@
 <md-card>
-    <form layout="row" class="md-padding" name="vm.editForm" ng-submit="vm.submit(term)">
+    <form layout="row" class="md-padding" name="vm.editForm" ng-submit="vm.submit()">
         <md-input-container flex>
-            <input name="term" autofocus ng-model="term" placeholder="Search"/>
+            <input name="term" autofocus ng-model="vm.term" placeholder="Search"/>
         </md-input-container>
         <md-button class="md-icon-button"
                    md-colors="{background: 'accent-100'}" aria-label="Search"

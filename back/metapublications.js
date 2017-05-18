@@ -40,8 +40,8 @@ function arrangeUserRecord(user) {
 /**
  * arrange db record of Visit table
  * assuming it can be null
- * @param rec
- * @param id
+ * @param {Object} rec
+ * @param {Number} id
  */
 function arrangeVisitRecord(rec, id) {
     let r = {
@@ -210,7 +210,12 @@ function mostVisited(req, res) {
 function myMetapublications(req, res) {
     let r = rfUtils.parseQuery(undefined, req.query);
     if (r.error) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, constants.ERROR_MSG_BADPARAMETERS);
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            constants.ERROR_MSG_BADPARAMETERS
+        );
     }
     let query = r.data;
 
@@ -308,7 +313,6 @@ function myMetapublications(req, res) {
     });
 }
 
-
 /**
  * Search metapublications
  * @param {Object} req HTTP request
@@ -317,7 +321,12 @@ function myMetapublications(req, res) {
 function searchMetapublications(req, res) {
     let r = rfUtils.parseQuery(undefined, req.query);
     if (r.error) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, constants.ERROR_MSG_BADPARAMETERS);
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            constants.ERROR_MSG_BADPARAMETERS
+        );
     }
     let query = r.data;
 
@@ -435,7 +444,12 @@ function deleteMetapublication(req, res) {
         db.pool.query('DELETE FROM Metapublication WHERE ID = ?', [id], (err) => {
             if (err) {
                 console.log('Failed to delete Metapublication', err);
-                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_MSG_SQL, constants.ERROR_MSG_SQL);
+                return rfUtils.error(
+                    res,
+                    httpStatus.INTERNAL_SERVER_ERROR,
+                    constants.ERROR_MSG_SQL,
+                    constants.ERROR_MSG_SQL
+                );
             }
             res.send(r);
         });
@@ -474,7 +488,12 @@ function getUpdateData(params) {
 function updateMetapublication(req, res) {
     let id = vars.get(req, 'ID');
     if (!utils.isset(id)) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            'No Metapublication ID provided'
+        );
     }
 
     get(id, (r) => {
@@ -486,7 +505,12 @@ function updateMetapublication(req, res) {
         }
         let upd = getUpdateData(req.body);
         if (Object.keys(upd).length === 0) {
-            return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No data for update provided');
+            return rfUtils.error(
+                res,
+                httpStatus.BAD_REQUEST,
+                constants.ERROR_BADPARAMETERS,
+                'No data for update provided'
+            );
         }
 
         let params = [];
@@ -504,7 +528,12 @@ function updateMetapublication(req, res) {
         db.pool.query(q, params, (err) => {
             if (err) {
                 console.log('Failed to update Metapublication', err);
-                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to update Metapublication');
+                return rfUtils.error(
+                    res,
+                    httpStatus.INTERNAL_SERVER_ERROR,
+                    constants.ERROR_SQL,
+                    'Failed to update Metapublication'
+                );
             }
             get(id, (r) => {
                 if (r.error) {
@@ -516,7 +545,6 @@ function updateMetapublication(req, res) {
     });
 }
 
-
 /**
  * Create new Metapublication
  * @param {Object} req HTTP request
@@ -525,7 +553,12 @@ function updateMetapublication(req, res) {
 function createMetapublication(req, res) {
     let upd = getUpdateData(req.body);
     if (Object.keys(upd).length === 0) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication data provided');
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            'No Metapublication data provided'
+        );
     }
 
     upd[db.model.ID] = uuid.v1();
@@ -547,7 +580,12 @@ function createMetapublication(req, res) {
     db.pool.query(q, params, (err) => {
         if (err) {
             console.log('Failed to create new Metapublication', err);
-            return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to create new Metapublication');
+            return rfUtils.error(
+                res,
+                httpStatus.INTERNAL_SERVER_ERROR,
+                constants.ERROR_SQL,
+                'Failed to create new Metapublication'
+            );
         }
         get(upd[db.model.ID], (r) => {
             if (r.error) {
@@ -566,7 +604,12 @@ function createMetapublication(req, res) {
 function flagMetapublication(req, res) {
     let id = vars.get(req, 'ID');
     if (!utils.isset(id)) {
-        return rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS, 'No Metapublication ID provided');
+        return rfUtils.error(
+            res,
+            httpStatus.BAD_REQUEST,
+            constants.ERROR_BADPARAMETERS,
+            'No Metapublication ID provided'
+        );
     }
 
     get(id, (r) => {
@@ -577,21 +620,31 @@ function flagMetapublication(req, res) {
         if (typeof req.body.Flagged !== 'undefined') {
             flagged = rfUtils.boolValue(req.body.Flagged);
         } else {
-            flagged = r.data.Metapublication.Flagged ? false : true;
+            flagged = !r.data.Metapublication.Flagged;
         }
 
         if (!flagged) {
             if (req.User.Type !== constants.USER_TYPE_ADMIN) {
                 // everyone can report copyright issue,
                 // only admin can reset
-                return rfUtils.error(res, httpStatus.FORBIDDEN, constants.ERROR_FORBIDDEN, constants.ERROR_MSG_FORBIDDEN);
+                return rfUtils.error(
+                    res,
+                    httpStatus.FORBIDDEN,
+                    constants.ERROR_FORBIDDEN,
+                    constants.ERROR_MSG_FORBIDDEN
+                );
             }
         }
         let q = 'UPDATE Metapublication SET Flagged = ? WHERE ID = ?';
         db.pool.query(q, [flagged, id], (err) => {
             if (err) {
                 console.log('Failed to update Metapublication', err);
-                return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to update Metapublication');
+                return rfUtils.error(
+                    res,
+                    httpStatus.INTERNAL_SERVER_ERROR,
+                    constants.ERROR_SQL,
+                    'Failed to update Metapublication'
+                );
             }
             get(id, (r) => {
                 if (r.error) {
@@ -627,7 +680,7 @@ function getStatistics(req, res) {
         _counters.countVisits = x;
         res.send({
             data: _counters
-        })
+        });
     }).catch((e) => {
         console.log(e);
         return rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, 'Failed to get statistics');

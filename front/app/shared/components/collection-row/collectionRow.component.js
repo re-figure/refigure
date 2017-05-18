@@ -17,7 +17,22 @@
             controllerAs: 'vm',
             bindings:{
                 item: '<'
-            }
+            },
+            controller: Controller
         });
+
+    Controller.$inject = ['$state'];
+
+    function Controller($state) {
+        var vm = this;
+
+        vm.$onInit = activate;
+
+        //////////////////////////////////////
+
+        function activate() {
+            vm.currentState = $state.current.name;
+        }
+    }
 
 })(window.angular);

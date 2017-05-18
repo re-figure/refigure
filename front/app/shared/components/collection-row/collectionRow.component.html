@@ -23,7 +23,9 @@
             </div>
             <div ng-show="vm.item.Keywords" layout="row" layout-align="start center">
                 <b class="md-caption">Keywords&nbsp;&nbsp;</b>
-                <md-chips ng-model="vm.item.KeywordsChips" readonly="true"></md-chips>
+                <md-chips class="rf-features" ng-model="vm.item.KeywordsChips" readonly="true">
+                    <md-chip-template ui-sref-disabled ui-sref="{{vm.currentState}}({query: $chip, from: 0})" ng-bind="$chip"></md-chip-template>
+                </md-chips>
             </div>
         </md-content>
         <md-content layout-padding layout="column" layout-align="space-around stretch" flex="15">

@@ -81,6 +81,7 @@
                     .save(vm.refigure)
                     .then(function (refigure) {
                         vm.form.$setPristine();
+                        rfToast.show('Refigure saved');
                         $scope.$emit('refigureUpdated', refigure);
                     });
             }

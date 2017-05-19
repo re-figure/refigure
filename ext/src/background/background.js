@@ -24,7 +24,7 @@ function updateBrowserAction(tab) {
                     }
                 }, 10000);
             } else {
-                if (t.foundFigures.length === 0) {
+                if (!t.foundFigures || t.foundFigures.length === 0) {
                     // no figures found on the page or an error occurred
                     t.badgeText = '0';
                 } else {
@@ -112,10 +112,12 @@ function onSearchFiguresComplete(result, tab) {
 }
 
 function update(tabId) {
-    chrome.tabs.get(tabId, function (tab) {
-        startSearchFiguresIfNeed(tab);
-        updateBrowserAction(tab);
-    });
+    if (tabsData[tabId] && tabsData[tabId].status !== _gConst.STATUS_INPROCESS) {
+        chrome.tabs.get(tabId, function (tab) {
+            startSearchFiguresIfNeed(tab);
+            updateBrowserAction(tab);
+        });
+    }
 }
 
 function createNewTabData(tabId) {

@@ -32,13 +32,8 @@
             "css": ["/content/content.css"]
         },
         {
-            "matches": ["*://*.figshare.com/articles/*", "*://figshare.com/articles/*"],
+            "matches": ["*://*.figshare.com/*", "*://figshare.com/*"],
             "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshare.js"],
-            "css": ["/content/content.css"]
-        },
-        {
-            "matches": ["*://figshare.com/collections/*"],
-            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/figshareCollections.js"],
             "css": ["/content/content.css"]
         },
         {

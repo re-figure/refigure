@@ -22,7 +22,7 @@ function updateBrowserAction(tab) {
                         chrome.browserAction.enable(tab.id);
                         chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
                     }
-                }, 3000);
+                }, 10000);
             } else {
                 if (t.foundFigures.length === 0) {
                     // no figures found on the page or an error occurred

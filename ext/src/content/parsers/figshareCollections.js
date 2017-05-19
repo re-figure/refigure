@@ -4,7 +4,7 @@
     parser.parseFigures = function () {
         return new Promise(function (resolve, reject) {
             var interval,
-                maxIterations = 10,
+                maxIterations = 50,
                 iterations = 0;
             interval = setInterval(function () {
                 var elements = Sizzle(parser.CONTENT_BLOCK_SELECTOR + ' .portal-item-thumb-wrap');
@@ -27,7 +27,7 @@
                     reject('Maximum iteration counter exceeded. Website is too slow!');
                 }
                 iterations++;
-            }, 300);
+            }, 200);
         });
     };
 

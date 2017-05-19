@@ -11,13 +11,16 @@
                 <b>Authors: </b><span ng-bind="vm.image.Authors"></span>
             </p>
             <p class="md-caption">
-                <b>Article DOI: </b><span ng-bind="vm.image.DOI"></span>
+                <b>Article DOI: </b>
+                <a ng-show="vm.image.DOI" target="_blank" ng-href="http://dx.doi.org/{{vm.image.DOI}}" ng-bind="vm.image.DOI"></a>
             </p>
+            <!--
             <p class="md-caption">
                 <b>Image DOI: </b><span ng-bind="vm.image.DOIFigure"></span>
             </p>
-            <div ng-show="image.Legend">
-                <md-divider></md-divider>
+            -->
+            <div class="md-caption">
+                <b>Legend: </b>
                 <div class="md-body-2" ng-bind="vm.image.Legend"></div>
             </div>
         </div>

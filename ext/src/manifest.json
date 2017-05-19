@@ -37,12 +37,11 @@
             "css": ["/content/content.css"]
         },
         {
-            "matches": ["*://refigure.noblecoz.com/*"],
-            "js": ["/content/content.js", "/content/templates.min.js", "/content/parsers/refigure.js"],
-            "css": ["/content/content.css"]
-        },
-        {
             "matches": ["<all_urls>"],
+            "exclude_matches": [
+                "*://refigure.noblecoz.com/*",
+                "*://localhost/*"
+            ],
             "js": ["/content/content.js", "/content/templates.min.js"],
             "css": ["/content/content.css"]
         }

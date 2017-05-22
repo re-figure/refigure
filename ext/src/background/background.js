@@ -1,10 +1,13 @@
-var tabsData = {};
+var tabsData = {},
+    contextMenu = {};
 
 chrome.storage.local.get('userInfo', function (data) {
     if (data.userInfo) {
-        createContextMenus();
+        contextMenu.isSignedIn = true;
+        contextMenu.create();
     } else {
-        removeContextMenus();
+        contextMenu.isSignedIn = false;
+        contextMenu.remove();
     }
 });
 
@@ -21,6 +24,8 @@ function updateBrowserAction(tab) {
                     if (t.badgeText === '') {
                         chrome.browserAction.enable(tab.id);
                         chrome.browserAction.setBadgeText({tabId: tab.id, text: ''});
+                        contextMenu.isActionEnabled = true;
+                        contextMenu.create();
                     }
                 }, 10000);
             } else {
@@ -74,12 +79,16 @@ chrome.runtime.onMessage.addListener(
         if (sender.tab && request.type === _gConst.MSG_TYPE_CHECK_COMPLETED) {
             chrome.browserAction.enable(sender.tab.id);
             onSearchFiguresComplete(request, sender.tab);
+            contextMenu.isActionEnabled = true;
+            contextMenu.create();
         }
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_IN) {
-            createContextMenus();
+            contextMenu.isSignedIn = true;
+            contextMenu.create();
         }
         if (request.type === _gConst.MSG_TYPE_USER_LOGGED_OUT) {
-            removeContextMenus();
+            contextMenu.isSignedIn = false;
+            contextMenu.remove();
         }
         if (request.type === _gConst.MSG_TYPE_GET_FOUND_FIGURES) {
             sendResponse({
@@ -145,6 +154,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, change, tab) {
         update(tabId);
     } else {
         chrome.browserAction.disable(tabId);
+        contextMenu.isActionEnabled = false;
+        contextMenu.remove();
     }
 });
 
@@ -167,53 +178,47 @@ chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
     update(tabs[0].id);
 });
 
-/*
- Called when the context menu item has been created, or when creation failed due to an error.
- We'll just log success/failure here.
- */
-function onCreated() {
-    if (chrome.runtime.lastError) {
-        onError(chrome.runtime.lastError);
-    } else {
-        console.log('Item created successfully');
+contextMenu = {
+    isSignedIn: false,
+    isActionEnabled: false,
+    create: function () {
+        if (contextMenu.isSignedIn && contextMenu.isActionEnabled) {
+            var addToExistingItemOptions = {
+                id: 'add-to-existing',
+                title: 'Add image to Refigure',
+                contexts: ['image']
+            };
+            chrome.contextMenus.create(addToExistingItemOptions, contextMenu.onCreated);
+            chrome.contextMenus.onClicked.addListener(contextMenu.onClick);
+        }
+    },
+    remove: function () {
+        if (chrome.contextMenus.onClicked.hasListener(contextMenu.onClick)) {
+            chrome.contextMenus.onClicked.removeListener(contextMenu.onClick);
+        }
+        chrome.contextMenus.removeAll(function () {
+            console.log('Refigure context menu: removed');
+        });
+    },
+    onClick: function (info, tab) {
+        switch (info.menuItemId) {
+            case 'add-to-existing':
+                console.log('Adding an image to the current Refigure');
+                chrome.tabs.sendMessage(tab.id, {
+                    type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION,
+                    src: info.srcUrl
+                });
+                break;
+        }
+    },
+    onCreated: function () {
+        if (chrome.runtime.lastError) {
+            console.error('Refigure context menu: error: ', chrome.runtime.lastError);
+        } else {
+            console.log('Refigure context menu: created successfully');
+        }
     }
-}
-
-function onError(error) {
-    console.error('Error: ', error);
-}
-
-function createContextMenus() {
-    /*
-     Create all the context menu items.
-     */
-    var addToExistingItemOptions = {
-        id: 'add-to-existing',
-        title: 'Add image to Refigure',
-        contexts: ['image']
-    };
-    chrome.contextMenus.create(addToExistingItemOptions, onCreated);
-    chrome.contextMenus.onClicked.addListener(contextMenuClickListener);
-}
-
-function removeContextMenus() {
-    if (chrome.contextMenus.onClicked.hasListener(contextMenuClickListener)) {
-        chrome.contextMenus.onClicked.removeListener(contextMenuClickListener);
-    }
-    chrome.contextMenus.removeAll();
-}
-
-function contextMenuClickListener(info, tab) {
-    switch (info.menuItemId) {
-        case 'add-to-existing':
-            console.log('Add an image to the current Refigure');
-            chrome.tabs.sendMessage(tab.id, {
-                type: _gConst.MSG_TYPE_ADD_FIGURE_TO_COLLECTION,
-                src: info.srcUrl
-            });
-            break;
-    }
-}
+};
 
 function getParseStatus(url) {
     if (_gConst.SETTINGS.parseAll) {

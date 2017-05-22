@@ -8,7 +8,7 @@
         } else {
             return commonParser();
         }
-    }
+    };
 
     function collectionParser() {
         console.log('collectionParser');
@@ -24,7 +24,6 @@
             interval = setInterval(function () {
                 var elements = Sizzle('.listing-wrap .portal-item-thumb-wrap');
                 if (elements.length) {
-                    console.log(elements.length);
                     var figures = [],
                         pageDOI = document.querySelector('meta[name="DC.identifier"]').content.replace(/doi:/, '');
 

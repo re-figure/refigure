@@ -31,9 +31,9 @@
         </md-content>
         <md-content
                 class="rf-item"
+                ng-class="vm.layout[vm.view].itemFlex === 50 ? 'rf-flex-layout-50' : ''"
                 flex="{{vm.layout[vm.view].itemFlex}}"
-                ng-repeat="image in vm.refigure.Figures | filter: search"
-                layout="column" layout-align="start stretch">
+                ng-repeat="image in vm.refigure.Figures | filter: search">
             <div md-whiteframe="2" layout="row" layout-align="start stretch" layout-fill>
                 <div
                         ng-click="vm.showFullScreen($event, image.URL)"

@@ -182,6 +182,7 @@ contextMenu = {
     isSignedIn: false,
     isActionEnabled: false,
     create: function () {
+        return false;
         if (contextMenu.isSignedIn && contextMenu.isActionEnabled) {
             var addToExistingItemOptions = {
                 id: 'add-to-existing',

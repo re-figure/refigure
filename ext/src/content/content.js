@@ -263,6 +263,9 @@ parser = {
         if (!authorMeta.length) {
             authorMeta = Sizzle('meta[name="DC.contributor"]');
         }
+        if (!authorMeta.length) {
+            authorMeta = Sizzle('meta[name="DC.Contributor"]');
+        }
         return authorMeta.map(function (el) {
             return el.content.replace(/,/, '');
         }).join('; ');

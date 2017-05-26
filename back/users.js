@@ -369,14 +369,14 @@ function passwordChangeRequest(req, res) {
         rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS);
         return;
     }
-    db.cbFind(db.model.TABLE_USER, {[db.model.ID]: req.User.ID}, (err, results) => {
+    db.cbFind(db.model.TABLE_USER, {['Email']: email}, (err, results) => {
         if (err) {
             console.error('passwordChangeRequest: cannot find user', err);
             rfUtils.error(res, httpStatus.INTERNAL_SERVER_ERROR, constants.ERROR_SQL, constants.ERROR_MSG_SQL);
             return;
         }
         if (results.length === 0) {
-            console.log('passwordChangeRequest: not users found');
+            console.log('passwordChangeRequest: no users found');
             rfUtils.error(res, httpStatus.NOT_FOUND, constants.ERROR_USERNOTFOUND, constants.ERROR_MSG_USERNOTFOUND);
             return;
         }

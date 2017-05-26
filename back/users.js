@@ -458,7 +458,7 @@ function updatePassword(req, res) {
     }
 
     // check that new password is provided and valid
-    let password = utils.get(req.body, 'password');
+    let password = utils.get(req.body, 'Password');
     checkPassword(password);
 
     db.cbFind(db.model.TABLE_USER, {[db.model.ID]: userId}, (err, results) => {

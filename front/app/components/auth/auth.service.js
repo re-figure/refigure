@@ -343,7 +343,7 @@
             return $http
                 .post(authApiUri + '/password-change/', {
                     token: data.token,
-                    password: data.password
+                    Password: data.Password
                 })
                 .then(function (res) {
                     return utils.get(res, 'data');

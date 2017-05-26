@@ -364,7 +364,7 @@ function passwordChangeRequest(req, res) {
         captcha.check(req, res);
     }
 
-    let email = req.body.email;
+    let email = req.body.Email;
     if (!email) {
         rfUtils.error(res, httpStatus.BAD_REQUEST, constants.ERROR_BADPARAMETERS);
         return;

@@ -11,7 +11,7 @@
         for (var i = 0; i < document.images.length; i++) {
             src = document.images[i].src;
             //src = document.images[i].getAttribute("src-large");
-            if (src && src.match(/articles\/.*\/bin/) && document.images[i].hasAttribute('src-large')) {
+            if (src && src.match(/articles\/.*\/bin/) /* && document.images[i].hasAttribute('src-large')*/) {
                 var figure = {URL: src};
 
                 figureBlock = document.images[i].parentNode.parentNode;

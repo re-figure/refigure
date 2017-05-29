@@ -76,6 +76,6 @@ router.get('/api/news/:ID', news.getSingle);
 router.get('/api/news', news.getAll);
 router.post('/api/news', news.addOrUpdateNews);
 router.put('/api/news', news.addOrUpdateNews);
-router.delete('/api/figure/:ID', news.deleteNews);
+router.delete('/api/news/:ID', news.deleteNews);
 
 router.get('/api/statistics', metapublications.getStatistics);

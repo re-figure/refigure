@@ -20,6 +20,7 @@
 
     ItemController.$inject = [
         '$scope',
+        '$location',
         '$state',
         'MESSAGES',
         'collections',
@@ -27,7 +28,7 @@
         'auth'
     ];
 
-    function ItemController($scope, $state, MESSAGES, collections, modal, auth) {
+    function ItemController($scope, $location, $state, MESSAGES, collections, modal, auth) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -70,8 +71,6 @@
             }
         };
 
-        vm.url = window.location.href;
-
         vm.refigure = {};
         vm.details = null;
         vm.user = {};
@@ -87,6 +86,7 @@
         ///////////////////////
 
         function activate() {
+            vm.url = $location.absUrl();
             $scope.$watch(function () {
                 return $state.params.view;
             }, function (view) {
@@ -179,6 +179,7 @@
                 }
             }
 
+            //noinspection JSUnusedGlobalSymbols
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,

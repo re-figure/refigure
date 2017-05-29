@@ -40,6 +40,13 @@
             }
         }
     }, {
+        state: 'home.newsItem',
+        config: {
+            url: '/news/:id',
+            template: '<news-item></news-item>',
+            data: {}
+        }
+    }, {
         state: 'home.news',
         config: {
             url: '/news',

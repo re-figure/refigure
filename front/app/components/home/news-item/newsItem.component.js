@@ -18,12 +18,12 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$stateParams', 'news'];
+    Controller.$inject = ['$stateParams', '$state', 'news'];
 
-    function Controller($stateParams, news) {
+    function Controller($stateParams, $state, news) {
         var vm = this;
 
-        vm.item = {};
+        vm.newsItem = {};
         vm.$onInit = activate;
 
         /////////////////////
@@ -37,7 +37,8 @@
          */
         function activate() {
             news.getSingle($stateParams.id).then(function (data) {
-                vm.item = data;
+                $state.get('home.newsItem').data.headerTitle = data.HeaderTitle || data.Title;
+                vm.newsItem = data;
             });
         }
     }

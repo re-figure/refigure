@@ -4,7 +4,6 @@ const constants = require('./const');
 const db = require('./db');
 const rfUtils = require('./rf-utils');
 const vars = require('js.shared').vars;
-const uuid = require('node-uuid');
 
 exports.getAll = getAll;
 exports.getSingle = getSingle;
@@ -12,11 +11,7 @@ exports.addOrUpdateNews = addOrUpdateNews;
 exports.deleteNews = deleteNews;
 
 function getAll(req, res) {
-    db.pool.query({sql: `
-            SELECT NewsID, Title, DateCreated, Author
-            FROM News
-            ORDER BY DateCreated DESC
-        `, nestTables:true}, [], (err, results) => {
+    db.pool.query({sql: `SELECT * FROM News ORDER BY DateCreated DESC`, nestTables:true}, [], (err, results) => {
         if (err) {
             return res.send({
                 http: httpStatus.INTERNAL_SERVER_ERROR,

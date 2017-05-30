@@ -42,9 +42,11 @@
     }, {
         state: 'home.newsItem',
         config: {
-            url: '/news/:id',
+            url: '/news/item/:id',
             template: '<news-item></news-item>',
-            data: {}
+            data: {
+                headerTitle: ''
+            }
         }
     }, {
         state: 'home.news',
@@ -52,6 +54,7 @@
             url: '/news',
             template: '<news></news>',
             data: {
+                headerTitle: 'News',
                 label: 'News',
                 description: 'The latest news'
             }

@@ -7,7 +7,8 @@
 (function (angular) {
     'use strict';
 
-    var _apiUrl = '/api';
+    var _apiUrl = '/api',
+        _itemDescriptionLength = 400;
 
     angular
         .module('refigure.news', [])
@@ -38,7 +39,10 @@
             return $http
                 .get(_apiUrl + '/news')
                 .then(function (res) {
-                    return utils.get(res, 'data.data');
+                    var news = utils.get(res, 'data.data') || [];
+                    return news.map(function (item) {
+                        return adjustItem(item);
+                    });
                 });
         }
 
@@ -55,8 +59,25 @@
             return $http
                 .get(_apiUrl + '/news/' + id)
                 .then(function (res) {
-                    return utils.get(res, 'data.data.News');
+                    var newsItem = utils.get(res, 'data.data') || {};
+                    return adjustItem(newsItem);
                 });
+        }
+
+        function adjustItem(item) {
+            item = item.News;
+            if (!item.Content) {
+                item.briefContent = '';
+            } else {
+                var div = document.createElement('div');
+                div.innerHTML = item.Content;
+                var strippedContent = div.textContent || div.innerText || '';
+                item.briefContent = strippedContent.substring(0, _itemDescriptionLength);
+                if (item.briefContent !== strippedContent) {
+                    item.briefContent += '...';
+                }
+            }
+            return item;
         }
     }
 })(window.angular);

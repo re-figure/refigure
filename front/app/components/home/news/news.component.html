@@ -1,1 +1,19 @@
-<h1>Sorry, news page is under construction</h1>
+<md-card>
+    <md-input-container class="md-block news-search">
+        <input type="text" placeholder="Search" ng-model="search">
+    </md-input-container>
+</md-card>
+<div class="news-grid">
+    <md-card layout-padding ui-sref="home.newsItem({id: item.NewsID})" ng-repeat="item in vm.news | filter: search">
+        <div layout="column">
+            <div class="md-headline" ng-bind="item.Title"></div>
+            <div class="md-subhead" ng-show="item.Author">
+                By <span ng-bind="item.Author"></span>
+                <span> on </span>
+                <span ng-bind="item.DateCreated|date:'LLLL d\'th\', yyyy'"></span>
+            </div>
+        </div>
+        <div ng-bind="item.briefContent"></div>
+    </md-card>
+</div>
+<!--<pre>{{vm.news|json}}</pre>-->

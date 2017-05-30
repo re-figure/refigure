@@ -7,7 +7,7 @@
  * @example
  * <blog></blog>
  */
-(function(angular) {
+(function(angular, twttr) {
     'use strict';
 
     angular
@@ -39,6 +39,16 @@
             blog.getAll().then(function (data) {
                 vm.blog = data;
             });
+            twttr.widgets.createTimeline(
+                {
+                    sourceType: 'profile',
+                    screenName: 'scimpact_org'
+                },
+                document.getElementById('twitter-feed'),
+                {
+                    height: 1000
+                }
+            );
         }
     }
-})(window.angular);
+})(window.angular, window.twttr);

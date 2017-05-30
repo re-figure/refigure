@@ -69,7 +69,7 @@
             currentTab: null,
             rfFigures: null,
             foundFigures: null,
-            Metapublication: null,
+            //Metapublication: null,
             inMetapublications: [],
             userInfo: {}
         })
@@ -120,7 +120,7 @@
         $rootScope.$on('$routeChangeSuccess', function ($event, $curr) {
             document.body.className = 'rf-route-' + $curr.$$route.config.name;
         });
-        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        chrome.runtime.onMessage.addListener(function (request, sender) {
                 if (sender.tab && request.type === _gConst.MSG_TYPE_SEARCH_COMPLETED) {
                     $rootScope.$apply(function () {
                         STORAGE.rfFigures = request.figures;

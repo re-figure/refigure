@@ -1,18 +1,23 @@
-<md-card>
-    <md-input-container class="md-block blog-search">
-        <input type="text" placeholder="Search" ng-model="search">
-    </md-input-container>
-</md-card>
-<div class="blog-grid">
-    <md-card layout-padding ui-sref="home.blogItem({id: item.BlogID})" ng-repeat="item in vm.blog | filter: search">
-        <div layout="column">
-            <div class="md-headline" ng-bind="item.Title"></div>
-            <div class="md-subhead" ng-show="item.Author">
-                By <span ng-bind="item.Author"></span>
-                <span> on </span>
-                <span ng-bind="item.DateCreated|date:'LLLL d\'th\', yyyy'"></span>
-            </div>
+<div layout="row" layout-align="start stretch">
+    <div>
+        <md-card>
+            <md-input-container class="md-block blog-search">
+                <input type="text" placeholder="Search" ng-model="search">
+            </md-input-container>
+        </md-card>
+        <div class="blog-grid">
+            <md-card layout-padding ui-sref="home.blogItem({id: item.BlogID})" ng-repeat="item in vm.blog | filter: search">
+                <div layout="column">
+                    <div class="md-headline" ng-bind="item.Title"></div>
+                    <div class="md-subhead" ng-show="item.Author">
+                        By <span ng-bind="item.Author"></span>
+                        <span> on </span>
+                        <span ng-bind="item.DateCreated|date:'LLLL d\'th\', yyyy'"></span>
+                    </div>
+                </div>
+                <div ng-bind="item.briefContent"></div>
+            </md-card>
         </div>
-        <div ng-bind="item.briefContent"></div>
-    </md-card>
+    </div>
+    <div id="twitter-feed"></div>
 </div>

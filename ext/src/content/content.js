@@ -5,12 +5,6 @@ var refigure = {
 
 var parser = {};
 
-chrome.storage.local.get('Metapublication', function (data) {
-    if (data.Metapublication) {
-        refigure.Metapublication = data.Metapublication;
-    }
-});
-
 chrome.runtime.onMessage.addListener(function (request) {
     switch (request.type) {
         case _gConst.MSG_TYPE_REFIGURE_ADD_START:

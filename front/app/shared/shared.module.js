@@ -13,7 +13,7 @@
             'ui.router',
             'ngMaterial',
             'refigure.collections',
-            'refigure.news'
+            'refigure.blog'
         ]);
 
 })(window.angular);

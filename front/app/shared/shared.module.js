@@ -12,7 +12,8 @@
         .module('refigureShared', [
             'ui.router',
             'ngMaterial',
-            'refigure.collections'
+            'refigure.collections',
+            'refigure.news'
         ]);
 
 })(window.angular);

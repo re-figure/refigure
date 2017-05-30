@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:news
+ * @name refigureApp.directive:newsItem
  * @restrict E
  * @description
  * News Page
@@ -12,18 +12,18 @@
 
     angular
         .module('refigureApp')
-        .component('news', {
-            templateUrl: 'view/news.component.html',
+        .component('newsItem', {
+            templateUrl: 'view/newsItem.component.html',
             controller: Controller,
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['news'];
+    Controller.$inject = ['$stateParams', '$state', 'news'];
 
-    function Controller(news) {
+    function Controller($stateParams, $state, news) {
         var vm = this;
 
-        vm.news = [];
+        vm.newsItem = {};
         vm.$onInit = activate;
 
         /////////////////////
@@ -36,8 +36,9 @@
          * Activates controller
          */
         function activate() {
-            news.getAll().then(function (data) {
-                vm.news = data;
+            news.getSingle($stateParams.id).then(function (data) {
+                $state.get('home.newsItem').data.headerTitle = data.HeaderTitle || data.Title;
+                vm.newsItem = data;
             });
         }
     }

@@ -2,7 +2,7 @@
  * @ngdoc service
  * @name refigure.collections.services:collections
  * @description
- * profile service
+ * Collection service
  */
 (function (angular) {
     'use strict';

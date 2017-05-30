@@ -9,7 +9,7 @@ const users = require('./users');
 const captcha = require('./captcha');
 const figures = require('./figures');
 const metapublications = require('./metapublications');
-const news = require('./news');
+const blog = require('./blog');
 
 const homePage = __dirname + '/../build/';
 const staticOptions = {};
@@ -72,10 +72,10 @@ router.post('/api/figure', figures.addOrUpdateFigure);
 router.put('/api/figure', figures.addOrUpdateFigure);
 router.delete('/api/figure/:ID', figures.deleteFigure);
 
-router.get('/api/news/:ID', news.getSingle);
-router.get('/api/news', news.getAll);
-router.post('/api/news', news.addOrUpdateNews);
-router.put('/api/news', news.addOrUpdateNews);
-router.delete('/api/news/:ID', news.deleteNews);
+router.get('/api/blog/:ID', blog.getSingle);
+router.get('/api/blog', blog.getAll);
+router.post('/api/blog', blog.addOrUpdatePost);
+router.put('/api/blog', blog.addOrUpdatePost);
+router.delete('/api/blog/:ID', blog.deletePost);
 
 router.get('/api/statistics', metapublications.getStatistics);

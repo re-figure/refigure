@@ -1,10 +1,10 @@
 <md-card>
-    <md-input-container class="md-block news-search">
+    <md-input-container class="md-block blog-search">
         <input type="text" placeholder="Search" ng-model="search">
     </md-input-container>
 </md-card>
-<div class="news-grid">
-    <md-card layout-padding ui-sref="home.newsItem({id: item.NewsID})" ng-repeat="item in vm.news | filter: search">
+<div class="blog-grid">
+    <md-card layout-padding ui-sref="home.blogItem({id: item.BlogID})" ng-repeat="item in vm.blog | filter: search">
         <div layout="column">
             <div class="md-headline" ng-bind="item.Title"></div>
             <div class="md-subhead" ng-show="item.Author">
@@ -16,4 +16,3 @@
         <div ng-bind="item.briefContent"></div>
     </md-card>
 </div>
-<!--<pre>{{vm.news|json}}</pre>-->

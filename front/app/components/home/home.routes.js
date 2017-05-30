@@ -40,23 +40,23 @@
             }
         }
     }, {
-        state: 'home.newsItem',
+        state: 'home.blogItem',
         config: {
-            url: '/news/item/:id',
-            template: '<news-item></news-item>',
+            url: '/blog/item/:id',
+            template: '<blog-item></blog-item>',
             data: {
                 headerTitle: ''
             }
         }
     }, {
-        state: 'home.news',
+        state: 'home.blog',
         config: {
-            url: '/news',
-            template: '<news></news>',
+            url: '/blog',
+            template: '<blog></blog>',
             data: {
-                headerTitle: 'News',
-                label: 'News',
-                description: 'The latest news'
+                headerTitle: 'Blog',
+                label: 'Blog',
+                description: 'The latest posts'
             }
         }
     }, {

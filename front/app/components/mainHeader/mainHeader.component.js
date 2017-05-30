@@ -35,7 +35,7 @@
         }, {
             state: 'home.about'
         }, {
-            state: 'home.news'
+            state: 'home.blog'
         }, {
             state: 'home.terms'
         }];

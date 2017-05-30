@@ -1,8 +1,8 @@
 /**
  * @ngdoc service
- * @name refigure.news.services:news
+ * @name refigure.blog.services:blog
  * @description
- * News service
+ * blog service
  */
 (function (angular) {
     'use strict';
@@ -11,8 +11,8 @@
         _itemDescriptionLength = 400;
 
     angular
-        .module('refigure.news', [])
-        .factory('news', serviceFunc);
+        .module('refigure.blog', [])
+        .factory('blog', serviceFunc);
 
     serviceFunc.$inject = ['$http'];
 
@@ -29,18 +29,18 @@
 
         /**
          * @ngdocs method
-         * @name refigure.news.services:news#getAll
-         * @methodOf refigure.news.services:news
+         * @name refigure.blog.services:blog#getAll
+         * @methodOf refigure.blog.services:blog
          * @returns {Object} promise
          * @description
-         * Loads most all news
+         * Loads most all blog
          */
         function getAll() {
             return $http
-                .get(_apiUrl + '/news')
+                .get(_apiUrl + '/blog')
                 .then(function (res) {
-                    var news = utils.get(res, 'data.data') || [];
-                    return news.map(function (item) {
+                    var blog = utils.get(res, 'data.data') || [];
+                    return blog.map(function (item) {
                         return adjustItem(item);
                     });
                 });
@@ -48,24 +48,24 @@
 
         /**
          * @ngdocs method
-         * @name refigure.news.services:news#getSingle
-         * @methodOf refigure.news.services:news
-         * @param {String} id news id
+         * @name refigure.blog.services:blog#getSingle
+         * @methodOf refigure.blog.services:blog
+         * @param {String} id blog id
          * @returns {Object} promise
          * @description
-         * Loads most all news
+         * Loads most all blog
          */
         function getSingle(id) {
             return $http
-                .get(_apiUrl + '/news/' + id)
+                .get(_apiUrl + '/blog/' + id)
                 .then(function (res) {
-                    var newsItem = utils.get(res, 'data.data') || {};
-                    return adjustItem(newsItem);
+                    var blogItem = utils.get(res, 'data.data') || {};
+                    return adjustItem(blogItem);
                 });
         }
 
         function adjustItem(item) {
-            item = item.News;
+            item = item.Blog;
             if (!item.Content) {
                 item.briefContent = '';
             } else {

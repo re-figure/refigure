@@ -1,43 +1,43 @@
 /**
  * @ngdoc directive
- * @name refigureApp.directive:news
+ * @name refigureApp.directive:blog
  * @restrict E
  * @description
- * News Page
+ * Blog grid
  * @example
- * <news></news>
+ * <blog></blog>
  */
 (function(angular) {
     'use strict';
 
     angular
         .module('refigureApp')
-        .component('news', {
-            templateUrl: 'view/news.component.html',
+        .component('blog', {
+            templateUrl: 'view/blog.component.html',
             controller: Controller,
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['news'];
+    Controller.$inject = ['blog'];
 
-    function Controller(news) {
+    function Controller(blog) {
         var vm = this;
 
-        vm.news = [];
+        vm.blog = [];
         vm.$onInit = activate;
 
         /////////////////////
 
         /**
          * @ngdoc method
-         * @name refigureApp.directive:news#activate
-         * @methodOf refigureApp.directive:news
+         * @name refigureApp.directive:blog#activate
+         * @methodOf refigureApp.directive:blog
          * @description
          * Activates controller
          */
         function activate() {
-            news.getAll().then(function (data) {
-                vm.news = data;
+            blog.getAll().then(function (data) {
+                vm.blog = data;
             });
         }
     }

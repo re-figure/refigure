@@ -1,0 +1,20 @@
+<div layout="row" layout-align="center center">
+    <md-button class="md-primary blog-back-to-list md-raised" ui-sref="home.blog">
+        <md-icon>arrow_back</md-icon>
+        <span> back to latest posts</span>
+    </md-button>
+    <md-card layout-padding>
+        <div layout="column">
+            <h1 ng-bind="vm.blogItem.Title"></h1>
+            <div class="md-subhead" ng-show="vm.blogItem.Author">
+                By <span ng-bind="vm.blogItem.Author"></span>
+                <span> on </span>
+                <span ng-bind="vm.blogItem.DateCreated|date:'LLLL d\'th\', yyyy'"></span>
+            </div>
+        </div>
+        <md-divider></md-divider>
+        <div>
+            <div ng-bind-html="vm.blogItem.Content"></div>
+        </div>
+    </md-card>
+</div>

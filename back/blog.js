@@ -7,11 +7,11 @@ const vars = require('js.shared').vars;
 
 exports.getAll = getAll;
 exports.getSingle = getSingle;
-exports.addOrUpdateNews = addOrUpdateNews;
-exports.deleteNews = deleteNews;
+exports.addOrUpdatePost = addOrUpdatePost;
+exports.deletePost = deletePost;
 
 function getAll(req, res) {
-    db.pool.query({sql: `SELECT * FROM News ORDER BY DateCreated DESC`, nestTables:true}, [], (err, results) => {
+    db.pool.query({sql: `SELECT * FROM Blog ORDER BY DateCreated DESC`, nestTables:true}, [], (err, results) => {
         if (err) {
             return res.send({
                 http: httpStatus.INTERNAL_SERVER_ERROR,
@@ -27,7 +27,7 @@ function getAll(req, res) {
 
 function getSingle(req, res) {
     let id = vars.get(req, 'ID');
-    db.pool.query({sql: `SELECT * FROM News WHERE NewsID = ?`, nestTables:true}, [id], (err, results) => {
+    db.pool.query({sql: `SELECT * FROM Blog WHERE BlogID = ?`, nestTables:true}, [id], (err, results) => {
         if (err) {
             return res.send({
                 http: httpStatus.INTERNAL_SERVER_ERROR,
@@ -41,7 +41,7 @@ function getSingle(req, res) {
     });
 }
 
-function addOrUpdateNews(req, res) {
+function addOrUpdatePost(req, res) {
     if (req.User.Type !== constants.USER_TYPE_ADMIN) {
         return rfUtils.error(
             res,
@@ -50,15 +50,15 @@ function addOrUpdateNews(req, res) {
             constants.ERROR_MSG_FORBIDDEN
         );
     }
-    let id = vars.get(req, 'NewsID');
+    let id = vars.get(req, 'BlogID');
     if (id) {
-        updateNews(req, res);
+        updatePost(req, res);
     } else {
-        createNews(req, res);
+        createPost(req, res);
     }
 }
 
-function deleteNews(req, res) {
+function deletePost(req, res) {
     if (req.User.Type !== constants.USER_TYPE_ADMIN) {
         return rfUtils.error(
             res,
@@ -67,8 +67,8 @@ function deleteNews(req, res) {
             constants.ERROR_MSG_FORBIDDEN
         );
     }
-    let id = vars.get(req, 'NewsID');
-    db.pool.query({sql: `SELECT NewsID FROM News WHERE NewsID = ?`}, [id], (err) => {
+    let id = vars.get(req, 'BlogID');
+    db.pool.query({sql: `SELECT BlogID FROM Blog WHERE BlogID = ?`}, [id], (err) => {
         if (err) {
             return res.send({
                 http: httpStatus.INTERNAL_SERVER_ERROR,
@@ -76,19 +76,19 @@ function deleteNews(req, res) {
                 message: constants.ERROR_MSG_SQL
             });
         }
-        db.pool.query('DELETE FROM Figure WHERE ID = ?', [id], (err) => {
+        /*db.pool.query('DELETE FROM Figure WHERE ID = ?', [id], (err) => {
             if (err) {
-                console.log('Failed to delete news', err);
+                console.log('Failed to delete post', err);
             }
             res.send(err);
-        });
+        });*/
     });
 }
 
-function updateNews(req, res) {
+function updatePost(req, res) {
 
 }
 
-function createNews(req, res) {
+function createPost(req, res) {
 
 }

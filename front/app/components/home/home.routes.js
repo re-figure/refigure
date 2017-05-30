@@ -55,8 +55,8 @@
             template: '<blog></blog>',
             data: {
                 headerTitle: 'Blog',
-                label: 'Latest Posts',
-                description: 'The Latest posts'
+                label: 'Blog',
+                description: 'The latest posts'
             }
         }
     }, {

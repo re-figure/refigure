@@ -43,7 +43,7 @@ let pathsNoAuthGET = [
     '/api/metapublication',
     '/api/oauth/google',
     '/api/oauth/fb',
-    '/api/news'
+    '/api/blog'
 ];
 
 /**

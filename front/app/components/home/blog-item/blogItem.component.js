@@ -7,7 +7,7 @@
  * @example
  * <blog-item></blog-item>
  */
-(function(angular) {
+(function(angular, twttr) {
     'use strict';
 
     angular
@@ -18,9 +18,9 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$stateParams', '$state', 'blog'];
+    Controller.$inject = ['$location', '$state', 'blog'];
 
-    function Controller($stateParams, $state, blog) {
+    function Controller($location, $state, blog) {
         var vm = this;
 
         vm.blogItem = {};
@@ -36,10 +36,31 @@
          * Activates controller
          */
         function activate() {
-            blog.getSingle($stateParams.id).then(function (data) {
+            blog.getSingle($state.params.id).then(function (data) {
                 $state.get('home.blogItem').data.headerTitle = data.HeaderTitle || data.Title;
                 vm.blogItem = data;
+                twttr.widgets.createShareButton(
+                    $location.absUrl(),
+                    document.getElementById('twitter-share'),
+                    {
+                        size: 'large',
+                        url: $location.absUrl(),
+                        text: data.Title,
+                        via: 'scimpact_org',
+                        related: 'twitterapi,twitter'
+                    }
+                );
             });
+            twttr.widgets.createTimeline(
+                {
+                    sourceType: 'profile',
+                    screenName: 'scimpact_org'
+                },
+                document.getElementById('twitter-feed'),
+                {
+                    height: 1000
+                }
+            );
         }
     }
-})(window.angular);
+})(window.angular, window.twttr);

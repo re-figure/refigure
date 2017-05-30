@@ -7,7 +7,7 @@
  * @example
  * <about></about>
  */
-(function(angular) {
+(function(angular, twttr) {
     'use strict';
 
     angular
@@ -35,7 +35,16 @@
          * Activates controller
          */
         function activate() {
-
+            twttr.widgets.createTimeline(
+                {
+                    sourceType: 'profile',
+                    screenName: 'scimpact_org'
+                },
+                document.getElementById('twitter-feed'),
+                {
+                    height: 470
+                }
+            );
         }
     }
-})(window.angular);
+})(window.angular, window.twttr);

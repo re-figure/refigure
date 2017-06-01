@@ -1,6 +1,6 @@
 {
   "subject" : "Refigure Signup information",
-  "landingPage" : "http://refigure.noblecoz.com/profile/account/",
+  "landingPage" : "https://refigure.org/profile/account/",
   "from" : "refigure@noblecoz.com",
   "text" : "You have registered with a social network"
 }

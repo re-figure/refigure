@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /var/www/refigure.com/back
+cd /var/www/refigure.org/back
 npm install --production

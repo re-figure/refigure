@@ -11,7 +11,7 @@
     var states = [{
         state: 'some-file-to-donwload',
         config: {
-            url: '//cdn.refigure.com/somefile.pdf'
+            url: '//cdn.refigure.org/somefile.pdf'
         }
     }];
 

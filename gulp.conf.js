@@ -75,7 +75,7 @@ module.exports = {
     indexHtml: buildDir + '/index.html',
     extension: {
         replace: {
-            'REMOTE_API_URL': 'https://refigure.noblecoz.com/api/',
+            'REMOTE_API_URL': 'https://refigure.org/api/',
             'PARSE_ALL_SITES': p.locals.doParse.notInManifest
         },
         src: extSrcDir,

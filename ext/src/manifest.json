@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Refigure",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Refigure extension",
     "icons": {
         "100": "/img/refigure_logo_small.png"
@@ -40,6 +40,7 @@
             "matches": ["<all_urls>"],
             "exclude_matches": [
                 "*://refigure.noblecoz.com/*",
+                "*://refigure.org/*",
                 "*://localhost/*"
             ],
             "js": ["/content/content.js", "/content/templates.min.js"],

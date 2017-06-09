@@ -69,7 +69,7 @@
             currentTab: null,
             rfFigures: null,
             foundFigures: null,
-            //Metapublication: null,
+            Metapublication: null,
             inMetapublications: [],
             userInfo: {}
         })

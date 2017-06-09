@@ -55,10 +55,13 @@
 
         function editCollection(id) {
             CollectionSvc.read(id).then(function (resp) {
-                chrome.tabs.sendMessage(STORAGE.currentTab, {
-                    type: _gConst.MSG_TYPE_IMAGE_ADD_START,
+                chrome.storage.local.set({
                     Metapublication: resp.data.data.Metapublication
                 }, function () {
+                    chrome.tabs.sendMessage(STORAGE.currentTab, {
+                        type: _gConst.MSG_TYPE_IMAGE_ADD_START,
+                        Metapublication: resp.data.data.Metapublication
+                    });
                     window.close();
                 });
             });

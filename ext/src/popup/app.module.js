@@ -40,7 +40,7 @@
 
     angular.module('ReFigure', ['ngRoute', 'ngSanitize'])
         .constant('CookieToken', {
-            COOKIE_DOMAIN: 'https://refigure.noblecoz.com',
+            COOKIE_DOMAIN: 'https://refigure.org',
             COOKIE_NAME: 'Authentication',
             set: function (token) {
                 chrome.cookies.set({

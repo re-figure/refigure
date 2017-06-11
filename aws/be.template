@@ -73,7 +73,7 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "www.refigure.com",
+            "Value": "www.refigure.org",
             "PropagateAtLaunch": true
           }
         ],
@@ -93,7 +93,7 @@
           "Ref": "RefigureEC2SecurityGroup"
         }],
         "InstanceType": "t2.micro",
-        "KeyName": "refigure.com",
+        "KeyName": "refigure.org",
         "UserData": {
           "Fn::Base64": {
             "Fn::Join": [
@@ -123,8 +123,8 @@
                 "chmod +x ./install\n",
                 "./install auto\n",
                 "service codedeploy-agent start\n",
-                "mkdir -p /var/www/refigure.com/\n",
-                "mkdir -p /var/www/logs/refigure.com/\n"
+                "mkdir -p /var/www/refigure.org/\n",
+                "mkdir -p /var/www/logs/refigure.org/\n"
               ]
             ]
           }

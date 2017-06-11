@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/refigure.com
+    destination: /var/www/refigure.org
 hooks:
   ApplicationStop:
     - location: aws/codedeploy/app-stop.sh

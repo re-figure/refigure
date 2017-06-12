@@ -1,6 +1,6 @@
 {
   "subject" : "Refigure password change",
   "landingPage" : "https://refigure.org/passwordreset/%token%/",
-  "from" : "refigure@noblecoz.com",
+  "from" : "support@refigure.org",
   "text" : "You have requested password change, Please contact support@refigure.org to confirm."
 }

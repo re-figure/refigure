@@ -71,7 +71,7 @@
         function updatePassword(password) {
             return $http
                 .post(profileApiUri + '/password-change/', {
-                    password: password
+                    Password: password
                 })
                 .then(function (res) {
                     return utils.get(res, 'data.data');

@@ -24,7 +24,6 @@
 
     function Config(GoogleSigninProvider, $facebookProvider) {
         GoogleSigninProvider.init({
-            apiKey: 'GOOGLE_API_KEY',
             clientId: 'GOOGLE_CLIENT_ID',
             scope: 'profile'
         });

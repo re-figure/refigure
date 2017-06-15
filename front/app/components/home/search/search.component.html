@@ -23,7 +23,7 @@
             </div>
         </form>
 
-        <div class="r-download-extension" layout="column" layout-align="top center">
+        <div class="r-download-extension" layout="column" layout-align="top center" ng-show="vm.isChrome">
             <md-button
                     target="_blank"
                     href="https://chrome.google.com/webstore/detail/refigure/plbplbglohkmicpcelhkendkdfaipome?hl=en"
@@ -35,7 +35,7 @@
     </div>
     <div hide show-gt-xs flex="15"></div>
 </div>
-<div class="r-most-visited" layout="row">
+<div class="r-most-visited" layout="row" ng-if="vm.mostVisited.length">
     <div flex flex-offset-gt-xs="5">
         <div class="r-heading" layout="column">
             Most visited refigures

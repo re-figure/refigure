@@ -14,6 +14,12 @@ const routes = require('./routes');
 const auth = require('./auth');
 const errors = require('./errors');
 
+let ssl = config.getT('server.ssl', 'b', true);
+if (ssl) {
+    const httpsRedirect = require('express-https-redirect');
+    app.use('/', httpsRedirect());
+}
+
 // various middleware parsers
 app.use(bodyParser.urlencoded({
     extended: false

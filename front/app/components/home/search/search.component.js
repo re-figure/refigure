@@ -27,6 +27,7 @@
         var vm = this;
         vm.form = null;
         vm.mostVisited = [];
+        vm.isChrome = false;
 
         vm.submit = submit;
 
@@ -42,6 +43,7 @@
          * Activates controller
          */
         function activate() {
+            vm.isChrome = !!window.navigator.userAgent.match(/Chrome/);
             load();
         }
 

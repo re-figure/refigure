@@ -74,8 +74,5 @@
       "refigureSite": false,
       "notInManifest": false
     }
-  },
-  "dependencies": {
-    "express-https-redirect": "^1.0.0"
   }
 }

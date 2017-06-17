@@ -23,10 +23,9 @@
         ////////////////////////////
 
         function activate() {
-            //TODO: fake testing account, remove this
             vm.loginData = {
-                Email: 'blabla@test.org',
-                Password: 'Pa$$word'
+                Email: '',
+                Password: ''
             };
         }
     }

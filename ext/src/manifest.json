@@ -1,8 +1,9 @@
 {
     "manifest_version": 2,
     "name": "Refigure",
-    "version": "0.0.4",
+    "version": "0.0.7",
     "description": "Refigure extension",
+    "author": "Giriga Goyal, James Akin",
     "icons": {
         "100": "/img/refigure_logo_small.png"
     },

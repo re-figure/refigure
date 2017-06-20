@@ -360,7 +360,13 @@ function searchMetapublications(req, res) {
 			           WHERE MATCH(Value) AGAINST (?)
                  )
         `;
-        params.push(query.query);
+        //if query is like UUID, then wrap word with '"' to prevent relevant search
+        //https://dev.mysql.com/doc/refman/5.5/en/fulltext-natural-language.html
+        if (/^[^-]{8}\-[^-]{4}\-[^-]{4}\-[^-]{4}\-[^-]{12}$/.test(query.query)) {
+            params.push(`"` + query.query + `"`);
+        } else {
+            params.push(query.query);
+        }
         if (rfUtils.boolValue(req.query.Flagged)) {
             q += ` AND Metapublication.Flagged = 1`;
         }

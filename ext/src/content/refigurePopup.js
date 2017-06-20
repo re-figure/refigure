@@ -6,6 +6,11 @@
         if (!_scope) {
             self.create();
         }
+        _scope.$apply(function () {
+            _scope.hidden = false;
+            _scope.minimized = false;
+            _scope.formData = {};
+        });
     };
 
     self.hide = function () {

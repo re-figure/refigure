@@ -50,7 +50,14 @@
                 <input name="Password" type="password"
                        ng-required="true"
                        placeholder="Password"
-                       ng-model="vm.data.Password"/>
+                       ng-model="vm.data.Password"
+                       password-validator/>
+                <div ng-messages="vm.form.Password.$error" ng-messages-multiple role="alert">
+                    <div ng-message="pass-length">Password must be at least 8 characters length</div>
+                    <div ng-message="pass-uppercase">Password must contain at least one uppercase character</div>
+                    <div ng-message="pass-lowercase">Password must contain at least one lowercase character</div>
+                    <div ng-message="pass-chars">Password must contain at least one none-alphanumeric or digital character</div>
+                </div>
             </md-input-container>
         </div>
         <div layout="row" layout-margin>

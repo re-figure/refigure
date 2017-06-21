@@ -1,4 +1,4 @@
-var refigure = {
+var refigure = window.refigure = {
     Metapublication: null,
     figures: []
 };

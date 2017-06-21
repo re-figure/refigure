@@ -59,7 +59,7 @@ angular.module('ReFigureContent', [])
                         .delete(_gApiURL + 'figure/' + $scope.collection.Figures[index].ID)
                         .then(function () {
                             $scope.collection.Figures.splice(index, 1);
-                            window.searchFigures();
+                            window.sendCheckFiguresRequest(window.refigure.figures);
                         });
                 });
         };
@@ -68,7 +68,7 @@ angular.module('ReFigureContent', [])
             var popup = angular.element(
                 '<div class="rf-image-popup"><div class="rf-image-wrp"><img src="' + src + '"></div></div>'
             );
-            popup.on('click', function (e) {
+            popup.on('click', function () {
                 popup.removeClass('rf-fade-in');
                 setTimeout(function () {
                     popup.remove();
@@ -97,7 +97,7 @@ angular.module('ReFigureContent', [])
                 $scope.saveFigure(data).then(function (fig) {
                     $scope.collection.Figures.push(fig);
                     $scope.opts.current = $scope.collection.Figures.length - 1;
-                    window.searchFigures();
+                    window.sendCheckFiguresRequest(window.refigure.figures);
                 });
             }
         };
@@ -128,7 +128,7 @@ angular.module('ReFigureContent', [])
                         chrome.storage.local.set({
                             Metapublication: resp.data.data.Metapublication
                         }, function () {
-                            figureAddStart(resp.data.data.Metapublication);
+                            window.figureAddStart(resp.data.data.Metapublication);
                         });
                     });
             }

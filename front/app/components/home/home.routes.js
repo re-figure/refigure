@@ -21,7 +21,7 @@
     }, {
         state: 'home.search-results',
         config: {
-            url: '/search-results?{from:int}&query&{size:int}&sortDirection&sortField&{Flagged:int}',
+            url: '/search-results?{from:int}&query&{size:int}&sortDirection&sortField&{Flagged:int}&queryField',
             reloadOnSearch: false,
             template: '<search-results></search-results>',
             data: {

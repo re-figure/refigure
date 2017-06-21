@@ -44,7 +44,7 @@
 
     <md-menu md-offset="0 36" ng-show="vm.sortBy">
         <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()" aria-label="Sort variants">
-            Sort <span ng-bind="vm.sortBy[vm.sortKey].name"></span> <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
+            Sort by: <span ng-bind="vm.sortBy[vm.sortKey].name"></span> <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
         </md-button>
         <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
             <md-menu-item ng-repeat="(key, opts) in vm.sortBy">
@@ -57,6 +57,11 @@
             </md-menu-item>
         </md-menu-content>
     </md-menu>
+    <div>
+        <md-button class="md-raised md-primary" ng-show="vm.searchParams.queryField" ng-click="vm.resetQueryField()">
+            Search in: <span ng-bind="vm.queryFieldLabels[vm.searchParams.queryField]"></span> <md-icon>close</md-icon>
+        </md-button>
+    </div>
 
     <span flex></span>
 

@@ -46,7 +46,7 @@
                     sortDirection: '',
                     sortField: ''
                 },
-                name: 'by relevance'
+                name: 'relevance'
             },
             figCountDesc: {
                 stateParams: {
@@ -54,7 +54,7 @@
                     sortDirection: 'DESC',
                     sortField: 'FiguresCount'
                 },
-                name: 'by number of images - largest at top'
+                name: 'number of images - largest at top'
             },
             figCountAsc: {
                 stateParams: {
@@ -62,7 +62,7 @@
                     sortDirection: 'ASC',
                     sortField: 'FiguresCount'
                 },
-                name: 'by number of images - smallest at top'
+                name: 'number of images - smallest at top'
             },
             nameAsc: {
                 stateParams: {
@@ -70,7 +70,7 @@
                     sortDirection: 'ASC',
                     sortField: 'Metapublication.Title'
                 },
-                name: 'by name - A..Z'
+                name: 'name - A..Z'
             },
             nameDesc: {
                 stateParams: {
@@ -78,7 +78,7 @@
                     sortDirection: 'DESC',
                     sortField: 'Metapublication.Title'
                 },
-                name: 'by name - Z..A'
+                name: 'name - Z..A'
             },
             visitsDesc: {
                 stateParams: {
@@ -86,7 +86,7 @@
                     sortDirection: 'DESC',
                     sortField: 'Visit.Count'
                 },
-                name: 'by popularity - most at top'
+                name: 'popularity - most at top'
             },
             visitsAsc: {
                 stateParams: {
@@ -94,11 +94,16 @@
                     sortDirection: 'ASC',
                     sortField: 'Visit.Count'
                 },
-                name: 'by popularity - less at top'
+                name: 'popularity - less at top'
             }
         };
 
+        vm.queryFieldLabels = {
+            'Metapublication.Keywords': 'Keywords'
+        };
+
         vm.updateState = updateState;
+        vm.resetQueryField = resetQueryField;
         vm.changeSort = changeSort;
         vm.$onInit = activate;
 
@@ -143,6 +148,10 @@
         function changeSort(key) {
             vm.sortKey = key;
             updateState(vm.sortBy[vm.sortKey].stateParams);
+        }
+
+        function resetQueryField() {
+            $state.go($state.current.name, {queryField: null});
         }
     }
 

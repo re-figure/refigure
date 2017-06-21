@@ -223,7 +223,11 @@
             }
 
             if (item.Keywords) {
-                item.KeywordsChips = item.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+                var tmpChips = item.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+                tmpChips = tmpChips.filter(function (el) {
+                    return el;
+                });
+                item.KeywordsChips = tmpChips
             }
 
             uiData.img = {};

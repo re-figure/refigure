@@ -1,10 +1,12 @@
-<div class="text-center">
-    <p class="rf-details btn-group" ng-show="vm.store.foundFigures.length">
-        Found <b ng-bind="vm.store.foundFigures.length"></b> <span plural="vm.store.foundFigures.length">image</span>
-        in <b ng-bind="vm.store.inMetapublications.length"></b> <span plural="vm.store.inMetapublications.length">Refigure</span>
-    </p>
+<div class="info-wrp">
+    <div class="btn-group" ng-show="vm.store.foundFigures.length">
+        Found <b ng-bind="vm.store.foundFigures.length"></b>
+        <span plural="vm.store.foundFigures.length"> image</span>
+        in <b ng-bind="vm.store.inMetapublications.length"></b>
+        <span plural="vm.store.inMetapublications.length"> Refigure</span>
+    </div>
     <div ng-hide="vm.store.foundFigures.length > 0">No Refigures found on this page</div>
     <div ng-hide="vm.store.userInfo.ID" >Please click <a href="#!/auth">here</a> to sign in</div>
-    <found-figures></found-figures>
 </div>
+<found-figures></found-figures>
 <collection-list ng-if="vm.store.userInfo.ID"></collection-list>

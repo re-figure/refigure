@@ -14,7 +14,8 @@
             'ngCookies',
             'refigureShared',
             'google-signin',
-            'ngFacebook'
+            'ngFacebook',
+            'ngMessages'
         ])
         .constant('authApiUri', '/api')
         .config(Config)

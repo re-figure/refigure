@@ -37,9 +37,9 @@
         ]);
     }
 
-    Run.$inject = ['$rootScope', 'GoogleSignin', 'auth'];
+    Run.$inject = ['$rootScope', 'GoogleSignin', 'auth', '$facebook'];
 
-    function Run($rootScope, GoogleSignin, auth) {
+    function Run($rootScope, GoogleSignin, auth, $facebook) {
         var js = document.createElement('script'),
             fjs = document.getElementsByTagName('script')[0];
 
@@ -49,13 +49,19 @@
 
         $rootScope.$on('ng-google-signin:isSignedIn', function (event, isSignedIn) {
             if (isSignedIn && !auth.isAuthenticated()) {
-                auth.oAuth.google(GoogleSignin.getUser().getAuthResponse()['id_token']);
+                auth.oAuth.google(GoogleSignin.getUser().getAuthResponse()['id_token'])
+                    .catch(function () {
+                        GoogleSignin.signOut();
+                    });
             }
         });
 
         $rootScope.$on('fb.auth.authResponseChange', function (e, resp) {
             if (resp.status === 'connected' && !auth.isAuthenticated()) {
-                auth.oAuth.fb(resp.authResponse.accessToken);
+                auth.oAuth.fb(resp.authResponse.accessToken)
+                    .catch(function () {
+                        $facebook.logout();
+                    });
             }
         });
     }

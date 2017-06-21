@@ -109,7 +109,7 @@
                 <div ng-show="vm.refigure.Keywords" layout="row" layout-align="start center">
                     <b class="md-caption">Keywords&nbsp;</b>
                     <md-chips class="rf-features" ng-model="vm.refigure.KeywordsChips" readonly="true">
-                        <md-chip-template ui-sref="home.search-results({query: $chip})">{{$chip}}</md-chip-template>
+                        <md-chip-template ui-sref="home.search-results({query: $chip, queryField: 'Metapublication.Keywords'})">{{$chip}}</md-chip-template>
                     </md-chips>
                 </div>
                 <visits-count count="vm.refigure.Visit.Count"></visits-count>

@@ -353,13 +353,12 @@ function searchMetapublications(req, res) {
     `;
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
         params.push(query.query);
-        q += `
-            WHERE Metapublication.ID IN (
-			          SELECT DISTINCT MetapublicationID
-                        FROM FullTextSearch
-			           WHERE MATCH(Value) AGAINST (?)
-                 )
+        let subQuery = `
+            SELECT DISTINCT MetapublicationID
+            FROM FullTextSearch
+            WHERE MATCH(Value) AGAINST (?)
         `;
+
         //if query is like UUID, then wrap word with '"' to prevent relevant search
         //https://dev.mysql.com/doc/refman/5.5/en/fulltext-natural-language.html
         if (/^[^-]{8}\-[^-]{4}\-[^-]{4}\-[^-]{4}\-[^-]{12}$/.test(query.query)) {
@@ -367,6 +366,16 @@ function searchMetapublications(req, res) {
         } else {
             params.push(query.query);
         }
+
+        if (
+            rfUtils.checkStringNotEmpty(req.query.queryField) &&
+            ['Metapublication.Keywords'].indexOf(req.query.queryField) !== -1
+        ) {
+            subQuery += ` AND Name=?`;
+            params.push(req.query.queryField);
+        }
+
+        q += ` WHERE Metapublication.ID IN (` + subQuery + `)`;
         if (rfUtils.boolValue(req.query.Flagged)) {
             q += ` AND Metapublication.Flagged = 1`;
         }

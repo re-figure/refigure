@@ -24,7 +24,11 @@
             <div ng-show="vm.item.Keywords" layout="row" layout-align="start center">
                 <b class="md-caption">Keywords&nbsp;&nbsp;</b>
                 <md-chips class="rf-features" ng-model="vm.item.KeywordsChips" readonly="true">
-                    <md-chip-template ui-sref-disabled ui-sref="{{vm.currentState}}({query: $chip, from: 0})" ng-bind="$chip"></md-chip-template>
+                    <md-chip-template
+                            ui-sref-disabled
+                            ui-sref="{{vm.currentState}}({query: $chip, from: 0, queryField: 'Metapublication.Keywords'})"
+                            ng-bind="$chip">
+                    </md-chip-template>
                 </md-chips>
             </div>
         </md-content>

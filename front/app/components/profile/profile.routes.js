@@ -11,7 +11,7 @@
     var states = [{
         state: 'profile.collections',
         config: {
-            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField',
+            url: '/collections?{from:int}&query&{size:int}&sortDirection&sortField&queryField',
             template: '<collections-management></collections-management>',
             reloadOnSearch: false,
             data: {
@@ -23,7 +23,7 @@
     }, {
         state: 'profile.myCollections',
         config: {
-            url: '/my-collections?{from:int}&query&{size:int}&sortDirection&sortField',
+            url: '/my-collections?{from:int}&query&{size:int}&sortDirection&sortField&queryField',
             template: '<my-collections></my-collections>',
             reloadOnSearch: false,
             data: {

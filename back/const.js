@@ -125,7 +125,9 @@ var _gConst = {
             return this[_code];
         }
         return 'An error occurred';
-    }
+    },
+
+    FULLTEXT_SEARCH_FIELDS: ['Metapublication.Keywords']
 };
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {

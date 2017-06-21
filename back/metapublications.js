@@ -248,14 +248,21 @@ function myMetapublications(req, res) {
     }
     params.push(req.User.ID);
     if (utils.isset(query.query) && rfUtils.checkStringNotEmpty(query.query)) {
-        q += `
-            AND Metapublication.ID IN (
-			          SELECT DISTINCT MetapublicationID
-                        FROM FullTextSearch
-			           WHERE MATCH(Value) AGAINST (?)
-                 )
+        let subQuery = `
+            SELECT DISTINCT MetapublicationID
+            FROM FullTextSearch
+            WHERE MATCH(Value) AGAINST (?)
         `;
         params.push(query.query);
+        if (
+            rfUtils.checkStringNotEmpty(req.query.queryField) &&
+            constants.FULLTEXT_SEARCH_FIELDS.indexOf(req.query.queryField) !== -1
+        ) {
+            subQuery += ` AND Name=?`;
+            params.push(req.query.queryField);
+        }
+
+        q += ` AND Metapublication.ID IN (` + subQuery + `)`;
     }
     if (query.sortField) {
         let valid = false;
@@ -369,7 +376,7 @@ function searchMetapublications(req, res) {
 
         if (
             rfUtils.checkStringNotEmpty(req.query.queryField) &&
-            ['Metapublication.Keywords'].indexOf(req.query.queryField) !== -1
+            constants.FULLTEXT_SEARCH_FIELDS.indexOf(req.query.queryField) !== -1
         ) {
             subQuery += ` AND Name=?`;
             params.push(req.query.queryField);

@@ -18,6 +18,7 @@
         .factory('authInterceptor', authInterceptor)
         .factory('authErrorInterceptor', authErrorInterceptor);
 
+    //noinspection UnnecessaryLocalVariableJS
     var AUTH_TOKEN = 'Authentication';
     var AUTH_HEADER = AUTH_TOKEN;
 
@@ -287,6 +288,7 @@
             var deferred = $q.defer();
             saveCurrentUrl();
             authToken.removeToken();
+            _userPromise = null;
             fillUsrInfo();
             deferred.resolve();
             return deferred.promise;
@@ -304,9 +306,8 @@
          */
         function remindPassword(data) {
             return $http
-                .post(authApiUri + '/password-change-request/', data, {
-                    // noIntercept: true
-                })
+                .post(authApiUri + '/password-change-request/', data, {})
+                //noIntercept: true
                 .then(function (res) {
                     return utils.get(res, 'data');
                 });
@@ -506,6 +507,7 @@
     ];
 
     function authInterceptor(authToken) {
+        //noinspection UnnecessaryLocalVariableJS
         var exports = {
             request: request,
             response: response
@@ -545,6 +547,7 @@
     authErrorInterceptor.$inject = ['$q', '$injector'];
 
     function authErrorInterceptor($q, $injector) {
+        //noinspection UnnecessaryLocalVariableJS
         var exports = {
             requestError: requestError,
             responseError: responseError

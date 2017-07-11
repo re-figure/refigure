@@ -223,7 +223,8 @@
             }
 
             if (item.Keywords) {
-                var tmpChips = item.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+                //var tmpChips = item.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
+                var tmpChips = item.Keywords.split(/(?:(?:&[^;]+;)|\||,|;)+/);
                 tmpChips = tmpChips.map(function (el) {
                     return {
                         name: el

@@ -224,10 +224,12 @@
 
             if (item.Keywords) {
                 var tmpChips = item.Keywords.split(/(?:(?:&[^;]+;)|\s|\||,|;)+/);
-                tmpChips = tmpChips.filter(function (el) {
-                    return el;
+                tmpChips = tmpChips.map(function (el) {
+                    return {
+                        name: el
+                    };
                 });
-                item.KeywordsChips = tmpChips
+                item.KeywordsChips = tmpChips;
             }
 
             uiData.img = {};

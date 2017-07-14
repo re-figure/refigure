@@ -1,6 +1,7 @@
 angular.module('ReFigureContent', [])
     .constant('USER_INFO', {})
-    .config(['$httpProvider', 'USER_INFO', function ($httpProvider, USER_INFO) {
+    .config(['$httpProvider', '$compileProvider', 'USER_INFO', function ($httpProvider, $compileProvider, USER_INFO) {
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
         //noinspection JSUnresolvedVariable
         chrome.storage.local.get('userInfo', function (data) {
             if (!data.userInfo) {
@@ -39,6 +40,8 @@ angular.module('ReFigureContent', [])
                 $scope.dialog.dfd.reject();
             }
         };
+
+        $scope.exampleSrc = chrome.extension.getURL('img/select_image_example.png');
 
         $scope.minimized = false;
 

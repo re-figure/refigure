@@ -42,21 +42,21 @@ function onClickImage(event) {
     return false;
 }
 
-function onEnterImage() {
-    document.getElementById('rf-info-message-add').classList.add('rf-info-message-bordered');
-}
-
-function onLeaveImage() {
-    document.getElementById('rf-info-message-add').classList.remove('rf-info-message-bordered');
-}
+// function onEnterImage() {
+//     document.getElementById('rf-info-message-add').classList.add('rf-info-message-bordered');
+// }
+//
+// function onLeaveImage() {
+//     document.getElementById('rf-info-message-add').classList.remove('rf-info-message-bordered');
+// }
 
 function figureAddStart(Metapublication) {
     refigure.Metapublication = Metapublication || refigure.Metapublication;
     Sizzle(parser.CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.add('rf-addable-image');
         el.addEventListener('click', onClickImage);
-        el.addEventListener('mouseenter', onEnterImage);
-        el.addEventListener('mouseleave', onLeaveImage);
+        // el.addEventListener('mouseenter', onEnterImage);
+        // el.addEventListener('mouseleave', onLeaveImage);
     });
     window.imagePopup.show(false, refigure.Metapublication);
 }
@@ -65,8 +65,8 @@ function figureAddStop() {
     Sizzle(parser.CONTENT_BLOCK_SELECTOR + ' img').forEach(function (el) {
         el.classList.remove('rf-addable-image');
         el.removeEventListener('click', onClickImage);
-        el.removeEventListener('mouseenter', onEnterImage);
-        el.removeEventListener('mouseleave', onLeaveImage);
+        // el.removeEventListener('mouseenter', onEnterImage);
+        // el.removeEventListener('mouseleave', onLeaveImage);
     });
 }
 

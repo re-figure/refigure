@@ -69,6 +69,7 @@
     }
   ],
   "web_accessible_resources": [
+    "img/select_image_example.png",
     "fonts/*"
   ],
   "permissions": [

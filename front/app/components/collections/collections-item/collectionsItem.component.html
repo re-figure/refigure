@@ -56,26 +56,26 @@
                 <md-button ng-click="vm.showProperties($event, image)" class="md-icon-button rf-item-show-properties">
                     <md-icon>more_vert</md-icon>
                 </md-button>
-                <div class="rf-item-properties" layout-padding flex>
-                    <p class="md-caption">
+                <div class="rf-item-properties" flex>
+                    <p>
                         <b>Caption: </b><span ng-bind="image.Caption"></span>
                     </p>
-                    <p class="md-caption">
+                    <p>
                         <b>Notes: </b><span ng-bind="image.Features"></span>
                     </p>
-                    <p class="md-caption">
+                    <p>
                         <b>Authors: </b><span ng-bind="image.Authors"></span>
                     </p>
-                    <p class="md-caption">
+                    <p>
                         <b>Article DOI: </b>
                         <a ng-show="image.DOI" target="_blank" ng-href="http://dx.doi.org/{{image.DOI}}" ng-bind="image.DOI"></a>
                     </p>
                     <!--
-                    <p class="md-caption">
+                    <p>
                         <b>Image DOI: </b><span ng-bind="image.DOIFigure"></span>
                     </p>
                     -->
-                    <p class="md-caption">
+                    <p>
                         <b>Legend: </b><span ng-bind="image.Legend"></span>
                     </p>
                 </div>

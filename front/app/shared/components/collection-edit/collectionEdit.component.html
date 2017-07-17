@@ -48,14 +48,13 @@
             <md-card-content class="hide-show-slide-down" ng-show="vm.opened === $index">
                 <form name="vm.forms.f{{$index}}" layout="column" layout-fill>
                     <md-input-container>
-                        <label>Caption</label>
-                        <textarea ng-blur="vm.saveImage($index)" ng-model="image.Caption"></textarea>
+                        <textarea ng-blur="vm.saveImage($index)" placeholder="Caption" ng-model="image.Caption"></textarea>
                     </md-input-container>
                     <md-input-container>
                         <textarea ng-blur="vm.saveImage($index)" placeholder="Legend" ng-model="image.Legend"></textarea>
                     </md-input-container>
                     <md-input-container>
-                        <input ng-blur="vm.saveImage($index)" placeholder="Features" ng-model="image.Features">
+                        <input ng-blur="vm.saveImage($index)" placeholder="Notes" ng-model="image.Features">
                     </md-input-container>
                     <md-input-container>
                         <textarea ng-blur="vm.saveImage($index)" placeholder="Authors" ng-model="image.Authors"></textarea>

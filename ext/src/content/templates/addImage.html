@@ -11,7 +11,12 @@
             </div>
         </div>
         <div class="panel-body">
-            <div id="rf-info-message-add" class="alert rf-info-message text-center">Click on image in article to add to Refigure</div>
+            <div class="rf-info-message">
+                <div class="row">
+                    <div class="col-xs-8">Add findings by clicking on any figure or table with a green border</div>
+                    <div class="col-xs-4"><img ng-src="{{exampleSrc}}" alt=""></div>
+                </div>
+            </div>
             <div ng-repeat="fig in collection.Figures">
                 <div class="row">
                     <div class="col-xs-4">
@@ -53,7 +58,7 @@
                         </div>
                         <div class="material-input">
                             <input ng-blur="saveFigure(fig)" id="rf-edit-figure-features" type="text" ng-model="fig.Features">
-                            <label for="rf-edit-figure-features">Features</label>
+                            <label for="rf-edit-figure-features">Notes (comments: antibody clone, cell line, etc.)</label>
                         </div>
                         <div class="material-input">
                             <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Authors"></div>

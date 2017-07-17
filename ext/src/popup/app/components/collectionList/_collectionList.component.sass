@@ -2,10 +2,6 @@
     display: block
     padding-bottom: 35px
 
-    .list-delimiter
-        margin: 20px -15px 0
-        height: 1px
-        background-color: #ddd
     .panel
         border: none
         //box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12)
@@ -35,14 +31,15 @@
         bottom: 0
 
     &-search
-        position: relative
+        box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)
+        font-size: 16px
         &-reset
             visibility: hidden
-            width: 34px
+            width: 47px
             position: absolute
             right: 0
-            top: 20px
-            bottom: 1px
+            top: 4px
+            bottom: 0
             background-color: #fff
             outline: none
             transition: opacity .3s
@@ -50,3 +47,11 @@
             padding-right: 34px
             &.ng-not-empty + label + button
                 visibility: visible
+
+        &.material-input
+            margin: 10px -13px
+            padding: 20px 13px 15px
+            input:focus ~ label,
+            input.ng-not-empty ~ label
+                left: 13px
+                font-size: 12px

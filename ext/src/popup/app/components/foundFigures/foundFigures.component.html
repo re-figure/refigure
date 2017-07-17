@@ -1,5 +1,5 @@
 <div class="found-figures">
-    <div ng-repeat="fig in vm.figures">
+    <div ng-repeat="fig in vm.figures | limitTo: vm.figureLimit">
         <div class="row">
             <div class="col-xs-4">
                 <img ng-click="vm.showFull(fig.URL)" class="thumbnail clickable" ng-src="{{fig.URL}}">
@@ -61,5 +61,13 @@
             </div>
         </div>
         <hr ng-hide="$last">
+    </div>
+    <div class="found-figures-expand text-right">
+        <button ng-show="vm.figureLimit > vm.baseFigureLimit" class="btn btn-xs btn-link" ng-click="vm.figureLimit = vm.figureLimit - 2">
+            <span class="glyphicon glyphicon-minus"></span> less
+        </button>
+        <button ng-show="vm.figureLimit < vm.figures.length" class="btn btn-xs btn-link" ng-click="vm.figureLimit = vm.figureLimit + 2">
+            <span class="glyphicon glyphicon-plus"></span> {{vm.figures.length - vm.figureLimit}} more
+        </button>
     </div>
 </div>

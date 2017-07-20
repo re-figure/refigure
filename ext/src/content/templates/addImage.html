@@ -45,27 +45,27 @@
                 <div class="row" ng-show="opts.current === $index">
                     <div class="container-fluid">
                         <div class="material-input">
-                            <input id="rf-edit-figure-url" type="text" ng-model="fig.URL" readonly>
+                            <input id="rf-edit-figure-url" ng-model="fig.URL" readonly>
                             <label for="rf-edit-figure-url">URL</label>
                         </div>
                         <div class="material-input">
-                            <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Caption"></div>
+                            <div ng-blur="saveFigure(fig)" contenteditable ng-model="fig.Caption"></div>
                             <label>Caption</label>
                         </div>
                         <div class="material-input">
-                            <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Legend"></div>
+                            <div ng-blur="saveFigure(fig)" contenteditable ng-model="fig.Legend"></div>
                             <label>Legend</label>
                         </div>
                         <div class="material-input">
-                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-features" type="text" ng-model="fig.Features">
+                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-features" ng-model="fig.Features">
                             <label for="rf-edit-figure-features">Notes (comments: antibody clone, cell line, etc.)</label>
                         </div>
                         <div class="material-input">
-                            <div ng-blur="saveFigure(fig)" contenteditable="true" ng-model="fig.Authors"></div>
+                            <div ng-blur="saveFigure(fig)" contenteditable ng-model="fig.Authors"></div>
                             <label>Article authors</label>
                         </div>
                         <div class="material-input">
-                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-doi" type="text" ng-model="fig.DOI">
+                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-doi" ng-model="fig.DOI">
                             <label for="rf-edit-figure-doi">Article DOI</label>
                         </div>
                     </div>

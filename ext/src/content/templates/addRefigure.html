@@ -10,17 +10,17 @@
         </div>
         <div class="panel-body">
             <div class="material-input" ng-class="ccForm.title.$invalid && ccForm.title.$dirty ? 'has-error' : ''">
-                <input id="rf-collection-create-title" name="title" type="text" ng-model="formData.Title" required/>
+                <input id="rf-collection-create-title" name="title" ng-model="formData.Title" required/>
                 <label for="rf-collection-create-title">Title</label>
                 <div class="material-input-example">Effect of anti-CD47 on tumor growth</div>
             </div>
             <div class="material-input">
-                <div contenteditable="true" id="rf-collection-create-descr" ng-model="formData.Description"></div>
-                <label for="rf-collection-create-descr">Hypothesis</label>
+                <div contenteditable id="rf-collection-create-descr" ng-model="formData.Description"></div>
+                <label for="rf-collection-create-descr">Description</label>
                 <div class="material-input-example">Are in vivo results dependent on antibody clone?</div>
             </div>
             <div class="material-input">
-                <input id="rf-collection-create-keywords" type="text" ng-model="formData.Keywords"/>
+                <input id="rf-collection-create-keywords" ng-model="formData.Keywords"/>
                 <label for="rf-collection-create-keywords">Keywords</label>
                 <div class="material-input-example">Comma separated: gene name, replication, etc</div>
             </div>

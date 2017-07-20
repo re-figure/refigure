@@ -20,13 +20,7 @@
     }, {
         state: 'auth.signup',
         config: {
-            url: '/signup/:hash',
-            params:  {
-                hash: {
-                    value: null,
-                    squash: true
-                }
-            },
+            url: '/signup/:hash?',
             template: '<sign-up></sign-up>',
             data: {
                 auth: true
@@ -35,13 +29,7 @@
     }, {
         state: 'auth.pwdreset',
         config: {
-            url: '/passwordreset/:hash',
-            params:  {
-                hash: {
-                    value: null,
-                    squash: true
-                }
-            },
+            url: '/passwordreset/:hash?',
             template: '<password-reset></password-reset>',
             data: {
                 auth: true

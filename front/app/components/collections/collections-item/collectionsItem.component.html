@@ -50,32 +50,32 @@
                         <b>Caption: </b><span ng-bind="image.Caption"></span>
                     </div>
                     <div ng-show="image.Features">
-                        <b>Features: </b><span ng-bind="image.Features"></span>
+                        <b>Notes: </b><span ng-bind="image.Features"></span>
                     </div>
                 </div>
                 <md-button ng-click="vm.showProperties($event, image)" class="md-icon-button rf-item-show-properties">
                     <md-icon>more_vert</md-icon>
                 </md-button>
-                <div class="rf-item-properties" layout-padding flex>
-                    <p class="md-caption">
+                <div class="rf-item-properties" flex>
+                    <p>
                         <b>Caption: </b><span ng-bind="image.Caption"></span>
                     </p>
-                    <p class="md-caption">
-                        <b>Features: </b><span ng-bind="image.Features"></span>
+                    <p>
+                        <b>Notes: </b><span ng-bind="image.Features"></span>
                     </p>
-                    <p class="md-caption">
+                    <p>
                         <b>Authors: </b><span ng-bind="image.Authors"></span>
                     </p>
-                    <p class="md-caption">
+                    <p>
                         <b>Article DOI: </b>
                         <a ng-show="image.DOI" target="_blank" ng-href="http://dx.doi.org/{{image.DOI}}" ng-bind="image.DOI"></a>
                     </p>
                     <!--
-                    <p class="md-caption">
+                    <p>
                         <b>Image DOI: </b><span ng-bind="image.DOIFigure"></span>
                     </p>
                     -->
-                    <p class="md-caption">
+                    <p>
                         <b>Legend: </b><span ng-bind="image.Legend"></span>
                     </p>
                 </div>
@@ -88,7 +88,7 @@
                 md-is-locked-open="true"
                 md-whiteframe="2">
             <md-content layout-padding>
-                <div class="rf-item-details-title md-title" md-truncate ng-bind="vm.refigure.Title"></div>
+                <div class="rf-item-details-title md-title" ng-bind="vm.refigure.Title"></div>
                 <div ui-sref="collections.user({query: vm.refigure.User.ID})" md-truncate>
                     <b class="md-caption">Creator </b><a href="" ng-bind="vm.refigure.User.FullName"></a>
                 </div>
@@ -109,7 +109,10 @@
                 <div ng-show="vm.refigure.Keywords" layout="row" layout-align="start center">
                     <b class="md-caption">Keywords&nbsp;</b>
                     <md-chips class="rf-features" ng-model="vm.refigure.KeywordsChips" readonly="true">
-                        <md-chip-template ui-sref="home.search-results({query: $chip, queryField: 'Metapublication.Keywords'})">{{$chip}}</md-chip-template>
+                        <md-chip-template
+                            ui-sref="home.search-results({query: $chip.name, queryField: 'Metapublication.Keywords'})"
+                            ng-bind="$chip.name"
+                        ></md-chip-template>
                     </md-chips>
                 </div>
                 <visits-count count="vm.refigure.Visit.Count"></visits-count>
@@ -139,24 +142,22 @@
                 <div ng-show="vm.refigure.ID" class="rf-item-details-controls" layout="row" layout-align="space-between center">
                     <md-button
                             ng-show="vm.isAdmin() || vm.user.ID === vm.refigure.UserID"
-                            class="md-button-small md-raised md-primary"
-                            ui-sref="collections.item({edit: vm.refigure.ID})">
-                        edit&nbsp;<md-icon>edit</md-icon>
+                            class="md-button-small md-raised md-accent"
+                            ui-sref="collections.item({edit: vm.refigure.ID})"
+                            layout="row"
+                            layout-align="space-between center">
+                        <span>edit</span>
+                        <md-icon>edit</md-icon>
                     </md-button>
                     <md-button
-                            flex
                             ng-show="vm.isAdmin() || !vm.refigure.Flagged"
-                            class="md-raised md-button-small"
-                            ng-class="vm.refigure.Flagged? 'md-accent' : 'md-warn'"
-                            ng-click="vm.toggleFlag()">
-                        <span ng-hide="vm.refigure.Flagged">
-                            Report copyright infringement&nbsp;
-                            <md-icon>report_problem</md-icon>
-                        </span>
-                        <span ng-show="vm.refigure.Flagged">
-                            Unmark as copyright infringement&nbsp;
-                            <md-icon>thumb_up</md-icon>
-                        </span>
+                            class="md-button-small btn-copyright md-primary"
+                            ng-click="vm.toggleFlag()"
+                            layout="row"
+                            layout-align="space-between center">
+                        <span ng-hide="vm.refigure.Flagged">Report copyright<br>infringement</span>
+                        <span ng-show="vm.refigure.Flagged">Unmark as copyright<br>infringement</span>
+                        <md-icon ng-bind="vm.refigure.Flagged ? 'thumb_up' : 'report_problem'"></md-icon>
                     </md-button>
                 </div>
             </md-content>

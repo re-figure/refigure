@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Refigure",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Refigure extension",
   "icons": {
     "100": "/img/refigure_logo_small.png"
@@ -69,6 +69,7 @@
     }
   ],
   "web_accessible_resources": [
+    "img/select_image_example.png",
     "fonts/*"
   ],
   "permissions": [

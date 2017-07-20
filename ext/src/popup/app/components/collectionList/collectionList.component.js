@@ -13,15 +13,16 @@
     function CollectionListController(AuthService, CollectionSvc, STORAGE, MessageService) {
         var vm = this;
 
-        vm.$onInit = activate;
-        vm.editCollection = editCollection;
+        vm.search = '';
         vm.metapublication = STORAGE.Metapublication;
         vm.userInfo = AuthService.userInfo;
+
         vm.showFull = showFull;
         vm.handleESC = handleESC;
         vm.addRefigure = addRefigure;
-        vm.search = '';
+        vm.editCollection = editCollection;
 
+        vm.$onInit = activate;
         ////////////////////////////
 
         function getMyOwnCollections() {

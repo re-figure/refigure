@@ -10,8 +10,12 @@
     CtrlFunction.$inject = ['$timeout', 'STORAGE', 'MessageService'];
     function CtrlFunction($timeout, STORAGE, MessageService) {
         var vm = this;
+
         vm.figures = STORAGE.foundFigures;
         vm.opened = -1;
+        vm.figureLimit = 2;
+        vm.baseFigureLimit = 2;
+
         vm.$onInit = activate;
         vm.showFull = showFull;
         vm.toClipboard = toClipboard;

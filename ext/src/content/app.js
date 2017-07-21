@@ -212,12 +212,13 @@ angular.module('ReFigureContent', [])
                     ngModel.$setViewValue(html);
                 }
 
-                var label = element.next();
-                if (label[0].tagName === 'LABEL') {
-                    label.on('click', function () {
-                        element[0].focus();
-                    });
-                }
+                element.parent().find('label').on('click', function () {
+                    element[0].focus();
+                });
+                scope.$on('$destroy', function () {
+                    element.off();
+                    element.parent().find('label').off();
+                });
 
                 element.on('paste', function(e) {
                     e.preventDefault();

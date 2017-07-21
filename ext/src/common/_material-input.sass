@@ -13,6 +13,10 @@
         transition: all .3s
         color: #999
         font-weight: normal
+        span
+            font-size: 12px
+            font-style: italic
+            transition: opacity .3s
 
     input, textarea, div[contenteditable]
         display: block
@@ -38,6 +42,13 @@
             top: 5px
             left: 0
             font-size: 10px
+
+        &:focus ~ label span,
+        &.ng-not-empty ~ label span
+            font-size: 10px
+
+        &.ng-not-empty ~ label span
+            opacity: 0
 
     div[contenteditable], textarea
         height: auto

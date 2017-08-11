@@ -46,7 +46,7 @@
             </md-input-container>
         </div>
         <div layout="row" layout-margin>
-            <md-input-container flex>
+            <md-input-container flex="50">
                 <input name="Password" type="password"
                        ng-required="true"
                        placeholder="Password"
@@ -57,6 +57,17 @@
                     <div ng-message="pass-uppercase">Password must contain at least one uppercase character</div>
                     <div ng-message="pass-lowercase">Password must contain at least one lowercase character</div>
                     <div ng-message="pass-chars">Password must contain at least one none-alphanumeric or digital character</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex="50">
+                <input name="ConfirmPassword" type="password"
+                       ng-disabled="vm.form.Password.$invalid"
+                       ng-required="true"
+                       placeholder="Confirm password"
+                       ng-model="vm.ConfirmPassword"
+                       ng-change="vm.comparePasswords()"/>
+                <div ng-messages="vm.form.ConfirmPassword.$error" ng-messages-multiple role="alert">
+                    <div ng-message="pass-confirm-equals">Passwords must be equal</div>
                 </div>
             </md-input-container>
         </div>

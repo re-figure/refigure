@@ -130,10 +130,12 @@
         '$q',
         'authApiUri',
         'authToken',
-        'authUserInfo'
+        'authUserInfo',
+        'MESSAGES',
+        'chromeService'
     ];
 
-    function auth($http, $state, $q, authApiUri, authToken, authUserInfo) {
+    function auth($http, $state, $q, authApiUri, authToken, authUserInfo, MESSAGES, chromeService) {
         var _userPromise;
 
         var exports = {
@@ -440,7 +442,10 @@
          * Fills current user info
          */
         function fillUsrInfo(info) {
-            if (!angular.isDefined(info)) {
+            if (angular.isUndefined(info)) {
+                chromeService.sendMessage({
+                    type: MESSAGES.MSG_TYPE_USER_LOGGED_OUT_ON_SITE
+                });
                 authUserInfo.Email = '';
                 authUserInfo.FullName = '';
                 authUserInfo.Initials = '';
@@ -459,6 +464,10 @@
                 authUserInfo.FirstName = info.FirstName;
                 authUserInfo.LastName = info.LastName;
                 setUsrNames(authUserInfo);
+                chromeService.sendMessage({
+                    type: MESSAGES.MSG_TYPE_USER_LOGGED_IN_ON_SITE,
+                    user: authUserInfo
+                });
             }
         }
     }

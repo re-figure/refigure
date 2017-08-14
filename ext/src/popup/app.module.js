@@ -80,7 +80,7 @@
 
     function ConfigController($httpProvider, $compileProvider, STORAGE, CookieToken) {
         angular.extend(STORAGE, _store);
-        if (STORAGE.userInfo.ID) {
+        if (STORAGE.userInfo.Email) {
             CookieToken.set(STORAGE.userInfo.Token);
         }
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);

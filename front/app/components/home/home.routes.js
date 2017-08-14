@@ -60,6 +60,17 @@
             }
         }
     }, {
+        state: 'home.help',
+        config: {
+            url: '/help',
+            template: '<help></help>',
+            data: {
+                headerTitle: 'Help',
+                label: 'Help',
+                description: 'Step-by-step help'
+            }
+        }
+    }, {
         state: 'home.terms',
         config: {
             url: '/terms',

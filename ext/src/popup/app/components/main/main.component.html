@@ -6,7 +6,7 @@
         <span plural="vm.store.inMetapublications.length"> Refigure</span>
     </div>
     <div ng-hide="vm.store.foundFigures.length > 0">No Refigures found on this page</div>
-    <div ng-hide="vm.store.userInfo.ID" >Please click <a href="#!/auth">here</a> to sign in</div>
+    <div ng-hide="vm.store.userInfo.Email" >Please click <a href="#!/auth">here</a> to sign in</div>
 </div>
 <found-figures></found-figures>
-<collection-list ng-if="vm.store.userInfo.ID"></collection-list>
+<collection-list ng-if="vm.store.userInfo.Email"></collection-list>

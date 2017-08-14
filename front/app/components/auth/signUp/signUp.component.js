@@ -34,6 +34,7 @@
         vm.form = null;
         vm.captchaUrl = null;
         vm.step = $stateParams.hash ? 'validate' : 'form';
+        vm.ConfirmPassword = '';
         vm.data = {
             token: $stateParams.hash,
             FirstName: '',
@@ -50,6 +51,7 @@
         vm.register = register;
         vm.start = start;
         vm.showTerms = showTerms;
+        vm.comparePasswords = comparePasswords;
 
         activate();
 
@@ -168,5 +170,11 @@
                     );
             }
         }
+
+        function comparePasswords() {
+            vm.form.ConfirmPassword.$setValidity('pass-confirm-equals', vm.ConfirmPassword === vm.data.Password);
+            console.log(vm.form, vm.form.ConfirmPassword, vm.ConfirmPassword === vm.data.Password);
+        }
+
     }
 }(window.angular));

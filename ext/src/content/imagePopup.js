@@ -10,7 +10,6 @@
         // if so, then use UPDATE then not CREATE
         _scope.$apply(function () {
             _scope.hidden = false;
-            console.log(_scope.collection);
             if (collection && (!_scope.collection || _scope.collection.ID !== collection.ID)) {
                 _scope.collection = collection;
                 console.info('Starting refigure:', angular.copy(_scope.collection));

@@ -103,6 +103,22 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
+chrome.runtime.onMessageExternal.addListener(function (request, sender, callback) {
+    switch (request.type) {
+        case _gConst.MSG_TYPE_USER_LOGGED_IN_ON_SITE:
+            chrome.storage.local.set({
+                userInfo: request.user
+            });
+            break;
+        case _gConst.MSG_TYPE_USER_LOGGED_OUT_ON_SITE:
+            chrome.storage.local.remove('userInfo');
+            break;
+        case _gConst.MSG_TYPE_IS_EXTENSION_INSTALLED:
+            callback({success: true});
+            break;
+    }
+});
+
 function onParseFiguresComplete(result, tab) {
     var t = tabsData[tab.id];
     if (t) {

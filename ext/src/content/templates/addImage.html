@@ -45,8 +45,8 @@
                 <div class="row" ng-show="opts.current === $index">
                     <div class="container-fluid">
                         <div class="material-input">
-                            <input id="rf-edit-figure-url" ng-model="fig.URL" readonly>
-                            <label for="rf-edit-figure-url">URL</label>
+                            <input id="rf-edit-figure-url_{{$index}}" ng-model="fig.URL" readonly>
+                            <label for="rf-edit-figure-url_{{$index}}">URL</label>
                         </div>
                         <div class="material-input">
                             <div ng-blur="saveFigure(fig)" contenteditable ng-model="fig.Caption"></div>
@@ -57,16 +57,16 @@
                             <label>Legend</label>
                         </div>
                         <div class="material-input">
-                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-features" ng-model="fig.Features">
-                            <label for="rf-edit-figure-features">Notes <span>(your comments: antibody clone, cell line, etc.)</span></label>
+                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-features_{{$index}}" ng-model="fig.Features">
+                            <label for="rf-edit-figure-features_{{$index}}">Notes <span>(your comments: antibody clone, cell line, etc.)</span></label>
                         </div>
                         <div class="material-input">
                             <div ng-blur="saveFigure(fig)" contenteditable ng-model="fig.Authors"></div>
                             <label>Article authors</label>
                         </div>
                         <div class="material-input">
-                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-doi" ng-model="fig.DOI">
-                            <label for="rf-edit-figure-doi">Article DOI</label>
+                            <input ng-blur="saveFigure(fig)" id="rf-edit-figure-doi_{{$index}}" ng-model="fig.DOI">
+                            <label for="rf-edit-figure-doi_{{$index}}">Article DOI</label>
                         </div>
                     </div>
                 </div>

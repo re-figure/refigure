@@ -1,4 +1,4 @@
-<div ng-show="vm.auth.userInfo.ID">
+<div ng-show="vm.auth.userInfo.Email">
     <p><b ng-bind="vm.userInfo.Login || vm.userInfo.Email">%Username%</b></p>
     <a href="https://refigure.org/profile" target="_blank">Refigure website</a>
     <div class="text-right">
@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<form ng-hide="vm.auth.userInfo.ID" name="loginForm" ng-submit="vm.login(vm.loginData)">
+<form ng-hide="vm.auth.userInfo.Email" name="loginForm" ng-submit="vm.login(vm.loginData)">
     <div class="material-input" ng-class="loginForm.login.$invalid && loginForm.login.$dirty ? 'has-error' : ''">
         <input id="login-form-login" type="email" name="login" ng-model="vm.loginData.Email" required/>
         <label for="login-form-login">Login</label>

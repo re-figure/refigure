@@ -25,10 +25,11 @@
         'MESSAGES',
         'collections',
         'modalDialog',
-        'auth'
+        'auth',
+        'CONST'
     ];
 
-    function ItemController($scope, $location, $state, MESSAGES, collections, modal, auth) {
+    function ItemController($scope, $location, $state, MESSAGES, collections, modal, auth, CONST) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -107,7 +108,7 @@
             collections
                 .get($state.params.id)
                 .then(function (resp) {
-                    if ('PARSE_REFIGURE_SITE') {
+                    if (CONST.parseRefigureSite) {
                         window.postMessage({
                             type: MESSAGES.MSG_TYPE_REFIGURE_IMAGES_COLLECTED,
                             images: resp.Figures

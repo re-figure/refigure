@@ -1,4 +1,5 @@
 {
+  "author": "Girija Goyal, James Akin",
   "manifest_version": 2,
   "name": "Refigure",
   "version": "0.0.10",
@@ -15,8 +16,7 @@
     "default_popup": "/popup/popup.html",
     "default_title": "Refigure"
   },
-  "content_scripts": [
-    {
+  "content_scripts": [{
       "matches": ["*://journals.plos.org/*", "*://collections.plos.org/*"],
       "js": [
         "/content/content.js",
@@ -24,8 +24,7 @@
         "/content/parsers/plos.js"
       ],
       "css": ["/content/content.css"]
-    },
-    {
+    }, {
       "matches": ["*://*.elifesciences.org/*", "*://elifesciences.org/*"],
       "js": [
         "/content/content.js",
@@ -33,8 +32,7 @@
         "/content/parsers/elifesciences.js"
       ],
       "css": ["/content/content.css"]
-    },
-    {
+    }, {
       "matches": ["*://www.ncbi.nlm.nih.gov/pmc/articles/*"],
       "js": [
         "/content/content.js",
@@ -42,8 +40,7 @@
         "/content/parsers/pmc.js"
       ],
       "css": ["/content/content.css"]
-    },
-    {
+    }, {
       "matches": ["*://*.figshare.com/*", "*://figshare.com/*"],
       "js": [
         "/content/content.js",
@@ -51,8 +48,7 @@
         "/content/parsers/figshare.js"
       ],
       "css": ["/content/content.css"]
-    },
-    {
+    }, {
       "matches": ["<all_urls>"],
       "exclude_matches": [
         "*://refigure.noblecoz.com/*",
@@ -80,5 +76,12 @@
     "cookies",
     "*://refigure.org/*",
     "*://refigure.noblecoz.org/*"
-  ]
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://refigure.org/*",
+      "*://localhost/*",
+      "*://refigure.noblecoz.com/*"
+    ]
+  }
 }

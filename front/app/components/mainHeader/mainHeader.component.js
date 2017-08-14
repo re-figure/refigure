@@ -38,6 +38,8 @@
             state: 'home.blog'
         }, {
             state: 'home.terms'
+        }, {
+            state: 'home.help'
         }];
 
         vm.userInfo = authUserInfo;

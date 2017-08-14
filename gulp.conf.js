@@ -24,6 +24,7 @@ module.exports = {
 
     replace: {
         'PARSE_REFIGURE_SITE': p.locals.doParse.refigureSite,
+        'EXTENSION_ID': argv.extensionId || p.locals.extensionId
     },
 
     buildDir: buildDir,

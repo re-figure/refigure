@@ -19,7 +19,7 @@
         ////////////
 
         function logout() {
-            STORAGE.userInfo.ID = null;
+            STORAGE.userInfo.Email = null;
             STORAGE.Metapublication = null;
             chrome.storage.local.remove('userInfo');
             chrome.runtime.sendMessage({
@@ -51,7 +51,7 @@
 
         function isAuth() {
             var dfd = $q.defer();
-            if (STORAGE.userInfo.ID) {
+            if (STORAGE.userInfo.Email) {
                 dfd.resolve(undefined);
             } else {
                 dfd.resolve('/');

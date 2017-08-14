@@ -15,7 +15,14 @@
             'refigureShared'
         ])
         .constant('MESSAGES', {
-            MSG_TYPE_REFIGURE_IMAGES_COLLECTED: 100
+            MSG_TYPE_REFIGURE_IMAGES_COLLECTED: 100,
+            MSG_TYPE_USER_LOGGED_IN_ON_SITE: 41,
+            MSG_TYPE_USER_LOGGED_OUT_ON_SITE: 51,
+            MSG_TYPE_IS_EXTENSION_INSTALLED: 120
+        })
+        .constant('CONST', {
+            extensionId: 'EXTENSION_ID',
+            parseRefigureSite: 'PARSE_REFIGURE_SITE'
         })
         .config(appConfig)
         .config(themeConfig)

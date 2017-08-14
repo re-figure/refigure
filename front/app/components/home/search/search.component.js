@@ -20,10 +20,13 @@
 
     Controller.$inject = [
         '$state',
-        'collections'
+        '$timeout',
+        'collections',
+        'chromeService',
+        'MESSAGES'
     ];
 
-    function Controller($state, collections) {
+    function Controller($state, $timeout, collections, chromeService, MESSAGES) {
         var vm = this;
         vm.form = null;
         vm.mostVisited = [];
@@ -44,6 +47,15 @@
          */
         function activate() {
             vm.isChrome = !!window.navigator.userAgent.match(/Chrome/);
+            chromeService.sendMessage({
+                type: MESSAGES.MSG_TYPE_IS_EXTENSION_INSTALLED
+            }, function (resp) {
+                if (resp && resp.success) {
+                    $timeout(function () {
+                        vm.isChrome = false;
+                    });
+                }
+            });
             load();
         }
 

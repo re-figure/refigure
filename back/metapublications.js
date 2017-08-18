@@ -744,8 +744,8 @@ function handleParsers(req, res, next) {
             if (r.data) {
                 body.push(
                         '<title>' + r.data.Metapublication.Title + '</title>',
-                        '<meta name="og:title" content="' + r.data.Metapublication.Title + '" />',
-                        '<meta name="og:description" content="' + r.data.Metapublication.Description + '" />'
+                        '<meta name="og:title" content="' + (r.data.Metapublication.Title || 'No title') + '" />',
+                        '<meta name="og:description" content="' + (r.data.Metapublication.Description || '') + '" />'
                 );
                 if (r.data.Metapublication.Figures[0]) {
                     body.push(

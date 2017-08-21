@@ -1,6 +1,6 @@
-# To request new features
+# To request new features or submit new ideas or otherwise engage with ReFigure
 
-Ideas are welcome! Create a new issue <a href="https://github.com/re-figure/refigure/issues">here</a>.
+Create a new issue <a href="https://github.com/re-figure/refigure/issues">here</a> or email contactrefigure@gmail.
 
 # For developers
 
@@ -21,7 +21,7 @@ Ideas are welcome! Create a new issue <a href="https://github.com/re-figure/refi
 #  For those interested in creative writing or generating infographics and cartoons
 
 1. Create/manage/help with our monthly newsletter. 
-2. Publish your open science blogs on our website
+2. Publish your open science blogs on our website.
 Please email contactrefigure@gmail if you are interested or tweet to @re_Figure
 
 # For science journalists

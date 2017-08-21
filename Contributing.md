@@ -1,6 +1,6 @@
 # To request new features
 
-Ideas are welcome! Create a new issue <a href="">here</a>.
+Ideas are welcome! Create a new issue <a href="https://github.com/re-figure/refigure/issues">here</a>.
 
 # For developers
 

@@ -1,3 +1,7 @@
+# To request new features
+
+Ideas are welcome! Create a new issue <a href="">here</a>.
+
 # For developers
 
 1. Integration an image visualization/manipulation API like IIIF to allow users to capture panels within figures rather than the entire figure as described here (level 2): https://elifesciences.org/labs/d6044799/dynamically-serving-scientific-images-using-iiif
@@ -14,11 +18,7 @@
      -Use extension as described in https://www.youtube.com/watch?v=-4GnatquWRw
 4. Explain the key differences/similarities between the results
 
-# For those curious about open science
-
-Describe yourself as a persona and why you are interested in open science
-
-#  Interested in creative writing or generating infographics and cartoons
+#  For those interested in creative writing or generating infographics and cartoons
 
 1. Create/manage/help with our monthly newsletter. 
 2. Publish your open science blogs on our website

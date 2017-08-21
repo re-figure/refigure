@@ -1,11 +1,16 @@
-Request new features or submit new ideas or otherwise engage with ReFigure by creating a new issue <a href="https://github.com/re-figure/refigure/issues">here</a> or emailing contactrefigure@gmail.
+We invite anyone interested in our project to contribute to the development of the project, request new features, discuss ideas, or otherwise engage with ReFigure by <a href="https://github.com/re-figure/refigure/issues">creating a new issue</a> or emailing us at contactrefigure@gmail.com. Thank you!
 
-# For developers
+# Projects for developers
 
-1. Integration an image visualization/manipulation API like IIIF to allow users to capture panels within figures rather than the entire figure as described here (level 2): https://elifesciences.org/labs/d6044799/dynamically-serving-scientific-images-using-iiif
-2. Create domain handlers for more publisher websites or repositories. For example, pubmed: https://www.ncbi.nlm.nih.gov/pubmed . The current PMC domain handler would be a great place to start for a handler for Pubmed.
+These are two big features we'd like to tackle next. Can you help? We welcome your input and help.
 
-# To create ReFigures
+We would like to integrate an image visualization/manipulation API like IIIF to allow users to capture panels within figures rather than the entire figure as described [here (level 2 compliance)][https://elifesciences.org/labs/d6044799/dynamically-serving-scientific-images-using-iiif]. Please see issue #4.
+
+We would like to create domain handlers for more publisher websites or repositories, such as [PubMed][https://www.ncbi.nlm.nih.gov/pubmed]. The current PMC domain handler would be a great place to start for a handler for PubMed. Please see issue #5.
+
+Please also refer to the [issues][https://github.com/re-figure/refigure/issues] for further feature requests.
+
+# Create ReFigures
 
 1. Download extension from https://chrome.google.com/webstore/detail/refigure/plbplbglohkmicpcelhkendkdfaipome
 2. To upload and connect your own data to published findings:
@@ -16,13 +21,13 @@ Request new features or submit new ideas or otherwise engage with ReFigure by cr
      -Use extension as described in https://www.youtube.com/watch?v=-4GnatquWRw
 4. Explain the key differences/similarities between the results
 
-#  For those interested in creative writing or generating infographics and cartoons
+#  Interested in creative writing or generating infographics and cartoons
 
 1. Create/manage/help with our monthly newsletter. 
 2. Publish your open science blogs on our website.
 Please email contactrefigure@gmail if you are interested or tweet to @re_Figure
 
-# For science journalists
+# Science journalists
 
 1. Use ReFigure to compile data
 2. What did you think of ReFigure? Let us know or write about it.

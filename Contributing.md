@@ -1,6 +1,4 @@
-# To request new features or submit new ideas or otherwise engage with ReFigure
-
-Create a new issue <a href="https://github.com/re-figure/refigure/issues">here</a> or email contactrefigure@gmail.
+Request new features or submit new ideas or otherwise engage with ReFigure by creating a new issue <a href="https://github.com/re-figure/refigure/issues">here</a> or emailing contactrefigure@gmail.
 
 # For developers
 

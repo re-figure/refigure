@@ -15,4 +15,4 @@ npm-debug.log
 .tags1
 *.bak
 ext/dist/
-package-lock.json
+run.sh

@@ -744,7 +744,7 @@ function searchUsers(req, res) {
         q += ' ORDER BY ?? ' + query.sortDirection;
         params.push(query.sortField);
     } else {
-        q += ' ORDER BY User.Email ASC';
+        q += ' ORDER BY User.DateCreated DESC';
     }
     q += ' LIMIT ' + query.from + ', ' + query.size;
     q += '; SELECT FOUND_ROWS() AS count;';

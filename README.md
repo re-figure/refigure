@@ -3,6 +3,11 @@
 Refigure
 ============
 
+ ReFigure is a <a href="https://chrome.google.com/webstore/detail/refigure/plbplbglohkmicpcelhkendkdfaipome">Chrome extension</a> that allows users to click on open access figures (images) in scientific pages and create a curated collection published on <a href="https://refigure.org">ReFigure.org</a>. The extension also collects metadata associated with the figure such author, DOI to enhance the curated collection. 
+
+
+
+
 Project Tree Structure
 ============
 

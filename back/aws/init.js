@@ -13,7 +13,9 @@ module.exports = (config) => {
         });
     }
 
-    AWS.config.update({
-        region: config.region
-    });
+    if (config.region) {
+        AWS.config.update({
+            region: config.region
+        });
+    }
 };

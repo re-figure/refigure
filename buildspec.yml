@@ -15,6 +15,7 @@ phases:
 artifacts:
   files:
     - aws/codedeploy/**/*
+    - aws/etc/**/*
     - back/**/*
     - build/**/*
     - appspec.yml

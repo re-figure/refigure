@@ -12,10 +12,16 @@ config.init(p.locals);
 
 let awsConfig = config.get('aws.config');
 if (awsConfig) {
-    require('./aws/init')({
-        profile: config.get('aws.profile', 'default'),
-        region: config.get('aws.region', 'us-east-1')
-    });
+    let conf = {};
+    let profile = config.get('aws.profile');
+    if (profile) {
+        conf.profile = profile;
+    }
+    let region = config.get('aws.region');
+    if (region) {
+        conf.region = region;
+    }
+    require('./aws/init')(conf);
     require('./aws/ssm').getConfiguration(awsConfig)
         .then((data) => {
             // initialize config from aws parameters store

@@ -5,6 +5,7 @@
   "author": "Andrey Pavlov <andrew.m.pavlov@gmail.com>",
   "devDependencies": {},
   "dependencies": {
+    "aws-sdk": "^2.102.0",
     "body-parser": "^1.17.0",
     "cookie-parser": "^1.4.3",
     "crypto-js": "^3.1.9-1",

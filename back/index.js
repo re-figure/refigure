@@ -21,8 +21,9 @@ if (awsConfig) {
     if (region) {
         conf.region = region;
     }
-    require('./aws/init')(conf);
-    require('./aws/ssm').getConfiguration(awsConfig)
+    const aws = require('js.shared').aws('init ssm');
+    aws.init(conf);
+    aws.ssm.getConfiguration(awsConfig)
         .then((data) => {
             // initialize config from aws parameters store
             config.init(data);

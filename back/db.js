@@ -48,7 +48,7 @@ function cbFind(where, by, cb) {
     let q = 'SELECT * FROM ?? WHERE 1';
     let params = [];
     params.push(where);
-    for (var key in by) {
+    for (let key in by) {
         if (by.hasOwnProperty(key)) {
             q += ' AND ' + key + ' = ?';
             params.push(by[key]);

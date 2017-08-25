@@ -2,3 +2,4 @@
 
 cd /var/www/refigure.org/back
 npm install --production
+npm update

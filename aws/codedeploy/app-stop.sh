@@ -9,4 +9,4 @@ fi
 
 #register service
 src="/var/www/refigure.org"
-cp $src/aws/etc/init/refigure.conf /etc/init/
+cp -f $src/aws/etc/init/refigure.conf /etc/init/

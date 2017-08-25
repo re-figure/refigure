@@ -175,7 +175,9 @@
                 "ec2:*",
                 "codedeploy:*",
                 "s3:*",
-                "iam:*"
+                "iam:*",
+                "ssm:GetParameters",
+                "ssm:GetParameter"
               ],
               "Resource": "*"
             }

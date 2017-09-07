@@ -464,9 +464,11 @@
                 authUserInfo.FirstName = info.FirstName;
                 authUserInfo.LastName = info.LastName;
                 setUsrNames(authUserInfo);
+                var extensionUser = angular.copy(authUserInfo);
+                extensionUser.Token = authToken.getToken();
                 chromeService.sendMessage({
                     type: MESSAGES.MSG_TYPE_USER_LOGGED_IN_ON_SITE,
-                    user: authUserInfo
+                    user: extensionUser
                 });
             }
         }

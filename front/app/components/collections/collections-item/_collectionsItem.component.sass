@@ -28,8 +28,6 @@ collections-item
 
         &-fullscreen
             position: relative
-            img
-                max-height: 300px
             md-icon
                 position: absolute
                 top: 0
@@ -98,20 +96,24 @@ collections-item
                 &.r-g-plus
                     font-family: arial,sans-serif
                     background-color: #d14836
-    .rf-layout-masonry
-        .rf-item
-            &-fullscreen
-                padding-bottom: $caption-height
-            &-caption
-                display: block
-            &-show-properties
-                display: block
+    .rf-layout
+        &-masonry
+            .rf-item
+                height: 500px
+                &-fullscreen
+                    padding-bottom: $caption-height
+                &-caption
+                    display: block
+                &-show-properties
+                    display: block
 
-        .rf-item-properties
-            display: none
+            .rf-item-properties
+                display: none
 
-        .rf-item-fullscreen img
-            max-height: 600px
+        &-grid
+            .rf-item
+                height: 291px
+
 
 .rf-item-fullproperties
     max-width: 100%

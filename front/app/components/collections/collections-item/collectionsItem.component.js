@@ -216,7 +216,7 @@
                     figure.URL = largeSrc;
                 });
             };
-            img.src = figure.URL;
+            img.src = largeSrc;
         }
 
     }

@@ -58,13 +58,13 @@
                 </md-button>
                 <div class="rf-item-properties" flex>
                     <p>
-                        <b>Caption: </b><span ng-bind="image.Caption"></span>
+                        <b>Caption: </b><span ellipsis ng-bind="image.Caption"></span>
                     </p>
                     <p>
-                        <b>Notes: </b><span ng-bind="image.Features"></span>
+                        <b>Notes: </b><span ellipsis ng-bind="image.Features"></span>
                     </p>
                     <p>
-                        <b>Authors: </b><span ng-bind="image.Authors"></span>
+                        <b>Authors: </b><span class="rf-item-properties-author" ellipsis ng-bind="image.Authors"></span>
                     </p>
                     <p>
                         <b>Article DOI: </b>
@@ -76,7 +76,7 @@
                     </p>
                     -->
                     <p>
-                        <b>Legend: </b><span ng-bind="image.Legend"></span>
+                        <b>Legend: </b><span ellipsis ng-bind="image.Legend"></span>
                     </p>
                 </div>
             </div>

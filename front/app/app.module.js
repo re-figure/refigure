@@ -9,6 +9,7 @@
             'ngMaterial',
             'router.helper',
             'ui.ap.auto-focus',
+            'dibari.angular-ellipsis',
             // custom modules
             'refigureAuth',
             'refigureProfile',

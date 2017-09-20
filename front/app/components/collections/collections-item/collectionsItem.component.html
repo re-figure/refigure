@@ -41,8 +41,8 @@
                         flex="{{vm.layout[vm.view].thumbFlex}}"
                         layout="column"
                         layout-padding
-                        layout-align="center center">
-                    <img ng-src="{{image.URL}}">
+                        layout-align="center center"
+                        ng-style="{'background-image': 'url('+image.URL+')'}">
                     <md-icon>zoom_in</md-icon>
                 </div>
                 <div class="rf-item-caption">

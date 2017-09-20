@@ -1,25 +1,25 @@
 <md-dialog class="rf-item-fullproperties" aria-label="Properties dialog">
     <md-dialog-content>
         <div layout-padding>
-            <p class="md-caption">
+            <p>
                 <b>Caption: </b><span ng-bind="vm.image.Caption"></span>
             </p>
-            <p class="md-caption">
+            <p>
                 <b>Notes: </b><span ng-bind="vm.image.Features"></span>
             </p>
-            <p class="md-caption">
+            <p>
                 <b>Authors: </b><span ng-bind="vm.image.Authors"></span>
             </p>
-            <p class="md-caption">
+            <p>
                 <b>Article DOI: </b>
                 <a ng-show="vm.image.DOI" target="_blank" ng-href="http://dx.doi.org/{{vm.image.DOI}}" ng-bind="vm.image.DOI"></a>
             </p>
             <!--
-            <p class="md-caption">
+            <p>
                 <b>Image DOI: </b><span ng-bind="vm.image.DOIFigure"></span>
             </p>
             -->
-            <p class="md-caption">
+            <p>
                 <b>Legend: </b><span ng-bind="vm.image.Legend"></span>
             </p>
         </div>

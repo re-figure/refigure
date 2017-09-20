@@ -4,7 +4,6 @@ const email = require('emailjs');
 
 const config = require('js.shared').config;
 const constants = require('./const');
-const utils = require('js.shared').utils;
 
 const auth = require('./auth');
 const rfUtils = require('./rf-utils');
@@ -31,6 +30,7 @@ function sendRegistrationEmail(user, cb) {
 
         let htmlText = r.data.replace(/%NAME%/, name);
         htmlText = htmlText.replace(/%LANDING_PAGE%/, landingPage);
+        emailConfig.text = emailConfig.text.replace(/%LANDING_PAGE%/, landingPage);
 
         sendMessage(user.Email, emailConfig, htmlText, (err, message) => {
             if (err) {
@@ -63,6 +63,7 @@ function sendChangePasswordEmail(user, cb) {
 
         let htmlText = r.data.replace(/%NAME%/, name);
         htmlText = htmlText.replace(/%LANDING_PAGE%/, landingPage);
+        emailConfig.text = emailConfig.text.replace(/%LANDING_PAGE%/, landingPage);
 
         sendMessage(user.Email, emailConfig, htmlText, (err, message) => {
             if (err) {
@@ -102,6 +103,7 @@ function sendSocialSignupEmail(user, socialNetworkName, cb) {
         for (let placeholder in placeholders) {
             if (placeholders.hasOwnProperty(placeholder)) {
                 htmlText = htmlText.replace('%' + placeholder + '%', placeholders[placeholder]);
+                emailConfig.text = emailConfig.text.replace('%' + placeholder + '%', placeholders[placeholder]);
             }
         }
 

@@ -1,17 +1,23 @@
+$icon-opacity: .7
 $caption-height: 20px
 collections-item
+    [ellipsis]
+        display: inline-block
+        max-height: 38px
     .rf-item
         padding: 6px 12px 6px 2px
 
         & > div
             background-color: #fff
-
+        &-properties
+            padding-right: 8px
+            &-author
+                max-height: 19px
         &-show-properties
             position: absolute
             top: 8px
             right: 3px
-            display: none
-            opacity: .4
+            opacity: $icon-opacity
             transition: opacity .3s
             &:hover
                 opacity: 1
@@ -27,12 +33,17 @@ collections-item
                         display: none
 
         &-fullscreen
+            background: no-repeat center center
+            background-size: contain
             position: relative
+            padding: 0
+            margin: 8px
             md-icon
                 position: absolute
                 top: 0
+                padding: 0
                 left: 0
-                opacity: .4
+                opacity: $icon-opacity
                 transition: opacity .3s
 
             &:hover md-icon
@@ -103,8 +114,6 @@ collections-item
                 &-fullscreen
                     padding-bottom: $caption-height
                 &-caption
-                    display: block
-                &-show-properties
                     display: block
 
             .rf-item-properties

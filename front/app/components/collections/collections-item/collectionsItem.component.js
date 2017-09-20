@@ -33,7 +33,7 @@
         var vm = this;
         var currentLastInRow = -1;
 
-        var imgSrcParsers = [
+        var _imgSrcParsers = [
             {
                 name: 'plos',
                 matcher: function (str) {
@@ -172,15 +172,6 @@
         }
 
         function showFullScreen(e, src) {
-            for (var i = 0; i < imgSrcParsers.length; i++) {
-                if (imgSrcParsers[i].matcher(src)) {
-                    src = imgSrcParsers[i].replacer(src);
-                    console.info('SRC matched: ', imgSrcParsers[i].name, ', set to: ', src);
-                    break;
-                }
-            }
-
-            //noinspection JSUnusedGlobalSymbols
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,
@@ -207,7 +198,25 @@
         function setRefigure(refigure) {
             angular.merge(vm.refigure, refigure);
             vm.refigure.Figures = refigure.Figures;
-            $state.get('collections.item').data.headerTitle = '"' + vm.refigure.Title + '"';
+            $state.get('collections.item').data.headerTitle = '"' + vm.refigure['Title'] + '"';
+            vm.refigure.Figures.forEach(function (fig) {
+                for (var i = 0; i < _imgSrcParsers.length; i++) {
+                    if (_imgSrcParsers[i].matcher(fig.URL)) {
+                        preloadAndReplace(fig, _imgSrcParsers[i].replacer(fig.URL));
+                        break;
+                    }
+                }
+            });
+        }
+
+        function preloadAndReplace(figure, largeSrc) {
+            var img = new Image();
+            img.onload = function () {
+                $scope.$applyAsync(function () {
+                    figure.URL = largeSrc;
+                });
+            };
+            img.src = figure.URL;
         }
 
     }

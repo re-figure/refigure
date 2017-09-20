@@ -184,12 +184,8 @@
             modal.show({
                 template: '<img src="' + src + '">',
                 targetEvent: e,
-                onShowing: function (s, el) {
-                    el[0].classList.add('md-dialog-autoheight');
-                },
-                disableParentScroll: false,
                 clickOutsideToClose: true,
-                parent: '.r-page-content'
+                parent: document.getElementById('#r-page-content')
             });
         }
 
@@ -204,7 +200,7 @@
                 templateUrl: 'view/imageProperties.modal.html',
                 targetEvent: e,
                 clickOutsideToClose: true,
-                parent: '.r-page-content'
+                parent: document.getElementById('#r-page-content')
             });
         }
 

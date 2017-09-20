@@ -10,7 +10,7 @@
     "angular-cookies": "1.6.5",
     "angular-material": "1.1.4",
     "angular-sanitize": "1.6.5",
-    "angular-ui-router": "0.3.2",
+    "ui-router": "0.3.2",
     "js.shared": "https://github.com/andrewpavlov/js.shared.git",
     "routerHelper": "https://github.com/andrewpavlov/routerHelper.git",
     "ui.ap": "https://github.com/andrewpavlov/ui.ap.git",

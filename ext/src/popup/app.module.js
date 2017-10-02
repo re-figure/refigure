@@ -40,11 +40,13 @@
 
     angular.module('ReFigure', ['ngRoute', 'ngSanitize'])
         .constant('CookieToken', {
-            COOKIE_DOMAIN: 'https://refigure.org',
+            COOKIE_URL: 'https://refigure.org',
+            COOKIE_DOMAIN: '.refigure.org',
             COOKIE_NAME: 'Authentication',
             set: function (token) {
                 chrome.cookies.set({
-                    url: this.COOKIE_DOMAIN,
+                    url: this.COOKIE_URL,
+                    domain: this.COOKIE_DOMAIN,
                     name: this.COOKIE_NAME,
                     value: token
                 }, function () {
@@ -57,9 +59,9 @@
                 });
             },
             remove: function () {
-                chrome.cookies.set({
-                    name: this.COOKIE_NAME,
-                    url: this.COOKIE_DOMAIN
+                chrome.cookies.remove({
+                    url: this.COOKIE_URL,
+                    name: this.COOKIE_NAME
                 }, function (cookie) {
                     console.log('cookie removed', cookie);
                 });

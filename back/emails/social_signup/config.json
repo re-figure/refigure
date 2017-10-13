@@ -1,6 +1,6 @@
 {
   "subject" : "Refigure Signup information",
   "landingPage" : "https://refigure.org/profile/account/",
-  "from" : "support@refigure.org",
+  "from" : "ReFigure support <support@refigure.org>",
   "text" : "You have registered with %SOC_NETWORK%. Your temporary password now is: %PWD%. You can use this link %LANDING_PAGE% to change password"
 }

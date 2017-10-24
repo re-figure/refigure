@@ -95,6 +95,22 @@
                     sortField: 'Visit.Count'
                 },
                 name: 'popularity - less at top'
+            },
+            createdAsc: {
+                stateParams: {
+                    from: 0,
+                    sortDirection: 'ASC',
+                    sortField: 'Metapublication.DateCreated'
+                },
+                name: 'creation date - older at top'
+            },
+            createdDesc: {
+                stateParams: {
+                    from: 0,
+                    sortDirection: 'DESC',
+                    sortField: 'Metapublication.DateCreated'
+                },
+                name: 'creation date - newer at top'
             }
         };
 

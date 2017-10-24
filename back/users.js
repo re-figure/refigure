@@ -721,12 +721,17 @@ function searchUsers(req, res) {
         );
     }
     let query = r.data;
-
     let params = [];
     let q = `
         SELECT SQL_CALC_FOUND_ROWS *
           FROM User
     `;
+    if (query.query) {
+        q += `
+            WHERE MATCH (User.Email, User.FirstName, User.LastName, User.Organization) AGAINST (?)
+        `;
+        params.push(query.query);
+    }
     // TODO add search filter here
     if (query.sortField) {
         let valid = false;

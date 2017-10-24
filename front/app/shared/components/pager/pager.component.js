@@ -29,6 +29,7 @@
 
     function PagerCtrl($scope, $state) {
         var vm = this;
+
         var defaults = {
             query: '',
             from: 0,
@@ -95,6 +96,22 @@
                     sortField: 'Visit.Count'
                 },
                 name: 'popularity - less at top'
+            },
+            createdAsc: {
+                stateParams: {
+                    from: 0,
+                    sortDirection: 'ASC',
+                    sortField: 'Metapublication.DateCreated'
+                },
+                name: 'creation date - oldest at top'
+            },
+            createdDesc: {
+                stateParams: {
+                    from: 0,
+                    sortDirection: 'DESC',
+                    sortField: 'Metapublication.DateCreated'
+                },
+                name: 'creation date - newest at top'
             }
         };
 

@@ -28,13 +28,16 @@
 
     function Controller($scope, $state, rfUsers, rfToast, modal) {
         var vm = this;
+
         vm.users = [];
         vm.searchParams = null;
         vm.found = 0;
         vm.fakeTrueValue = true;
+        vm.term = '';
 
         vm.remove = remove;
         vm.save = save;
+        vm.submit = submit;
         vm.$onInit = activate;
 
         /////////////////////
@@ -47,8 +50,9 @@
          * Activates controller
          */
         function activate() {
-            $scope.$watchCollection('vm.searchParams', function (params, prevParams) {
-                if (params && (!prevParams || params.user === prevParams.user)) {
+            $scope.$watchCollection('vm.searchParams', function (params) {
+                if (params) {
+                    vm.term = params.query;
                     load(params);
                 }
             });
@@ -72,6 +76,13 @@
                             vm.user = resp;
                         });
                 }
+            });
+        }
+
+        function submit() {
+            $state.go($state.current.name, {
+                query: vm.term,
+                from: 0
             });
         }
 

@@ -173,7 +173,6 @@
 
         function comparePasswords() {
             vm.form.ConfirmPassword.$setValidity('pass-confirm-equals', vm.ConfirmPassword === vm.data.Password);
-            console.log(vm.form, vm.form.ConfirmPassword, vm.ConfirmPassword === vm.data.Password);
         }
 
     }

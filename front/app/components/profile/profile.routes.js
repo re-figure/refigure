@@ -57,7 +57,7 @@
     }, {
         state: 'profile.users',
         config: {
-            url: '/users-list?user&{from:int}&{size:int}',
+            url: '/users-list?user&{from:int}&{size:int}&query',
             template: '<users-list></users-list>',
             reloadOnSearch: false,
             data: {

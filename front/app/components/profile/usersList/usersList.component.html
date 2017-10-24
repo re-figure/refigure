@@ -1,8 +1,14 @@
 <md-card>
-    <form layout="row" class="md-padding" name="vm.editForm">
+    <form layout="row" class="md-padding" name="vm.editForm" ng-submit="vm.submit()">
         <md-input-container flex>
             <input name="term" autofocus ng-model="vm.term" placeholder="Search"/>
         </md-input-container>
+        <md-button class="md-icon-button"
+                   md-colors="{background: 'accent-100'}" aria-label="Search"
+                   type="submit"
+        >
+            <md-icon md-font-set="material-icons">search</md-icon>
+        </md-button>
     </form>
 </md-card>
 
@@ -11,7 +17,7 @@
 <md-card
         ui-sref="profile.users({user: item.ID})"
         class="r-user"
-        ng-repeat="item in vm.users|filter: vm.term">
+        ng-repeat="item in vm.users">
     <div layout="column" layout-align="space-between start">
         <span class="md-headline" ng-bind="item.FullName"></span>
 

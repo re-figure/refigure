@@ -82,7 +82,7 @@
             </div>
         </md-content>
     </div>
-    <div layout="column" ng-show="vm.refigure.ID">
+    <div layout="column" ng-if="vm.refigure.ID">
         <md-sidenav
                 class="rf-item-details md-sidenav-right"
                 md-is-locked-open="true"
@@ -139,7 +139,7 @@
                     </div>
                 </div>
 
-                <div ng-show="vm.refigure.ID" class="rf-item-details-controls" layout="row" layout-align="space-between center">
+                <div class="rf-item-details-controls" layout="row" layout-align="space-between center">
                     <md-button
                             ng-show="vm.isAdmin() || vm.user.ID === vm.refigure.UserID"
                             class="md-button-small md-raised md-accent"
@@ -162,6 +162,9 @@
                 </div>
             </md-content>
         </md-sidenav>
+        <md-content class="collection-discus md-padding" md-whiteframe="2">
+            <dir-disqus config="vm.discusConfig"></dir-disqus>
+        </md-content>
     </div>
 </div>
 <collection-edit></collection-edit>

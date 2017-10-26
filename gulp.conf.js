@@ -24,7 +24,8 @@ module.exports = {
 
     replace: {
         'PARSE_REFIGURE_SITE': p.locals.doParse.refigureSite,
-        'EXTENSION_ID': argv.extensionId || p.locals.extensionId
+        'EXTENSION_ID': argv.extensionId || p.locals.extensionId,
+        'DISQUS_SHORT_NAME': argv.disqusShortName || p.locals.disqus['short_name'],
     },
 
     buildDir: buildDir,

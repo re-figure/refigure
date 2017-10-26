@@ -16,7 +16,8 @@
     "ui.ap": "https://github.com/andrewpavlov/ui.ap.git",
     "ng-google-signin": "^0.1.0",
     "ng-facebook": "^0.1.6",
-    "angular-ellipsis": "^0.1.7"
+    "angular-ellipsis": "^0.1.7",
+    "angularUtils-disqus": "angular-utils-disqus#^1.0.0"
   },
   "overrides": {
     "angular-material": {

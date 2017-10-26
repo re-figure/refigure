@@ -10,6 +10,7 @@
             'router.helper',
             'ui.ap.auto-focus',
             'dibari.angular-ellipsis',
+            'angularUtils.directives.dirDisqus',
             // custom modules
             'refigureAuth',
             'refigureProfile',
@@ -23,7 +24,8 @@
         })
         .constant('CONST', {
             extensionId: 'EXTENSION_ID',
-            parseRefigureSite: 'PARSE_REFIGURE_SITE'
+            parseRefigureSite: 'PARSE_REFIGURE_SITE',
+            disqusShortName: 'DISQUS_SHORT_NAME'
         })
         .config(appConfig)
         .config(themeConfig)

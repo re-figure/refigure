@@ -72,6 +72,7 @@
             }
         };
 
+        vm.discusConfig = {};
         vm.refigure = {};
         vm.details = null;
         vm.user = {};
@@ -88,6 +89,12 @@
 
         function activate() {
             vm.url = $location.absUrl();
+            vm.discusConfig = {
+                'disqus_shortname': CONST.disqusShortName,
+                'disqus_url': vm.url,
+                'disqus_identifier': null,
+                'disqus_title': ''
+            };
             $scope.$watch(function () {
                 return $state.params.view;
             }, function (view) {
@@ -114,6 +121,8 @@
                             images: resp.Figures
                         }, '*');
                     }
+                    vm.discusConfig['disqus_identifier'] = 'collections-item-' + resp.ID;
+                    vm.discusConfig['disqus_title'] = vm.refigure['Title'];
                     setRefigure(resp);
                 });
         }

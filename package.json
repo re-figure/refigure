@@ -74,6 +74,9 @@
       "refigureSite": false,
       "notInManifest": false
     },
-    "extensionId": "plbplbglohkmicpcelhkendkdfaipome"
+    "extensionId": "plbplbglohkmicpcelhkendkdfaipome",
+    "disqus": {
+      "short_name": "refigure"
+    }
   }
 }

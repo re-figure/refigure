@@ -35,7 +35,10 @@
         }, {
             state: 'home.about'
         }, {
-            state: 'home.blog'
+            label: 'Blog',
+            href: 'http://www.refigureblog.org/',
+            description: 'The latest posts',
+            target: '_blank'
         }, {
             state: 'home.terms'
         }, {
@@ -63,8 +66,10 @@
                 vm.state = toState;
             });
             vm.menuItems.forEach(function (_item) {
-                var info = $state.get(_item.state) || {};
-                angular.extend(_item, info.data);
+                if (_item.state) {
+                    var info = $state.get(_item.state) || {};
+                    angular.extend(_item, info.data);
+                }
             });
         }
 

@@ -33,16 +33,29 @@
     </md-toolbar>
 
     <md-content md-scroll-y>
-        <md-list-item class="md-2-line"
-                      ng-repeat="item in vm.menuItems"
-                      aria-label="{{ item.label }}"
-                      ui-sref="{{ item.state }}"
-                      ng-click="vm.toggle()">
-            <div class="md-list-item-text" layout="column">
-                <h3 ng-bind="item.label"></h3>
-                <h4 ng-bind="item.description"></h4>
-            </div>
-        </md-list-item>
+        <div ng-repeat="item in vm.menuItems">
+            <md-list-item
+                class="md-2-line"
+                ng-if="item.state"
+                ui-sref="{{ item.state }}"
+                aria-label="{{ item.label }}"
+                ng-click="vm.toggle()">
+                <div class="md-list-item-text" layout="column">
+                    <h3 ng-bind="item.label"></h3>
+                    <h4 ng-bind="item.description"></h4>
+                </div>
+            </md-list-item>
+            <md-list-item class="md-2-line"
+                          ng-if="!item.state"
+                          aria-label="{{ item.label }}"
+                          ng-href="{{item.href}}"
+                          target="{{item.target || 'self'}}">
+                <div class="md-list-item-text" layout="column">
+                    <h3 ng-bind="item.label"></h3>
+                    <h4 ng-bind="item.description"></h4>
+                </div>
+            </md-list-item>
+        </div>
     </md-content>
 
 </md-sidenav>

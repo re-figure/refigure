@@ -51,7 +51,15 @@
                     return str.replace('-480w.', '.').replace('-300w.', '.');
                 }
             }, {
-                name: 'pmc',
+                name: 'pmc (report)',
+                matcher: function (str) {
+                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/) && str.indexOf('?report=thumb') !== -1;
+                },
+                replacer: function (str) {
+                    return str.replace('report=thumb', 'report=previmg');
+                }
+            }, {
+                name: 'pmc (ext)',
                 matcher: function (str) {
                     return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
                 },
@@ -202,7 +210,9 @@
             vm.refigure.Figures.forEach(function (fig) {
                 for (var i = 0; i < _imgSrcParsers.length; i++) {
                     if (_imgSrcParsers[i].matcher(fig.URL)) {
-                        preloadAndReplace(fig, _imgSrcParsers[i].replacer(fig.URL));
+                        var largeSRC = _imgSrcParsers[i].replacer(fig.URL);
+                        console.info('URL "', fig.URL, '" matches ', _imgSrcParsers[i].name, '. Preloading ', largeSRC);
+                        preloadAndReplace(fig, largeSRC);
                         break;
                     }
                 }

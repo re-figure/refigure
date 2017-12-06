@@ -20,7 +20,7 @@
             </p>
             -->
             <p>
-                <b>Legend: </b><span ng-bind="vm.image.Legend"></span>
+                <b>Legend: </b><span ng-bind-html="vm.image.Legend | linky:'_blank'"></span>
             </p>
         </div>
     </md-dialog-content>

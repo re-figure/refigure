@@ -495,7 +495,7 @@ function addOrUpdateMetapublication(req, res) {
 function getUpdateData(params) {
     let m = {};
     ['Title', 'Description', 'Keywords'].forEach((key) => {
-        if (params[key]) {
+        if (params.hasOwnProperty(key)) {
             m[key] = params[key];
         }
     });

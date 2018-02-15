@@ -429,7 +429,7 @@ function addOrUpdateFigure(req, res) {
 function getUpdateData(params) {
     let m = {};
     ['Caption', 'Authors', 'Features', 'Legend', 'DOI', 'URL', 'DOIFigure'].forEach((key) => {
-        if (params[key]) {
+        if (params.hasOwnProperty(key)) {
             m[key] = params[key];
         }
     });

@@ -31,7 +31,6 @@
         var vm = this;
 
         vm.opened = -1;
-        vm.opened = -1;
         vm.forms = {};
 
         vm.saveRefigure = saveRefigure;

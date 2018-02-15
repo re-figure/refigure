@@ -18,23 +18,39 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = [];
+    Controller.$inject = ['$location', 'modalDialog'];
 
-    function Controller() {
+    function Controller($location, modalDialog) {
         var vm = this;
+        var _actions = {
+            feedback: function () {
+                modalDialog.info(
+                    'If you are experiencing any problems with this extension or have questions or suggestions, ' +
+                    'please email <a href="mailto:refigure@refigure.org">refigure@refigure.org</a>',
+                    true
+                );
+            }
+        };
 
-        activate();
+        vm.$onInit = activate;
 
         /////////////////////
 
         /**
          * @ngdoc method
-         * @name refigureApp.directive:about#activate
-         * @methodOf refigureApp.directive:about
+         * @name refigureApp.directive:help#activate
+         * @methodOf refigureApp.directive:help
          * @description
          * Activates controller
          */
         function activate() {
+            var hash = $location.hash();
+            if (hash.trim() !== '') {
+                var command = hash.split('=');
+                if (command[0] === 'action' && typeof _actions[command[1]] === 'function') {
+                    _actions[command[1]].call();
+                }
+            }
         }
     }
 })(window.angular);

@@ -29,12 +29,17 @@
 
         return exports;
 
-        function info(message) {
-            var dialog = $mdDialog.alert({
+        function info(message, isHtml) {
+            var props = {
                 title: 'Refigure',
-                textContent: message,
                 ok: 'Close'
-            });
+            };
+            if (isHtml) {
+                props.htmlContent = message;
+            } else {
+                props.textContent = message;
+            }
+            var dialog = $mdDialog.alert(props);
             return show(dialog);
         }
 

@@ -7,7 +7,7 @@
         </md-card-title-media>
         <md-card-title-text layout="column" layout-align="space-between start">
             <span class="md-headline" ng-bind="vm.item.Title"></span>
-            <div ng-bind-html="vm.item.Description | linky:'_blank'"></div>
+            <div class="description-pre-wrap" ng-bind-html="vm.item.Description | linky:'_blank'"></div>
             <span class="md-subhead">
                 <span ng-bind="vm.item.FiguresCount"></span>
                 image<span ng-bind="vm.item.FiguresCount === 1 ? '' : 's'"></span> in refigure

@@ -105,7 +105,7 @@
                     <b class="md-caption" ng-bind="vm.refigure.Figures.length===1 ? ' image' : ' images'"></b>
                 </div>
 
-                <div ng-bind-html="vm.refigure.Description | linky:'_blank'"></div>
+                <div class="description-pre-wrap" ng-bind-html="vm.refigure.Description | linky:'_blank'"></div>
                 <div ng-show="vm.refigure.Keywords" layout="row" layout-align="start center">
                     <b class="md-caption">Keywords&nbsp;</b>
                     <md-chips class="rf-features" ng-model="vm.refigure.KeywordsChips" readonly="true">

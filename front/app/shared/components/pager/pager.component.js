@@ -39,6 +39,7 @@
             Flagged: 0
         };
 
+        vm.dots = '...';
         vm.isMenuOpened = false;
         vm.sortBy = {
             relevance: {
@@ -138,12 +139,12 @@
             });
             updateState(vm.searchParams);
 
-            $scope.$watch('vm.total', function () {
+            $scope.$watchGroup(['vm.total', 'vm.searchParams.from'], function () {
                 if (vm.total) {
                     vm.paging = {
                         pages: Math.ceil(vm.total / vm.searchParams.size)
                     };
-                    vm.paging.pageArr = new Array(vm.paging.pages);
+                    vm.paging.pageArr = buildPagination(vm.searchParams.from, vm.paging.pages);
                 }
             });
             $scope.$on('$mdMenuOpen', toggleMenu);
@@ -169,6 +170,35 @@
 
         function resetQueryField() {
             $state.go($state.current.name, {queryField: null});
+        }
+
+        function buildPagination(current, last) { // jshint ignore:line
+            var delta = 2,
+                left = current - delta,
+                right = current + delta + 1,
+                range = [],
+                rangeWithDots = [],
+                dots = '...',
+                i, l;
+
+            for (i = 1; i <= last; i++) {
+                if (i === 1 || i === last || i >= left && i < right) {
+                    range.push(i);
+                }
+            }
+            for (i = 0; i < range.length; i++) {
+                if (l) {
+                    if (range[i] - l === delta) {
+                        rangeWithDots.push(l + 1);
+                    } else if (range[i] - l !== 1) {
+                        rangeWithDots.push(dots);
+                    }
+                }
+                rangeWithDots.push(range[i]);
+                l = range[i];
+            }
+
+            return rangeWithDots;
         }
     }
 

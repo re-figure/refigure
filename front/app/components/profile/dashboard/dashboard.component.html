@@ -1,4 +1,9 @@
-<md-content ng-show="vm.stats" layout="row">
+<md-card>
+    <div>
+        <md-button ng-click="vm.downloadsCSV()">extension downloads (csv)</md-button>
+    </div>
+</md-card>
+<md-content class="dashboard-infoblocks" ng-show="vm.stats" layout="row">
     <md-card ui-sref="profile.collections" flex class="dboard-refigures" layout="column" layout-align="space-between center">
         <span>total number of refigures</span>
         <b ng-bind="vm.stats.countMetapublications"></b>

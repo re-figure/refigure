@@ -84,6 +84,9 @@ function isAdminRequest(req) {
         if (req.path.match(/statistics/i)) {
             return true;
         }
+        if (req.method === 'GET' && req.path.match(/downloads/i)) {
+            return true;
+        }
     }
     return false;
 }

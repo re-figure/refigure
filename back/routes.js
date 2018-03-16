@@ -10,6 +10,7 @@ const captcha = require('./captcha');
 const figures = require('./figures');
 const metapublications = require('./metapublications');
 const blog = require('./blog');
+const downloads = require('./downloads');
 
 const homePage = __dirname + '/../build/';
 const staticOptions = {};
@@ -79,3 +80,4 @@ router.put('/api/blog', blog.addOrUpdatePost);
 router.delete('/api/blog/:ID', blog.deletePost);
 
 router.get('/api/statistics', metapublications.getStatistics);
+router.get('/api/downloads', downloads.getDownloads);

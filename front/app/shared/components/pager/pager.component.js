@@ -38,8 +38,8 @@
             sortField: 'Metapublication.Title',
             Flagged: 0
         };
+        var _dots = '...';
 
-        vm.dots = '...';
         vm.isMenuOpened = false;
         vm.sortBy = {
             relevance: {
@@ -123,6 +123,8 @@
         vm.updateState = updateState;
         vm.resetQueryField = resetQueryField;
         vm.changeSort = changeSort;
+        vm.gotoPage = gotoPage;
+        vm.pageBtnClass = pageBtnClass;
         vm.$onInit = activate;
 
         //////////////////////////////////////////
@@ -172,6 +174,20 @@
             $state.go($state.current.name, {queryField: null});
         }
 
+        function pageBtnClass(i) {
+            var ret = [i !== _dots ? 'md-fab' : 'md-icon-button'];
+            if (i === vm.searchParams.from) {
+                ret.push('md-primary');
+            }
+            return ret;
+        }
+
+        function gotoPage(i) {
+            if (_dots !== i) {
+                updateState({from: i});
+            }
+        }
+
         function buildPagination(current, last) { // jshint ignore:line
             var delta = 2,
                 left = current - delta,
@@ -188,16 +204,15 @@
             }
             for (i = 0; i < range.length; i++) {
                 if (l) {
-                    if (range[i] - l === delta) {
-                        rangeWithDots.push(l + 1);
-                    } else if (range[i] - l !== 1) {
+                    if (range[i] - l !== 1) {
                         rangeWithDots.push(dots);
+                    } else if (range[i] - l === delta) {
+                        rangeWithDots.push(l + 1);
                     }
                 }
                 rangeWithDots.push(range[i]);
                 l = range[i];
             }
-
             return rangeWithDots;
         }
     }

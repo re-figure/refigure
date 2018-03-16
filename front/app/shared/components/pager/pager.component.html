@@ -1,4 +1,4 @@
-<md-content class="md-padding" md-whiteframe="1" layout="row" layout-align="start stretch">
+<md-content class="md-padding" md-whiteframe="1" layout="row" layout-align="start stretch" layout-wrap>
     <md-button
             aria-label="To first page"
             class="md-primary md-fab md-mini"
@@ -20,9 +20,9 @@
             aria-label="To page label"
             ng-repeat="i in vm.paging.pageArr track by $index"
             class="md-mini"
-            ng-bind="$index + 1"
-            ng-click="vm.updateState({from: $index * vm.searchParams.size})"
-            ng-class="vm.searchParams.from === $index * vm.searchParams.size ? 'md-icon-button' : 'md-fab'"
+            ng-bind="i"
+            ng-click="vm.dots !== i && vm.updateState({from: i})"
+            ng-class="[vm.searchParams.from, vm.dots].indexOf(i) !== -1 ? 'md-icon-button' : 'md-fab'"
     ></md-button>
 
     <md-button

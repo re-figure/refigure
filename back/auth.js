@@ -35,7 +35,8 @@ let pathsNoAuth = [
     '/api/password-change-request',
     '/api/password-change',
     '/api/most-visited-metapublications',
-    '/api/metapublications'
+    '/api/metapublications',
+    '/api/downloads'
 ];
 
 let pathsNoAuthGET = [

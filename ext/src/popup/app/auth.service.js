@@ -22,9 +22,9 @@
             STORAGE.userInfo.Email = null;
             STORAGE.Metapublication = null;
             chrome.storage.local.remove('userInfo');
-            chrome.runtime.sendMessage({
-                type: _gConst.MSG_TYPE_USER_LOGGED_OUT
-            });
+            // chrome.runtime.sendMessage({
+            //     type: _gConst.MSG_TYPE_USER_LOGGED_OUT
+            // });
             CookieToken.remove();
             $location.path('/');
         }
@@ -37,9 +37,9 @@
                         angular.extend(STORAGE.userInfo, resp.data.data);
                         STORAGE.Metapublication = null;
                         $location.path('/');
-                        chrome.runtime.sendMessage({
-                            type: _gConst.MSG_TYPE_USER_LOGGED_IN
-                        });
+                        // chrome.runtime.sendMessage({
+                        //     type: _gConst.MSG_TYPE_USER_LOGGED_IN
+                        // });
                         chrome.storage.local.set({
                             userInfo: resp.data.data
                         });

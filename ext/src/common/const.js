@@ -10,8 +10,6 @@ var _gConst = {
     MSG_TYPE_REFIGURE_ADD_START: 21,
     MSG_TYPE_ADD_COMPLETED: 30,
 
-    MSG_TYPE_USER_LOGGED_IN: 40,
-    MSG_TYPE_USER_LOGGED_OUT: 50,
     MSG_TYPE_USER_LOGGED_IN_ON_SITE: 41,
     MSG_TYPE_USER_LOGGED_OUT_ON_SITE: 51,
     MSG_TYPE_CHECK_COMPLETED: 60,
@@ -31,7 +29,27 @@ var _gConst = {
 
     SETTINGS: {
         parseAll: 'PARSE_ALL_SITES'
-    }
+    },
+
+    COOKIE: {
+        URL: 'http://localhost:8181',
+        DOMAIN: '.localhost:8181',
+        // URL: 'https://refigure.org',
+        // DOMAIN: '.refigure.org',
+        NAME: 'Authentication'
+    },
+
+    ON_INSTALL: {
+        LOG: '$LOG_ON_INSTALL$',
+        EMAIL: '$EMAIL_ON_INSTALL$',
+        FORCE_AUTH: '$FORCE_AUTH_ON_INSTALL$$'
+    },
+    ON_UNINSTALL: {
+        LOG: '$LOG_ON_UNINSTALL$',
+        EMAIL: '$EMAIL_ON_UNINSTALL$'
+    },
+
+    EXTENSION_USER_SOURCE_GOOGLE: 1
 };
 
 var _gApiURL;

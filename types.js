@@ -13,9 +13,11 @@
  * @property {ChromeEvent} runtime.onSuspend
  * @property {ChromeEvent} runtime.onMessage
  * @property {ChromeEvent} runtime.onMessageExternal
+ * @property {Function} runtime.setUninstallURL
  * @property {Function} runtime.getManifest
  * @property {Object} identity
  * @property {Function} identity.getProfileUserInfo
+ * @property {Function} identity.getAuthToken
  * @property {Object} storage
  * @property {Object} storage.local
  * @property {Function} storage.local.set

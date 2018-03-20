@@ -76,6 +76,13 @@ module.exports = {
     indexHtml: buildDir + '/index.html',
     extension: {
         replace: {
+            '$LOG_ON_INSTALL$': p.locals.onInstall.log,
+            '$EMAIL_ON_INSTALL$': p.locals.onInstall.email,
+            '$FORCE_AUTH_ON_INSTALL$': p.locals.onInstall.forceAuth,
+
+            '$LOG_ON_UNINSTALL$': p.locals.onUninstall.log,
+            '$EMAIL_ON_UNINSTALL$': p.locals.onUninstall.email,
+
             'REMOTE_API_URL': 'https://api.refigure.org/api/',
             'PARSE_ALL_SITES': p.locals.doParse.notInManifest
         },
@@ -124,5 +131,9 @@ module.exports = {
             index: extSrcDir + '/popup/popup.html'
         }
     },
-    oauth: p.locals.oauth
+    oauth: {
+        'google-clientId': p.locals.oauth['google-clientId'],
+        'facebook-clientId': argv['oauth-facebook-clientId'] || p.locals.oauth['facebook-clientId'],
+        'facebook-clientSecret': argv['oauth-facebook-clientSecret'] || p.locals.oauth['facebook-clientSecret']
+    }
 };

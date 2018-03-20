@@ -14,6 +14,7 @@ const cookies = require('js.shared').cookies;
 const captcha = require('./captcha');
 const mail = require('./email');
 const metapublications = require('./metapublications');
+const downloads = require('./downloads');
 
 exports.loginUserWithPassword = loginUserWithPassword;
 exports.userInfo = userInfo;
@@ -233,7 +234,23 @@ function cbAddUser(user, cb) {
             user.Department || null,
             user.SocialID || null
         ],
-        cb
+        (err, res) => {
+            if (!err) {
+                downloads.addOrUpdateRow({
+                    Email: user.Email,
+                    DateRegistered: Date.now()
+                }, () => {
+                    if (config.get('onRegister.email')) {
+                        return mail.sendOnUserEvent(user, 'registration', () => {
+                            cb(err, res);
+                        });
+                    }
+                    cb(err, res);
+                });
+            } else {
+                cb(err, res);
+            }
+        }
     );
 }
 

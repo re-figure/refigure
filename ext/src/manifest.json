@@ -1,4 +1,5 @@
 {
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmRRN4gh2gjWHQFe/nDq43yhU+ydp1addI9WKhQEFxh2ZCHOIRL65SmVNHaEVHdzyZIeORD0Vw3JVKmFRJgNTM2a1paLG5keUrMRtWEUwGIarSMCuBIKHn8mts0cv72R/eBaNlWwMZnoKpbLAzFo5JcYWoNFvW4mxXd6AG3ZXNKqjMKtQvFABMW/mOmVo+VqlW93SjNUEO8x010+VSBP8dXxoBCsKfCK/Yij+vpVq3J+f6ZqPxQBH9dmOa3vXcxws1uKaSS+V5lZ8t8LGHDzPvUyj4vupuyEC5CnmRsknq0VfJkME+O9emiQbcKwanGCudRsgFwMVo4pfgiimzzfVYwIDAQAB",
   "author": "Girija Goyal, James Akin",
   "manifest_version": 2,
   "name": "Refigure",
@@ -74,6 +75,8 @@
     "storage",
     "contextMenus",
     "cookies",
+    "identity",
+    "identity.email",
     "*://refigure.org/*",
     "*://refigure.noblecoz.org/*"
   ],
@@ -82,6 +85,12 @@
       "*://refigure.org/*",
       "*://localhost/*",
       "*://refigure.noblecoz.com/*"
+    ]
+  },
+  "oauth2": {
+    "client_id": "521277911794-3hb42tq74p009p6fafks2mkft4mp01m8.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
     ]
   }
 }

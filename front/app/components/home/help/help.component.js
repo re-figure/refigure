@@ -18,9 +18,9 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$location', 'modalDialog'];
+    Controller.$inject = ['$location', 'modalDialog', '$http'];
 
-    function Controller($location, modalDialog) {
+    function Controller($location, modalDialog, $http) {
         var vm = this;
         var _actions = {
             feedback: function () {
@@ -29,6 +29,20 @@
                     'please email <a href="mailto:refigure@refigure.org">refigure@refigure.org</a>',
                     true
                 );
+            },
+            uninstall: function (params) {
+                if (params.email) {
+                    var data = {
+                        Email: params.email,
+                        DateRemoved: Date.now()
+                    };
+                    return $http.post('/api/downloads', data);
+                }
+                // modalDialog.info(
+                //     'If you are experiencing any problems with this extension or have questions or suggestions, ' +
+                //     'please email <a href="mailto:refigure@refigure.org">refigure@refigure.org</a>',
+                //     true
+                // );
             }
         };
 
@@ -44,13 +58,25 @@
          * Activates controller
          */
         function activate() {
+            var commands = parseHash();
+            if (commands.action && typeof _actions[commands.action] === 'function') {
+                _actions[commands.action](commands);
+            }
+        }
+
+        function parseHash() {
+            var ret = {};
             var hash = $location.hash();
             if (hash.trim() !== '') {
-                var command = hash.split('=');
-                if (command[0] === 'action' && typeof _actions[command[1]] === 'function') {
-                    _actions[command[1]].call();
-                }
+                var params = hash.split('&');
+                params.forEach(function (param) {
+                    var tmp = param.split('=');
+                    if (tmp.length === 2) {
+                        ret[tmp[0]] = tmp[1];
+                    }
+                });
             }
+            return ret;
         }
     }
 })(window.angular);

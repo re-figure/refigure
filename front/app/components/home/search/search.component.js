@@ -21,12 +21,13 @@
     Controller.$inject = [
         '$state',
         '$timeout',
+        '$location',
         'collections',
         'chromeService',
         'MESSAGES'
     ];
 
-    function Controller($state, $timeout, collections, chromeService, MESSAGES) {
+    function Controller($state, $timeout, $location, collections, chromeService, MESSAGES) {
         var vm = this;
         vm.form = null;
         vm.mostVisited = [];

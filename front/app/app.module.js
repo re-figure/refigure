@@ -13,7 +13,8 @@
             // custom modules
             'refigureAuth',
             'refigureProfile',
-            'refigureShared'
+            'refigureShared',
+            'angular-google-analytics'
         ])
         .constant('MESSAGES', {
             MSG_TYPE_REFIGURE_IMAGES_COLLECTED: 100,
@@ -31,22 +32,31 @@
 
     appConfig.$inject = [
         '$httpProvider',
-        '$locationProvider'
+        '$locationProvider',
+        'AnalyticsProvider'
     ];
 
-    function appConfig($httpProvider, $locationProvider) {
+    function appConfig($httpProvider, $locationProvider, AnalyticsProvider) {
         $locationProvider.html5Mode(true);
         $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.interceptors.push('authErrorInterceptor');
         $httpProvider.interceptors.push('errorInterceptor');
+
+        AnalyticsProvider.setAccount('UA-116092391-1');
+        AnalyticsProvider.setPageEvent('$stateChangeSuccess');
+        AnalyticsProvider.trackUrlParams(true);
+        // AnalyticsProvider.setDomainName(
+        //     window.location.host.indexOf('localhost') === -1 ? window.location.host : 'none'
+        // );
     }
 
     appRun.$inject = [
         '$rootScope',
-        'auth'
+        'auth',
+        'Analytics'
     ];
 
-    function appRun($rootScope, auth) {
+    function appRun($rootScope, auth, Analytics) {
         $rootScope.projectName = 'Refigure';
         $rootScope.mobileBrowser = utils.mobileBrowser();
         if (auth.isAuthenticated()) {

@@ -21,7 +21,7 @@ exports.google = Google;
 exports.fb = FB;
 
 function Google(req, res) {
-    let CLIENT_ID = config.get('oauth.google.clientId');
+    let CLIENT_ID = config.get('oauth.google-clientId');
     let gAuth = new GoogleAuth();
     let gClient = new gAuth.OAuth2(CLIENT_ID, '', '');
 
@@ -73,9 +73,8 @@ function Google(req, res) {
 }
 
 function FB(req, res) {
-    let CLIENT_SECRET = config.get('oauth.facebook.clientSecret');
+    let CLIENT_SECRET = config.get('oauth.facebook-clientSecret');
     let fields = ['first_name', 'last_name', 'email'];
-
     if (!req.params.token) {
         return rfUtils.error(
             res,

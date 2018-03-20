@@ -62,18 +62,27 @@
       "pwdChangeExpiresIn": "10h"
     },
     "oauth": {
-      "google": {
-        "clientId": "521277911794-l7at2jftvc2bluvbe2qa2c03njorm8ij.apps.googleusercontent.com"
-      },
-      "facebook": {
-        "clientId": "784421105053917",
-        "clientSecret": "271b89f5b62a46d9299fe2b93dcc336d"
-      }
+      "google-clientId": "521277911794-l7at2jftvc2bluvbe2qa2c03njorm8ij.apps.googleusercontent.com",
+      "facebook-clientId": "784421105053917",
+      "facebook-clientSecret": "271b89f5b62a46d9299fe2b93dcc336d"
     },
     "doParse": {
       "refigureSite": false,
       "notInManifest": false
     },
-    "extensionId": "plbplbglohkmicpcelhkendkdfaipome"
+    "extensionId": "plbplbglohkmicpcelhkendkdfaipome",
+    "onInstall": {
+      "log": true,
+      "email": true,
+      "forceAuth": true
+    },
+    "onRegister": {
+      "email": true
+    },
+    "onUninstall": {
+      "log": true,
+      "email": true
+    },
+    "adminEmail": "contactrefigure@gmail.com"
   }
 }

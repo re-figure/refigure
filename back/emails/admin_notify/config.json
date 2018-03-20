@@ -1,0 +1,5 @@
+{
+  "subject" : "Refigure website user event",
+  "from" : "ReFigure support <support@refigure.org>",
+  "text" : "User %NAME% [%EMAIL%] performed the %ACTION% action on the Refigure website"
+}

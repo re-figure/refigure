@@ -28,6 +28,8 @@ var _gConst = {
     USER_REGISTRATION_TYPE_GOOGLE: 1,
     USER_REGISTRATION_TYPE_FACEBOOK: 2,
 
+    EXTENSION_USER_SOURCE_GOOGLE: 1,
+
     // authentication header name
     AUTHENTICATION_HEADER: 'Authentication',
     AUTHENTICATION_COOKIE: 'Authentication',

@@ -26,48 +26,47 @@
         'collections',
         'modalDialog',
         'auth',
-        'CONST'
+        'CONST',
+        'Analytics'
     ];
 
-    function ItemController($scope, $location, $state, MESSAGES, collections, modal, auth, CONST) {
+    function ItemController($scope, $location, $state, MESSAGES, collections, modal, auth, CONST, Analytics) {
         var vm = this;
         var currentLastInRow = -1;
 
-        var _imgSrcParsers = [
-            {
-                name: 'plos',
-                matcher: function (str) {
-                    return str.match(/plos\.org/);
-                },
-                replacer: function (str) {
-                    return str.replace('size=inline', 'size=large');
-                }
-            }, {
-                name: 'elifescinces',
-                matcher: function (str) {
-                    return str.match(/elifesciences\.org/);
-                },
-                replacer: function (str) {
-                    return str.replace('-480w.', '.').replace('-300w.', '.');
-                }
-            }, {
-                name: 'pmc (report)',
-                matcher: function (str) {
-                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/) && str.indexOf('?report=thumb') !== -1;
-                },
-                replacer: function (str) {
-                    return str.replace('report=thumb', 'report=previmg');
-                }
-            }, {
-                name: 'pmc (ext)',
-                matcher: function (str) {
-                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
-                },
-                replacer: function (str) {
-                    return str.replace('.gif', '.jpg');
-                }
+        var _imgSrcParsers = [{
+            name: 'plos',
+            matcher: function (str) {
+                return str.match(/plos\.org/);
+            },
+            replacer: function (str) {
+                return str.replace('size=inline', 'size=large');
             }
-        ];
+        }, {
+            name: 'elifescinces',
+            matcher: function (str) {
+                return str.match(/elifesciences\.org/);
+            },
+            replacer: function (str) {
+                return str.replace('-480w.', '.').replace('-300w.', '.');
+            }
+        }, {
+            name: 'pmc (report)',
+            matcher: function (str) {
+                return str.match(/ncbi\.nlm\.nih\.gov\/pmc/) && str.indexOf('?report=thumb') !== -1;
+            },
+            replacer: function (str) {
+                return str.replace('report=thumb', 'report=previmg');
+            }
+        }, {
+            name: 'pmc (ext)',
+            matcher: function (str) {
+                return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
+            },
+            replacer: function (str) {
+                return str.replace('.gif', '.jpg');
+            }
+        }];
 
         vm.layout = {
             grid: {
@@ -172,6 +171,11 @@
             collections.toggleFlag(vm.refigure.ID)
                 .then(function () {
                     vm.refigure.Flagged = !vm.refigure.Flagged * 1;
+                    Analytics.trackEvent(
+                        'Copyright infringement',
+                        vm.refigure.Flagged ? 'Report' : 'Unmark',
+                        vm.refigure.ID
+                    );
                 });
         }
 

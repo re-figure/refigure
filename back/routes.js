@@ -82,5 +82,5 @@ router.delete('/api/blog/:ID', blog.deletePost);
 //admin dashboard
 router.get('/api/statistics', metapublications.getStatistics);
 router.get('/api/downloads', downloads.getDownloads);
-router.post('/api/downloads', downloads.createDownload);
-router.put('/api/downloads', downloads.updateDownload);
+router.post('/api/downloads', downloads.addOrUpdateDownload);
+router.put('/api/downloads', downloads.addOrUpdateDownload);

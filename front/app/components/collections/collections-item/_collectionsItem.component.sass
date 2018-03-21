@@ -1,11 +1,15 @@
 $icon-opacity: .7
 $caption-height: 20px
+
 collections-item
     [ellipsis]
         display: inline-block
         max-height: 38px
     .rf-item
-        padding: 6px 12px 6px 2px
+        padding: 6px 8px 6px 2px
+        @media only screen and (max-width: $layout-breakpoint-sm)
+            padding-left: 2px
+            padding-right: 2px
 
         & > div
             background-color: #fff
@@ -29,7 +33,8 @@ collections-item
                 opacity: 1
 
         &-view
-            margin: 0 12px 6px 2px
+            overflow: hidden
+            margin: 0 8px 6px 2px
             background-color: #fff
             &-search
                 margin-left: 16px
@@ -37,6 +42,9 @@ collections-item
                     margin: 18px 0 0
                     .md-error-spacer
                         display: none
+            @media only screen and (max-width: $layout-breakpoint-sm)
+                margin-right: 0
+                margin-left: 0
 
         &-fullscreen
             background: no-repeat center center
@@ -73,8 +81,13 @@ collections-item
                 text-overflow: ellipsis
 
         &-details
+            margin-left: 4px
+            margin-bottom: 12px
             width: 450px
             max-width: none
+            @media only screen and (max-width: $layout-breakpoint-sm)
+                width: 100%
+                margin-left: 0
 
             [ui-sref] a
                 color: #000

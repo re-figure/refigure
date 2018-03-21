@@ -1,12 +1,12 @@
 <md-card ui-sref="collections.item({id: vm.item.ID})">
-    <md-card-title>
-        <md-card-title-media>
+    <md-card-title layout-wrap>
+        <md-card-title-media flex="100" flex-gt-xs="none">
             <div class="md-media-lg card-media" layout="column" layout-align="center center">
                 <img ng-src="{{vm.item.$ui.img.src}}">
             </div>
         </md-card-title-media>
         <md-card-title-text layout="column" layout-align="space-between start">
-            <span class="md-headline" ng-bind="vm.item.Title"></span>
+            <div md-truncate class="md-headline" ng-bind="vm.item.Title"></div>
             <div
                 class="description-pre-wrap"
                 ng-bind-html="vm.item.Description | linky:'_blank'"
@@ -16,7 +16,7 @@
                 image<span ng-bind="vm.item.FiguresCount === 1 ? '' : 's'"></span> in refigure
             </span>
         </md-card-title-text>
-        <md-content layout-padding layout="column" layout-align="space-between start" flex="25">
+        <md-content layout-padding layout="column" layout-align="space-between start" flex="25" flex-xs="100">
             <div class="rf-row-owner">
                 <b class="md-caption">by</b>
                 <a ui-sref-disabled ui-sref="collections.user({query: vm.item.User.ID})" ng-bind="vm.item.User.FullName"></a>
@@ -35,7 +35,7 @@
                 </md-chips>
             </div>
         </md-content>
-        <md-content layout-padding layout="column" layout-align="space-around stretch" flex="15">
+        <md-content hide show-gt-sm layout-padding layout="column" layout-align="space-around stretch" flex="15">
             <div layout="row" layout-align="space-between center">
                 <b class="md-caption">Created at&nbsp;&nbsp;</b>
                 <span ng-bind="vm.item.DateCreated|date:'M/d/yyyy'"></span>

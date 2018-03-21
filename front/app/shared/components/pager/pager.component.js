@@ -33,7 +33,7 @@
         var defaults = {
             query: '',
             from: 0,
-            size: 5,
+            size: 20,
             sortDirection: 'ASC',
             sortField: 'Metapublication.Title',
             Flagged: 0

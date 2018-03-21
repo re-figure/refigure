@@ -3,7 +3,7 @@
   "author": "Girija Goyal, James Akin",
   "manifest_version": 2,
   "name": "Refigure",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "ReFigure aggregates and organises different scientific figures amongst users through a backend running on a server and Chrome plugin",
   "icons": {
     "100": "/img/refigure_logo_small.png"

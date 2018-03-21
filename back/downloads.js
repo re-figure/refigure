@@ -104,7 +104,7 @@ function addOrUpdateRow(params, callback) {
                 });
             }
             //send notify email if DateRemoved property changed to something
-            if (!_oldRecord.DateRemoved && userInfo.DateRemoved && config.get('onUninstall.email')) {
+            if (config.get('onUninstall.email') && (!_oldRecord || !_oldRecord.DateRemoved && userInfo.DateRemoved)) {
                 return mail.sendOnUserEvent(userInfo, 'uninstallation', () => {
                     callback({data: userInfo});
                 });

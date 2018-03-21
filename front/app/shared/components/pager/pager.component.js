@@ -56,7 +56,8 @@
                     sortDirection: 'DESC',
                     sortField: 'FiguresCount'
                 },
-                name: 'number of images - largest at top'
+                name: 'number of images',
+                suffix: ' - largest at top'
             },
             figCountAsc: {
                 stateParams: {
@@ -64,7 +65,8 @@
                     sortDirection: 'ASC',
                     sortField: 'FiguresCount'
                 },
-                name: 'number of images - smallest at top'
+                name: 'number of images',
+                suffix: ' - smallest at top'
             },
             nameAsc: {
                 stateParams: {
@@ -72,7 +74,8 @@
                     sortDirection: 'ASC',
                     sortField: 'Metapublication.Title'
                 },
-                name: 'name - A..Z'
+                name: 'name',
+                suffix: ' - A..Z'
             },
             nameDesc: {
                 stateParams: {
@@ -80,7 +83,8 @@
                     sortDirection: 'DESC',
                     sortField: 'Metapublication.Title'
                 },
-                name: 'name - Z..A'
+                name: 'name',
+                suffix: ' - Z..A'
             },
             visitsDesc: {
                 stateParams: {
@@ -88,7 +92,8 @@
                     sortDirection: 'DESC',
                     sortField: 'Visit.Count'
                 },
-                name: 'popularity - most at top'
+                name: 'popularity',
+                suffix: ' - most at top'
             },
             visitsAsc: {
                 stateParams: {
@@ -96,7 +101,8 @@
                     sortDirection: 'ASC',
                     sortField: 'Visit.Count'
                 },
-                name: 'popularity - less at top'
+                name: 'popularity',
+                suffix: ' - less at top'
             },
             createdAsc: {
                 stateParams: {
@@ -104,7 +110,8 @@
                     sortDirection: 'ASC',
                     sortField: 'Metapublication.DateCreated'
                 },
-                name: 'creation date - oldest at top'
+                name: 'creation date',
+                suffix: ' - oldest at top'
             },
             createdDesc: {
                 stateParams: {
@@ -112,7 +119,8 @@
                     sortDirection: 'DESC',
                     sortField: 'Metapublication.DateCreated'
                 },
-                name: 'creation date - newest at top'
+                name: 'creation date',
+                suffix: ' - newest at top'
             }
         };
 

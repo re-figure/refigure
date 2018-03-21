@@ -1,18 +1,18 @@
 <md-toolbar class="r-main-toolbar">
     <div class="md-toolbar-tools">
         <a ui-sref="home.search"><img alt="Brand" src="img/refigure_logo.png" class="r-nav-logo"/></a>
-        <h2 ng-bind="vm.projectName" class="r-nav-bar-heading"></h2>
-        <span ng-bind="vm.state.data.headerTitle"></span>
+        <h2 hide show-gt-sm ng-bind="vm.projectName" class="r-nav-bar-heading"></h2>
+        <span md-truncate ng-bind="vm.state.data.headerTitle"></span>
 
         <span flex></span>
-        <md-button href="mailto:refigure@refigure.org" class="md-icon-button">
+        <md-button hide show-gt-sm href="mailto:refigure@refigure.org" class="md-icon-button">
             <md-icon>mail_outline</md-icon>
             <md-tooltip>
                 If you are experiencing any problems with this extension
                 or have questions or suggestions, please email us
             </md-tooltip>
         </md-button>
-        <md-button class="md-icon-button" ui-sref="home.help">
+        <md-button hide show-gt-sm class="md-icon-button" ui-sref="home.help">
             <md-icon>help_outline</md-icon>
         </md-button>
         <md-button ui-sref="profile" ng-class="vm.userInfo.Email?'':'md-icon-button'" aria-label="My Refigure">

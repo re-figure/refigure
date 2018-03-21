@@ -1,6 +1,10 @@
 collection-edit
-  .md-truncate
-    width: 100%
-  md-sidenav.md-sidenav-right
-    width: 50%
-    min-width: 600px
+    .md-truncate
+        width: 100%
+    md-sidenav.md-sidenav-right
+        width: 50%
+        min-width: 600px
+
+        @media (max-width: $layout-breakpoint-sm)
+            width: 100%
+            min-width: 100%

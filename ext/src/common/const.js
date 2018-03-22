@@ -32,10 +32,10 @@ var _gConst = {
     },
 
     COOKIE: {
-        URL: 'http://localhost:8181',
-        DOMAIN: '.localhost:8181',
-        // URL: 'https://refigure.org',
-        // DOMAIN: '.refigure.org',
+        // URL: 'http://localhost:8181',
+        // DOMAIN: '.localhost:8181',
+        URL: 'https://refigure.org',
+        DOMAIN: '.refigure.org',
         NAME: 'Authentication'
     },
 

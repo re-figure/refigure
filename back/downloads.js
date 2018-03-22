@@ -3,7 +3,7 @@
 const httpStatus = require('http-status-codes');
 
 const constants = require('./const');
-const uuid = require('uuid');
+const uuid = require('node-uuid');
 const db = require('./db');
 const rfUtils = require('./rf-utils');
 const mail = require('./email');

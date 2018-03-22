@@ -8,7 +8,8 @@ const pool = createPool();
 exports.model = {
     ID: 'ID',
     TABLE_USER: 'User',
-    TABLE_FIGURE: 'Figure'
+    TABLE_FIGURE: 'Figure',
+    TABLE_DOWNLOADS: 'ExtensionDownload'
 };
 
 exports.pool = pool;

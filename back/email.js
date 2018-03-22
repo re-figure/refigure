@@ -11,6 +11,7 @@ const rfUtils = require('./rf-utils');
 exports.sendRegistrationEmail = sendRegistrationEmail;
 exports.sendChangePasswordEmail = sendChangePasswordEmail;
 exports.sendSocialSignupEmail = sendSocialSignupEmail;
+exports.sendOnUserEvent = sendOnUserEvent;
 
 /**
  * Create and send registration confirmation email
@@ -110,6 +111,47 @@ function sendSocialSignupEmail(user, socialNetworkName, cb) {
         sendMessage(user.Email, emailConfig, htmlText, (err, message) => {
             if (err) {
                 console.error('Failed to send temporary password message', err);
+            }
+        });
+
+        cb({
+            error: 0,
+            data: user
+        });
+    });
+}
+
+/**
+ * Create and send the email with tmp password
+ * @param {Object} user user registered with social network
+ * @param {String} action action name
+ * @param {Function} cb Callback function
+ */
+function sendOnUserEvent(user, action, cb) {
+    getEmailTemplate('admin_notify', (r) => {
+        if (r.error) {
+            return cb(r);
+        }
+        let emailConfig = r.config;
+
+        let placeholders = {
+            EMAIL: user.Email,
+            NAME: user.FirstName + ' ' + user.LastName,
+            ACTION: action
+        };
+
+        let htmlText = r.data;
+
+        for (let placeholder in placeholders) {
+            if (placeholders.hasOwnProperty(placeholder)) {
+                htmlText = htmlText.replace('%' + placeholder + '%', placeholders[placeholder]);
+                emailConfig.text = emailConfig.text.replace('%' + placeholder + '%', placeholders[placeholder]);
+            }
+        }
+
+        sendMessage(config.get('adminEmail'), emailConfig, htmlText, (err, message) => {
+            if (err) {
+                console.error('Failed to send admin notification', err, user, action);
             }
         });
 

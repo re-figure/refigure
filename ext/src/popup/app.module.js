@@ -40,9 +40,9 @@
 
     angular.module('ReFigure', ['ngRoute', 'ngSanitize'])
         .constant('CookieToken', {
-            COOKIE_URL: 'https://refigure.org',
-            COOKIE_DOMAIN: '.refigure.org',
-            COOKIE_NAME: 'Authentication',
+            COOKIE_URL: _gConst.COOKIE.URL,
+            COOKIE_DOMAIN: _gConst.COOKIE.DOMAIN,
+            COOKIE_NAME: _gConst.COOKIE.NAME,
             set: function (token) {
                 chrome.cookies.set({
                     url: this.COOKIE_URL,

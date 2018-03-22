@@ -1,71 +1,58 @@
 <md-content class="md-padding" md-whiteframe="1" layout="row" layout-align="start stretch" layout-wrap>
     <md-button
-            aria-label="To first page"
-            class="md-primary md-fab md-mini"
-            ng-click="vm.updateState({from: 0})"
-            ng-disabled="vm.searchParams.from === 0"
-    >
-        <md-icon>first_page</md-icon>
-    </md-button>
-    <md-button
-            aria-label="To prev page"
-            class="md-fab md-mini"
-            ng-click="vm.updateState({from: vm.searchParams.from - vm.searchParams.size})"
-            ng-disabled="vm.searchParams.from === 0"
+        aria-label="To prev page"
+        class="md-fab md-mini"
+        ng-click="vm.updateState({from: vm.searchParams.from - 1})"
+        ng-disabled="vm.searchParams.from === 1"
     >
         <md-icon>chevron_left</md-icon>
     </md-button>
 
-    <md-button
+    <div hide show-gt-xs>
+        <md-button
             aria-label="To page label"
             ng-repeat="i in vm.paging.pageArr track by $index"
             class="md-mini"
             ng-bind="i"
-            ng-click="vm.dots !== i && vm.updateState({from: i})"
-            ng-class="[vm.searchParams.from, vm.dots].indexOf(i) !== -1 ? 'md-icon-button' : 'md-fab'"
-    ></md-button>
+            ng-click="vm.gotoPage(i)"
+            ng-class="vm.pageBtnClass(i)"
+        ></md-button>
+    </div>
 
     <md-button
-            aria-label="To next page"
-            class="md-fab md-mini"
-            ng-click="vm.updateState({from: vm.searchParams.from + vm.searchParams.size})"
-            ng-disabled="vm.searchParams.from === (vm.paging.pages - 1) * vm.searchParams.size"
+        aria-label="To next page"
+        class="md-fab md-mini"
+        ng-click="vm.updateState({from: vm.searchParams.from + 1})"
+        ng-disabled="vm.searchParams.from === vm.paging.pages"
     >
         <md-icon>chevron_right</md-icon>
     </md-button>
-    <md-button
-            aria-label="To last page"
-            class="md-primary md-fab md-mini"
-            ng-click="vm.updateState({from: (vm.paging.pages - 1) * vm.searchParams.size})"
-            ng-disabled="vm.searchParams.from === (vm.paging.pages - 1) * vm.searchParams.size"
-    >
-        <md-icon>last_page</md-icon>
-    </md-button>
+    <div flex-order="2" flex-order-gt-xs="1" flex-xs="100">
+        <md-menu md-offset="0 36" ng-show="vm.sortBy">
+            <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()" aria-label="Sort variants" md-truncate>
+                <span hide show-gt-sm>Sort by: <span ng-bind="vm.sortBy[vm.sortKey].suffix"></span></span>
+                &nbsp;<span ng-bind="vm.sortBy[vm.sortKey].name"></span>&nbsp;
+                <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
+            </md-button>
+            <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+                <md-menu-item ng-repeat="(key, opts) in vm.sortBy">
+                    <md-button aria-label="{{opts.name}}" ng-disabled="vm.sortKey === key" ng-click="vm.changeSort(key)">
+                        <span ng-bind="opts.name"></span>
+                        <span ng-bind="opts.suffix"></span>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
 
-    <md-menu md-offset="0 36" ng-show="vm.sortBy">
-        <md-button class="md-raised md-primary" ng-mouseenter="$mdMenu.open()" aria-label="Sort variants">
-            Sort by: <span ng-bind="vm.sortBy[vm.sortKey].name"></span> <md-icon ng-bind="vm.isMenuOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"></md-icon>
-        </md-button>
-        <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
-            <md-menu-item ng-repeat="(key, opts) in vm.sortBy">
-                <md-button
-                        aria-label="{{opts.name}}"
-                        ng-disabled="vm.sortKey === key"
-                        ng-click="vm.changeSort(key)"
-                        ng-bind="opts.name">
-                </md-button>
-            </md-menu-item>
-        </md-menu-content>
-    </md-menu>
-    <div>
         <md-button class="md-raised md-primary" ng-show="vm.searchParams.queryField" ng-click="vm.resetQueryField()">
-            Search in: <span ng-bind="vm.queryFieldLabels[vm.searchParams.queryField]"></span> <md-icon>close</md-icon>
+            <span hide show-gt-sm>Search in: </span>
+            <span ng-bind="vm.queryFieldLabels[vm.searchParams.queryField]"></span> <md-icon>close</md-icon>
         </md-button>
     </div>
 
-    <span flex></span>
+    <span flex flex-order-gt-xs="2"></span>
 
-    <div class="found-total" layout="column" layout-align="space-between stretch">
+    <div class="found-total" layout="column" layout-align="space-between stretch" flex-order="1" flex-order-gt-xs="3">
         <span class="found-total-label">found</span>
         <b ng-bind="vm.total"></b>
         <span class="found-total-label" ng-bind="vm.totalLabel"></span>

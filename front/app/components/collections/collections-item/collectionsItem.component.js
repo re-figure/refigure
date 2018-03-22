@@ -22,52 +22,52 @@
         '$scope',
         '$location',
         '$state',
+        '$mdMedia',
         'MESSAGES',
         'collections',
         'modalDialog',
         'auth',
-        'CONST'
+        'CONST',
+        'Analytics'
     ];
 
-    function ItemController($scope, $location, $state, MESSAGES, collections, modal, auth, CONST) {
+    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST, Analytics) {
         var vm = this;
         var currentLastInRow = -1;
 
-        var _imgSrcParsers = [
-            {
-                name: 'plos',
-                matcher: function (str) {
-                    return str.match(/plos\.org/);
-                },
-                replacer: function (str) {
-                    return str.replace('size=inline', 'size=large');
-                }
-            }, {
-                name: 'elifescinces',
-                matcher: function (str) {
-                    return str.match(/elifesciences\.org/);
-                },
-                replacer: function (str) {
-                    return str.replace('-480w.', '.').replace('-300w.', '.');
-                }
-            }, {
-                name: 'pmc (report)',
-                matcher: function (str) {
-                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/) && str.indexOf('?report=thumb') !== -1;
-                },
-                replacer: function (str) {
-                    return str.replace('report=thumb', 'report=previmg');
-                }
-            }, {
-                name: 'pmc (ext)',
-                matcher: function (str) {
-                    return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
-                },
-                replacer: function (str) {
-                    return str.replace('.gif', '.jpg');
-                }
+        var _imgSrcParsers = [{
+            name: 'plos',
+            matcher: function (str) {
+                return str.match(/plos\.org/);
+            },
+            replacer: function (str) {
+                return str.replace('size=inline', 'size=large');
             }
-        ];
+        }, {
+            name: 'elifescinces',
+            matcher: function (str) {
+                return str.match(/elifesciences\.org/);
+            },
+            replacer: function (str) {
+                return str.replace('-480w.', '.').replace('-300w.', '.');
+            }
+        }, {
+            name: 'pmc (report)',
+            matcher: function (str) {
+                return str.match(/ncbi\.nlm\.nih\.gov\/pmc/) && str.indexOf('?report=thumb') !== -1;
+            },
+            replacer: function (str) {
+                return str.replace('report=thumb', 'report=previmg');
+            }
+        }, {
+            name: 'pmc (ext)',
+            matcher: function (str) {
+                return str.match(/ncbi\.nlm\.nih\.gov\/pmc/);
+            },
+            replacer: function (str) {
+                return str.replace('.gif', '.jpg');
+            }
+        }];
 
         vm.layout = {
             grid: {
@@ -99,7 +99,8 @@
             $scope.$watch(function () {
                 return $state.params.view;
             }, function (view) {
-                vm.view = view || 'grid';
+                //only grid view on small devices
+                vm.view = !$mdMedia('gt-sm') || !view ? 'grid' : view;
             });
 
             if (auth.isAuthenticated()) {
@@ -172,6 +173,11 @@
             collections.toggleFlag(vm.refigure.ID)
                 .then(function () {
                     vm.refigure.Flagged = !vm.refigure.Flagged * 1;
+                    Analytics.trackEvent(
+                        'Copyright infringement',
+                        vm.refigure.Flagged ? 'Report' : 'Unmark',
+                        vm.refigure.ID
+                    );
                 });
         }
 
@@ -207,12 +213,15 @@
             angular.merge(vm.refigure, refigure);
             vm.refigure.Figures = refigure.Figures;
             $state.get('collections.item').data.headerTitle = '"' + vm.refigure['Title'] + '"';
+            var shouldPreload = $mdMedia('gt-sm');
             vm.refigure.Figures.forEach(function (fig) {
                 for (var i = 0; i < _imgSrcParsers.length; i++) {
                     if (_imgSrcParsers[i].matcher(fig.URL)) {
                         var largeSRC = _imgSrcParsers[i].replacer(fig.URL);
                         console.info('URL "', fig.URL, '" matches ', _imgSrcParsers[i].name, '. Preloading ', largeSRC);
-                        preloadAndReplace(fig, largeSRC);
+                        if (shouldPreload) {
+                            preloadAndReplace(fig, largeSRC);
+                        }
                         break;
                     }
                 }

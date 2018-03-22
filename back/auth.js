@@ -35,7 +35,8 @@ let pathsNoAuth = [
     '/api/password-change-request',
     '/api/password-change',
     '/api/most-visited-metapublications',
-    '/api/metapublications'
+    '/api/metapublications',
+    '/api/downloads'
 ];
 
 let pathsNoAuthGET = [
@@ -82,6 +83,9 @@ function isAdminRequest(req) {
             return true;
         }
         if (req.path.match(/statistics/i)) {
+            return true;
+        }
+        if (req.method === 'GET' && req.path.match(/downloads/i)) {
             return true;
         }
     }

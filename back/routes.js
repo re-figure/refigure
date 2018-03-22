@@ -10,6 +10,7 @@ const captcha = require('./captcha');
 const figures = require('./figures');
 const metapublications = require('./metapublications');
 const blog = require('./blog');
+const downloads = require('./downloads');
 
 const homePage = __dirname + '/../build/';
 const staticOptions = {};
@@ -78,4 +79,8 @@ router.post('/api/blog', blog.addOrUpdatePost);
 router.put('/api/blog', blog.addOrUpdatePost);
 router.delete('/api/blog/:ID', blog.deletePost);
 
+//admin dashboard
 router.get('/api/statistics', metapublications.getStatistics);
+router.get('/api/downloads', downloads.getDownloads);
+router.post('/api/downloads', downloads.addOrUpdateDownload);
+router.put('/api/downloads', downloads.addOrUpdateDownload);

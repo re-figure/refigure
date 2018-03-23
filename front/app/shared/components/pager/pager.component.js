@@ -191,7 +191,7 @@
         }
 
         function gotoPage(i) {
-            if (_dots !== i) {
+            if (_dots !== i && vm.searchParams.from !== i) {
                 updateState({from: i});
             }
         }

@@ -30,7 +30,7 @@
         'CONST'
     ];
 
-    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST, Analytics) {
+    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST) {
         var vm = this;
         var currentLastInRow = -1;
 

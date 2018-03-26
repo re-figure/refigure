@@ -33,11 +33,12 @@
         var defaults = {
             query: '',
             from: 0,
-            size: 5,
+            size: 20,
             sortDirection: 'ASC',
             sortField: 'Metapublication.Title',
             Flagged: 0
         };
+        var _dots = '...';
 
         vm.isMenuOpened = false;
         vm.sortBy = {
@@ -55,7 +56,8 @@
                     sortDirection: 'DESC',
                     sortField: 'FiguresCount'
                 },
-                name: 'number of images - largest at top'
+                name: 'number of images',
+                suffix: ' - largest at top'
             },
             figCountAsc: {
                 stateParams: {
@@ -63,7 +65,8 @@
                     sortDirection: 'ASC',
                     sortField: 'FiguresCount'
                 },
-                name: 'number of images - smallest at top'
+                name: 'number of images',
+                suffix: ' - smallest at top'
             },
             nameAsc: {
                 stateParams: {
@@ -71,7 +74,8 @@
                     sortDirection: 'ASC',
                     sortField: 'Metapublication.Title'
                 },
-                name: 'name - A..Z'
+                name: 'name',
+                suffix: ' - A..Z'
             },
             nameDesc: {
                 stateParams: {
@@ -79,7 +83,8 @@
                     sortDirection: 'DESC',
                     sortField: 'Metapublication.Title'
                 },
-                name: 'name - Z..A'
+                name: 'name',
+                suffix: ' - Z..A'
             },
             visitsDesc: {
                 stateParams: {
@@ -87,7 +92,8 @@
                     sortDirection: 'DESC',
                     sortField: 'Visit.Count'
                 },
-                name: 'popularity - most at top'
+                name: 'popularity',
+                suffix: ' - most at top'
             },
             visitsAsc: {
                 stateParams: {
@@ -95,7 +101,8 @@
                     sortDirection: 'ASC',
                     sortField: 'Visit.Count'
                 },
-                name: 'popularity - less at top'
+                name: 'popularity',
+                suffix: ' - less at top'
             },
             createdAsc: {
                 stateParams: {
@@ -103,7 +110,8 @@
                     sortDirection: 'ASC',
                     sortField: 'Metapublication.DateCreated'
                 },
-                name: 'creation date - oldest at top'
+                name: 'creation date',
+                suffix: ' - oldest at top'
             },
             createdDesc: {
                 stateParams: {
@@ -111,7 +119,8 @@
                     sortDirection: 'DESC',
                     sortField: 'Metapublication.DateCreated'
                 },
-                name: 'creation date - newest at top'
+                name: 'creation date',
+                suffix: ' - newest at top'
             }
         };
 
@@ -122,6 +131,8 @@
         vm.updateState = updateState;
         vm.resetQueryField = resetQueryField;
         vm.changeSort = changeSort;
+        vm.gotoPage = gotoPage;
+        vm.pageBtnClass = pageBtnClass;
         vm.$onInit = activate;
 
         //////////////////////////////////////////
@@ -138,12 +149,12 @@
             });
             updateState(vm.searchParams);
 
-            $scope.$watch('vm.total', function () {
+            $scope.$watchGroup(['vm.total', 'vm.searchParams.from'], function () {
                 if (vm.total) {
                     vm.paging = {
                         pages: Math.ceil(vm.total / vm.searchParams.size)
                     };
-                    vm.paging.pageArr = new Array(vm.paging.pages);
+                    vm.paging.pageArr = buildPagination(vm.searchParams.from, vm.paging.pages);
                 }
             });
             $scope.$on('$mdMenuOpen', toggleMenu);
@@ -169,6 +180,48 @@
 
         function resetQueryField() {
             $state.go($state.current.name, {queryField: null});
+        }
+
+        function pageBtnClass(i) {
+            var ret = [i !== _dots ? 'md-fab' : 'md-icon-button'];
+            if (i === vm.searchParams.from) {
+                ret.push('md-primary');
+            }
+            return ret;
+        }
+
+        function gotoPage(i) {
+            if (_dots !== i && vm.searchParams.from !== i) {
+                updateState({from: i});
+            }
+        }
+
+        function buildPagination(current, last) { // jshint ignore:line
+            var delta = 2,
+                left = current - delta,
+                right = current + delta + 1,
+                range = [],
+                rangeWithDots = [],
+                dots = '...',
+                i, l;
+
+            for (i = 1; i <= last; i++) {
+                if (i === 1 || i === last || i >= left && i < right) {
+                    range.push(i);
+                }
+            }
+            for (i = 0; i < range.length; i++) {
+                if (l) {
+                    if (range[i] - l !== 1) {
+                        rangeWithDots.push(dots);
+                    } else if (range[i] - l === delta) {
+                        rangeWithDots.push(l + 1);
+                    }
+                }
+                rangeWithDots.push(range[i]);
+                l = range[i];
+            }
+            return rangeWithDots;
         }
     }
 

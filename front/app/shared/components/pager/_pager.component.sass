@@ -4,11 +4,15 @@ pager
     .md-button.md-icon-button
         margin-top: 12px
     .found-total
-        margin: -14px -14px -14px 0
-        padding-left: 16px
+        margin: -16px -16px -16px 0
+        //padding-left: 16px
         text-align: center
         color: $primary-color
         font-size: 30px
+
+        @media (max-width: $layout-breakpoint-sm)
+            margin: -8px -8px -8px 0
+
         &-label
             line-height: 12px
             color: #fff

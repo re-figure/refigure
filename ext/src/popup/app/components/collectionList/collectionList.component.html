@@ -25,7 +25,9 @@
                          src="/img/no_image.png">
                 </div>
                 <div class="col-xs-8">
-                    <p ng-bind-html="collection.Metapublication.Description | linky:'_blank'"></p>
+                    <p
+                        class="description-pre-wrap"
+                        ng-bind-html="collection.Metapublication.Description | linky:'_blank'"></p>
                     <div class="collection-fig-count">
                         <span ng-bind="collection.Metapublication.FiguresCount"></span>
                         <span plural="collection.Metapublication.FiguresCount"> image</span> in Refigure

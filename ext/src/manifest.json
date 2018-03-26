@@ -1,8 +1,9 @@
 {
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmRRN4gh2gjWHQFe/nDq43yhU+ydp1addI9WKhQEFxh2ZCHOIRL65SmVNHaEVHdzyZIeORD0Vw3JVKmFRJgNTM2a1paLG5keUrMRtWEUwGIarSMCuBIKHn8mts0cv72R/eBaNlWwMZnoKpbLAzFo5JcYWoNFvW4mxXd6AG3ZXNKqjMKtQvFABMW/mOmVo+VqlW93SjNUEO8x010+VSBP8dXxoBCsKfCK/Yij+vpVq3J+f6ZqPxQBH9dmOa3vXcxws1uKaSS+V5lZ8t8LGHDzPvUyj4vupuyEC5CnmRsknq0VfJkME+O9emiQbcKwanGCudRsgFwMVo4pfgiimzzfVYwIDAQAB",
   "author": "Girija Goyal, James Akin",
   "manifest_version": 2,
   "name": "Refigure",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "ReFigure aggregates and organises different scientific figures amongst users through a backend running on a server and Chrome plugin",
   "icons": {
     "100": "/img/refigure_logo_small.png"

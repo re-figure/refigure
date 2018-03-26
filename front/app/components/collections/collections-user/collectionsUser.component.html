@@ -1,30 +1,25 @@
-<div layout="row" flex layout-align="start start">
-    <div flex>
+<div layout="column" layout-gt-sm="row" layout-align="start stretch" layout-align-gt-sm="start start">
+    <md-content class="collection-user-details" layout-padding md-whiteframe="4" flex-order-gt-sm="2">
+        <div md-truncate>
+            <b class="md-caption">User </b><span ng-bind="vm.user.FullName"></span>
+        </div>
+        <div>
+            <b class="md-caption">Joined us at </b><span ng-bind="vm.user.DateCreated|date:'M/d/yyyy'"></span>
+        </div>
+        <div>
+            <b class="md-caption">Total refigures </b><span ng-bind="vm.found"></span>
+        </div>
+        <div ng-show="vm.user.Organization">
+            <b class="md-caption">Organization </b><span ng-bind="vm.user.Organization"></span>
+            <span ng-show="vm.user.Department">
+                <b class="md-caption"> in </b>
+                <span ng-bind="vm.user.Department"></span>
+                <b class="md-caption"> dept.</b>
+            </span>
+        </div>
+    </md-content>
+    <div flex flex-order-gt-sm="1">
         <pager total="vm.found" search-params="vm.searchParams"></pager>
         <collection-row item="item" ng-repeat="item in vm.refigures"></collection-row>
     </div>
-    <md-sidenav
-            class="md-sidenav-right"
-            md-is-locked-open="true"
-            md-whiteframe="4">
-        <md-content layout-padding>
-            <div md-truncate>
-                <b class="md-caption">User </b><span ng-bind="vm.user.FullName"></span>
-            </div>
-            <div>
-                <b class="md-caption">Joined us at </b><span ng-bind="vm.user.DateCreated|date:'M/d/yyyy'"></span>
-            </div>
-            <div>
-                <b class="md-caption">Total refigures </b><span ng-bind="vm.found"></span>
-            </div>
-            <div ng-show="vm.user.Organization">
-                <b class="md-caption">Organization </b><span ng-bind="vm.user.Organization"></span>
-                <span ng-show="vm.user.Department">
-                    <b class="md-caption"> in </b>
-                    <span ng-bind="vm.user.Department"></span>
-                    <b class="md-caption"> dept.</b>
-                </span>
-            </div>
-        </md-content>
-    </md-sidenav>
 </div>

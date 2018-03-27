@@ -33,7 +33,7 @@
          * Sends chrome message
          */
         function sendMessage(message, callback) {
-            if (typeof chrome !== 'undefined') {
+            if (typeof chrome !== 'undefined' && typeof chrome.runtime !== 'undefined' && chrome.runtime.sendMessage) {
                 chrome.runtime.sendMessage(CONST.extensionId, message, callback);
             }
         }

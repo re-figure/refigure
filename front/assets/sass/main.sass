@@ -44,6 +44,12 @@ md-toolbar
     .r-heading
         margin-top: 2rem
         text-align: center
+        @media (max-width: $layout-breakpoint-sm)
+            margin-top: 1rem
+            h1
+                margin: 0
+        @media (max-width: $layout-breakpoint-xs)
+            margin-top: 0
     .r-description
         text-align: center
 

@@ -18,9 +18,9 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$scope', '$state', 'collections'];
+    Controller.$inject = ['$scope', '$state', '$mdMedia', 'collections'];
 
-    function Controller($scope, $state, collections) {
+    function Controller($scope, $state, $mdMedia, collections) {
         var vm = this;
 
         vm.refigures = [];
@@ -63,6 +63,10 @@
             collections.search(params).then(function (data) {
                 vm.refigures = data.results;
                 vm.found = data.found;
+                //blur input to remove display keyboard
+                if ($mdMedia('sm') || $mdMedia('xs')) {
+                    document.getElementById('search-term').blur();
+                }
             });
         }
 

@@ -21,12 +21,13 @@
     Controller.$inject = [
         '$state',
         '$timeout',
+        '$mdMedia',
         'collections',
         'chromeService',
         'MESSAGES'
     ];
 
-    function Controller($state, $timeout, collections, chromeService, MESSAGES) {
+    function Controller($state, $timeout, $mdMedia, collections, chromeService, MESSAGES) {
         var vm = this;
         vm.form = null;
         vm.mostVisited = [];
@@ -46,7 +47,10 @@
          * Activates controller
          */
         function activate() {
-            vm.isChrome = !!window.navigator.userAgent.match(/Chrome/);
+            var agent = window.navigator.userAgent;
+            if (agent.match(/Chrome/) && !agent.match(/Mobile/)) {
+                vm.isChrome = true;
+            }
             chromeService.sendMessage({
                 type: MESSAGES.MSG_TYPE_IS_EXTENSION_INSTALLED
             }, function (resp) {
@@ -76,6 +80,9 @@
                     vm.mostVisited = ret;
                 })
                 .finally(function () {
+                    if ($mdMedia('gt-sm')) {
+                        document.getElementById('search-term').focus();
+                    }
                     vm.loading = false;
                 });
         }

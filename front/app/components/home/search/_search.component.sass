@@ -1,21 +1,25 @@
 search
-  .r-main-content
-    .r-search-input
-      margin-top: 2rem
-      md-input-container
-        font-size: $headline-font-size-base
-        margin-top: 1rem
-      .md-button
-        margin-top: .5rem
-        margin-left: 0
-        margin-right: 0
-    .r-download-extension
-      margin-top: 2rem
-      button
-        font-size: $subhead-font-size-base
-        text-transform: inherit
-  .r-most-visited
-    margin-top: 6rem
-    .r-heading
-      text-align: center
-      font-size: $title-font-size-base
+    .r-main-content
+        .r-search-input
+            margin-top: 2rem
+            @media (max-width: $layout-breakpoint-sm)
+                margin-top: 0
+            md-input-container
+                font-size: $headline-font-size-base
+                margin-top: 1rem
+            .md-button
+                margin-top: .5rem
+                margin-left: 0
+                margin-right: 0
+        .r-download-extension
+            margin-top: 2rem
+            button
+                font-size: $subhead-font-size-base
+                text-transform: inherit
+    .r-most-visited
+        margin-top: 6rem
+        @media (max-width: $layout-breakpoint-sm)
+            margin-top: 2rem
+        .r-heading
+            text-align: center
+            font-size: $title-font-size-base

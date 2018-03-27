@@ -18,12 +18,19 @@ collection-row
             padding-left: 10px
             color: $success-color
     @media only screen and (max-width: $layout-breakpoint-xs)
+        md-content
+            margin-left: 0
         md-card
             md-card-title-text
                 margin-top: 8px
                 margin-bottom: 8px
-                width: 100%
                 padding: 0
+                width: 100%
+                .md-truncate
+                    width: 100%
+                .description-pre-wrap
+                    overflow: hidden
+                    max-height: 200px
             md-card-title md-card-title-media .md-media-lg
                 max-height: 152px
                 width: auto

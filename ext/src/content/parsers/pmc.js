@@ -14,11 +14,13 @@
             if (src && src.match(/articles\//) /* && document.images[i].hasAttribute('src-large')*/) {
                 var figure = {URL: src};
 
-                figureBlock = document.images[i].parentNode.parentNode;
-
-                caption = figureBlock.querySelector('div.icnblk_cntnt > div:nth-child(1) > a');
+                figureBlock = document.images[i].parentNode.parentNode.querySelector('div.icnblk_cntnt');
+                if (!figureBlock) {
+                    figureBlock = document.images[i].parentNode.parentNode.parentNode.querySelector('div.icnblk_cntnt');
+                }
+                caption = figureBlock.querySelector('* > div:nth-child(1) > a');
                 caption = caption ? caption.innerText : null;
-                legend = figureBlock.querySelector('div.icnblk_cntnt > div:nth-child(2) > span');
+                legend = figureBlock.querySelector('* > div:nth-child(2) > span');
                 legend = legend ? legend.innerText : null;
 
                 if (caption) {

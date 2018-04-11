@@ -150,12 +150,16 @@
             updateState(vm.searchParams);
 
             $scope.$watchGroup(['vm.total', 'vm.searchParams.from'], function () {
-                if (vm.total) {
-                    vm.paging = {
-                        pages: Math.ceil(vm.total / vm.searchParams.size)
-                    };
-                    vm.paging.pageArr = buildPagination(vm.searchParams.from, vm.paging.pages);
+                vm.paging = {
+                    isFirst: vm.searchParams.from === 0,
+                    isLast: true,
+                    current: vm.searchParams.from / vm.searchParams.size,
+                    pages: Math.ceil(vm.total / vm.searchParams.size)
+                };
+                if (vm.paging.pages) {
+                    vm.paging.isLast = vm.searchParams.from / vm.searchParams.size === vm.paging.pages - 1;
                 }
+                vm.paging.pageArr = buildPagination(vm.searchParams.from / vm.searchParams.size + 1, vm.paging.pages);
             });
             $scope.$on('$mdMenuOpen', toggleMenu);
             $scope.$on('$mdMenuClose', toggleMenu);
@@ -184,15 +188,15 @@
 
         function pageBtnClass(i) {
             var ret = [i !== _dots ? 'md-fab' : 'md-icon-button'];
-            if (i === vm.searchParams.from) {
+            if (i - 1 === vm.searchParams.from / vm.searchParams.size) {
                 ret.push('md-primary');
             }
             return ret;
         }
 
         function gotoPage(i) {
-            if (_dots !== i && vm.searchParams.from !== i) {
-                updateState({from: i});
+            if (_dots !== i && vm.searchParams.from / vm.searchParams.size !== i - 1) {
+                updateState({from: (i - 1) * vm.searchParams.size});
             }
         }
 

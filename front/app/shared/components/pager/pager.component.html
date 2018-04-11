@@ -2,8 +2,8 @@
     <md-button
         aria-label="To prev page"
         class="md-fab md-mini"
-        ng-click="vm.updateState({from: vm.searchParams.from - 1})"
-        ng-disabled="vm.searchParams.from === 1"
+        ng-click="vm.updateState({from: vm.searchParams.from - vm.searchParams.size})"
+        ng-disabled="vm.paging.isFirst"
     >
         <md-icon>chevron_left</md-icon>
     </md-button>
@@ -22,9 +22,8 @@
     <md-button
         aria-label="To next page"
         class="md-fab md-mini"
-        ng-click="vm.updateState({from: vm.searchParams.from + 1})"
-        ng-disabled="vm.searchParams.from === vm.paging.pages"
-    >
+        ng-click="vm.updateState({from: vm.searchParams.from + vm.searchParams.size})"
+        ng-disabled="vm.paging.isLast">
         <md-icon>chevron_right</md-icon>
     </md-button>
     <div flex-order="2" flex-order-gt-xs="1" flex-xs="100">

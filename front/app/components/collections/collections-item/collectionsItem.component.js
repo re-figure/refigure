@@ -27,10 +27,11 @@
         'collections',
         'modalDialog',
         'auth',
-        'CONST'
+        'CONST',
+        'Analytics'
     ];
 
-    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST) {
+    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST, Analytics) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -172,6 +173,11 @@
             collections.toggleFlag(vm.refigure.ID)
                 .then(function () {
                     vm.refigure.Flagged = !vm.refigure.Flagged * 1;
+                    Analytics.trackEvent(
+                        'Copyright infringement',
+                        vm.refigure.Flagged ? 'Report' : 'Unmark',
+                        vm.refigure.ID
+                    );
                 });
         }
 

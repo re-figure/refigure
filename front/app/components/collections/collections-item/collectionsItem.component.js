@@ -89,6 +89,9 @@
         vm.isAdmin = isAdmin;
         vm.showFullScreen = showFullScreen;
         vm.showProperties = showProperties;
+        vm.shareFB = shareFB;
+        vm.shareGoogle = shareGoogle;
+        vm.getDOILink = getDOILink;
 
         vm.$onInit = activate;
 
@@ -123,6 +126,7 @@
                             images: resp.Figures
                         }, '*');
                     }
+                    Analytics.trackEvent('Collection', 'view', $state.params.id);
                     setRefigure(resp);
                 });
         }
@@ -174,8 +178,8 @@
                 .then(function () {
                     vm.refigure.Flagged = !vm.refigure.Flagged * 1;
                     Analytics.trackEvent(
-                        'Copyright infringement',
-                        vm.refigure.Flagged ? 'Report' : 'Unmark',
+                        'Collection',
+                        'Copyright infringement ' + vm.refigure.Flagged ? 'report' : 'unmark',
                         vm.refigure.ID
                     );
                 });
@@ -207,6 +211,7 @@
                 clickOutsideToClose: true,
                 parent: document.getElementById('#r-page-content')
             });
+            Analytics.trackEvent('Collection', 'view figure', image.ID);
         }
 
         function setRefigure(refigure) {
@@ -236,6 +241,22 @@
                 });
             };
             img.src = largeSrc;
+        }
+
+        function shareFB(e) {
+            e.preventDefault();
+            Analytics.trackEvent('Collection', 'share facebook', $state.params.id);
+            window.open(e.target.href, 'facebook-share-dialog', 'width=626,height=436');
+        }
+
+        function shareGoogle(e) {
+            e.preventDefault();
+            Analytics.trackEvent('Collection', 'share google', $state.params.id);
+            window.open(e.target.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        }
+
+        function getDOILink(url) {
+            return url.indexOf('http://') === 0 || url.indexOf('https://')  === 0 ? url : 'http://dx.doi.org/' + url;
         }
 
     }

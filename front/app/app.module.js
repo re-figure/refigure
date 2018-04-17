@@ -45,9 +45,7 @@
         AnalyticsProvider.setAccount('$GOOGLE_ANALYTICS$');
         AnalyticsProvider.setPageEvent('$stateChangeSuccess');
         AnalyticsProvider.trackUrlParams(true);
-        // AnalyticsProvider.setDomainName(
-        //     window.location.host.indexOf('localhost') === -1 ? window.location.host : 'none'
-        // );
+        // AnalyticsProvider.enterDebugMode();
     }
 
     appRun.$inject = [

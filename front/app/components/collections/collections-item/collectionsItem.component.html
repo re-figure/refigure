@@ -39,13 +39,12 @@
             <b class="md-caption">Share </b>
             <a class="r-facebook"
                ng-href="https://www.facebook.com/share.php?u={{vm.url}}"
-               onclick="window.open(this.href, 'facebook-share-dialog', 'width=626,height=436');return false;">
+               ng-click="vm.shareFb($event, 'facebook')">
                 facebook
             </a>
             <a class="r-g-plus"
                ng-href="https://plus.google.com/share?url={{vm.url}}"
-               onclick="window.open(this.href, '',
-                    'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+               ng-click="vm.shareGoogle($event)">
                 google+
             </a>
             <div
@@ -149,7 +148,7 @@
                     </p>
                     <p>
                         <b>Article DOI: </b>
-                        <a ng-show="image.DOI" target="_blank" ng-href="http://dx.doi.org/{{image.DOI}}" ng-bind="image.DOI"></a>
+                        <a ng-if="image.DOI" target="_blank" ng-href="{{vm.getDOILink(image.DOI)}}" ng-bind="image.DOI"></a>
                     </p>
                     <!--
                     <p>

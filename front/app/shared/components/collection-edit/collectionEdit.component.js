@@ -24,10 +24,11 @@
         'collections',
         'modalDialog',
         'rfToast',
-        'rfImages'
+        'rfImages',
+        'Analytics'
     ];
 
-    function EditController($scope, $state, collections, modal, rfToast, rfImages) {
+    function EditController($scope, $state, collections, modal, rfToast, rfImages, Analytics) {
         var vm = this;
 
         vm.opened = -1;
@@ -57,6 +58,7 @@
                 return $state.params.edit;
             }, function (refigureID) {
                 if (refigureID) {
+                    Analytics.trackEvent('Collection', 'edit', refigureID);
                     collections
                         .get(refigureID)
                         .then(function (resp) {

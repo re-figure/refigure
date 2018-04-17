@@ -27,10 +27,11 @@
         'collections',
         'modalDialog',
         'auth',
-        'CONST'
+        'CONST',
+        'Analytics'
     ];
 
-    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST) {
+    function ItemController($scope, $location, $state, $mdMedia, MESSAGES, collections, modal, auth, CONST, Analytics) {
         var vm = this;
         var currentLastInRow = -1;
 
@@ -88,6 +89,9 @@
         vm.isAdmin = isAdmin;
         vm.showFullScreen = showFullScreen;
         vm.showProperties = showProperties;
+        vm.shareFB = shareFB;
+        vm.shareGoogle = shareGoogle;
+        vm.getDOILink = getDOILink;
 
         vm.$onInit = activate;
 
@@ -122,6 +126,7 @@
                             images: resp.Figures
                         }, '*');
                     }
+                    Analytics.trackEvent('Collection', 'view', $state.params.id);
                     setRefigure(resp);
                 });
         }
@@ -172,6 +177,11 @@
             collections.toggleFlag(vm.refigure.ID)
                 .then(function () {
                     vm.refigure.Flagged = !vm.refigure.Flagged * 1;
+                    Analytics.trackEvent(
+                        'Collection',
+                        'Copyright infringement ' + vm.refigure.Flagged ? 'report' : 'unmark',
+                        vm.refigure.ID
+                    );
                 });
         }
 
@@ -201,6 +211,7 @@
                 clickOutsideToClose: true,
                 parent: document.getElementById('#r-page-content')
             });
+            Analytics.trackEvent('Collection', 'view figure', image.ID);
         }
 
         function setRefigure(refigure) {
@@ -230,6 +241,22 @@
                 });
             };
             img.src = largeSrc;
+        }
+
+        function shareFB(e) {
+            e.preventDefault();
+            Analytics.trackEvent('Collection', 'share facebook', $state.params.id);
+            window.open(e.target.href, 'facebook-share-dialog', 'width=626,height=436');
+        }
+
+        function shareGoogle(e) {
+            e.preventDefault();
+            Analytics.trackEvent('Collection', 'share google', $state.params.id);
+            window.open(e.target.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+        }
+
+        function getDOILink(url) {
+            return url.indexOf('http://') === 0 || url.indexOf('https://')  === 0 ? url : 'http://dx.doi.org/' + url;
         }
 
     }

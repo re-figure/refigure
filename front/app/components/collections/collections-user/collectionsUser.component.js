@@ -21,10 +21,11 @@
     ItemController.$inject = [
         '$scope',
         '$state',
-        'collections'
+        'collections',
+        'Analytics'
     ];
 
-    function ItemController($scope, $state, collections) {
+    function ItemController($scope, $state, collections, Analytics) {
         var vm = this;
         vm.found = 0;
         vm.refigures = [];
@@ -37,7 +38,6 @@
 
         function activate() {
             $scope.$watchCollection('vm.searchParams', function (params) {
-                console.log('params', params);
                 if (params) {
                     load(params);
                 }
@@ -45,6 +45,7 @@
         }
 
         function load(params) {
+            Analytics.trackEvent('User', 'collections', $state.params.query);
             $state.get('collections.user').data.headerTitle = '';
             collections
                 .search(params)

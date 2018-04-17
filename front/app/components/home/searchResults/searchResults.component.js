@@ -18,9 +18,9 @@
             controllerAs: 'vm'
         });
 
-    Controller.$inject = ['$scope', '$state', '$mdMedia', 'collections'];
+    Controller.$inject = ['$scope', '$state', '$mdMedia', 'collections', 'Analytics'];
 
-    function Controller($scope, $state, $mdMedia, collections) {
+    function Controller($scope, $state, $mdMedia, collections, Analytics) {
         var vm = this;
 
         vm.refigures = [];
@@ -43,8 +43,11 @@
             if ($state.params.Flagged) {
                 $state.get('home.search-results').data.headerTitle = 'Search results: flagged';
             }
-            $scope.$watchCollection('vm.searchParams', function (params) {
+            $scope.$watchCollection('vm.searchParams', function (params, old) {
                 if (params) {
+                    if (!old || params.query !== old.query) {
+                        Analytics.trackEvent('Collection', 'search', params.query);
+                    }
                     vm.term = params.query;
                     load(params);
                 }

@@ -21,6 +21,10 @@
                 caption = figureBlock.querySelector('* > div:nth-child(1) > a');
                 caption = caption ? caption.innerText : null;
                 legend = figureBlock.querySelector('* > div:nth-child(2) > span');
+                if (!legend) {
+                    // 18.04.2018 markup update
+                    legend = figureBlock.querySelector('* > div.caption > p');
+                }
                 legend = legend ? legend.innerText : null;
 
                 if (caption) {
